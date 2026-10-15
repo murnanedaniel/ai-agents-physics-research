@@ -5,7 +5,7 @@ These are recurring patterns mined from about six months of one physicist's real
 ## Inner loop (one experiment)
 
 ### Surprising number is a bug first
-A result that is too good, too fast, too clean, or exactly matches a prior guess gets checked before it gets believed, whether the push-back comes from the human or the agent notices it itself. The check is always a re-derivation or an independent measurement, never an explanation.
+A result that is too good, too fast, too clean, or exactly matches a prior guess gets checked before it gets believed. In practice the push-back usually came from the researcher: in one case the agent called a too-good number "a surprise", explained it away for hours and defended it when asked, until an accidental recompute exposed it as a bug. The check that works is a re-derivation or an independent measurement, never an explanation.
 Seen: recurring, both machines.
 Course: [surprising-number.md](surprising-number.md)
 
@@ -98,7 +98,7 @@ Asked to critically review its own just-shipped work, an agent spawned independe
 Seen: a few times, notable.
 
 ### A too-good result is suspicious; the headline shrinks under audit
-A surprisingly strong result (a clean lead over a baseline, an unusually good score) is met with scepticism rather than celebration. Audits then found data corruption, leakage, or a physical limit, and the claim was weakened or withdrawn rather than defended.
+A surprisingly strong result (a clean lead over a baseline, an unusually good score) should be met with scepticism rather than celebration, and the researcher had to supply that scepticism more often than the agent did. When audits did run, they found data corruption, leakage or a physical limit, and the claim shrank.
 Seen: recurring, both machines.
 Course: [surprising-number.md](surprising-number.md)
 

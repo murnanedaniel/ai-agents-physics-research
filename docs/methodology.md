@@ -46,7 +46,15 @@ The private evidence documents cite quotes with thread identifiers. A script re-
 
 The rule for the course: **no anecdote goes on stage until someone has re-read it in the raw transcript.** That's the [spot-check](patterns/surprising-number.md) principle, applied to our own evidence.
 
-[TODO: cluster-side results]
+**Cluster result:** the mining readers' quotes held up very well. 321 of 322 evidence quotes were verbatim, and the last was real but sat in tool output. The distortion came one layer up, in the **synthesis**. Three headline anecdotes in the combined evidence base had each been tidied:
+
+- **A too-good number:** the agent had noticed it but explained it away and defended it, until an accidental recompute caught the bug. The synthesis described it as the agent catching its own bug.
+- **A speedup:** accurately reported, but the synthesis left out that the agent parked the run overnight rather than applying the fix.
+- **A leakage finding:** in reality, one sentence in a single model's consolidation pass. The synthesis described it as a cross-model check.
+
+The verifier itself had bugs, which were fixed on the way: it couldn't read some message formats, and it stalled on very large threads.
+
+**Lesson:** each layer of agentic summarisation makes the story a little cleaner and a little more flattering to the agent. Quotes survive; narratives drift. Verify stories against the source, not against the summary.
 
 ## 4. Agent quality over time
 
