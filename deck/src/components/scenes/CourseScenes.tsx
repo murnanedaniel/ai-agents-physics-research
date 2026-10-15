@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import { BeatScene } from "./BeatScene";
 import { LiveLink, type BeatLink } from "@/components/DocsLink";
 import type { SceneId } from "@/lib/timeline";
+import { asset } from "@/lib/asset";
 const d = (path: string, title: string): BeatLink => ({kind: "docs", path, title});
 const l = (target: "rangeDashboard" | "sciencedash", title: string): BeatLink => ({kind: "live", target, title});
 type Content = { kicker: string; title: string; lines: string[]; links: BeatLink[] };
@@ -12,6 +13,7 @@ export const BEATS: Record<Exclude<SceneId, "thanks">, Content> = {
  "q1-possible": {kicker: "Q1 · possibilities, with receipts", title: "What can agentic science do in Oct 2026?", lines: [], links: [d("evidence/possible/", "what is possible")]},
  "q2-machinery": {kicker: "Q2 · the machinery", title: "What is it?", lines: ["The model proposes an action.", "The harness executes a tool and records its result.", "The model continues with the updated context."], links: [d("machinery/llm-basics/", "LLM basics"), d("machinery/tool-loop/", "tool loop")]},
  "q2-limits": {kicker: "Q2 · evidence, not confidence", title: "What can’t it do (yet)?", lines: ["Confidence is not calibration; audits can miss the worst bug.", "Memory alone does not enforce a critical rule.", "Review findings don’t reliably carry into later drafts.", "Exit 0 is not evidence. Test that the checker can fail."], links: [d("evidence/limits/", "limits")]},
+ quality: {kicker: "Q2 · measured, not remembered", title: "Six months of working with agents", lines: ["About 2,000 of my messages to Claude (Apr–Oct 2026), each labelled by a small model: correction, challenge, praise or instruction.", "Pushback fell from 46% to 29%, almost all of it fewer \u201care you sure?\u201d challenges. Outright corrections stayed around 15%.", "Model, month, project and my own skill move together: this is a trend in working practice, not a model ranking."], links: [d("evidence/quality-over-time/", "quality over time"), d("methodology/", "methodology")]},
  "q3-professional": {kicker: "Q3 · the centre of the course", title: "Professional agentic science", lines: [], links: [d("professional/", "professional practice")]},
  "two-axes": {kicker: "Method × implementation", title: "Two axes, one scientific method", lines: ["Choose the scientific loop.", "Then choose the model, harness and environment."], links: [d("environments/", "five environments")]},
  "inner-intro": {kicker: "Inner loop · 10:55", title: "Inner loop: one experiment", lines: ["Hypothesis → run → evaluate → iterate", "Reproduce the baseline before changing one thing.", "Two runtimes: agent steps ≠ experiment wall clock."], links: [d("loops/inner/", "inner loop"), d("patterns/reproduce-baseline/", "baseline"), d("patterns/surprising-number/", "surprising number")]},
@@ -42,6 +44,7 @@ export function CourseScene({id, step}: {id: Exclude<SceneId,"thanks">; step: nu
  {(id === "cooking" || id === "serving") && <Ovens />}
  {id === "q1-possible" && <Numbers step={step} />}
  {id === "q2-machinery" && <ToolLoop step={step} />}
+ {id === "quality" && <img className="quality-chart" src={asset("/quality/pushback.png")} alt="Line chart: share of the researcher\u2019s messages that push back on the agent, falling from 46% in May to 29% in October 2026; outright corrections stay near 15%." />}
  {id === "q3-professional" && <Professional step={step} />}
  {id === "two-axes" && <Axes />}
  {id === "inner-fiddler" && <Scoreboard />}

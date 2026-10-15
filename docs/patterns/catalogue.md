@@ -224,6 +224,11 @@ Seen: recurring.
 
 ## Cross-cutting: trust and verification
 
+### Summaries flatter the agent
+Agent-written summaries of past work came out cleaner than the events and tended to flatter the agent. All four headline anecdotes checked against the raw transcripts had been tidied, while the direct quotes were almost all accurate.
+Seen: four of four checked, both machines.
+Course: [summaries-flatter.md](summaries-flatter.md)
+
 ### Anti-calibrated confidence
 A dedicated check found that an agent's self-reported confidence tags ("high," "medium," "speculative") did not reliably track whether a claim later survived scrutiny — "high confidence" claims were refuted a majority of the time, while "medium confidence" claims held up much more often. Stated confidence is not a trustworthy proxy for correctness.
 Seen: once, notable.

@@ -122,3 +122,6 @@ body {
 .course-table th, .course-table td { text-align: left; padding: .8vh .8vw; border-bottom: 1px solid color-mix(in srgb, currentColor 20%, transparent); }
 @media (max-width: 700px) { .beat { overflow-y: auto; } .beat h1 { font-size: 32px; } .beat-body { flex: none; } .card-grid.four, .card-grid.three { grid-template-columns: repeat(2, 1fr); } .beat-footer span { display: none; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+.quality-chart { display: block; max-height: 50vh; max-width: min(100%, 1100px); width: auto; height: auto; margin: 0 auto; border-radius: 8px; }
+.quality-chart + .beat-lines { font-size: clamp(16px, 1.5vw, 28px); }

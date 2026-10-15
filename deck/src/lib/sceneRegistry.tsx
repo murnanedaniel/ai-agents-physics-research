@@ -7,7 +7,7 @@ export type SceneComponent = (props: { step: number; onAdvance?: () => void }) =
 const beat = (id: Exclude<SceneId, "thanks">): SceneComponent => function RegisteredBeat({step}) { return <CourseScene id={id} step={step} />; };
 export const SCENE_COMPONENTS: Record<SceneId, SceneComponent> = {
  title: beat("title"), cooking: beat("cooking"), "q1-possible": beat("q1-possible"),
- "q2-machinery": beat("q2-machinery"), "q2-limits": beat("q2-limits"),
+ "q2-machinery": beat("q2-machinery"), "q2-limits": beat("q2-limits"), quality: beat("quality"),
  "q3-professional": beat("q3-professional"), "two-axes": beat("two-axes"),
  "inner-intro": beat("inner-intro"), "inner-fiddler": beat("inner-fiddler"), "inner-theory": beat("inner-theory"),
  "middle-intro": beat("middle-intro"), "middle-range": beat("middle-range"),

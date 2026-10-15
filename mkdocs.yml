@@ -59,6 +59,7 @@ nav:
 - Evidence:
   - Possible: evidence/possible.md
   - Limits: evidence/limits.md
+  - Quality over time: evidence/quality-over-time.md
 - Professional practice: professional/index.md
 - Research loops:
   - Inner: loops/inner.md
@@ -67,6 +68,7 @@ nav:
 - Patterns:
   - Overview: patterns/index.md
   - Full catalogue: patterns/catalogue.md
+  - Summaries flatter the agent: patterns/summaries-flatter.md
   - Reproduce the baseline: patterns/reproduce-baseline.md
   - A surprising number is a bug first: patterns/surprising-number.md
   - A bounded delegation contract: patterns/delegation-contract.md
