@@ -1,6 +1,6 @@
 export type Part = "setup" | "inner" | "middle" | "outer" | "close";
 export type Theme = "dark" | "light";
-export type SceneId = "title" | "cooking" | "q1-possible" | "q2-machinery" | "q2-limits" | "quality" | "q3-professional" | "two-axes" | "inner-intro" | "inner-fiddler" | "inner-theory" | "middle-intro" | "middle-range" | "outer-intro" | "outer-volunteer" | "landscape" | "serving" | "thanks";
+export type SceneId = "title" | "cooking" | "q1-possible" | "q2-machinery" | "q2-limits" | "quality" | "what-changed" | "q3-professional" | "two-axes" | "inner-intro" | "inner-fiddler" | "inner-theory" | "middle-intro" | "middle-range" | "outer-intro" | "outer-volunteer" | "landscape" | "serving" | "thanks";
 export type Scene = { id: SceneId; label: string; part: Part; theme: Theme; steps: number; startSec: number; endSec: number };
 // Seconds from 09:00. Gaps are the morning break, lunch and afternoon break.
 export const SCENES: Scene[] = [
@@ -55,8 +55,17 @@ export const SCENES: Scene[] = [
     "theme": "light",
     "steps": 3,
     "startSec": 3900,
-    "endSec": 4200,
+    "endSec": 4050,
     "label": "Six months of working with agents"
+  },
+  {
+    "id": "what-changed",
+    "part": "setup",
+    "theme": "light",
+    "steps": 3,
+    "startSec": 4050,
+    "endSec": 4200,
+    "label": "What changed, tested"
   },
   {
     "id": "q3-professional",
