@@ -66,6 +66,7 @@ nav:
   - Outer: loops/outer.md
 - Patterns:
   - Overview: patterns/index.md
+  - Full catalogue: patterns/catalogue.md
   - Reproduce the baseline: patterns/reproduce-baseline.md
   - A surprising number is a bug first: patterns/surprising-number.md
   - A bounded delegation contract: patterns/delegation-contract.md
@@ -84,6 +85,7 @@ nav:
   - Galactic neighbour finding: demos/galactic-neighbours.md
   - A resilient Perlmutter bridge: demos/perlmutter-bridge.md
 - Landscape: landscape.md
+- Methodology: methodology.md
 - Cheatsheet: cheatsheet.md
 docs_dir: docs
 site_dir: out/docs
