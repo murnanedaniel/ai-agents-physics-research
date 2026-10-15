@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f6f1e7;
+  --ink: #141414;
+  --canvas: #050607;
+  --grid: rgba(125, 211, 252, 0.06);
+  --accent: #7dd3fc;
+  --accent-warm: #f59e0b;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-canvas: var(--canvas);
+  --color-accent: var(--accent);
+  --color-accent-warm: var(--accent-warm);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-serif);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--canvas);
+  color: #f4f4f5;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  overscroll-behavior: none;
+}
+
+.canvas-grid {
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.paper-texture {
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(rgba(0,0,0,0.025) 1px, transparent 1px),
+    radial-gradient(rgba(0,0,0,0.015) 1px, transparent 1px);
+  background-position: 0 0, 12px 12px;
+  background-size: 24px 24px;
+}
+
+.vignette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.55) 100%);
+}
+
+.theme-light {
+  --canvas: #f6f1e7;
+  --grid: rgba(20, 20, 20, 0.055);
+  --accent: #0369a1;
+  --accent-warm: #b45309;
+  color: #141414;
+}
+
+.theme-light .paper-grid {
+  background-image:
+    linear-gradient(to right, rgba(20,20,20,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20,20,20,0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.theme-light .vignette::after {
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(120,100,60,0.14) 100%);
+}
+
+.ink-shadow {
+  box-shadow: 0 14px 40px -14px rgba(20,20,20,0.25), 0 0 0 1px rgba(20,20,20,0.08);
+}
+
+/* Hide scrollbars on auto-scrolled regions (terminal feed, etc). */
+.scrollbar-hidden {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+/* Projector canvas: scales with the viewport, including embedded scenes. */
+.beat { position: absolute; inset: 0; padding: 4vh 5vw; display: flex; flex-direction: column; gap: 2.4vh; color: inherit; }
+.beat-header, .beat-footer { display: flex; justify-content: space-between; align-items: center; font-family: var(--font-geist-mono), monospace; font-size: clamp(11px, 1vw, 19px); letter-spacing: .08em; }
+.beat-header { color: var(--accent); text-transform: uppercase; }
+.draft-badge, .status-chip { border: 1px solid currentColor; border-radius: 100px; padding: .3em .8em; font-size: .8em; white-space: nowrap; }
+.beat h1 { font-family: var(--font-serif), Georgia, serif; font-size: clamp(36px, 4.4vw, 85px); line-height: 1.08; max-width: 90%; text-wrap: balance; }
+.beat-body { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; gap: 2vh; }
+.beat-lines { font-size: clamp(18px, 1.9vw, 36px); line-height: 1.4; }
+.beat-lines p + p { margin-top: 1.3vh; }
+.beat-lines:empty { display: none; }
+.course-links { display: flex; flex-wrap: wrap; gap: .7vw; }
+.course-link { display: inline-flex; border: 1px solid currentColor; border-radius: 100px; padding: .45em .9em; font-size: clamp(12px, 1.05vw, 21px); color: var(--accent); cursor: pointer; text-decoration: none; }
+.course-link:hover { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.course-link:focus-visible { outline: 3px solid var(--accent-warm); outline-offset: 4px; }
+.course-link[aria-disabled="true"] { opacity: .6; cursor: default; }
+.beat-footer { opacity: .5; font-size: clamp(10px, .8vw, 16px); }
+.card-grid { display: grid; gap: 1.3vw; }
+.card-grid.four { grid-template-columns: repeat(4, 1fr); }
+.card-grid.three { grid-template-columns: repeat(3, 1fr); }
+.course-card { border: 1px solid color-mix(in srgb, currentColor 25%, transparent); border-radius: 12px; padding: 1.5vw; font-size: clamp(16px, 1.45vw, 28px); }
+.course-card h2 { font-size: 1.15em; margin-bottom: 2vh; }
+.course-card .course-link { margin-top: 2vh; }
+.status-chip { display: table; color: var(--accent-warm); }
+.big-number { font-size: clamp(38px, 4.4vw, 84px); font-weight: 400; color: var(--accent); }
+.caveat { color: var(--accent-warm); margin-top: 2vh; font-size: .85em; }
+.tool-loop { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw; }
+.context-label { margin-top: 2vh; font-size: clamp(13px, 1.1vw, 22px); }
+.context-track { height: 1.3vh; background: #475569; border-radius: 20px; margin-top: 1vh; overflow: hidden; }
+.context-track > div { height: 100%; background: var(--accent); }
+.course-table { width: 100%; border-collapse: collapse; font-size: clamp(14px, 1.25vw, 24px); }
+.course-table caption { text-align: left; color: var(--accent); margin-bottom: 1vh; }
+.course-table th, .course-table td { text-align: left; padding: .8vh .8vw; border-bottom: 1px solid color-mix(in srgb, currentColor 20%, transparent); }
+@media (max-width: 700px) { .beat { overflow-y: auto; } .beat h1 { font-size: 32px; } .beat-body { flex: none; } .card-grid.four, .card-grid.three { grid-template-columns: repeat(2, 1fr); } .beat-footer span { display: none; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }

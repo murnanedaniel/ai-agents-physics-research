@@ -1,0 +1,7 @@
+.venv/
+out/
+deck/node_modules/
+deck/.next/
+deck/out/
+deck/next-env.d.ts
+.DS_Store

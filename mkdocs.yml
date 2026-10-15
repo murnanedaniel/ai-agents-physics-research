@@ -1,0 +1,89 @@
+site_name: AI Agents in Practice for Physics Research
+site_description: KIT, 22 October 2026 — research loops, evidence and live agent workflows
+  for physics.
+site_url: http://localhost/docs/
+theme:
+  name: material
+  palette:
+  - media: '(prefers-color-scheme: light)'
+    scheme: default
+    primary: teal
+    accent: teal
+    toggle:
+      icon: material/weather-night
+      name: Switch to dark mode
+  - media: '(prefers-color-scheme: dark)'
+    scheme: slate
+    primary: teal
+    accent: teal
+    toggle:
+      icon: material/weather-sunny
+      name: Switch to light mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+  - navigation.sections
+  - navigation.footer
+  - navigation.top
+  - toc.follow
+  - content.code.copy
+  - content.code.annotate
+  - search.suggest
+  - navigation.indexes
+markdown_extensions:
+- admonition
+- attr_list
+- md_in_html
+- pymdownx.details
+- pymdownx.superfences
+- pymdownx.tabbed:
+    alternate_style: true
+- pymdownx.highlight:
+    anchor_linenums: true
+- pymdownx.inlinehilite
+- pymdownx.keys
+- pymdownx.arithmatex:
+    generic: true
+- toc:
+    permalink: true
+extra_javascript:
+- https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+nav:
+- Home: index.md
+- Setup: setup.md
+- Environments: environments.md
+- Machinery:
+  - LLM basics: machinery/llm-basics.md
+  - Tool loop: machinery/tool-loop.md
+- Evidence:
+  - Possible: evidence/possible.md
+  - Limits: evidence/limits.md
+- Professional practice: professional/index.md
+- Research loops:
+  - Inner: loops/inner.md
+  - Middle: loops/middle.md
+  - Outer: loops/outer.md
+- Patterns:
+  - Overview: patterns/index.md
+  - Reproduce the baseline: patterns/reproduce-baseline.md
+  - A surprising number is a bug first: patterns/surprising-number.md
+  - A bounded delegation contract: patterns/delegation-contract.md
+  - Calibrated judges: patterns/calibrated-judges.md
+  - Carry review findings into the next draft: patterns/review-tracking.md
+  - Audit the provenance: patterns/provenance-audit.md
+  - Approval gates: patterns/approval-gates.md
+  - Hooks over memory: patterns/hooks-over-memory.md
+  - Cross-model review: patterns/cross-model-review.md
+  - Exit zero is not evidence: patterns/exit-zero-is-not-evidence.md
+- Demos:
+  - Overview: demos/index.md
+  - 'RANGE: a one-minute paper dashboard': demos/range.md
+  - Is an agent a superior fiddler?: demos/fiddler-benchmark.md
+  - Theory sprint: demos/theory-sprint.md
+  - Galactic neighbour finding: demos/galactic-neighbours.md
+  - A resilient Perlmutter bridge: demos/perlmutter-bridge.md
+- Landscape: landscape.md
+- Cheatsheet: cheatsheet.md
+docs_dir: docs
+site_dir: out/docs
