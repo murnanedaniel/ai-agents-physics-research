@@ -36,7 +36,17 @@ What this tells us:
 
 The private evidence documents cite quotes with thread identifiers. A script re-located every quote in the raw transcripts after normalising whitespace, quote marks and ellipses, and classified each as verbatim, partial or not found.
 
-[TODO: fill in the result once the check has finished]
+**Workstation result:** about 60% of attributed quotes were found verbatim or near-verbatim. Of the rest:
+
+- **About half were artefacts:** labels or course phrases that a merging agent had put in quote marks next to a thread id. They weren't transcript quotes at all.
+- **One was a coverage gap:** tool output, which the checker doesn't search.
+- **About eight were paraphrases presented as quotes.**
+
+**Checking the stories, not just the words.** Re-reading one headline anecdote in the raw transcript showed that the mining had **tidied it into a cleaner moral** than what happened. The real exchange was a negotiation between agent and researcher that ended in honest wording; the mined version made it a one-sided refusal.
+
+The rule for the course: **no anecdote goes on stage until someone has re-read it in the raw transcript.** That's the [spot-check](patterns/surprising-number.md) principle, applied to our own evidence.
+
+[TODO: cluster-side results]
 
 ## 4. Agent quality over time
 
