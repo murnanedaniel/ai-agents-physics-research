@@ -14,6 +14,7 @@ Use these recipes at the point a failure could occur. Each connects an observed 
 - [Hooks over memory](hooks-over-memory.md)
 - [Cross-model review](cross-model-review.md)
 - [Exit zero is not evidence](exit-zero-is-not-evidence.md)
+- [Any session can message any other session](sessions-message-sessions.md)
 
 ## Before the course
 

@@ -80,6 +80,7 @@ nav:
   - Hooks over memory: patterns/hooks-over-memory.md
   - Cross-model review: patterns/cross-model-review.md
   - Exit zero is not evidence: patterns/exit-zero-is-not-evidence.md
+  - Sessions message sessions: patterns/sessions-message-sessions.md
 - Demos:
   - Overview: demos/index.md
   - 'RANGE: a one-minute paper dashboard': demos/range.md

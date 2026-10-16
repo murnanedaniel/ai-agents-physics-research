@@ -180,6 +180,11 @@ Course: [approval-gates.md](approval-gates.md)
 A dispatcher session locates old work by topic across machines and tools, resumes it in a named window with or without summarising first, restarts it after a crash, and even matches an untitled session to the right topic by its content.
 Seen: recurring, both machines.
 
+### Any session can message any other session
+Sessions on different machines and surfaces (workstation, cluster login node, cloud, a browser-driving desktop session) can list each other, read each other's transcripts, and send messages. That is what makes orchestrator-and-worker setups possible. A relayed message arrives labelled as coming from another session, and the receiver treats it as information, not as the human's instruction.
+Seen: recurring (orchestration), plus one notable cross-surface case.
+Course: [sessions-message-sessions.md](sessions-message-sessions.md)
+
 ### Challenge questions reset drift, anchoring, and premature "done"
 Short, blunt questions exposed real failure modes: anchoring on whatever example was mentioned first, marking a goal complete after a literature pass rather than the actual scientific question, calling something blocked when it was not. Each time, the challenge made the agent audit itself and change course.
 Seen: recurring, both machines.
