@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{SHORT_TITLE}} | Paper dashboard</title>
+  <style>
+    :root { color-scheme: light; --surface:#fcfcfb; --text:#1f1f1d; --accent:#2a78d6; --grid:#e6e5e0; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--surface); color:var(--text); font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:17px; line-height:1.25; }
+    main { max-width:1280px; margin:auto; padding:18px 24px 12px; }
+    header { border-bottom:2px solid var(--accent); padding-bottom:10px; }
+    h1 { font-size:28px; line-height:1.12; margin:0 0 6px; }
+    .meta, footer { font-size:14px; }
+    a { color:var(--accent); text-underline-offset:3px; }
+    .access { margin:6px 0 0; font-weight:650; }
+    .grid { display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:12px; margin-top:12px; align-items:stretch; }
+    .card { border:1px solid var(--grid); border-radius:9px; padding:12px 14px; min-width:0; }
+    h2 { font-size:17px; margin:0 0 8px; color:var(--accent); }
+    p { margin:0; }
+    ul { margin:7px 0 0; padding-left:19px; }
+    li + li { margin-top:5px; }
+    .question, .pipeline { grid-column:1 / -1; }
+    .question { display:flex; gap:18px; align-items:baseline; }
+    .question h2 { flex-shrink:0; margin:0; }
+    .idea { grid-column:1; grid-row:2 / 4; }
+    svg { display:block; width:100%; height:126px; }
+    svg text { fill:var(--text); font-family:inherit; font-size:16px; }
+    svg rect { fill:var(--surface); stroke:var(--grid); stroke-width:2; }
+    svg .arrow { fill:none; stroke:var(--accent); stroke-width:2; }
+    .results { grid-column:2 / 4; }
+    .numbers { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
+    .number { display:block; font-size:30px; font-weight:750; line-height:1.15; }
+    .label { display:block; font-size:15px; margin-top:4px; }
+    .tag { display:inline-block; font-size:13px; margin-top:5px; }
+    .baseline p + p { margin-top:6px; }
+    .flow { display:flex; gap:10px; padding:0; margin:0; list-style:none; align-items:center; }
+    .flow li { flex:1; margin:0; border:1px solid var(--grid); border-radius:5px; padding:9px; text-align:center; position:relative; }
+    .flow li + li::before { content:"→"; position:absolute; left:-12px; top:50%; transform:translateY(-50%); color:var(--accent); background:var(--surface); }
+    .tests { grid-column:1 / -1; }
+    .tests ul { display:flex; gap:24px; margin:0; }
+    .tests li { flex:1; margin:0; }
+    footer { margin-top:10px; border-top:1px solid var(--grid); padding-top:8px; }
+    @media (max-width:850px) { .grid { grid-template-columns:1fr; } .grid > .card { grid-column:1; grid-row:auto; } .question,.tests ul { display:block; } .question h2 { margin-bottom:6px; } .tests li + li { margin-top:6px; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>{{TITLE}}</h1>
+    <p class="meta">{{AUTHORS}} · {{VENUE_OR_PREPRINT}} · {{YEAR}} · <a href="{{PAPER_URL_OR_RELATIVE_PDF}}">Paper {{VERSION}}</a> · <a href="{{CODE_URL}}">Code</a> · <a href="{{DATA_URL}}">Data</a></p>
+    <!-- Remove unavailable code/data anchors and state availability in their place. Remove access notice if full text was read. -->
+    <p class="access">{{ACCESS_NOTICE}}</p>
+  </header>
+  <div class="grid">
+    <section class="card question"><h2>The question</h2><p>{{ONE_SENTENCE_QUESTION}}</p></section>
+    <section class="card idea">
+      <h2>The idea</h2>
+      <!-- Replace this diagram with the paper's core idea, using simple boxes and arrows. -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 126" role="img" aria-labelledby="idea-title idea-desc">
+        <title id="idea-title">{{CORE_IDEA_DIAGRAM_TITLE}}</title>
+        <desc id="idea-desc">{{CORE_IDEA_DIAGRAM_DESCRIPTION}}</desc>
+        <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2a78d6"/></marker></defs>
+        <rect x="2" y="34" width="110" height="54" rx="6"/><text x="57" y="66" text-anchor="middle">{{INPUT}}</text>
+        <path class="arrow" d="M114 61 H133" marker-end="url(#arrow)"/>
+        <rect x="136" y="34" width="110" height="54" rx="6"/><text x="191" y="66" text-anchor="middle">{{IDEA}}</text>
+        <path class="arrow" d="M248 61 H267" marker-end="url(#arrow)"/>
+        <rect x="270" y="34" width="108" height="54" rx="6"/><text x="324" y="66" text-anchor="middle">{{OUTPUT}}</text>
+      </svg>
+      <ul><li>{{IDEA_CLAIM_1}}</li><li>{{IDEA_CLAIM_2}}</li><li>{{IDEA_CLAIM_3}}</li></ul>
+    </section>
+    <section class="card results">
+      <h2>Headline results</h2>
+      <!-- Retain at most four verified results. Each location is an HTML anchor or PDF page link. -->
+      <div class="numbers">
+        <div><a class="number" href="{{RESULT_1_LOCATION}}">{{NUMBER_1}}</a><span class="label">{{METRIC_AND_CONTEXT_1}}</span><a class="tag" href="{{RESULT_1_LOCATION}}">{{PROVENANCE_1}}</a></div>
+        <div><a class="number" href="{{RESULT_2_LOCATION}}">{{NUMBER_2}}</a><span class="label">{{METRIC_AND_CONTEXT_2}}</span><a class="tag" href="{{RESULT_2_LOCATION}}">{{PROVENANCE_2}}</a></div>
+        <div><a class="number" href="{{RESULT_3_LOCATION}}">{{NUMBER_3}}</a><span class="label">{{METRIC_AND_CONTEXT_3}}</span><a class="tag" href="{{RESULT_3_LOCATION}}">{{PROVENANCE_3}}</a></div>
+        <div><a class="number" href="{{RESULT_4_LOCATION}}">{{NUMBER_4}}</a><span class="label">{{METRIC_AND_CONTEXT_4}}</span><a class="tag" href="{{RESULT_4_LOCATION}}">{{PROVENANCE_4}}</a></div>
+      </div>
+    </section>
+    <section class="card baseline"><h2>Compared with</h2><p>{{BASELINE_AND_SETTING_1}}</p><p>{{BASELINE_AND_SETTING_2}}</p></section>
+    <section class="card"><h2>Limits and open questions</h2><ul><li>{{LIMIT_1_AND_SOURCE_OR_OUR_READING}}</li><li>{{LIMIT_2_AND_SOURCE_OR_OUR_READING}}</li><li>{{LIMIT_3_AND_SOURCE_OR_OUR_READING}}</li></ul></section>
+    <section class="card pipeline"><h2>How it works</h2><ol class="flow"><li>{{STEP_1}}</li><li>{{STEP_2}}</li><li>{{STEP_3}}</li><li>{{STEP_4}}</li></ol></section>
+    <section class="card tests"><h2>If we wanted to test it <small>(our proposals)</small></h2><ul><li>{{EXPERIMENT_1}} <strong>Figure of merit:</strong> {{FOM_1}}</li><li>{{EXPERIMENT_2}} <strong>Figure of merit:</strong> {{FOM_2}}</li></ul></section>
+  </div>
+  <footer>Generated by an agent from <a href="{{PAPER_URL_OR_RELATIVE_PDF}}">{{SOURCE}}</a>; every number links to its location in the paper; check before citing.</footer>
+</main>
+</body>
+</html>
