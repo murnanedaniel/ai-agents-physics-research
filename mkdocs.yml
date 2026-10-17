@@ -88,6 +88,8 @@ nav:
   - Theory sprint: demos/theory-sprint.md
   - Galactic neighbour finding: demos/galactic-neighbours.md
   - A resilient Perlmutter bridge: demos/perlmutter-bridge.md
+- Hands-on:
+  - Interview your research setup: exercises/setup-interview.md
 - Landscape: landscape.md
 - Methodology: methodology.md
 - Cheatsheet: cheatsheet.md

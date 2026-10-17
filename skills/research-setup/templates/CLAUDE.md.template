@@ -1,0 +1,28 @@
+# Project context
+<!-- fill: 3-5 lines covering field, research mode, typical experiment, result, tools and paper workflow. -->
+
+## How we run experiments
+- Baseline first: reproduce the known number before any variant counts.
+- Change one thing at a time.
+- A surprising number is a bug until shown otherwise.
+- Exit code 0 or "completed" is not evidence: show the output.
+<!-- fill: project-specific baseline, output and evidence location. -->
+
+## Compute rules
+<!-- fill: machines, scheduler, GPUs, quotas, login-node restrictions and explicit approval threshold with resources and duration. Heavy work goes to the scheduler where available, never login nodes. If limits are unknown, ask before any job. -->
+
+## Approval gates
+Always ask the human before:
+- Deleting or overwriting data.
+- Pushing to shared branches.
+- Submitting large jobs, using the threshold in Compute rules.
+- Sending anything outside the project or collaboration boundary.
+- Anything touching credentials.
+<!-- fill: additional gates named by the user and the exact data/collaboration boundary. -->
+
+## Reporting style
+<!-- fill: progress frequency, evidence, autonomy within approval gates and writing language/style. -->
+
+## Things never to do
+- Never ask for or record passwords, tokens or keys.
+<!-- fill: user's prohibitions and data/collaboration restrictions. -->
