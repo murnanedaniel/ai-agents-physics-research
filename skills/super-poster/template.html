@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{SHORT_TITLE}} | Super-poster</title>
+  <style>
+    :root { color-scheme:light; --surface:#fcfcfb; --text:#1f1f1d; --muted:#6b6a64; --accent:#2a78d6; --baseline:#9aa7b8; --grid:#e6e5e0; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--surface); color:var(--text); font:15px/1.4 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    main { max-width:1280px; margin:auto; padding:20px 24px 16px; }
+    header { border-bottom:2px solid var(--accent); padding-bottom:14px; }
+    h1 { font-size:28px; line-height:1.15; margin:0 0 8px; overflow-wrap:anywhere; }
+    h2 { font-size:15px; line-height:1.3; color:var(--accent); font-weight:750; margin:0 0 10px; }
+    h3 { font-size:15px; margin:0 0 6px; }
+    p { margin:0; }
+    p + p { margin-top:8px; }
+    a { color:var(--accent); text-underline-offset:3px; overflow-wrap:anywhere; }
+    .meta, .note, figcaption, footer { font-size:14px; color:var(--muted); }
+    .src { font-size:11px; color:var(--muted); vertical-align:super; line-height:0; white-space:nowrap; text-decoration:none; }
+    small { font-size:13px; }
+    sub, sup { font-size:13px; }
+    .tldr { margin-top:12px; max-width:1120px; }
+    .verdict { margin-top:8px; }
+    .access { font-weight:700; margin-top:8px; }
+    .row { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:14px; align-items:start; }
+    .opening { grid-template-columns:0.8fr 1.2fr; }
+    .results { grid-template-columns:1.3fr 0.7fr; }
+    .closing { grid-template-columns:1fr 1fr; }
+    .card { min-width:0; padding:14px; border:1px solid var(--grid); border-radius:8px; overflow-wrap:anywhere; }
+    .full { margin-top:14px; }
+    figure { margin:0; }
+    figcaption { margin-top:7px; }
+    .graphic, .table-wrap { max-width:100%; overflow-x:auto; }
+    .graphic:focus-visible, .table-wrap:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+    svg { display:block; width:100%; height:auto; }
+    .mechanism-svg { min-width:640px; }
+    .chart-svg { min-width:800px; }
+    svg text { font-family:inherit; font-size:14px; fill:var(--text); }
+    svg .muted { fill:var(--muted); }
+    svg .gridline { stroke:var(--grid); stroke-width:1; }
+    svg .axis { stroke:var(--muted); stroke-width:1; }
+    svg .method { fill:var(--accent); }
+    svg .baseline { fill:var(--baseline); }
+    .chart-note { margin-bottom:8px; }
+    .chart-takeaway { margin-top:8px; }
+    .equation { font-size:16px; margin-bottom:8px; }
+    .key-numbers { display:grid; gap:10px; margin-top:12px; }
+    .number { font-size:25px; line-height:1.15; font-weight:750; }
+    .steps, .proposals { margin:0; padding-left:20px; }
+    li + li { margin-top:6px; }
+    dl { margin:0; }
+    .facts > div, .glossary > div { margin-top:6px; }
+    .facts > div:first-child, .glossary > div:first-child { margin-top:0; }
+    dt { display:inline; font-weight:650; }
+    dd { display:inline; margin:0; }
+    table { width:100%; border-collapse:collapse; font-size:14px; line-height:1.35; text-align:left; }
+    th, td { vertical-align:top; padding:8px 10px; border-bottom:1px solid var(--grid); }
+    th { color:var(--muted); font-weight:650; }
+    th:first-child, td:first-child { padding-left:0; }
+    th:last-child, td:last-child { padding-right:0; }
+    tbody tr:last-child td { border-bottom:0; }
+    .positioning th:first-child { width:18%; }
+    .evidence th:first-child { width:24%; }
+    .evidence th:last-child { width:24%; }
+    footer { margin-top:14px; border-top:1px solid var(--grid); padding-top:10px; }
+    @media (max-width:899px) {
+      main { padding:16px; }
+      .row, .opening, .results, .closing { grid-template-columns:1fr; }
+      h1 { font-size:24px; }
+      .table-wrap table { min-width:620px; }
+    }
+    @media print { main { max-width:none; padding:0; } .card { break-inside:avoid; } }
+    button, select, input { font:inherit; }
+    button, select { padding:5px 9px; border:1px solid var(--baseline); border-radius:5px; background:var(--surface); color:var(--text); }
+    button, summary { cursor:pointer; }
+    :focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
+    button[aria-pressed="true"] { background:var(--accent); color:white; }
+    .controls { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:8px 0; }
+    .js-only { display:none; }
+    .js .js-only { display:block; }
+    .js .controls.js-only { display:flex; }
+    .chart-ready .chart-fallback { display:none; }
+    .poster .full-only { display:none; }
+    .poster .opening { grid-template-columns:1fr; }
+    .poster .mechanism-svg { max-width:680px; margin:auto; }
+    .poster .mechanism-svg { height:230px; }
+    .poster .card { padding:10px; }
+    .poster .row { margin-top:10px; }
+    .dimmed { opacity:0.18; }
+    summary { color:var(--accent); font-weight:750; }
+    details > summary { margin-bottom:8px; }
+    .evidence-row { border-top:1px solid var(--grid); padding:8px 0; }
+    blockquote { margin:8px 0; padding-left:12px; border-left:2px solid var(--grid); }
+    dfn { position:relative; font-style:normal; text-decoration:underline dotted; }
+    dfn:hover::after, dfn:focus::after { content:attr(data-def); position:absolute; z-index:5; left:0; top:100%; width:240px; padding:8px; background:var(--text); color:var(--surface); font-size:14px; }
+    #chart-tooltip { min-height:1.5em; overflow-wrap:anywhere; }
+    @media print { .js-only { display:none !important; } .chart-ready .chart-fallback { display:block; } }
+  </style>
+</head>
+<body>
+<main>
+  <!-- TEMPLATE ONLY: replace every {{...}} token, escape inserted text/attributes,
+       and remove unused rows and instructional comments before delivery.
+       Back every numerical fact with linked provenance and ledger entries.
+       Prose: at most one class="src" tag per sentence, at the end, no brackets.
+       Tables/charts: one linked Source caption; tag only cells/marks from a
+       different source. TL;DR/verdict: no tags, backed elsewhere on the page.
+       Aim for 2,400px tall at 1280px; cut low-value text before shrinking type.
+       Order content by importance within the fixed reading order.
+       If a screenshot helper exists, capture/open the 1280x720 first screen
+       and a full-page image at 1280px width in Full and #poster modes.
+       Check JS-off and narrow-screen readability. Fix crossing schematic lines,
+       repeated chart/key numbers and per-row tags; re-render after fixes.
+       Do not treat illustrative chart coordinates as measured data. -->
+  <header>
+    <h1>{{TITLE}}</h1>
+    <p class="meta">{{AUTHORS}} · {{VENUE_OR_PREPRINT}} · {{YEAR_AND_VERSION}} <a class="src" href="{{IDENTITY_LOCATION}}">{{IDENTITY_SECTION_TAG}}</a> · <a href="{{PAPER_URL_OR_RELATIVE_PDF}}">Paper</a> · <a href="{{CODE_URL}}">Code</a> · <a href="{{DATA_URL}}">Data</a></p>
+    <!-- Replace unavailable code/data links with “not stated”. -->
+    <div class="controls js-only" aria-label="Reading depth">
+      <button type="button" data-depth="poster" aria-pressed="false">Poster (1 min)</button>
+      <button type="button" data-depth="full" aria-pressed="true">Full (3 min)</button>
+    </div>
+    <!-- Remove this notice when full text has been read. -->
+    <p class="access">{{ACCESS_NOTICE_OR_REMOVE}}</p>
+    <!-- Exactly 3 sentences, at most 60 words total; no tags in TL;DR/verdict. -->
+    <p class="tldr"><strong>TL;DR:</strong> {{PROBLEM_SENTENCE}} {{METHOD_SENTENCE}} {{RESULT_SENTENCE}}</p>
+    <p class="verdict"><strong>Reader's verdict:</strong> <span class="note">(agent's reading)</span> {{GENUINE_NOVELTY_AND_HOW_CONVINCING_MAX_30_WORDS}}</p>
+  </header>
+
+  <div class="row opening">
+    <section class="card full-only">
+      <h2>The problem</h2>
+      <p>{{PROBLEM_AND_PHYSICAL_FAILURE_EXAMPLE}} <dfn tabindex="0" data-def="{{PLAIN_JARGON_DEFINITION}}">{{KEY_JARGON_TERM}}</dfn> {{PLAIN_DEFINITION_IN_SENTENCE_KEEP_PARAGRAPH_TWO_TO_THREE_SENTENCES}} <a class="src" href="{{PROBLEM_LOCATION}}">{{PROBLEM_TAG}}</a></p>
+    </section>
+    <section class="card">
+      <h2>Mechanism schematic</h2>
+      <figure>
+        <div class="graphic" tabindex="0" role="region" aria-label="Mechanism drawing; scroll horizontally on narrow screens">
+          <svg class="mechanism-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 230" role="img" aria-labelledby="mechanism-title mechanism-desc">
+            <title id="mechanism-title">{{MECHANISM_TITLE}}</title>
+            <desc id="mechanism-desc">{{OBJECTS_RELATIONSHIPS_AND_CALLOUTS_DESCRIPTION}}</desc>
+            <!-- Draw this paper's actual objects or faithful data structure.
+                 Clean geometry, consistent spacing, about 10 primary objects max.
+                 Local cluster left; virtual/global nodes in a row above/right.
+                 Put 2 to 4 callouts in empty margins with thin leader lines.
+                 No arrows, labels or leaders crossing edges or each other.
+                 Draw representative edges for dense connectivity and state
+                 "each X connects to all Y". Never draw a word-box flowchart.
+                 Keep labels inside viewBox, >=13 rendered pixels.
+                 Mark groups or shapes with data-step="1", "2", ... matching
+                 How it works. Shared elements can use data-step="1 2".
+                 No opacity/dimming in the static SVG. -->
+            <g data-step="1"><!-- {{STEP_ONE_GEOMETRY}} --></g>
+            <g data-step="2"><!-- {{STEP_TWO_GEOMETRY}} --></g>
+            <g data-step="3"><!-- {{STEP_THREE_GEOMETRY}} --></g>
+          </svg>
+        </div>
+        <figcaption>{{WHAT_THE_DRAWING_MAKES_CLEAR}} <a class="src" href="{{MECHANISM_LOCATION}}">{{MECHANISM_TAG}}</a></figcaption>
+      </figure>
+      <!-- Buttons and captions are generated from the 3–5 How it works steps. -->
+      <div id="step-controls" class="controls js-only" aria-label="Mechanism steps"></div>
+      <p id="step-caption" class="js-only" aria-live="polite"></p>
+    </section>
+  </div>
+
+  <div class="row results">
+    <section class="card">
+      <h2>Main result chart</h2>
+      <p class="note chart-note">{{DATASET_SPLIT_AND_SETTING}}</p>
+      <div id="chart-controls" class="controls js-only" aria-label="Chart filters"></div>
+      <p id="chart-direction" class="note js-only"></p>
+      <figure>
+        <div id="chart-panels" class="graphic js-only" tabindex="0" role="region" aria-label="Comparison plots; scroll horizontally on narrow screens"></div>
+        <p id="chart-tooltip" class="js-only" role="status"></p>
+        <!-- STATIC FALLBACK: generated at authoring time from poster-data.rows,
+             never typed independently. Include ALL rows and exact strings, missing
+             values as not reported, directions/settings and shared source caption.
+             Each row: method | system | metric | value | err | unit.
+             Link a cell only if its source differs from the shared caption.
+             JS cannot create a fallback for a JS-off reader: serialise it before
+             saving the delivered HTML. The agent fills JSON only for chart data. -->
+        <div class="chart-fallback table-wrap">
+          <table><caption id="fallback-caption">{{METRICS_DIRECTIONS_AND_SETTINGS}}</caption>
+            <thead><tr><th scope="col">Method</th><th scope="col">System</th><th scope="col">Metric</th><th scope="col">Value</th><th scope="col">Uncertainty</th><th scope="col">Unit</th></tr></thead>
+            <tbody id="chart-fallback-rows"><!-- {{GENERATE_ROWS_FROM_POSTER_DATA}} --></tbody>
+          </table>
+          <p>{{UNAVAILABLE_COMPARISONS_OR_REMOVE}}</p>
+        </div>
+        <figcaption id="chart-source">Source: <a href="{{CHART_SOURCE_LOCATION}}">{{TABLE_FIG_OR_SECTION}}</a></figcaption>
+        <p class="chart-takeaway">{{ONE_SENTENCE_WHAT_THE_COMPARISON_ACTUALLY_SUPPORTS}}</p>
+      </figure>
+    </section>
+    <section class="card">
+      <h2 class="full-only">Key equation or scaling</h2>
+      <!-- Use HTML text, sub and sup, no MathJax. Define symbols and cite both
+           costs when comparing. Example syntax only: O(N), E<sub>i</sub>.
+           If unsupported, state 'not stated' rather than inventing an equation. -->
+      <p class="equation full-only">{{EQUATION_OR_SCALING_HTML}} <a class="src" href="{{EQUATION_LOCATION}}">{{EQUATION_TAG}}</a></p>
+      <p class="note full-only">{{SYMBOL_DEFINITIONS_AND_ASSUMPTIONS}}</p>
+      <div class="key-numbers">
+        <h2>Key numbers</h2>
+        <!-- Other main claim only; never repeat chart values here.
+             At most 2 big numbers on the WHOLE page. For cost/time/memory/scaling
+             or another selling point absent from the main chart, replace this
+             slot with a second small chart using the same scaffold and a shared
+             Source caption (unique SVG IDs, labels, direction note).
+             Remove if no other supported claim exists. -->
+        <div><p><span class="number">{{OTHER_CLAIM_KEY_VALUE}}</span> {{METRIC_SETTING_AND_NAMED_COMPARATOR}} <a class="src" href="{{KEY_AND_COMPARATOR_LOCATION}}">{{KEY_SOURCE}}</a></p></div>
+        <div><p><span class="number">{{SECOND_OTHER_CLAIM_KEY_VALUE_OR_REMOVE}}</span> {{SECOND_SETTING_AND_COMPARATOR}} <a class="src" href="{{SECOND_KEY_LOCATION}}">{{SECOND_KEY_SOURCE}}</a></p></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- OPTIONAL: delete the entire card unless the paper states a scaling claim.
+       Fill scaling in poster-data; leave null if absent. Static text remains
+       readable without JS. Measured dots require matching normalisation/units;
+       omit incomparable points with an explicit explanation. -->
+  <section id="scaling-card" class="card full full-only">
+    <h2>Scaling</h2>
+    <p>Illustrative, from the stated complexity, not the paper's data.</p>
+    <p>{{STATED_COMPLEXITIES_REFERENCE_N_NORMALISATION_AND_ASSUMPTIONS}} <a class="src" href="{{SCALING_LOCATION}}">{{SCALING_TAG}}</a></p>
+    <div class="js-only">
+      <label for="size-slider">System size N (log scale)</label>
+      <input id="size-slider" type="range" min="1" max="6" step="0.05" value="3">
+      <output id="size-output" for="size-slider"></output>
+      <div id="scaling-plot" class="graphic"></div>
+    </div>
+    <p>{{MEASURED_POINTS_WITH_SOURCES_OR_NOT_REPORTED}}</p>
+  </section>
+
+  <div class="row full-only">
+    <section class="card">
+      <h2>How it works</h2>
+      <!-- Keep 3 to 5 short, one-line steps; cite their shared section below,
+           or use at most one end-of-sentence src tag per sentence. -->
+      <ol class="steps">
+        <li>{{STEP_ONE}}</li>
+        <li>{{STEP_TWO}}</li>
+        <li>{{STEP_THREE}}</li>
+      </ol>
+      <p><a class="src" href="{{METHOD_LOCATION}}">{{METHOD_SECTION_TAG}}</a></p>
+    </section>
+    <details open class="card full-only">
+      <summary>Setup</summary>
+      <!-- Every missing field says 'not stated'. Use at most one end-of-sentence
+           src tag per sentence, covering its values. -->
+      <dl class="facts">
+        <div><dt>Datasets and sizes:</dt> <dd>{{DATASETS_SIZES_AND_TAGS}}</dd></div>
+        <div><dt>Splits:</dt> <dd>{{TRAIN_VALIDATION_TEST_SPLITS_AND_TAGS}}</dd></div>
+        <div><dt>Model sizes:</dt> <dd>{{MODEL_SIZES_AND_TAGS}}</dd></div>
+        <div><dt>Compute / hardware:</dt> <dd>{{COMPUTE_HARDWARE_AND_TAGS}}</dd></div>
+      </dl>
+    </details>
+  </div>
+
+  <details open class="card full full-only">
+    <summary>Where it sits</summary>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Comparison with prior methods">
+      <table class="positioning">
+        <thead><tr><th scope="col">Method</th><th scope="col">Approach in a few words</th><th scope="col">Cost</th><th scope="col">How this paper compares</th></tr></thead>
+        <tbody>
+          <!-- Retain 3 to 5 sourced competitors. Shared Source caption below;
+               tag individual cells only for a different source;
+               mark indirect comparisons and unknown costs explicitly. -->
+          <tr><td>{{PRIOR_A}}</td><td>{{APPROACH_A}}</td><td>{{COST_A}}</td><td>{{COMPARISON_A}}</td></tr>
+          <tr><td>{{PRIOR_B}}</td><td>{{APPROACH_B}}</td><td>{{COST_B}}</td><td>{{COMPARISON_B}}</td></tr>
+          <tr><td>{{PRIOR_C}}</td><td>{{APPROACH_C}}</td><td>{{COST_C}}</td><td>{{COMPARISON_C}}</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Source: <a href="{{POSITIONING_SOURCE_LOCATION}}">{{POSITIONING_TABLE_FIG_OR_SECTION}}</a></p>
+  </details>
+
+  <section class="card full full-only">
+    <h2>How strong is the evidence</h2>
+    <!-- Keep 3–4 claims. Each rating has exactly a four-word reason.
+         Quote verbatim, including qualifications. Do not invent quotations.
+         Use “unavailable” if full text cannot be inspected. -->
+    <details open class="evidence-row">
+      <summary>{{CLAIM_A}} | {{RATING_A}}: {{FOUR_WORD_REASON_A}}</summary>
+      <p>{{ACTUAL_TESTS_AND_LIMITATIONS_A}}</p>
+      <blockquote><p>{{VERBATIM_SENTENCES_A}}</p><cite><a href="{{QUOTE_LOCATION_A}}">{{QUOTE_SECTION_A}}</a></cite></blockquote>
+      <p>Not tested: {{NOT_TESTED_A_WITH_SOURCE_OR_OUR_READING_LABEL}}</p>
+    </details>
+    <details open class="evidence-row">
+      <summary>{{CLAIM_B}} | {{RATING_B}}: {{FOUR_WORD_REASON_B}}</summary>
+      <p>{{ACTUAL_TESTS_AND_LIMITATIONS_B}}</p>
+      <blockquote><p>{{VERBATIM_SENTENCES_B}}</p><cite><a href="{{QUOTE_LOCATION_B}}">{{QUOTE_SECTION_B}}</a></cite></blockquote>
+      <p>Not tested: {{NOT_TESTED_B_WITH_SOURCE_OR_OUR_READING_LABEL}}</p>
+    </details>
+    <details open class="evidence-row">
+      <summary>{{CLAIM_C}} | {{RATING_C}}: {{FOUR_WORD_REASON_C}}</summary>
+      <p>{{ACTUAL_TESTS_AND_LIMITATIONS_C}}</p>
+      <blockquote><p>{{VERBATIM_SENTENCES_C}}</p><cite><a href="{{QUOTE_LOCATION_C}}">{{QUOTE_SECTION_C}}</a></cite></blockquote>
+      <p>Not tested: {{NOT_TESTED_C_WITH_SOURCE_OR_OUR_READING_LABEL}}</p>
+    </details>
+    <p class="note">Source: <a href="{{EVIDENCE_SOURCE_LOCATION}}">{{EVIDENCE_TABLE_FIG_OR_SECTION}}</a></p>
+    <!-- Tag individual evidence cells only when their source differs. -->
+    <p class="note">Strength ratings are our reading of the evidence for each stated claim.</p>
+  </section>
+
+  <div class="row closing full-only">
+    <details open class="card full-only">
+      <summary>Reproduce</summary>
+      <dl class="facts">
+        <!-- Replace unavailable links with 'not stated' or 'not verified'.
+             Do not infer a licence or released checkpoints from a code link. -->
+        <div><dt>Code:</dt> <dd><a href="{{CODE_URL}}">{{CODE_LABEL}}</a>; licence: {{LICENCE_WITH_LINK_OR_NOT_STATED}}</dd></div>
+        <div><dt>Data:</dt> <dd><a href="{{DATA_URL}}">{{DATA_LABEL}}</a>; {{DATA_SIZES_WITH_PAPER_TAGS}}</dd></div>
+        <div><dt>Checkpoints:</dt> <dd>{{YES_NO_OR_NOT_STATED_WITH_LINK}}</dd></div>
+        <div><dt>Rough compute:</dt> <dd>{{REPORTED_COMPUTE_WITH_TAG_OR_LABELLED_ESTIMATE_WITH_SOURCED_INPUTS_OR_NOT_STATED}}</dd></div>
+        <div><dt>Gotcha:</dt> <dd>{{ONE_GOTCHA_IF_FOUND_WITH_SOURCE_OR_OUR_READING_LABEL}}</dd></div>
+      </dl>
+    </details>
+    <details open class="card full-only">
+      <summary>If we wanted to test it</summary>
+      <p class="note">Our proposals</p>
+      <!-- 2 to 3 experiments. Avoid invented numerical targets. -->
+      <ul class="proposals">
+        <li>{{INTERVENTION_AND_COMPARISON_A}} <strong>Figure of merit:</strong> {{FOM_A}}</li>
+        <li>{{INTERVENTION_AND_COMPARISON_B}} <strong>Figure of merit:</strong> {{FOM_B}}</li>
+      </ul>
+    </details>
+
+  </div>
+  <!-- Wrap jargon in prose: <dfn tabindex="0" data-def="{{PLAIN_DEFINITION}}">{{TERM}}</dfn>. -->
+    <details open class="full full-only">
+      <summary>Terms used on this page</summary>
+      <!-- 3 to 6 short, one-line definitions of terms actually used above. -->
+      <dl class="glossary">
+        <div><dt>{{TERM_A}}:</dt> <dd>{{PLAIN_DEFINITION_A}}</dd></div>
+        <div><dt>{{TERM_B}}:</dt> <dd>{{PLAIN_DEFINITION_B}}</dd></div>
+        <div><dt>{{TERM_C}}:</dt> <dd>{{PLAIN_DEFINITION_C}}</dd></div>
+      </dl>
+    </details>
+  <footer>Super-poster generated by an agent from <a href="{{PAPER_URL_OR_RELATIVE_PDF}}">{{SOURCE}}</a>; every number links to its location in the paper; check before citing.</footer>
+</main>
+<!-- DATA CONTRACT: one inert JSON block plus ONE executable inline script.
+     Preserve exact numeric text as strings; null means not reported, never zero.
+     source = {label: "Table/figure/section", href: "verified URL or PDF#page=N"}.
+     metrics = [{name, direction: "lower is better" or "higher is better"}].
+     system must identify comparable dataset/split/settings. Never mix units.
+     Fill rows and metadata only; renderer computes coordinates and controls.
+     Escape less-than as \u003c inside JSON to prevent closing-script injection.
+     Tiny DEMO ONLY, not rendered (replace with ledger values, never reuse):
+     {"method":"Demo method","system":"Demo system","metric":"Energy",
+      "value":"1.20","err":"0.03","unit":"meV",
+      "source":{"label":"Table 1","href":"paper.pdf#page=4"}}
+     Optional scaling object:
+     {"minN":10,"maxN":1000000,"referenceN":1000,
+      "complexities":["O(N)","O(N log N)","O(N^2)"],
+      "points":[{"N":1000,"value":"1.0","series":"O(N)",
+       "source":{"label":"Fig. 3","href":"paper.pdf#page=5"}}]}
+     Scaling y is dimensionless cost / cost at referenceN. Measured value must
+     use the same normalisation, with sourced inputs and calculation disclosed.
+     Other complexities require extending the explicit function map, never eval.
+-->
+<script type="application/json" id="poster-data">
+{"highlightMethod":"{{METHOD}}","metrics":[],"rows":[],"scaling":null}
+</script>
+<script>
+'use strict';
+(() => {
+  const $ = selector => document.querySelector(selector);
+  const $$ = selector => [...document.querySelectorAll(selector)];
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const el = (tag, attrs = {}, text = '') => {
+    const node = document.createElementNS(svgNS, tag);
+    Object.entries(attrs).forEach(([key, value]) => node.setAttribute(key, value));
+    if (text) node.textContent = text;
+    return node;
+  };
+  const button = (label, action) => {
+    const node = document.createElement('button');
+    node.type = 'button'; node.textContent = label;
+    node.addEventListener('click', action); return node;
+  };
+  const sourceText = source => `${source.label} (${source.href})`;
+  const safeHref = href => {
+    // Navigation only. Reject executable and embedded-document URL schemes.
+    const url = new URL(href, location.href);
+    return ['https:', 'http:', 'file:'].includes(url.protocol) ? href : '#';
+  };
+  document.body.classList.add('js');
+  function depth() {
+    const poster = location.hash === '#poster';
+    document.body.classList.toggle('poster', poster);
+    $$('[data-depth]').forEach(b => b.setAttribute('aria-pressed', String((b.dataset.depth === 'poster') === poster)));
+  }
+  $$('[data-depth]').forEach(b => b.addEventListener('click', () => {
+    location.hash = b.dataset.depth === 'poster' ? 'poster' : 'full'; depth();
+  }));
+  window.addEventListener('hashchange', depth); depth();
+
+  const steps = $$('.steps li');
+  let active = -1, timer = null;
+  const stepButtons = steps.map((step, index) => {
+    const b = button(`${index + 1} ${step.textContent.trim()}`, () => { stop(); selectStep(index); });
+    b.setAttribute('aria-pressed', 'false'); $('#step-controls').append(b); return b;
+  });
+  function selectStep(index) {
+    active = index;
+    $$('.mechanism-svg [data-step]').forEach(node => node.classList.toggle('dimmed', !node.dataset.step.split(/\s+/).includes(String(index + 1))));
+    stepButtons.forEach((b, i) => b.setAttribute('aria-pressed', String(i === index)));
+    $('#step-caption').textContent = steps[index].textContent;
+  }
+  const play = button('Play', () => {
+    if (timer) { stop(); return; }
+    if (!steps.length) return;
+    selectStep((active + 1) % steps.length);
+    play.textContent = 'Stop'; play.setAttribute('aria-pressed', 'true');
+    timer = window.setInterval(() => selectStep((active + 1) % steps.length), 2500);
+  });
+  function stop() { window.clearInterval(timer); timer = null; play.textContent = 'Play'; play.setAttribute('aria-pressed', 'false'); }
+  play.setAttribute('aria-pressed', 'false');
+  $('#step-controls').append(play, button('Show all', () => {
+    stop(); active = -1; $$('.mechanism-svg [data-step]').forEach(n => n.classList.remove('dimmed'));
+    stepButtons.forEach(b => b.setAttribute('aria-pressed', 'false')); $('#step-caption').textContent = '';
+  }));
+  document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); });
+
+  let data;
+  try { data = JSON.parse($('#poster-data').textContent); }
+  catch { return; } // Keep the static table readable if enhancement fails.
+  const rows = data.rows;
+  const numeric = value => value !== null && value !== '' && Number.isFinite(Number(value));
+  const valueText = row => row.value === null ? 'not reported' : `${row.value}${row.err === null ? ' (uncertainty not reported)' : ` ± ${row.err}`} ${row.unit}`;
+  if (Array.isArray(rows) && rows.length) {
+    const metrics = [...new Set(rows.map(r => r.metric))];
+    const systems = [...new Set(rows.map(r => r.system))];
+    const methods = [...new Set(rows.map(r => r.method))];
+    let metric = null, system = null;
+    const metricButtons = [null, ...metrics].map(name => {
+      const b = button(name === null ? 'All metrics' : name, () => { metric = name; render(); });
+      $('#chart-controls').append(b); return {name, b};
+    });
+    const label = document.createElement('label'); label.textContent = 'System '; label.htmlFor = 'chart-system';
+    const select = document.createElement('select'); select.id = 'chart-system';
+    [null, ...systems].forEach((name, index) => {
+      const option = document.createElement('option'); option.value = String(index); option.textContent = name === null ? 'All' : name; select.append(option);
+    });
+    select.addEventListener('change', () => { system = [null, ...systems][Number(select.value)]; render(); });
+    $('#chart-controls').append(label, select);
+    function render() {
+      const panels = $('#chart-panels'); panels.replaceChildren();
+      $('#chart-tooltip').textContent = '';
+      metricButtons.forEach(({name, b}) => b.setAttribute('aria-pressed', String(name === metric)));
+      $('#chart-direction').textContent = data.metrics.map(m => `${m.name}: ${m.direction}`).join(' · ');
+      // Separate system/metric/unit panels: no averaging or incomparable scales.
+      for (const m of metric === null ? metrics : [metric]) {
+        for (const sys of system === null ? systems : [system]) {
+          const subset = rows.filter(r => r.metric === m && r.system === sys).sort((a,b) => methods.indexOf(a.method) - methods.indexOf(b.method));
+          for (const unit of [...new Set(subset.map(r => r.unit))]) {
+            const group = subset.filter(r => r.unit === unit);
+            const values = group.filter(r => numeric(r.value)).map(r => Number(r.value));
+            const lo = values.length ? Math.min(...values) : 0;
+            const hi = values.length ? Math.max(...values) : 1;
+            const pad = (hi - lo || Math.abs(lo) || 1) * 0.15;
+            const min = lo - pad, max = hi + pad;
+            const x = v => 200 + 310 * (v - min) / (max - min);
+            const height = 100 + group.length * 38;
+            const svg = el('svg', {viewBox:`0 0 800 ${height}`, class:'chart-svg', role:'group', 'aria-label':`${m}, ${sys}, ${unit}`});
+            svg.append(el('title', {}, `${m} · ${sys} · ${unit}`), el('text', {x:0,y:20}, `${m} · ${sys} · ${unit}`));
+            [min, (min+max)/2, max].forEach(v => {
+              svg.append(el('line', {x1:x(v),x2:x(v),y1:32,y2:height-45,class:'gridline'}), el('text', {x:x(v),y:height-25,'text-anchor':'middle'}, v.toPrecision(3)));
+            });
+            svg.append(el('text', {x:200,y:height-5}, 'Linear dot scale; ticks rounded; axis need not start at zero'));
+            group.forEach((row, i) => {
+              const y = 50 + i*38;
+              svg.append(el('text', {x:0,y:y+5}, row.method));
+              if (!numeric(row.value)) { svg.append(el('text', {x:210,y:y+5}, 'not reported')); return; }
+              const tip = `${valueText(row)}, ${sourceText(row.source)}`;
+              const link = el('a', {href:safeHref(row.source.href),tabindex:0,'aria-label':`${row.method}, ${m}, ${sys}: ${tip}`});
+              link.append(el('title', {}, tip), el('circle', {cx:x(Number(row.value)),cy:y,r:6,class:row.method === data.highlightMethod ? 'method' : 'baseline'}), el('text', {x:x(Number(row.value))+10,y:y+5}, valueText(row)));
+              ['mouseenter','focus'].forEach(event => link.addEventListener(event, () => { $('#chart-tooltip').textContent = tip; }));
+              ['mouseleave','blur'].forEach(event => link.addEventListener(event, () => { $('#chart-tooltip').textContent = ''; }));
+              svg.append(link);
+            });
+            panels.append(svg);
+          }
+        }
+      }
+      document.body.classList.add('chart-ready');
+    }
+    render();
+  }
+
+  const scale = data.scaling;
+  if (scale && $('#scaling-card')) {
+    const functions = {'O(N)': n => n, 'O(N log N)': n => n*Math.log(n), 'O(N^2)': n => n*n};
+    if (!scale.complexities.every(c => functions[c]) || !(scale.minN > 1 && scale.maxN > scale.minN && scale.referenceN >= scale.minN && scale.referenceN <= scale.maxN)) return;
+    const slider = $('#size-slider');
+    slider.min = Math.log10(scale.minN); slider.max = Math.log10(scale.maxN); slider.value = Math.log10(scale.referenceN);
+    function drawScaling() {
+      const N = 10 ** Number(slider.value), left = Number(slider.min), right = Number(slider.max);
+      $('#size-output').textContent = `N ≈ ${N.toPrecision(3)} (rounded)`;
+      const points = scale.points || [];
+      const curves = scale.complexities.map(c => ({name:c, f:n => functions[c](n)/functions[c](scale.referenceN)}));
+      const ys = curves.flatMap(c => [c.f(scale.minN),c.f(scale.maxN)]).concat(points.map(p => Number(p.value))).filter(y => y > 0);
+      const low = Math.log10(Math.min(...ys)), high = Math.log10(Math.max(...ys));
+      const x = n => 80 + 470*(Math.log10(n)-left)/(right-left);
+      const y = v => 220 - 170*(Math.log10(v)-low)/(high-low || 1);
+      const svg = el('svg',{viewBox:'0 0 800 290',class:'chart-svg',role:'group','aria-label':'Illustrative normalised complexity curves; logarithmic axes'});
+      svg.append(el('text',{x:15,y:20},'Normalised cost (log scale); cost at reference N = 1'));
+      [low,(low+high)/2,high].forEach(v => svg.append(el('text',{x:0,y:y(10**v)},(10**v).toPrecision(2))));
+      [scale.minN,scale.referenceN,scale.maxN].forEach(n => svg.append(el('text',{x:x(n),y:245,'text-anchor':'middle'},String(n))));
+      svg.append(el('text',{x:80,y:275},'System size N (log scale)'),el('line',{x1:x(N),x2:x(N),y1:40,y2:225,stroke:'var(--muted)','stroke-dasharray':'3 3'}));
+      curves.forEach((c,index) => {
+        const d = Array.from({length:81},(_,i) => { const n=10**(left+(right-left)*i/80); return `${i?'L':'M'}${x(n)},${y(c.f(n))}`; }).join(' ');
+        svg.append(el('path',{d,fill:'none',stroke:index ? 'var(--baseline)' : 'var(--accent)','stroke-width':2,'stroke-dasharray':index ? `${index*4} 3` : 'none'}),el('text',{x:565,y:60+index*38},`${c.name}: ${c.f(N).toPrecision(3)} (rounded)`));
+      });
+      points.filter(p => p.N >= scale.minN && p.N <= scale.maxN && Number(p.value)>0).forEach(p => {
+        const link=el('a',{href:safeHref(p.source.href),tabindex:0,'aria-label':`${p.series}: N=${p.N}, cost=${p.value}, ${sourceText(p.source)}`});
+        link.append(el('title',{},`${p.series}: N=${p.N}, cost=${p.value}, ${sourceText(p.source)}`),el('circle',{cx:x(p.N),cy:y(Number(p.value)),r:5,fill:'var(--text)'})); svg.append(link);
+      });
+      $('#scaling-plot').replaceChildren(svg);
+    }
+    slider.addEventListener('input',drawScaling); drawScaling();
+  }
+})();
+</script>
+</body>
+</html>
