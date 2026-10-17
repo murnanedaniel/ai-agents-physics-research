@@ -1,0 +1,371 @@
+#!/usr/bin/env python3
+"""Local research memory. Python 3.9+, standard library only."""
+import argparse
+import datetime as dt
+import json
+import os
+from pathlib import Path
+import re
+import shlex
+import sqlite3
+import subprocess
+import sys
+
+TEMPLATE = '''# Project
+
+## Question
+<!-- What are we trying to answer? -->
+
+## Current hypothesis
+<!-- Our current explanation. -->
+
+## Figure of merit
+<!-- The number we are trying to move, including its baseline value. -->
+
+## Data and compute
+<!-- Data locations, compute resources and constraints. -->
+
+## Status
+<!-- One line on where things stand. -->
+
+## Next steps
+- <!-- First step. -->
+- <!-- Second step. -->
+- <!-- Third step. -->
+
+## People and rules
+<!-- Collaborators, responsibilities and working rules. -->
+'''
+PATTERNS = [re.compile(p) for p in (
+    r'\bghp_[A-Za-z0-9]{20,}\b', r'\bgithub_pat_[A-Za-z0-9_]{20,}\b',
+    r'\bgh[ousr]_[A-Za-z0-9]{20,}\b', r'\bwandb_v1_[A-Za-z0-9]{20,}\b',
+    r'\bsk-ant-[A-Za-z0-9_-]{20,}\b', r'\bsk-[A-Za-z0-9_-]{20,}\b',
+    r'\b(?:AKIA|ASIA)[0-9A-Z]{16}\b',
+    r'-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]*?-----END [A-Z ]*PRIVATE KEY-----')]
+ENV = re.compile(r'''\b([A-Za-z_][A-Za-z0-9_]*(?:TOKEN|SECRET|PASSWORD|KEY)[A-Za-z0-9_]*|TOKEN|SECRET|PASSWORD|KEY)\s*[:=]\s*(?:"[^"\n]*"|'[^'\n]*'|[^\s;]+)''', re.I)
+
+
+def redact(text):
+    text = ENV.sub(lambda m: m[1] + '=[REDACTED]', text)
+    for pattern in PATTERNS:
+        text = pattern.sub('[REDACTED]', text)
+    return text
+
+
+def db_path():
+    return Path(os.environ.get('RMEM_HOME', '~/.local/share/research-memory')).expanduser() / 'index.db'
+
+
+def connect():
+    path = db_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    db = sqlite3.connect(str(path))
+    db.row_factory = sqlite3.Row
+    db.executescript('''
+    CREATE TABLE IF NOT EXISTS files(path TEXT PRIMARY KEY, size INTEGER, mtime INTEGER,
+      offset INTEGER, session_id TEXT, cwd TEXT, source TEXT);
+    CREATE TABLE IF NOT EXISTS turns(id INTEGER PRIMARY KEY, path TEXT, session_id TEXT,
+      source TEXT, cwd TEXT, role TEXT, ts TEXT, text TEXT);
+    CREATE TABLE IF NOT EXISTS threads(session_id TEXT, source TEXT, cwd TEXT,
+      first_ts TEXT, last_ts TEXT, title TEXT, PRIMARY KEY(session_id, source));
+    CREATE TABLE IF NOT EXISTS meta(key TEXT PRIMARY KEY, value TEXT);
+    CREATE INDEX IF NOT EXISTS turns_session ON turns(session_id, source);
+    CREATE INDEX IF NOT EXISTS turns_path ON turns(path);
+    ''')
+    try:
+        db.execute('CREATE VIRTUAL TABLE IF NOT EXISTS turns_fts USING fts5(text, session_id UNINDEXED, role UNINDEXED, ts UNINDEXED)')
+    except sqlite3.OperationalError as exc:
+        if 'no such module' not in str(exc):
+            raise
+    return db
+
+
+def has_fts(db):
+    return db.execute("SELECT 1 FROM sqlite_master WHERE name='turns_fts'").fetchone() is not None
+
+
+def project_root(cwd=None):
+    path = Path(cwd or os.getcwd()).resolve()
+    try:
+        result = subprocess.run(['git', '-C', str(path), 'rev-parse', '--show-toplevel'],
+                                capture_output=True, text=True, timeout=0.12)
+        if result.returncode == 0:
+            return Path(result.stdout.strip()).resolve()
+    except (OSError, subprocess.TimeoutExpired):
+        pass
+    return path
+
+
+def inside(cwd, root):
+    if not cwd:
+        return False
+    try:
+        Path(cwd).resolve().relative_to(root)
+        return True
+    except (ValueError, OSError):
+        return False
+
+
+def roots(args):
+    if getattr(args, 'root', None):
+        return [Path(p).expanduser() for p in args.root]
+    if 'RMEM_ROOTS' in os.environ:
+        return [Path(p).expanduser() for p in os.environ['RMEM_ROOTS'].split(':') if p]
+    return [Path.home() / '.claude/projects', Path.home() / '.codex/sessions']
+
+
+def content_text(content, codex=False):
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        return '\n'.join(b['text'] for b in content if isinstance(b, dict)
+                         and b.get('type') in (('text', 'input_text', 'output_text') if codex else ('text',))
+                         and isinstance(b.get('text'), str))
+    return ''
+
+
+def parse(obj, state):
+    if not isinstance(obj, dict):
+        return None
+    payload = obj.get('payload')
+    if obj.get('type') == 'session_meta' and isinstance(payload, dict):
+        state.update(source='codex', session_id=payload.get('id') or state['session_id'],
+                     cwd=payload.get('cwd') or state['cwd'])
+        return None
+    codex = isinstance(payload, dict) and payload.get('role') in ('user', 'assistant')
+    if codex:
+        state['source'] = 'codex'
+        message = payload
+        role = payload['role']
+    else:
+        role = obj.get('type')
+        message = obj.get('message', {})
+        if role not in ('user', 'assistant') or not isinstance(message, dict):
+            return None
+    state['session_id'] = obj.get('sessionId') or state['session_id']
+    state['cwd'] = obj.get('cwd') or state['cwd']
+    if obj.get('isMeta'):
+        return None
+    text = content_text(message.get('content'), codex)
+    if not text.strip() or (role == 'user' and text.lstrip().startswith('<')):
+        return None
+    return (redact(str(state['session_id'])), state['source'], redact(str(state['cwd'])),
+            role, str(obj.get('timestamp') or ''), redact(text))
+
+
+def index(args):
+    db = connect()
+    added = 0
+    fts = has_fts(db)
+    with db:
+        seen = set()
+        changed = set()
+        for root in roots(args):
+            for path in sorted(root.rglob('*.jsonl')) if root.exists() else []:
+                path = path.resolve()
+                if str(path) in seen:
+                    continue
+                seen.add(str(path))
+                stat = path.stat()
+                old = db.execute('SELECT * FROM files WHERE path=?', (str(path),)).fetchone()
+                if old and old['size'] == stat.st_size and old['mtime'] == stat.st_mtime_ns:
+                    continue
+                reset = old is None or stat.st_size < old['size'] or (stat.st_size == old['size'] and stat.st_mtime_ns != old['mtime'])
+                changed.update(tuple(row) for row in db.execute(
+                    'SELECT DISTINCT session_id,source FROM turns WHERE path=?', (str(path),)))
+                if reset:
+                    if fts:
+                        db.execute('DELETE FROM turns_fts WHERE rowid IN (SELECT id FROM turns WHERE path=?)', (str(path),))
+                    db.execute('DELETE FROM turns WHERE path=?', (str(path),))
+                state = dict(session_id=path.stem, cwd='', source='claude') if reset else dict(old)
+                offset = 0 if reset else old['offset']
+                with path.open('rb') as stream:
+                    stream.seek(offset)
+                    while True:
+                        line = stream.readline()
+                        if not line or not line.endswith(b'\n'):
+                            break
+                        offset = stream.tell()
+                        try:
+                            obj = json.loads(line)
+                        except (ValueError, UnicodeDecodeError):
+                            continue
+                        turn = parse(obj, state)
+                        if turn:
+                            changed.add((turn[0], turn[1]))
+                            cur = db.execute('INSERT INTO turns(path,session_id,source,cwd,role,ts,text) VALUES(?,?,?,?,?,?,?)', (str(path),) + turn)
+                            if fts:
+                                db.execute('INSERT INTO turns_fts(rowid,text,session_id,role,ts) VALUES(?,?,?,?,?)', (cur.lastrowid, turn[5], turn[0], turn[3], turn[4]))
+                            added += 1
+                db.execute('INSERT OR REPLACE INTO files VALUES(?,?,?,?,?,?,?)',
+                           (str(path), stat.st_size, stat.st_mtime_ns, offset,
+                            redact(str(state['session_id'])), redact(str(state['cwd'])), state['source']))
+        # Only summaries touched by appended or rewritten files need rebuilding.
+        for session_id, source in changed:
+            db.execute('DELETE FROM threads WHERE session_id=? AND source=?', (session_id, source))
+            db.execute('''INSERT INTO threads SELECT session_id, source,
+              COALESCE((SELECT cwd FROM turns t2 WHERE t2.session_id=t.session_id AND t2.source=t.source AND cwd<>'' ORDER BY id DESC LIMIT 1), ''),
+              MIN(NULLIF(ts,'')), MAX(NULLIF(ts,'')), COALESCE((SELECT substr(text,1,100) FROM turns t3
+              WHERE t3.session_id=t.session_id AND t3.source=t.source AND role='user' ORDER BY id LIMIT 1), '')
+              FROM turns t WHERE session_id=? AND source=? GROUP BY session_id,source''',
+              (session_id, source))
+        db.execute("INSERT OR REPLACE INTO meta VALUES('last_indexed', ?)", (dt.datetime.now(dt.timezone.utc).isoformat(),))
+    db.close()
+    if not getattr(args, 'quiet', False):
+        print('Indexed {} new turns.'.format(added))
+
+
+def query_terms(query):
+    return [x for x in re.findall(r'"([^\"]+)"|(\S+)', query) for x in [x[0] or x[1]] if re.search(r'\w', x)]
+
+
+def snippet(text, terms):
+    pattern = re.compile('|'.join(re.escape(t) for t in sorted(terms, key=len, reverse=True)), re.I)
+    match = pattern.search(text)
+    start = max(0, match.start() - 60) if match else 0
+    excerpt = text[start:start + 240].replace('\n', ' ')
+    return ('...' if start else '') + pattern.sub(lambda m: '[' + m[0] + ']', excerpt) + ('...' if start + 240 < len(text) else '')
+
+
+def search(args):
+    args.quiet = True
+    index(args)
+    terms = query_terms(args.query)
+    if not terms:
+        return
+    db = connect()
+    values = []
+    if has_fts(db):
+        sql = 'SELECT t.*, bm25(turns_fts) AS rank FROM turns_fts JOIN turns t ON t.id=turns_fts.rowid WHERE turns_fts MATCH ?'
+        values.append(' AND '.join('"' + t.replace('"', '""') + '"' for t in terms))
+    else:
+        sql = 'SELECT t.*, 0 AS rank FROM turns t WHERE ' + ' AND '.join("t.text LIKE ? ESCAPE '\\'" for _ in terms)
+        values.extend('%' + t.replace('\\', '\\\\').replace('%', '\\%').replace('_', '\\_') + '%' for t in terms)
+    if args.since:
+        sql += ' AND t.ts >= ?'
+        values.append(args.since)
+    if args.role:
+        sql += ' AND t.role = ?'
+        values.append(args.role)
+    sql += ' ORDER BY rank, t.ts DESC'
+    root = project_root() if args.here else None
+    groups = {}
+    for row in db.execute(sql, values):
+        key = (row['session_id'], row['source'])
+        thread = db.execute('SELECT * FROM threads WHERE session_id=? AND source=?', key).fetchone()
+        if root and not inside(thread['cwd'], root):
+            continue
+        if key not in groups and len(groups) >= args.limit:
+            continue
+        groups.setdefault(key, (thread, []))
+        if len(groups[key][1]) < 2:
+            groups[key][1].append(row)
+    for key, (thread, hits) in groups.items():
+        print('{} to {} | {}\n{}'.format((thread['first_ts'] or 'unknown')[:10], (thread['last_ts'] or 'unknown')[:10], thread['cwd'], thread['title']))
+        for hit in hits:
+            print('  {}: {}'.format(hit['role'], snippet(hit['text'], terms)))
+        if key[1] == 'claude':
+            print('cd {} && claude --resume {}'.format(shlex.quote(thread['cwd'] or '.'), shlex.quote(key[0])))
+        print()
+    db.close()
+
+
+def context(args):
+    try:
+        root = project_root(args.cwd)
+        parts = []
+        for name, marker, count in [('PROJECT.md', None, 0), ('DECISIONS.md', r'(?=^Date: )', 5), ('CHECKINS.md', r'(?=^## \d{4}-)', 3)]:
+            path = root / name
+            if path.exists():
+                text = path.read_text()
+                if marker:
+                    entries = re.split(marker, text, flags=re.M)[1:]
+                    text = '# ' + name[:-3].title() + '\n\n' + ''.join(entries[-count:])
+                parts.append(text.strip())
+        if db_path().exists():
+            try:
+                db = sqlite3.connect(db_path().resolve().as_uri() + '?mode=ro', uri=True, timeout=0.02)
+                try:
+                    rows = db.execute('SELECT cwd,last_ts FROM threads').fetchall()
+                    dates = [ts or '' for cwd, ts in rows if inside(cwd, root)]
+                    if dates:
+                        parts.append('Past sessions in this project: {} (last: {}). Search with `rmem search --here ...`.'.format(len(dates), max(dates)[:10] or 'unknown'))
+                finally:
+                    db.close()
+            except (OSError, sqlite3.Error):
+                pass
+        output = '\n\n'.join(parts)[:args.max_chars]
+        if output:
+            sys.stdout.write(output)
+    except Exception:
+        pass
+
+
+def append_entry(name, entry):
+    path = project_root() / name
+    with path.open('a+') as stream:
+        stream.seek(0)
+        old = stream.read()
+        if not old:
+            stream.write('# ' + name[:-3].title() + '\n')
+            old = '\n'
+        stream.write(('\n' if old.endswith('\n') else '\n\n') + entry + '\n')
+
+
+def stats(args):
+    db = connect()
+    for label, sql in [('Sessions', 'SELECT count(*) FROM threads'), ('Turns', 'SELECT count(*) FROM turns'), ('Sources', 'SELECT count(DISTINCT source) FROM threads')]:
+        print('{}: {}'.format(label, db.execute(sql).fetchone()[0]))
+    print('Index size: {} bytes'.format(db_path().stat().st_size))
+    row = db.execute("SELECT value FROM meta WHERE key='last_indexed'").fetchone()
+    print('Last indexed: ' + (row[0] if row else 'never'))
+    db.close()
+
+
+def positive(value):
+    number = int(value)
+    if number < 0:
+        raise argparse.ArgumentTypeError('must be non-negative')
+    return number
+
+
+def date_arg(value):
+    try:
+        dt.datetime.strptime(value, '%Y-%m-%d')
+    except ValueError:
+        raise argparse.ArgumentTypeError('expected YYYY-MM-DD')
+    return value
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    sub = parser.add_subparsers(dest='command', required=True)
+    p = sub.add_parser('index'); p.add_argument('--root', action='append'); p.add_argument('--quiet', action='store_true')
+    p = sub.add_parser('search'); p.add_argument('query'); p.add_argument('--here', action='store_true'); p.add_argument('--since', type=date_arg); p.add_argument('--limit', type=positive, default=10); p.add_argument('--role', choices=['user', 'assistant'])
+    p = sub.add_parser('context'); p.add_argument('--cwd'); p.add_argument('--max-chars', type=positive, default=4000)
+    p = sub.add_parser('decide'); p.add_argument('decision'); p.add_argument('--why')
+    p = sub.add_parser('checkin'); p.add_argument('text'); p.add_argument('--kind', choices=['progress', 'plan', 'blocker'], default='progress')
+    sub.add_parser('init'); sub.add_parser('stats')
+    args = parser.parse_args()
+    try:
+        if args.command in ('index', 'search', 'context', 'stats'):
+            globals()[args.command](args)
+        elif args.command == 'init':
+            path = project_root() / 'PROJECT.md'
+            try:
+                with path.open('x') as stream:
+                    stream.write(TEMPLATE)
+            except FileExistsError:
+                pass
+        elif args.command == 'decide':
+            append_entry('DECISIONS.md', 'Date: {}\nDecision: {}'.format(dt.date.today(), args.decision) + ('\nReason: ' + args.why if args.why else ''))
+        elif args.command == 'checkin':
+            append_entry('CHECKINS.md', '## {} ({})\n{}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M'), args.kind, args.text))
+    except (OSError, sqlite3.Error, ValueError) as exc:
+        print('rmem: ' + str(exc), file=sys.stderr)
+        return 1
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
