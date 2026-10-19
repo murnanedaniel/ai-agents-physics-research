@@ -5,7 +5,8 @@ export type Scene = { id: SceneId; label: string; part: Part; theme: Theme; step
 // Seconds from 09:00. Gaps are intentional slack, morning break, lunch and afternoon break.
 export const SCENES = [
   {"id": "title", "part": "setup", "theme": "dark", "steps": 1, "startSec": 0, "endSec": 300, "label": "AI Agents in Practice for Physics Research"},
-  {"id": "one-lesson", "part": "setup", "theme": "dark", "steps": 3, "startSec": 300, "endSec": 600, "label": "One lesson for today"},
+  {"id": "agenda", "part": "setup", "theme": "light", "steps": 1, "startSec": 300, "endSec": 420, "label": "Structure of the day"},
+  {"id": "one-lesson", "part": "setup", "theme": "dark", "steps": 3, "startSec": 420, "endSec": 600, "label": "One lesson for today"},
   {"id": "cooking", "part": "setup", "theme": "dark", "steps": 2, "startSec": 600, "endSec": 900, "label": "Six projects, cooked today"},
   {"id": "q1-possible", "part": "setup", "theme": "dark", "steps": 4, "startSec": 900, "endSec": 1350, "label": "What can agentic science do in Oct 2026?"},
   {"id": "q2-machinery", "part": "setup", "theme": "dark", "steps": 3, "startSec": 1350, "endSec": 1950, "label": "What is it?"},

@@ -1,5 +1,6 @@
 // Import as a namespace to map scene IDs directly to their beats.
 export { default as "title" } from "./title";
+export { default as "agenda" } from "./agenda";
 export { default as "one-lesson" } from "./one-lesson";
 export { default as "cooking" } from "./cooking";
 export { default as "q1-possible" } from "./q1-possible";
