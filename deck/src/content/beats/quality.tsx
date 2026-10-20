@@ -1,10 +1,10 @@
-"use client";
+import type { Beat } from "./_types";
+import { Quality } from "@/components/scenes/g3/Quality";
 
-import { type Beat, d } from "./_types";
-import { asset } from "@/lib/asset";
-
-function Quality() { return <img className="quality-chart" src={asset("/quality/pushback.png")} alt="Line chart: share of the researcher\u2019s messages that push back on the agent, falling from 46% in May to 29% in October 2026; outright corrections stay near 15%." />; }
-
-const beat: Beat = {title: "Working with agents changed over six months.", lines: ["About 2,000 of my messages to Claude (Apr–Oct 2026), each labelled by a small model: correction, challenge, praise or instruction.", "Pushback fell from 46% to 29%, almost all of it fewer \u201care you sure?\u201d challenges. Outright corrections stayed around 15%.", "Model, month, project and my own skill move together: this is a trend in working practice, not a model ranking."], links: [d("evidence/quality-over-time/", "quality over time"), d("methodology/", "methodology")], Visual: Quality};
+const beat: Beat = {
+  title: "Working with agents changed over six months.",
+  Scene: Quality,
+  source: "2,015 of my messages in 27 Perlmutter Claude Code threads, May–Oct 2026, labelled by Haiku (κ 0.65 vs Sonnet); April (6 messages) omitted",
+};
 
 export default beat;

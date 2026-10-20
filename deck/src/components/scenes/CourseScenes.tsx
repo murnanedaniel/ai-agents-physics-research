@@ -4,9 +4,9 @@ import * as beats from "@/content/beats";
 import type { Beat } from "@/content/beats/_types";
 import type { SceneId } from "@/lib/timeline";
 
-export const BEATS = beats satisfies Record<Exclude<SceneId, "thanks">, Beat>;
+export const BEATS = beats satisfies Record<SceneId, Beat>;
 
-export function CourseScene({ id, step }: { id: Exclude<SceneId, "thanks">; step: number }) {
+export function CourseScene({ id, step }: { id: SceneId; step: number }) {
   const { Visual, ...beat }: Beat = BEATS[id];
   return <BeatScene {...beat} step={step}>{!beat.Scene && Visual && <Visual step={step} />}</BeatScene>;
 }

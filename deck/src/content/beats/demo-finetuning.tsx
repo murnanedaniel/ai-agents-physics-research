@@ -1,9 +1,11 @@
+"use client";
+
+import { FinetuningDemo } from "@/components/scenes/g5/FinetuningDemo";
 import type { Beat } from "./_types";
 
 const beat: Beat = {
-  title: "Demo: explore fine-tuning in Claude Science.",
-  lines: ["[build]"],
-  draft: true,
+  title: "Give the workbench the literature and both codes.",
+  Scene: FinetuningDemo,
 };
 
 export default beat;

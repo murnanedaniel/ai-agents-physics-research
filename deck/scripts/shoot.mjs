@@ -5,7 +5,7 @@
 //   node scripts/shoot.mjs --url http://localhost:3000/   # or a running dev server
 //   node scripts/shoot.mjs --scenes chart,diagram           # a subset of scenes
 //
-// CHROMIUM_PATH and LD_LIBRARY_PATH override the homebox defaults below.
+// CHROMIUM_PATH and LD_LIBRARY_PATH override the local defaults below.
 // NEXT_BASE_PATH supports exports built for a GitHub Pages subdirectory.
 // Writes PNGs, report.md/report.json, and <id>.md/<id>.json in shots/.
 // Exit code 1 if any check FAILs, including intentional [build] stubs.

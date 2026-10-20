@@ -1,7 +1,12 @@
 "use client";
 
-import { type Beat, d } from "./_types";
+import type { Beat } from "./_types";
+import { ReviewCarry } from "@/components/scenes/g7/ReviewCarry";
 
-const beat: Beat = {title: "Experiments become an argument through review.", lines: ["Experiments → argument → review → revision", "Review findings don’t reliably carry into later drafts.", "Give every finding an owner, a fix and a verification record."], links: [d("loops/middle/", "middle loop"), d("patterns/calibrated-judges/", "calibrated judges")]};
+const beat: Beat = {
+  title: "Experiments become an argument through review.",
+  source: "Pattern seen a few times in six months of agent work: course pattern catalogue, 2026",
+  Scene: ReviewCarry,
+};
 
 export default beat;

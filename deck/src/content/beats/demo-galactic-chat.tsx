@@ -1,9 +1,11 @@
+"use client";
+
+import { GalacticChat } from "@/components/scenes/g5/GalacticChat";
 import type { Beat } from "./_types";
 
 const beat: Beat = {
-  title: "Demo: start galactic clustering from a chat.",
-  lines: ["[build]"],
-  draft: true,
+  title: "Start in a plain chat; leave two plain files.",
+  Scene: GalacticChat,
 };
 
 export default beat;

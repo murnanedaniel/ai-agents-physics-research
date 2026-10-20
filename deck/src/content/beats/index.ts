@@ -89,3 +89,4 @@ export { default as "excalidraw" } from "./excalidraw";
 export { default as "buffer" } from "./buffer";
 export { default as "hands-on-2" } from "./hands-on-2";
 export { default as "hands-on-3" } from "./hands-on-3";
+export { default as "thanks" } from "./thanks";

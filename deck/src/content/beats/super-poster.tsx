@@ -1,15 +1,12 @@
 "use client";
 
-import { type Beat, d } from "./_types";
+import { SuperPoster } from "@/components/scenes/g6/SuperPoster";
+import type { Beat } from "./_types";
 
 const beat: Beat = {
   title: "A super-poster makes a paper explorable.",
-  lines: [
-    "A poster is skimmed in one minute. A super-poster gives about three minutes of depth, and it's interactive.",
-    "A Poster/Full toggle, a mechanism stepper, charts you can query, evidence rows that open to the paper's sentences.",
-    "It's an agent skill in the course repo, skills/super-poster/. Every number carries its source; the RANGE super-poster opens project 1.",
-  ],
-  links: [d("patterns/provenance-audit/", "audit the provenance"), d("demos/range/", "RANGE dashboard")],
+  source: "RANGE super-poster, made with the course skill skills/super-poster/ · paper: Caruso et al., Nat. Commun. 17 (2026)",
+  Scene: SuperPoster,
 };
 
 export default beat;

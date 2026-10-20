@@ -1,22 +1,12 @@
 "use client";
 
-import { type Beat, d } from "./_types";
-
-const tiers: [string, string][] = [
- ["Web chat only", "Paste the printed prompt into claude.ai or ChatGPT and answer the interview."],
- ["Terminal agent", "Copy the skill into your skills folder, then say “interview me about my research setup.”"],
- ["Your own project", "Run the interview inside your real repository, with your own tools and limits."],
-];
-function Tiers() { return <div className="card-grid three">{tiers.map(([title, text]) => <div className="course-card" key={title}><h2>{title}</h2><p>{text}</p></div>)}</div>; }
+import type { Beat } from "./_types";
+import { HandsOnInterview } from "@/components/scenes/g4/HandsOnInterview";
 
 const beat: Beat = {
- title: "Interview your research setup.",
- lines: [
-  "Goal: interview your research setup, then draft a CLAUDE.md, one or two starter skills and DECISIONS.md.",
-  "Card: exercises/setup-interview. Stretch goal: the research-memory kit makes this state automatic.",
- ],
- links: [d("exercises/setup-interview/", "setup interview"), d("kit/research-memory/", "research memory kit")],
- Visual: Tiers,
+  title: "Interview your research setup.",
+  source: "Exercise card and research-setup skill, this course (skills/research-setup)",
+  Scene: HandsOnInterview,
 };
 
 export default beat;

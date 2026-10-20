@@ -56,7 +56,7 @@ all steps at 1280×720. It writes PNGs, aggregate reports and per-scene Markdown
 reports in `shots/`, with word count, overflow, minimum font size, missing sources
 and placeholders on every step. It also retains the template's overlap, contrast,
 em-dash, page-error and unchanged-step checks. `[build]` stubs intentionally fail.
-`CHROMIUM_PATH` and `LD_LIBRARY_PATH` override the requested homebox defaults;
+`CHROMIUM_PATH` and `LD_LIBRARY_PATH` override the local defaults;
 `NEXT_BASE_PATH` supports an export built for a project subdirectory.
 
 ## Final ordered scene list
