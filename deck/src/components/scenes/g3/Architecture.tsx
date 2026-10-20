@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import { C, Canvas, MONO, SANS, SERIF, Step } from "./common";
 
 // notes/w19/WEB-RESEARCH.md §2: context rot (Chroma 2025), lost in the middle (Liu et al. 2023),
-// no continual learning (arXiv:2501.07278). ScienceDash: notes/w19/HOMEBOX-STORIES.md §7.
+// no continual learning (arXiv:2501.07278). ScienceDash: the course research notes §7.
 const NODES = Array.from({ length: 20 }, (_, k) => ({ cx: 70 + (k % 4) * 52, cy: 110 + Math.floor(k / 4) * 52 }));
 const BX = 380, BW = 740;
 

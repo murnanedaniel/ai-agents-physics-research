@@ -5,7 +5,7 @@ import { C, Canvas, Reveal, T, mono, stop } from "./kit";
 
 // Step 0: the two codes on one time axis. Step 1: how closely pyCHM's
 // Barbieri-Giudice tuning matches an independent engine that shares no code.
-// Facts: notes/w19/HOMEBOX-STORIES.md §3 (repo READMEs, validation table,
+// Facts: the course research notes §3 (repo READMEs, validation table,
 // fresh-venv test run 2026-10-18).
 const VALID = [
   { model: "5-5-5", pct: 0.16, raw: "126.9 vs 126.7" },
