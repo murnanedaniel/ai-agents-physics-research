@@ -10,8 +10,7 @@ const tiers: [string, string][] = [
 function Tiers() { return <div className="card-grid three">{tiers.map(([title, text]) => <div className="course-card" key={title}><h2>{title}</h2><p>{text}</p></div>)}</div>; }
 
 const beat: Beat = {
- kicker: "Outer loop · 15:05",
- title: "Hands-on 3: gates and checks",
+ title: "Turn a rule into a check that can fail.",
  lines: [
   "Goal: take one rule from your morning CLAUDE.md and turn it into an approval gate or an automated check.",
   "A check is a test that can fail. Write your approval-gate list. Card: [TODO]",

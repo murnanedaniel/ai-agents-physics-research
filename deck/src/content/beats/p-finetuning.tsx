@@ -18,8 +18,7 @@ function FinetuningGoals() {
 }
 
 const beat: Beat = {
-  kicker: "Inner loop · 11:06",
-  title: "Project 5: fine-tuning from first principles",
+  title: "Project 3: derive fine-tuning from first principles.",
   lines: [
     "The needle: a first-principles Bayesian derivation of fine-tuning, covering all orders at once.",
     "Needs a serious literature search driven by figures of merit, plus a custom literature dashboard.",

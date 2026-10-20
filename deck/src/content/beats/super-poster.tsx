@@ -3,8 +3,7 @@
 import { type Beat, d } from "./_types";
 
 const beat: Beat = {
-  kicker: "Middle loop · 13:10",
-  title: "A super-poster: grok a paper in three minutes",
+  title: "A super-poster makes a paper explorable.",
   lines: [
     "A poster is skimmed in one minute. A super-poster gives about three minutes of depth, and it's interactive.",
     "A Poster/Full toggle, a mechanism stepper, charts you can query, evidence rows that open to the paper's sentences.",

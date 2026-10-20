@@ -25,8 +25,7 @@ export default function EmbedPage() {
   const scene = SCENES.find((s) => s.id === sceneId);
   const Comp = sceneId ? SCENE_COMPONENTS[sceneId] : undefined;
   const steps = Math.max(1, scene?.steps ?? 1);
-  // The title now supplies its own dark styling, just like every other scene.
-  const theme = scene?.theme ?? "dark";
+  const theme = scene?.theme ?? "light";
 
   const advance = useCallback(() => setStep((s) => (s + 1) % steps), [steps]);
   const rewind = useCallback(() => setStep((s) => (s - 1 + steps) % steps), [steps]);
@@ -54,10 +53,10 @@ export default function EmbedPage() {
     return () => window.removeEventListener("wheel", onWheel);
   }, []);
 
-  if (!ready) return <div className="w-screen h-screen" style={{ backgroundColor: "#050607" }} />;
+  if (!ready) return <div className="w-screen h-screen" style={{ backgroundColor: "#f6f1e7" }} />;
   if (!Comp || !scene) {
     return (
-      <div className="w-screen h-screen flex items-center justify-center font-mono text-[13px] text-zinc-500" style={{ backgroundColor: "#050607" }}>
+      <div className="w-screen h-screen flex items-center justify-center font-mono text-[13px] text-zinc-500" style={{ backgroundColor: "#f6f1e7" }}>
         unknown scene: {String(sceneId)}
       </div>
     );
@@ -68,7 +67,7 @@ export default function EmbedPage() {
 
   return (
     <div
-      className={`relative w-screen h-screen overflow-hidden cursor-pointer select-none ${theme === "light" ? "theme-light" : ""}`}
+      className={`relative w-screen h-screen overflow-hidden cursor-pointer select-none ${theme === "light" ? "theme-light" : "theme-dark"}`}
       style={{ backgroundColor: theme === "light" ? "#f6f1e7" : "#050607" }}
       onClick={advance}
       role="button"

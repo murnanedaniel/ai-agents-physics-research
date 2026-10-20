@@ -24,8 +24,7 @@ function DetectorGoals() {
 }
 
 const beat: Beat = {
-  kicker: "Inner loop · 10:55",
-  title: "Project 6: a new universe",
+  title: "Project 5: discover the laws of a new universe.",
   lines: [
     "A structurally new quantum field theory, hidden from the agents. They get a collider, a detector and a beam-time budget.",
     "A swarm of roles: spectroscopist, bookkeeper, amplitude analyst, theorist, referee. Every run goes in a ledger, and every claim in a lab notebook.",

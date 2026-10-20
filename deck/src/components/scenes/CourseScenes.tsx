@@ -7,6 +7,6 @@ import type { SceneId } from "@/lib/timeline";
 export const BEATS = beats satisfies Record<Exclude<SceneId, "thanks">, Beat>;
 
 export function CourseScene({ id, step }: { id: Exclude<SceneId, "thanks">; step: number }) {
-  const { Visual, ...beat } = BEATS[id];
-  return <BeatScene {...beat} step={step}>{Visual && <Visual step={step} />}</BeatScene>;
+  const { Visual, ...beat }: Beat = BEATS[id];
+  return <BeatScene {...beat} step={step}>{!beat.Scene && Visual && <Visual step={step} />}</BeatScene>;
 }

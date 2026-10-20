@@ -1,0 +1,118 @@
+{
+  "generated_at": "2026-10-20T21:19:34.750591+00:00",
+  "project_dir": "/home/murnanedaniel/Research/teaching/ai-agents-physics-research",
+  "title": "ai-agents-physics-research",
+  "author": "Daniel Murnane",
+  "since_days": 7,
+  "metric": null,
+  "git": {
+    "is_repo": true,
+    "commits": [
+      {
+        "hash": "14cde70",
+        "date": "2026-10-20",
+        "subject": "super-poster v2: round ticks, responsive schematic, Poster mode fits one screen"
+      },
+      {
+        "hash": "36f5970",
+        "date": "2026-10-19",
+        "subject": "Deck: interactive structure-of-the-day scene (expandable sections, built from the timeline)"
+      },
+      {
+        "hash": "172e6d4",
+        "date": "2026-10-19",
+        "subject": "Deck: per-scene files, new 31-scene timeline for the six-project program, hands-on and outer-loop scenes"
+      },
+      {
+        "hash": "494814f",
+        "date": "2026-10-17",
+        "subject": "Rename paper-dashboard to super-poster; add interactive three-minute format"
+      },
+      {
+        "hash": "b727d16",
+        "date": "2026-10-17",
+        "subject": "Add paper-dashboard skill (one-minute paper explainer with verified numbers)"
+      },
+      {
+        "hash": "9bac175",
+        "date": "2026-10-17",
+        "subject": "Add research-memory kit: local transcript search, session-start brief, decision logging"
+      },
+      {
+        "hash": "ad95f0e",
+        "date": "2026-10-17",
+        "subject": "Add research-setup interview skill and hands-on exercise card"
+      },
+      {
+        "hash": "62a4e08",
+        "date": "2026-10-16",
+        "subject": "Sessions pattern: add resource negotiation between peer sessions"
+      },
+      {
+        "hash": "d88248e",
+        "date": "2026-10-16",
+        "subject": "Add pattern: any session can message any other session"
+      },
+      {
+        "hash": "a2e2bde",
+        "date": "2026-10-15",
+        "subject": "What changed in six months: preregistered scorecard, behaviour shifts, error-type shift; deck scene"
+      },
+      {
+        "hash": "e3686f1",
+        "date": "2026-10-15",
+        "subject": "Agent quality over time: docs page + deck scene; 'Summaries flatter the agent' pattern"
+      },
+      {
+        "hash": "0e8e014",
+        "date": "2026-10-15",
+        "subject": "Correct tidied anecdotes in catalogue; methodology: cluster-side quote check"
+      },
+      {
+        "hash": "549cf4b",
+        "date": "2026-10-15",
+        "subject": "Methodology: quote-verification result (workstation half)"
+      },
+      {
+        "hash": "36b5135",
+        "date": "2026-10-15",
+        "subject": "Docs: full pattern catalogue (120 entries) and methodology page"
+      },
+      {
+        "hash": "5116ff4",
+        "date": "2026-10-15",
+        "subject": "Course site draft 1: HTML deck (beats as placeholders) + docs"
+      }
+    ],
+    "files_changed": 133,
+    "branch": "main",
+    "uncommitted_changes": 3
+  },
+  "notes": [],
+  "next_steps": [
+    "Rebuild the course deck scenes with the keynote template",
+    "Rehearse the morning block"
+  ],
+  "blockers": [
+    "Project 2 and 4 stretch goals not written"
+  ],
+  "figures": [
+    {
+      "path": "deck/public/quality/behaviour_shifts.png",
+      "mtime": 1792106474.2602296,
+      "copied": "figure-1.png"
+    },
+    {
+      "path": "docs/assets/quality/behaviour_shifts.png",
+      "mtime": 1792106473.9722311,
+      "copied": "figure-2.png"
+    },
+    {
+      "path": "deck/public/quality/subagents.png",
+      "mtime": 1792106473.6532328,
+      "copied": "figure-3.png"
+    }
+  ],
+  "wandb": null,
+  "warnings": []
+}

@@ -18,8 +18,7 @@ function GalacticGoals() {
 }
 
 const beat: Beat = {
-  kicker: "Inner loop · 10:30",
-  title: "Project 2: galactic nearest-neighbour clustering",
+  title: "Project 2: find structure in galactic neighbours.",
   lines: [
     "Project 2: galactic nearest-neighbour clustering, framed as contributing to theory.",
     "We take visualisations from existing papers; the model does the mechanics, I bring the physics intuition.",

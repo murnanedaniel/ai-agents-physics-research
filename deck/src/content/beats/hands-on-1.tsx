@@ -10,8 +10,7 @@ const tiers: [string, string][] = [
 function Tiers() { return <div className="card-grid three">{tiers.map(([title, text]) => <div className="course-card" key={title}><h2>{title}</h2><p>{text}</p></div>)}</div>; }
 
 const beat: Beat = {
- kicker: "Inner loop · 11:30",
- title: "Hands-on 1: interview your research setup",
+ title: "Interview your research setup.",
  lines: [
   "Goal: interview your research setup, then draft a CLAUDE.md, one or two starter skills and DECISIONS.md.",
   "Card: exercises/setup-interview. Stretch goal: the research-memory kit makes this state automatic.",

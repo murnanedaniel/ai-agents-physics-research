@@ -1,6 +1,6 @@
 "use client";
 
-import { SCENES, TOTAL_SEC, formatMMSS } from "@/lib/timeline";
+import { SCENES, TOTAL_SEC, PART_NAMES, formatClock, formatMMSS } from "@/lib/timeline";
 
 type Props = {
   elapsed: number;
@@ -26,11 +26,11 @@ export function PresenterClock({ elapsed, sceneIdx, stepIdx, fallback, running }
           {running ? "● LIVE" : "○ IDLE"}
         </span>
         <span>{formatMMSS(elapsed)} / {formatMMSS(TOTAL_SEC)}</span>
+        <span>{PART_NAMES[scene.part]} · scheduled {formatClock(scene.startSec)}</span>
         <span className="text-zinc-500">·</span>
         <span>left {formatMMSS(remaining)}</span>
       </div>
       <div className="flex items-center gap-3 mt-1">
-        <span className="text-zinc-500">{scene.part}</span>
         <span className="text-zinc-200">{scene.label}</span>
         <span className="text-zinc-600">[{sceneIdx + 1}/{SCENES.length}]</span>
       </div>

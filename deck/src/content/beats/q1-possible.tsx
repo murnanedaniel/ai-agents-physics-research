@@ -11,6 +11,6 @@ const evidence = [
 ];
 function Numbers({step}: {step: number}) { return <div className="card-grid four">{evidence.map(([n, claim, caveat],i) => <div className="course-card" key={n}><strong className="big-number">{n}</strong><p>{claim}</p><motion.p className="caveat" initial={false} animate={{opacity: step >= Math.min(i + 1, 3) ? 1 : 0}} aria-hidden={step < Math.min(i + 1, 3)}>{caveat}</motion.p></div>)}</div>; }
 
-const beat: Beat = {kicker: "Q1 · possibilities, with receipts", title: "What can agentic science do in Oct 2026?", lines: [], links: [d("evidence/possible/", "what is possible")], Visual: Numbers};
+const beat: Beat = {title: "Agentic science already takes many forms.", lines: [], links: [d("evidence/possible/", "what is possible")], Visual: Numbers};
 
 export default beat;

@@ -18,8 +18,7 @@ function TrackingGoals() {
 }
 
 const beat: Beat = {
-  kicker: "Inner loop · 11:18",
-  title: "Project 4: global track fitting",
+  title: "Project 4: fit tracks together.",
   lines: [
     "Project 4: global track fitting. The source notes say almost nothing beyond the name.",
     "Goal, dataset and method: [TODO: Daniel].",
