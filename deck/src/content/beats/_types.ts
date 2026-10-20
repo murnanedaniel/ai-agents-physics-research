@@ -3,12 +3,13 @@ import type { BeatLink } from "@/components/DocsLink";
 
 export type { BeatLink } from "@/components/DocsLink";
 export type Beat = {
-  kicker: string;
   title: string;
-  lines: string[];
-  links: BeatLink[];
+  lines?: string[];
+  links?: BeatLink[];
+  source?: string;
   draft?: boolean;
   Visual?: (props: { step: number }) => ReactElement;
+  Scene?: (props: { step: number }) => ReactElement;
 };
 
 export const d = (path: string, title: string): BeatLink => ({ kind: "docs", path, title });

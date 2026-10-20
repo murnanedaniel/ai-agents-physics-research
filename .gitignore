@@ -5,3 +5,4 @@ deck/.next/
 deck/out/
 deck/next-env.d.ts
 .DS_Store
+deck/shots/

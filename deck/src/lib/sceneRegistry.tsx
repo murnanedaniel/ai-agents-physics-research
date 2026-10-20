@@ -1,13 +1,11 @@
 import type { ReactElement } from "react";
-import type { SceneId } from "./timeline";
-import * as beats from "@/content/beats";
+import { SCENES, type SceneId } from "./timeline";
 import { CourseScene } from "@/components/scenes/CourseScenes";
-import { ClaudeFinalSlide } from "@/components/scenes/ClaudeFinalSlide";
 
 export type SceneComponent = (props: { step: number; onAdvance?: () => void }) => ReactElement;
-type BeatId = Exclude<SceneId, "thanks">;
+type BeatId = SceneId;
 const beatComponents = Object.fromEntries(
-  (Object.keys(beats) as BeatId[]).map(id => [
+  SCENES.map(({ id }) => id).map(id => [
     id,
     function RegisteredBeat({ step }: { step: number }) { return <CourseScene id={id} step={step} />; },
   ]),
@@ -15,5 +13,4 @@ const beatComponents = Object.fromEntries(
 
 export const SCENE_COMPONENTS: Record<SceneId, SceneComponent> = {
   ...beatComponents,
-  thanks: ClaudeFinalSlide,
 };

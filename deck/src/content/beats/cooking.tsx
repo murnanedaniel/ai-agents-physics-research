@@ -1,11 +1,17 @@
 "use client";
 
-import { type Beat } from "./_types";
+import type { Beat } from "./_types";
 import { LiveLink } from "@/components/DocsLink";
+import { Cooking } from "@/components/scenes/g4/Cooking";
 
-const ovens = ["1 · RANGE vs transformers (from scratch)", "2 · galactic neighbours", "3 · shown live", "4 · global track fitting", "5 · fine-tuning from first principles", "6 · hypothetical detector"];
+// Kept for serving.tsx, which imports it. Not used by this scene.
+const ovens = ["1 · RANGE: molecular energies and forces", "2 · galactic clustering", "3 · fine-tuning from first principles", "4 · global track fitting", "5 · The Basic Model (a new universe)"];
 export function Ovens() { return <div className="card-grid three">{ovens.map(name => <div className="course-card" key={name}><h2>{name}</h2><span className="status-chip">not started</span><LiveLink title="ovens status" target="ovensStatus" /></div>)}</div>; }
 
-const beat: Beat = {kicker: "Setup · ovens on", title: "Six projects, cooked today", lines: ["Six projects start now: RANGE is cooked completely from scratch, the rest partly pre-cooked, with material to switch to.", "Each has stretch goals. We check all six at every break."], links: [], Visual: Ovens};
+const beat: Beat = {
+  title: "Five projects start cooking today.",
+  source: "Projects and pre-cooking: course plan, 17-20 Oct 2026 · times: today's agenda",
+  Scene: Cooking,
+};
 
 export default beat;

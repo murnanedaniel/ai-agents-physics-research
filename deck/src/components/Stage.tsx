@@ -31,7 +31,8 @@ export function Stage() {
     else if (byIdx) idx = parseInt(byIdx, 10);
     if (idx >= 0 && idx < SCENES.length) {
       setSceneIdx(idx);
-      setStepIdx(0);
+      const requestedStep = Number(params.get("step") ?? 0);
+      setStepIdx(Number.isFinite(requestedStep) ? Math.max(0, Math.min(SCENES[idx].steps - 1, Math.floor(requestedStep))) : 0);
     }
   }, []);
 
@@ -94,9 +95,11 @@ export function Stage() {
 
   return (
     <motion.div
-      className={`relative w-screen h-screen overflow-hidden cursor-pointer select-none ${theme === "light" ? "theme-light" : ""}`}
+      className={`relative w-screen h-screen overflow-hidden cursor-pointer select-none ${theme === "light" ? "theme-light" : "theme-dark"}`}
       onClick={advance}
       role="button"
+      data-scene={scene.id}
+      data-step={stepIdx}
       tabIndex={0}
       animate={{ backgroundColor: theme === "light" ? "#f6f1e7" : "#050607" }}
       transition={{ duration: 1.2, ease: [0.65, 0, 0.3, 1] }}

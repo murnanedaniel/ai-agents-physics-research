@@ -1,33 +1,12 @@
 "use client";
 
-import { type Beat, d } from "./_types";
-
-function GalacticGoals() {
-  return (
-    <div className="card-grid two">
-      <div className="course-card">
-        <h2>Base goal</h2>
-        <p>Take visualisations from existing papers; the model does the mechanics, I bring the physics intuition.</p>
-      </div>
-      <div className="course-card">
-        <h2>Stretch</h2>
-        <p>[TODO: Daniel]</p>
-      </div>
-    </div>
-  );
-}
+import { Galactic } from "@/components/scenes/g5/Galactic";
+import type { Beat } from "./_types";
 
 const beat: Beat = {
-  kicker: "Inner loop · 10:30",
-  title: "Project 2: galactic nearest-neighbour clustering",
-  lines: [
-    "Project 2: galactic nearest-neighbour clustering, framed as contributing to theory.",
-    "We take visualisations from existing papers; the model does the mechanics, I bring the physics intuition.",
-    "Flagged to start before the course, earlier than the other ovens.",
-  ],
-  links: [d("demos/galactic-neighbours/", "working notes")],
-  draft: true,
-  Visual: GalacticGoals,
+  title: "Project 2: fast on a GPU, not yet shown to be right.",
+  source: "Round 1 report, May 2026: synthetic Gaussian blobs, one A100-40GB, median of 5 repeats, JIT compile excluded · jFoF: github.com/bhorowitz/jFoF",
+  Scene: Galactic,
 };
 
 export default beat;

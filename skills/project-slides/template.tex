@@ -1,0 +1,94 @@
+% Compile with: tectonic template.tex
+% All example content below is placeholder material for a fictional project.
+\documentclass[aspectratio=169,11pt]{beamer}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+% Load fonts by file name: tectonic's bundle does not register family names.
+\setsansfont{texgyreheros}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\setmonofont{lmmono10}[Extension=.otf,UprightFont=*-regular,ItalicFont=*-italic]
+
+\definecolor{Surface}{HTML}{FCFCFB}
+\definecolor{Text}{HTML}{1F1F1D}
+\definecolor{Muted}{HTML}{6B6A64}
+\definecolor{Accent}{HTML}{2A78D6}
+\definecolor{Grid}{HTML}{E6E5E0}
+\definecolor{Warn}{HTML}{B45309}
+\definecolor{Blocked}{HTML}{B91C1C}
+% Status markers carry a shape and a word, never colour alone.
+\newcommand{\statusok}{{\color{Accent}$\bullet$}\,\textbf{ok}}
+\newcommand{\statuswarn}{{\color{Warn}$\blacktriangle$}\,\textbf{waiting}}
+\newcommand{\statusblocked}{{\color{Blocked}$\blacksquare$}\,\textbf{blocked}}
+\setbeamercolor{background canvas}{bg=Surface}
+\setbeamercolor{normal text}{fg=Text,bg=Surface}
+\setbeamercolor{frametitle}{fg=Text}
+\setbeamercolor{structure}{fg=Accent}
+\setbeamertemplate{navigation symbols}{}
+\setbeamersize{text margin left=10mm,text margin right=10mm}
+\setbeamertemplate{itemize item}{\raisebox{0.15ex}{\scriptsize\color{Accent}$\blacksquare$}}
+\setbeamertemplate{itemize subitem}{\raisebox{0.15ex}{\tiny\color{Accent}$\blacksquare$}}
+
+\newcommand{\shortdecktitle}{Project check-in}
+\newcommand{\deckdate}{20 Oct 2026}
+\newcommand{\framekicker}{}
+\newcommand{\kicker}[1]{\gdef\framekicker{#1}}
+\setbeamertemplate{frametitle}{%
+  \vspace{2mm}{\usebeamercolor[fg]{structure}\fontsize{9}{11}\selectfont\ttfamily\MakeUppercase{\framekicker}\par}%
+  \vspace{2mm}{\usebeamercolor[fg]{frametitle}\fontsize{20}{23}\selectfont\bfseries\insertframetitle\par}\vspace{2mm}}
+\setbeamertemplate{footline}{%
+  \leavevmode\hbox{%
+    \begin{beamercolorbox}[wd=.82\paperwidth,ht=7mm,dp=2.5mm,leftskip=10mm]{normal text}%
+      {\color{Muted}\fontsize{8}{9}\selectfont\ttfamily\shortdecktitle{} · \deckdate}%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.18\paperwidth,ht=7mm,dp=2.5mm,rightskip=10mm plus1fil]{normal text}%
+      \hfill{\color{Muted}\fontsize{8}{9}\selectfont\ttfamily\insertframenumber/\inserttotalframenumber}%
+    \end{beamercolorbox}}}
+\setbeamertemplate{title page}{%
+  \vfill
+  {\color{Accent}\fontsize{9}{11}\selectfont\ttfamily EXAMPLE · PROJECT\par}\vspace{5mm}
+  {\color{Text}\fontsize{30}{34}\selectfont\bfseries\inserttitle\par}\vspace{3mm}
+  {\color{Muted}\fontsize{16}{20}\selectfont\insertsubtitle\par}\vspace{12mm}
+  {\color{Muted}\fontsize{10}{13}\selectfont\ttfamily\insertauthor{} · \insertdate\par}
+  \vfill}
+
+\newcommand{\src}[1]{\vfill{\color{Muted}\fontsize{8}{9}\selectfont\ttfamily source: #1\par}}
+\newcommand{\placeholder}[1]{%
+  \begin{tikzpicture}\draw[Muted,dashed,line width=.7pt] (0,0) rectangle (7.6,4.25);
+  \node[align=center,text=Muted,font=\ttfamily\small,text width=6.8cm] at (3.8,2.125) {#1};\end{tikzpicture}}
+\def\InlineChartPath{__INLINE_CHART__}
+\newcommand{\examplechart}{%
+  \begin{tikzpicture}
+  \begin{axis}[width=7.7cm,height=3.6cm,axis lines=left,xlabel={epoch},ylabel={validation efficiency},xmin=1,xmax=10,ymin=.70,ymax=.95,xtick={1,...,10},ytick={.70,.75,...,.95},tick label style={font=\sffamily\scriptsize,/pgf/number format/assume math mode=true},yticklabel style={/pgf/number format/.cd,fixed,fixed zerofill,precision=2},label style={font=\sffamily\scriptsize},ymajorgrids=true,grid style={Grid},axis line style={Muted},tick style={Muted},clip=false]
+    \addplot[Accent,line width=2pt,mark=none] coordinates {(1,.71)(2,.80)(3,.85)(4,.88)(5,.90)(6,.915)(7,.922)(8,.928)(9,.931)(10,.933)};
+    \node[anchor=south east,text=Accent,font=\scriptsize\bfseries] at (axis cs:10,.933) {0.933};
+  \end{axis}\end{tikzpicture}}
+\newcommand{\figurecontent}[1]{%
+  \IfFileExists{#1}{\includegraphics[width=\linewidth,height=.55\textheight,keepaspectratio]{#1}}{%
+    \def\requestedpath{#1}\ifx\requestedpath\InlineChartPath\examplechart\else\placeholder{#1}\fi}}
+\newcommand{\figslide}[8]{%
+  \kicker{#1}\begin{frame}[t]{#2}
+    \begin{columns}[T,onlytextwidth]
+      \begin{column}{.58\textwidth}\centering\figurecontent{#3}\par\vspace{1mm}{\color{Muted}\small #4}\end{column}
+      \begin{column}{.37\textwidth}\begin{itemize}\item #5\item #6\item #7\end{itemize}\end{column}
+    \end{columns}\src{#8}\end{frame}}
+\newcommand{\textslide}[3]{\kicker{#1}\begin{frame}[t]{#2}#3\end{frame}}
+\newcommand{\nextslide}[4]{%
+  \kicker{#1}\begin{frame}[t]{#2}\begin{columns}[T,onlytextwidth]
+    \begin{column}{.58\textwidth}{\color{Muted}\bfseries NEXT STEPS}\par\vspace{2mm}#3\end{column}
+    \begin{column}{.36\textwidth}\colorbox{Grid}{\begin{minipage}[t]{.9\linewidth}\raggedright\vspace{2mm}{\color{Muted}\bfseries BLOCKERS}\par\vspace{3mm}#4\end{minipage}}\end{column}
+  \end{columns}\end{frame}}
+
+% ==== EXAMPLE DOCUMENT BEGINS ====
+\title{EXAMPLE: GNN track-finding efficiency study}
+\subtitle{A fictional check-in showing the intended structure and density}
+\author{Alex Researcher}
+\date{20 October 2026}
+\begin{document}
+\begin{frame}[plain]\titlepage\end{frame}
+
+\figslide{EXAMPLE · STATUS}{Validation efficiency is flattening near 0.93 after ten epochs.}{__INLINE_CHART__}{Example data, not a real run}{Efficiency gains slow after epoch six.}{Latest value is 0.933.}{\statusok{} on track for the 3 Nov review.}{fictional validation log · epochs 1 to 10}
+
+\nextslide{EXAMPLE · NEXT}{The next check-in will test whether the plateau is data-limited.}{\begin{enumerate}\item Run the larger training sample.\item Scan the pruning threshold.\item Compare efficiency by particle momentum.\end{enumerate}}{\statuswarn{} GPU queue allocation\\[3mm]\statusblocked{} label audit approval\par\vspace{2mm}}
+\end{document}

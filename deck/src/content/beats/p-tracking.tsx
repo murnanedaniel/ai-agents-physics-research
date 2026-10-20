@@ -1,33 +1,12 @@
 "use client";
 
-import { type Beat } from "./_types";
-
-function TrackingGoals() {
-  return (
-    <div className="card-grid two">
-      <div className="course-card">
-        <h2>Base goal</h2>
-        <p>[TODO: Daniel]</p>
-      </div>
-      <div className="course-card">
-        <h2>Stretch</h2>
-        <p>[TODO: Daniel]</p>
-      </div>
-    </div>
-  );
-}
+import type { Beat } from "./_types";
+import { TrackTogether } from "@/components/scenes/g7/TrackTogether";
 
 const beat: Beat = {
-  kicker: "Inner loop · 11:18",
-  title: "Project 4: global track fitting",
-  lines: [
-    "Project 4: global track fitting. The source notes say almost nothing beyond the name.",
-    "Goal, dataset and method: [TODO: Daniel].",
-    "Like every project but RANGE, it gets a pre-cooked run to switch to.",
-  ],
-  links: [],
-  draft: true,
-  Visual: TrackingGoals,
+  title: "Project 4: fit the tracks of an event together.",
+  source: "D. T. Murnane, Beam spot sensitivity in ML-based track parameter regression (draft, 2026). Models: Renusch et al., arXiv:2609.32479",
+  Scene: TrackTogether,
 };
 
 export default beat;

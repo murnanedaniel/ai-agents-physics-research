@@ -1,7 +1,12 @@
 "use client";
 
-import { type Beat, d, l } from "./_types";
+import { type Beat } from "./_types";
+import { OuterIntro } from "@/components/scenes/g9/OuterIntro";
 
-const beat: Beat = {kicker: "Outer loop · 14:30", title: "Outer loop: programme and career", lines: ["The infrastructure exists, but you have to build it.", "Durable briefs, decision logs, worktrees and approval gates.", "A working fleet is not yet a complete physics-programme playbook."], links: [d("loops/outer/", "outer loop"), d("demos/perlmutter-bridge/", "resilient bridge"), l("sciencedash", "ScienceDash")]};
+const beat: Beat = {
+  title: "A research programme needs its own loop.",
+  source: "Course evidence synthesis §6 (Apr to Oct 2026 sessions) · ScienceDash usage audit, Oct 2026",
+  Scene: OuterIntro,
+};
 
 export default beat;

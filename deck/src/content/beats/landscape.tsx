@@ -1,7 +1,12 @@
 "use client";
 
-import { type Beat, d } from "./_types";
+import { type Beat } from "./_types";
+import { Landscape } from "@/components/scenes/g9/Landscape";
 
-const beat: Beat = {kicker: "Close · 15:30", title: "The landscape, October 2026", lines: ["Subscriptions: budget for the task. Claude and Codex are complementary.", "Open models: “capitalism is doing its job” — an opinion to test.", "2027: separate forecasts from demonstrated capability."], links: [d("landscape/", "landscape")]};
+const beat: Beat = {
+  title: "Choose an ecosystem around the work.",
+  source: "Course evidence synthesis §7: Claude Code and Codex sessions on workstation and cluster, Apr to Oct 2026",
+  Scene: Landscape,
+};
 
 export default beat;
