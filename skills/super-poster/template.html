@@ -34,12 +34,19 @@
     .graphic, .table-wrap { max-width:100%; overflow-x:auto; }
     .graphic:focus-visible, .table-wrap:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
     svg { display:block; width:100%; height:auto; }
-    .mechanism-svg { min-width:640px; }
+    .mechanism-graphic { overflow:visible; }
+    .mechanism-svg { width:100%; height:auto; }
+    .mechanism-callouts { display:none; font-size:13px; padding-left:20px; }
+    @media (max-width:600px) {
+      .mechanism-svg .callout { display:none; }
+      .mechanism-callouts { display:block; }
+      .mechanism-svg text { font-size:26px; }
+    }
     .chart-svg { min-width:800px; }
     svg text { font-family:inherit; font-size:14px; fill:var(--text); }
     svg .muted { fill:var(--muted); }
     svg .gridline { stroke:var(--grid); stroke-width:1; }
-    svg .axis { stroke:var(--muted); stroke-width:1; }
+    svg .axis { stroke:var(--grid); stroke-width:1; }
     svg .method { fill:var(--accent); }
     svg .baseline { fill:var(--baseline); }
     .chart-note { margin-bottom:8px; }
@@ -82,11 +89,21 @@
     .js .controls.js-only { display:flex; }
     .chart-ready .chart-fallback { display:none; }
     .poster .full-only { display:none; }
-    .poster .opening { grid-template-columns:1fr; }
-    .poster .mechanism-svg { max-width:680px; margin:auto; }
-    .poster .mechanism-svg { height:230px; }
-    .poster .card { padding:10px; }
-    .poster .row { margin-top:10px; }
+    .poster main { padding:10px 24px; }
+    .poster header { padding-bottom:8px; }
+    .poster h1 { font-size:24px; }
+    .poster .verdict, .poster footer, .poster #step-controls,
+    .poster #step-caption, .poster #chart-controls, .poster #chart-tooltip,
+    .poster .chart-takeaway, .poster .chart-note { display:none; }
+    .poster .opening, .poster .results { grid-template-columns:1fr; }
+    .poster .mechanism-svg { max-height:130px; width:100%; height:auto; margin:auto; }
+    .poster .mechanism-svg .callout { display:none; }
+    .poster .mechanism-callouts { display:none; }
+    .poster .card { padding:8px; }
+    .poster .row { margin-top:8px; }
+    .poster h2 { margin-bottom:4px; }
+    .poster #chart-panels { display:flex; gap:12px; }
+    .poster .chart-svg { min-width:0; flex:1; }
     .dimmed { opacity:0.18; }
     summary { color:var(--accent); font-weight:750; }
     details > summary { margin-bottom:8px; }
@@ -136,7 +153,7 @@
     <section class="card">
       <h2>Mechanism schematic</h2>
       <figure>
-        <div class="graphic" tabindex="0" role="region" aria-label="Mechanism drawing; scroll horizontally on narrow screens">
+        <div class="graphic mechanism-graphic" role="region" aria-label="Mechanism drawing">
           <svg class="mechanism-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 230" role="img" aria-labelledby="mechanism-title mechanism-desc">
             <title id="mechanism-title">{{MECHANISM_TITLE}}</title>
             <desc id="mechanism-desc">{{OBJECTS_RELATIONSHIPS_AND_CALLOUTS_DESCRIPTION}}</desc>
@@ -147,7 +164,10 @@
                  No arrows, labels or leaders crossing edges or each other.
                  Draw representative edges for dense connectivity and state
                  "each X connects to all Y". Never draw a word-box flowchart.
-                 Keep labels inside viewBox, >=13 rendered pixels.
+                 Keep labels inside viewBox, >=13 rendered pixels (callouts >=12px at 420px).
+                 Wrap each callout AND its leader in class="callout", numbered 1–4.
+                 Repeat its text in the numbered list below for narrow screens.
+                 Use no fixed pixel width; reflow geometry if labels cannot fit.
                  Mark groups or shapes with data-step="1", "2", ... matching
                  How it works. Shared elements can use data-step="1 2".
                  No opacity/dimming in the static SVG. -->
@@ -156,6 +176,11 @@
             <g data-step="3"><!-- {{STEP_THREE_GEOMETRY}} --></g>
           </svg>
         </div>
+        <ol class="mechanism-callouts">
+          <!-- Match the numbered SVG callouts; retain 2–4 items. -->
+          <li>{{CALLOUT_ONE}}</li>
+          <li>{{CALLOUT_TWO}}</li>
+        </ol>
         <figcaption>{{WHAT_THE_DRAWING_MAKES_CLEAR}} <a class="src" href="{{MECHANISM_LOCATION}}">{{MECHANISM_TAG}}</a></figcaption>
       </figure>
       <!-- Buttons and captions are generated from the 3–5 How it works steps. -->
@@ -170,6 +195,7 @@
       <p class="note chart-note">{{DATASET_SPLIT_AND_SETTING}}</p>
       <div id="chart-controls" class="controls js-only" aria-label="Chart filters"></div>
       <p id="chart-direction" class="note js-only"></p>
+      <p id="chart-scales" class="note js-only"></p>
       <figure>
         <div id="chart-panels" class="graphic js-only" tabindex="0" role="region" aria-label="Comparison plots; scroll horizontally on narrow screens"></div>
         <p id="chart-tooltip" class="js-only" role="status"></p>
@@ -191,7 +217,7 @@
         <p class="chart-takeaway">{{ONE_SENTENCE_WHAT_THE_COMPARISON_ACTUALLY_SUPPORTS}}</p>
       </figure>
     </section>
-    <section class="card">
+    <section class="card full-only">
       <h2 class="full-only">Key equation or scaling</h2>
       <!-- Use HTML text, sub and sup, no MathJax. Define symbols and cite both
            costs when comparing. Example syntax only: O(N), E<sub>i</sub>.
@@ -376,6 +402,18 @@
     node.type = 'button'; node.textContent = label;
     node.addEventListener('click', action); return node;
   };
+  // Round domains outward using 1, 2, 5 × powers of ten, never raw coordinates.
+  function niceTicks(min, max, n = 4) {
+    if (min === max) { const pad = Math.abs(min) * 0.1 || 1; min -= pad; max += pad; }
+    const raw = (max - min) / (n - 1);
+    const power = 10 ** Math.floor(Math.log10(raw));
+    const step = [1, 2, 5, 10].map(v => v * power).find(v => v >= raw);
+    const first = Math.floor(min / step), last = Math.ceil(max / step);
+    const digits = Math.max(0, -Math.floor(Math.log10(step)));
+    const ticks = Array.from({length:last - first + 1}, (_, i) => Number(((first + i) * step).toPrecision(12)));
+    return {min:ticks[0], max:ticks[ticks.length - 1], ticks,
+      format: v => v.toFixed(digits)};
+  }
   const sourceText = source => `${source.label} (${source.href})`;
   const safeHref = href => {
     // Navigation only. Reject executable and embedded-document URL schemes.
@@ -383,9 +421,11 @@
     return ['https:', 'http:', 'file:'].includes(url.protocol) ? href : '#';
   };
   document.body.classList.add('js');
+  let renderChart = () => {};
   function depth() {
     const poster = location.hash === '#poster';
     document.body.classList.toggle('poster', poster);
+    renderChart();
     $$('[data-depth]').forEach(b => b.setAttribute('aria-pressed', String((b.dataset.depth === 'poster') === poster)));
   }
   $$('[data-depth]').forEach(b => b.addEventListener('click', () => {
@@ -438,18 +478,21 @@
     const label = document.createElement('label'); label.textContent = 'System '; label.htmlFor = 'chart-system';
     const select = document.createElement('select'); select.id = 'chart-system';
     [null, ...systems].forEach((name, index) => {
-      const option = document.createElement('option'); option.value = String(index); option.textContent = name === null ? 'All' : name; select.append(option);
+      const option = document.createElement('option'); option.value = String(index); option.textContent = name === null ? 'All systems' : name; select.append(option);
     });
     select.addEventListener('change', () => { system = [null, ...systems][Number(select.value)]; render(); });
     $('#chart-controls').append(label, select);
     function render() {
+      const poster = document.body.classList.contains('poster');
+      const shownMetrics = poster ? [metrics[0]] : metric === null ? metrics : [metric];
+      const shownSystems = poster || system === null ? systems : [system];
       const panels = $('#chart-panels'); panels.replaceChildren();
       $('#chart-tooltip').textContent = '';
       metricButtons.forEach(({name, b}) => b.setAttribute('aria-pressed', String(name === metric)));
       $('#chart-direction').textContent = data.metrics.map(m => `${m.name}: ${m.direction}`).join(' · ');
       // Separate system/metric/unit panels: no averaging or incomparable scales.
-      for (const m of metric === null ? metrics : [metric]) {
-        for (const sys of system === null ? systems : [system]) {
+      for (const m of shownMetrics) {
+        for (const sys of shownSystems) {
           const subset = rows.filter(r => r.metric === m && r.system === sys).sort((a,b) => methods.indexOf(a.method) - methods.indexOf(b.method));
           for (const unit of [...new Set(subset.map(r => r.unit))]) {
             const group = subset.filter(r => r.unit === unit);
@@ -457,14 +500,16 @@
             const lo = values.length ? Math.min(...values) : 0;
             const hi = values.length ? Math.max(...values) : 1;
             const pad = (hi - lo || Math.abs(lo) || 1) * 0.15;
-            const min = lo - pad, max = hi + pad;
+            const axis = niceTicks(lo - pad, hi + pad);
+            const {min, max} = axis;
             const x = v => 200 + 310 * (v - min) / (max - min);
             const height = 100 + group.length * 38;
             const svg = el('svg', {viewBox:`0 0 800 ${height}`, class:'chart-svg', role:'group', 'aria-label':`${m}, ${sys}, ${unit}`});
             svg.append(el('title', {}, `${m} · ${sys} · ${unit}`), el('text', {x:0,y:20}, `${m} · ${sys} · ${unit}`));
-            [min, (min+max)/2, max].forEach(v => {
-              svg.append(el('line', {x1:x(v),x2:x(v),y1:32,y2:height-45,class:'gridline'}), el('text', {x:x(v),y:height-25,'text-anchor':'middle'}, v.toPrecision(3)));
+            axis.ticks.forEach(v => {
+              svg.append(el('line', {x1:x(v),x2:x(v),y1:32,y2:height-45,class:'gridline'}), el('text', {x:x(v),y:height-25,'text-anchor':'middle'}, axis.format(v)));
             });
+            svg.append(el('line', {x1:x(min),x2:x(max),y1:height-45,y2:height-45,class:'axis'}));
             svg.append(el('text', {x:200,y:height-5}, 'Linear dot scale; ticks rounded; axis need not start at zero'));
             group.forEach((row, i) => {
               const y = 50 + i*38;
@@ -481,8 +526,10 @@
           }
         }
       }
+      $('#chart-scales').textContent = panels.children.length > 1 ? 'scales differ by panel' : '';
       document.body.classList.add('chart-ready');
     }
+    renderChart = render;
     render();
   }
 
@@ -493,18 +540,23 @@
     const slider = $('#size-slider');
     slider.min = Math.log10(scale.minN); slider.max = Math.log10(scale.maxN); slider.value = Math.log10(scale.referenceN);
     function drawScaling() {
-      const N = 10 ** Number(slider.value), left = Number(slider.min), right = Number(slider.max);
+      const N = 10 ** Number(slider.value);
+      const xAxis = niceTicks(Math.floor(Number(slider.min)), Math.ceil(Number(slider.max)), 2);
+      const left = xAxis.min, right = xAxis.max;
       $('#size-output').textContent = `N ≈ ${N.toPrecision(3)} (rounded)`;
       const points = scale.points || [];
       const curves = scale.complexities.map(c => ({name:c, f:n => functions[c](n)/functions[c](scale.referenceN)}));
       const ys = curves.flatMap(c => [c.f(scale.minN),c.f(scale.maxN)]).concat(points.map(p => Number(p.value))).filter(y => y > 0);
-      const low = Math.log10(Math.min(...ys)), high = Math.log10(Math.max(...ys));
+      const yAxis = niceTicks(Math.floor(Math.log10(Math.min(...ys))), Math.ceil(Math.log10(Math.max(...ys))), 2);
+      const low = yAxis.min, high = yAxis.max;
       const x = n => 80 + 470*(Math.log10(n)-left)/(right-left);
       const y = v => 220 - 170*(Math.log10(v)-low)/(high-low || 1);
       const svg = el('svg',{viewBox:'0 0 800 290',class:'chart-svg',role:'group','aria-label':'Illustrative normalised complexity curves; logarithmic axes'});
       svg.append(el('text',{x:15,y:20},'Normalised cost (log scale); cost at reference N = 1'));
-      [low,(low+high)/2,high].forEach(v => svg.append(el('text',{x:0,y:y(10**v)},(10**v).toPrecision(2))));
-      [scale.minN,scale.referenceN,scale.maxN].forEach(n => svg.append(el('text',{x:x(n),y:245,'text-anchor':'middle'},String(n))));
+      const logLabel = exponent => exponent < 0 ? (10 ** exponent).toFixed(-exponent) : String(10 ** exponent);
+      yAxis.ticks.forEach(v => svg.append(el('line',{x1:80,x2:550,y1:y(10**v),y2:y(10**v),class:'gridline'}),el('text',{x:0,y:y(10**v)},logLabel(v))));
+      xAxis.ticks.forEach(v => svg.append(el('line',{x1:x(10**v),x2:x(10**v),y1:50,y2:220,class:'gridline'}),el('text',{x:x(10**v),y:245,'text-anchor':'middle'},logLabel(v))));
+      svg.append(el('path',{d:'M80 50 V220 H550',fill:'none',class:'axis'}));
       svg.append(el('text',{x:80,y:275},'System size N (log scale)'),el('line',{x1:x(N),x2:x(N),y1:40,y2:225,stroke:'var(--muted)','stroke-dasharray':'3 3'}));
       curves.forEach((c,index) => {
         const d = Array.from({length:81},(_,i) => { const n=10**(left+(right-left)*i/80); return `${i?'L':'M'}${x(n)},${y(c.f(n))}`; }).join(' ');
