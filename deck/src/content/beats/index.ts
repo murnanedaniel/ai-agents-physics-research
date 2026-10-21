@@ -56,7 +56,6 @@ export { default as "inner-intro" } from "./inner-intro";
 export { default as "p-galactic" } from "./p-galactic";
 export { default as "galactic-plan" } from "./galactic-plan";
 export { default as "surfaces" } from "./surfaces";
-export { default as "demo-galactic-repo" } from "./demo-galactic-repo";
 export { default as "plan-mode" } from "./plan-mode";
 export { default as "p-finetuning" } from "./p-finetuning";
 export { default as "pychm-story" } from "./pychm-story";
