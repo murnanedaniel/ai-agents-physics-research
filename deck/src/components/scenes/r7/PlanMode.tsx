@@ -12,12 +12,12 @@ const CYCLE = ["default", "accept edits", "plan"];
 function Tweet({ date, text, at, step }: { date: string; text: string; at: number; step: number }) {
   return (
     <Reveal at={at} step={step}>
-      <div className="rounded-2xl border px-5 py-4" style={{ borderColor: C.rule, background: "#fff" }}>
+      <div className="rounded-2xl border px-6 py-6" style={{ borderColor: C.rule, background: "#fff" }}>
         <div className="flex items-baseline justify-between gap-3">
           <span className="t-label" style={{ ...mono, fontSize: T.label, color: C.ink }}>Thariq · Claude Code team</span>
           <span className="t-label" style={{ ...mono, fontSize: T.label, color: C.muted }}>{date}</span>
         </div>
-        <div className="mt-2" style={{ fontSize: T.body, lineHeight: 1.3 }}>&ldquo;{text}&rdquo;</div>
+        <div className="mt-3" style={{ fontSize: "clamp(24px, 2.3vw, 44px)", lineHeight: 1.25 }}>&ldquo;{text}&rdquo;</div>
       </div>
     </Reveal>
   );
@@ -26,7 +26,7 @@ function Tweet({ date, text, at, step }: { date: string; text: string; at: numbe
 export function PlanMode({ step }: { step: number }) {
   return (
     <Canvas className="flex items-center gap-[4vw]">
-      <div className="flex-1 min-w-0 flex flex-col gap-[4vh]">
+      <div className="flex-1 min-w-0 flex flex-col gap-[7vh]">
         <div className="flex items-center gap-3 flex-wrap">
           <span className="rounded-md border-2 px-3 py-1 t-label" style={{ ...mono, fontSize: T.label, borderColor: C.ink, borderBottomWidth: 4 }}>Shift + Tab</span>
           {CYCLE.map((c, i) => (
@@ -41,7 +41,7 @@ export function PlanMode({ step }: { step: number }) {
           <div className="mt-2 t-label" style={{ ...mono, fontSize: T.label, color: C.muted }}>the docs on plan mode</div>
         </div>
       </div>
-      <div className="flex-1 min-w-0 flex flex-col gap-[2.5vh]">
+      <div className="flex-1 min-w-0 flex flex-col gap-[4vh]">
         <Tweet at={1} step={step} date="23 Sep 2026" text="I don't think the models need plan mode anymore" />
         <Tweet at={1} step={step} date="24 Sep 2026" text="make plan mode into a built-in mod" />
         <Reveal at={1} step={step}>

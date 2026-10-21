@@ -14,7 +14,7 @@ const CARDS = [
 
 export function ClaudeScience({ step }: { step: number }) {
   return (
-    <Canvas className="flex flex-col justify-center gap-[4vh]">
+    <Canvas className="flex flex-col justify-center gap-[7vh]">
       <div className="text-center">
         <div style={{ ...serif, fontSize: T.big, lineHeight: 1.1 }}>A research workbench.</div>
         <div className="mt-2 t-label" style={{ ...mono, fontSize: T.label, color: C.muted }}>Anthropic · a workbench for computational research · beta since June 2026 · 60+ skills, mostly biology and chemistry</div>
@@ -22,7 +22,7 @@ export function ClaudeScience({ step }: { step: number }) {
       <div className="grid grid-cols-3 gap-[2vw]">
         {CARDS.map((c) => (
           <div key={c.claim} className="flex flex-col gap-3">
-            <div className="rounded-xl border px-5 py-4 min-h-[16vh] flex items-center" style={{ borderColor: C.rule, background: C.card }}>
+            <div className="rounded-xl border px-5 py-4 min-h-[26vh] flex items-center" style={{ borderColor: C.rule, background: C.card }}>
               <div style={{ fontSize: T.body, lineHeight: 1.3 }}>{c.claim}</div>
             </div>
             <Reveal at={1} step={step}>

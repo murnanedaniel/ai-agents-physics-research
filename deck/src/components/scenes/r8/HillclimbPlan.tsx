@@ -12,8 +12,8 @@ import { Arrow, C, MONO, SANS, Stage } from "./kit";
 type Loop = { title: string; score: string[]; edit: string; check: string; open: boolean; pareto?: boolean };
 const LOOPS: Loop[] = [
   { title: "Galactic clustering", score: ["faster, with no", "loss of accuracy"], edit: "linking code", check: "halos vs exact finder", pareto: true, open: false },
-  { title: "RANGE", score: ["force error at matched", "size and speed"], edit: "long-range module", check: "MD22 test split", open: false },
   { title: "Fine-tuning theory", score: ["to be decided live", ""], edit: "", check: "", open: true },
+  { title: "RANGE", score: ["force error at matched", "size and speed"], edit: "long-range module", check: "MD22 test split", open: false },
 ];
 
 // Speed against accuracy: earlier versions as dots, the current best ringed;

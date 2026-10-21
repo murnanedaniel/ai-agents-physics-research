@@ -17,7 +17,7 @@ Time box: 5-10 minutes. Two prompts. Short answers are fine.
 
 Use your own draft (an abstract, a conclusion, a proposal paragraph) if you have one. Otherwise use this practice abstract. It is made up for the exercise, and some of its claims are planted errors:
 
-> We present a new graph-network jet tagger. The Higgs boson was observed by ATLAS and CMS in 2012, with a mass of about 135 GeV. Our tagger outperforms all existing methods on the public top-tagging dataset. Agentic workflows cut the analysis time by 90%, which makes this the first fully automated tagging study.
+> We present a new graph-network jet tagger. The Higgs boson was observed by ATLAS and CMS in 2012, with a mass of about 135 GeV. Compared with two baselines on the public top-tagging dataset, our tagger outperforms all existing methods. Agentic workflows cut the analysis time by 90%, which makes this the first fully automated tagging study.
 
 ## Step 1: review (about 4 minutes)
 

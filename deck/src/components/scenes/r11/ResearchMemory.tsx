@@ -68,11 +68,11 @@ export function ResearchMemory({ step }: { step: number }) {
           <div className="rounded-md text-center" style={{ border: `2px solid ${C.accent}`, padding: "1.2vh 0.6vw", ...T.body, color: C.ink }}>new session</div>
         </Column>
         <Column n={3} head="One-line decisions" when={step >= 2}>
-          <div className="rounded-md" style={{ background: "#1f1d1a", color: "#f3efe6", padding: "1.2vh 0.8vw", ...T.label, fontFamily: mono }}>
+          <div className="t-label rounded-md" style={{ background: "#1f1d1a", color: "#f3efe6", padding: "1.2vh 0.8vw", ...T.label, fontFamily: mono }}>
             $ rmem decide &quot;Use the measured baseline&quot;
           </div>
           <div className="t-label text-center" style={{ ...T.label, fontFamily: mono, color: C.accent }}>↓ appends</div>
-          <div className="rounded-md" style={{ border: `1px solid ${C.rule}`, background: "#fff", padding: "1.2vh 0.8vw", ...T.label, fontFamily: mono, color: C.ink }}>
+          <div className="t-label rounded-md" style={{ border: `1px solid ${C.rule}`, background: "#fff", padding: "1.2vh 0.8vw", ...T.label, fontFamily: mono, color: C.ink }}>
             DECISIONS.md<br />2026-10-22: Use the measured baseline
           </div>
         </Column>

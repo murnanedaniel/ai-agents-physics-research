@@ -20,7 +20,7 @@ export function JudgePanel({ step }: { step: number }) {
   const [hover, setHover] = useState(false);
   const rank = (v: number) => 600 + ((v - 1) / 99) * 560;
   return (
-    <Canvas viewBox="0 0 1200 580" label="Three model judges calibrated on three past proposals; on eleven unseen past proposals they rank a funded one above an unfunded one 93 percent of the time; on my own unpublished proposal their rank lands next to the real panel's">
+    <Canvas viewBox="0 0 1200 580" label="Three model judges calibrated on three past proposals; on eleven unseen past proposals they rank a funded one above an unfunded one 93 percent of the time; on my own unpublished proposal they ranked it a little better than the real ERC panel did">
       <Arrow id="r10-jp" />
       {/* legend */}
       <g>
@@ -42,7 +42,7 @@ export function JudgePanel({ step }: { step: number }) {
 
       {/* B: held-out test */}
       <Show at={1} step={step} dim>
-        <text x={0} y={ROW.b - 50} fontFamily={SANS} fontSize={25} fill={C.ink}>Eleven more, outcomes hidden</text>
+        <text x={0} y={ROW.b - 50} fontFamily={SANS} fontSize={25} fill={C.ink}>Eleven more, hidden</text>
         {Array.from({ length: 11 }, (_, i) => <Doc key={i} x={i * 36} y={ROW.b - 28} filled={i < 7} />)}
         <path d={`M440 ${ROW.b - 10} H540`} stroke={C.muted} strokeWidth={2} markerEnd="url(#r10-jp)" />
         <g {...stop} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={{ cursor: "default" }}>
@@ -70,7 +70,8 @@ export function JudgePanel({ step }: { step: number }) {
         <text className="t-label" x={rank(REAL_LO)} y={ROW.c + 30} fontSize={15} fill={C.warm} fontFamily={MONO}>REAL ERC PANEL</text>
         <circle cx={rank(UNSEEN_PANEL)} cy={ROW.c - 6} r={10} fill={C.accent} />
         <text className="t-label" x={rank(UNSEEN_PANEL) - 18} y={ROW.c - 32} fontSize={15} textAnchor="end" fill={C.accent} fontFamily={MONO}>MODEL PANEL</text>
-        <text x={1160} y={ROW.c + 76} textAnchor="end" fontFamily={SANS} fontSize={23} fill={C.muted}>Live: it scores the EuroHPC draft.</text>
+        <text x={600} y={ROW.c + 76} fontFamily={SANS} fontSize={24} fill={C.ink}>Close to the real panel, a little kinder.</text>
+        <text className="t-label" x={1160} y={ROW.c + 108} textAnchor="end" fontFamily={MONO} fontSize={15} fill={C.muted}>LIVE, THIS PANEL SCORES THE EUROHPC DRAFT</text>
       </Show>
     </Canvas>
   );

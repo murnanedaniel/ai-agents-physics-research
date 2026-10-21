@@ -10,7 +10,7 @@ import { C, Canvas, MONO, SANS, Show, stop } from "./kit";
 // (notes/w19/WEB-RESEARCH.md §6).
 const TABS = [
   { name: "Start", how: "browser", detail: "category, licence, policy boxes" },
-  { name: "Add files", how: "shell: tarball", detail: "built in the shell; if the browser upload fails, I attach it" },
+  { name: "Add files", how: "shell builds, I upload", detail: "the shell builds the tarball; the browser upload is untested, so I attach it" },
   { name: "Process", how: "browser", detail: "arXiv compiles; the agent reads the log" },
   { name: "Metadata", how: "browser", detail: "title, authors, abstract from the source" },
   { name: "Preview", how: "browser", detail: "compiled PDF checked against the local build" },
@@ -21,7 +21,7 @@ export function ArxivEdge({ step }: { step: number }) {
   const [hover, setHover] = useState<number | null>(null);
   const ex = TABS.length * (W + G) + 20;
   return (
-    <Canvas label="arXiv's submission form has five tabs before the Submit button. The agent fills all five, with the shell building the file to upload. The Submit click stays with me">
+    <Canvas label="arXiv's submission form has five tabs before the Submit button. The agent fills them, the shell builds the file and I upload it. The Submit click stays with me">
       <text x={0} y={80} fontFamily={SANS} fontSize={27} fill={C.ink}>The reviewed tracking paper, through arXiv&apos;s form:</text>
       {TABS.map((t, i) => {
         const x = i * (W + G);
@@ -31,7 +31,9 @@ export function ArxivEdge({ step }: { step: number }) {
             <rect x={x} y={Y} width={W} height={130} rx={12} fill={C.card} stroke={hot ? C.accent : C.rule} strokeWidth={hot ? 2.5 : 1.5} />
             <text className="t-label" x={x + 16} y={Y + 32} fontFamily={MONO} fontSize={15} fill={C.accent}>tab {i + 1}</text>
             <text x={x + 16} y={Y + 72} fontFamily={SANS} fontSize={25} fill={C.ink}>{t.name}</text>
-            <text className="t-label" x={x + 16} y={Y + 106} fontFamily={MONO} fontSize={14} fill={C.muted}>{t.how}</text>
+            {t.how.split(", ").map((h, k, all) => (
+              <text key={h} className="t-label" x={x + 16} y={Y + (all.length > 1 ? 98 : 106) + k * 20} fontFamily={MONO} fontSize={14} fill={C.muted}>{k < all.length - 1 ? `${h},` : h}</text>
+            ))}
           </g>
         );
       })}

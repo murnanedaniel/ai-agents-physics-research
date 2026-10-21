@@ -19,8 +19,8 @@ const PAGES = [
 export function CreditsPages() {
   const [hover, setHover] = useState<number | null>(null);
   return (
-    <Canvas label="Anthropic's AI for Science programme gives API credits to academic research. A March support page says up to 20,000 dollars with a biology focus; the newer August announcement says up to 50,000 dollars per project beyond biology. Live, we fill in the form">
-      <text x={0} y={40} fontFamily={SANS} fontSize={27} fill={C.ink}>AI for Science: free API credits for academic research.</text>
+    <Canvas label="Anthropic's AI for Science programme gives API credits to academic research. A March support page says up to 20,000 dollars with a biology focus; the newer August announcement says up to 50,000 dollars per project beyond biology. Live, we fill in the form for one of today's projects">
+      <text x={0} y={40} fontFamily={SANS} fontSize={27} fill={C.ink}>AI for Science: free API credits for academics.</text>
       <text x={0} y={78} fontFamily={SANS} fontSize={27} fill={C.muted}>Two official pages disagree.</text>
 
       <line x1={X0} x2={X1} y1={AXIS} y2={AXIS} stroke={C.ink} strokeWidth={1.5} />
@@ -50,7 +50,7 @@ export function CreditsPages() {
           </g>
         );
       })}
-      <text x={0} y={548} fontFamily={SANS} fontSize={25} fill={C.ink}>Live: the form. Physics is eligible.</text>
+      <text x={0} y={548} fontFamily={SANS} fontSize={25} fill={C.ink}>Live: the form, for one of today&apos;s projects.</text>
     </Canvas>
   );
 }

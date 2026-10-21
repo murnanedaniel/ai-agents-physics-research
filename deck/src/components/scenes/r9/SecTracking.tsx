@@ -5,9 +5,9 @@ import { Arrow, C, Canvas, MONO, SANS } from "./kit";
 // sec-tracking (section): three cards on a time axis. What our beam-spot draft
 // found, what the new paper changed, and what today's run asks.
 const CARDS = [
-  { when: "April 2026", who: "our beam-spot draft", lines: ["the d0 gain was", "mostly beam spot"], tint: "#fffdf8", ink: C.muted, note: "predicting d0 = 0 came close" },
+  { when: "April 2026", who: "our beam-spot draft", lines: ["d0 gain: mostly", "the beam spot"], tint: "#fffdf8", ink: C.muted, note: "predicting d0 = 0 came close" },
   { when: "September 2026", who: "Renusch et al.", lines: ["four models match", "a Kalman filter"], tint: C.tint, ink: C.accent, note: "on drifting-beam-spot tt̄" },
-  { when: "today", who: "project 5", lines: ["rerun them, then", "on found tracks"], tint: C.warmTint, ink: C.warm, note: "found by CKF, the usual track finder" },
+  { when: "today", who: "project 5", lines: ["rerun, then on", "found tracks"], tint: C.warmTint, ink: C.warm, note: "found by CKF, the usual track finder" },
 ];
 const W = 360, G = 40;
 
@@ -31,7 +31,7 @@ export function SecTracking() {
           </g>
         );
       })}
-      <text x={600} y={460} textAnchor="middle" fontFamily={SANS} fontSize={28} fill={C.ink}>Does that hold outside the paper's setup?</text>
+      <text x={600} y={460} textAnchor="middle" fontFamily={SANS} fontSize={28} fill={C.ink}>Does it hold outside the paper's setup?</text>
       <Arrow id="r9-st" />
     </Canvas>
   );

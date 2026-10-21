@@ -14,7 +14,7 @@ const CARDS = [
   { t: "13:26", kind: "idea", text: "If agents can write every problem set, maybe assessment drifts back to our oldest technology: the conversation. \u2026" },
   { t: "13:28", kind: "idea", text: "When every applicant’s plots are flawless, the plot stops carrying signal. …" },
   { t: "13:37", kind: "idea", text: "A correct-but-not-understood answer has a signature: it can’t survive perturbation. Change one assumption, ask what shifts. \u2026" },
-  { t: "13:43", kind: "idea", text: "… You can’t look up the anomaly you didn’t notice. …" },
+  { t: "13:43", kind: "idea", text: "You can’t look up the anomaly you didn’t notice." },
 ];
 const KINDS = [
   { k: "idea", n: 44 }, { k: "connection", n: 7 }, { k: "opinion", n: 7 }, { k: "question", n: 3 },

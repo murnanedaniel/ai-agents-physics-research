@@ -54,7 +54,7 @@ export function ExcalidrawScene({ step }: { step: number }) {
             <path d="M 98 10 L 112 20 L 98 30" stroke={C.accent} strokeWidth="3" fill="none" />
             <path d="M 20 10 L 6 20 L 20 30" stroke={C.accent} strokeWidth="3" fill="none" />
           </svg>
-          <span style={{ fontSize: T.body, color: C.accent, textAlign: "center", lineHeight: 1.2 }}>via an MCP server, the agent reads and draws</span>
+          <span style={{ fontSize: T.body, color: C.accent, textAlign: "center", lineHeight: 1.2 }}>via an Excalidraw MCP server, the agent reads and draws</span>
         </Reveal>
 
         <Reveal at={1} step={step} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.2vh" }}>

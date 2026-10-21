@@ -32,6 +32,7 @@ export function HandsOnReviewScene({ step }: { step: number }) {
       </div>
       <div style={{ alignSelf: "flex-start", display: "flex", alignItems: "center", gap: "1.6vw" }}>
         <CardLink path="exercises/review-a-draft/">exercise card ↗</CardLink>
+        <Label>10 minutes · chat, terminal or your own draft</Label>
       </div>
     </Canvas>
   );

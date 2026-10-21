@@ -20,12 +20,12 @@ const PLAN = [
 
 export function GalacticPlan({ step }: { step: number }) {
   return (
-    <Canvas className="flex flex-col justify-start pt-[3vh] gap-[6vh]">
+    <Canvas className="flex flex-col justify-between py-[3vh]">
       <div className="grid grid-cols-3 gap-[2vw]">
         {ART.map((a) => {
           const isNew = a.tone === "new";
           return (
-            <div key={a.name} className={`rounded-xl px-5 py-4 ${isNew ? "border-2 border-dashed" : "border"}`}
+            <div key={a.name} className={`rounded-xl px-6 py-6 min-h-[22vh] ${isNew ? "border-2 border-dashed" : "border"}`}
               style={{ borderColor: isNew ? C.accent : C.rule, background: isNew ? C.accentSoft : C.card }}>
               <div style={{ fontSize: T.body, color: isNew ? C.accent : C.ink, fontWeight: 600 }}>{a.name}</div>
               <div className="mt-2 t-label" style={{ ...mono, fontSize: T.label, color: C.ink, lineHeight: 1.35 }}>{a.sub}</div>
@@ -47,7 +47,7 @@ export function GalacticPlan({ step }: { step: number }) {
             </div>
           ))}
         </div>
-        <div className="mt-[4vh] rounded-xl border-l-4 pl-4 py-1" style={{ borderColor: C.accent }}>
+        <div className="mt-[7vh] rounded-xl border-l-4 pl-4 py-1" style={{ borderColor: C.accent }}>
           <div style={{ fontSize: T.body, lineHeight: 1.3 }}>Success: faster, with no loss of accuracy.</div>
           <div className="t-label mt-1" style={{ ...mono, fontSize: T.label, color: C.muted }}>figure of merit: the speed-accuracy Pareto frontier · accuracy = halo members against an exact answer · no results yet</div>
         </div>

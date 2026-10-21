@@ -16,7 +16,7 @@ const COLUMNS = [
     { id: "ex-erc", name: "ERC proposal", when: "Oct 2026" },
   ] },
   { head: "Outer loop", sub: "a programme", items: [
-    { id: "ex-chatlas", name: "ChATLAS", when: "2024 to 2026" },
+    { id: "ex-chatlas", name: "chATLAS", when: "2024 to 2026" },
     { id: "ex-hamlet", name: "HAMLET app", when: "Aug 2026" },
     { id: "ex-sciencedash", name: "ScienceDash", when: "Apr to Oct 2026" },
   ] },

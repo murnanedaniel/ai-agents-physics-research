@@ -14,7 +14,7 @@ const TOOLS = ["Shell commands", "File edits", "MCP tools"];
 type Gate = "ask" | "pass" | "rule";
 const MODES: { id: string; gates: [Gate, Gate, Gate]; rule?: string; note: string }[] = [
   { id: "plan", gates: ["rule", "rule", "rule"], rule: "plans only", note: "Reads and proposes; changes nothing." },
-  { id: "default", gates: ["ask", "ask", "ask"], note: "Asks before shell commands, edits and network use." },
+  { id: "default", gates: ["ask", "ask", "ask"], note: "Asks before shell commands, file edits and MCP tools." },
   { id: "acceptEdits", gates: ["ask", "pass", "ask"], note: "Edits in the working folder go through; the rest still asks." },
   { id: "auto", gates: ["rule", "rule", "rule"], rule: "classifier", note: "A classifier model decides. The docs: no safety guarantee." },
   { id: "dontAsk", gates: ["rule", "rule", "rule"], rule: "allow-list", note: "Only pre-approved tools run; the rest are refused." },
@@ -79,7 +79,7 @@ export function SecurityControlsScene({ step }: { step: number }) {
         <div style={{ fontSize: T.body, minHeight: "1.4em" }}>{mode.note}</div>
         <motion.div initial={false} animate={{ opacity: walled ? 1 : 0 }} transition={{ duration: 0.6 }} aria-hidden={!walled}
           style={{ fontSize: T.body, color: C.accent, borderLeft: `4px solid ${C.accent}`, paddingLeft: "1vw", maxWidth: "34vw" }}>
-          Sandbox: shell commands write only to allowed folders and reach only allowed domains.
+          Sandbox: shell writes only to allowed folders, reaches only allowed domains.
         </motion.div>
       </div>
     </Canvas>

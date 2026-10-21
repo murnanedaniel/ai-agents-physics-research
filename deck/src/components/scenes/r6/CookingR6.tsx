@@ -10,6 +10,7 @@ const PRE0 = 320;
 const hm = (h: number, m: number) => h + m / 60;
 const SERVE = hm(15, 40);
 const LUNCH_CHECK = hm(13, 15);
+const REVIEW = hm(14, 5); // demo-tracking-review in the timeline
 const breaks = [[hm(10, 20), hm(10, 40)], [12, hm(13, 15)], [hm(14, 30), hm(14, 50)]];
 
 // Numbered in presentation order. Launch times follow the scene order in
@@ -19,7 +20,7 @@ const projects = [
   { n: 2, name: "Fine-tuning", start: hm(11, 10), pre: false },
   { n: 3, name: "RANGE", start: hm(11, 25), pre: false },
   { n: 4, name: "The Basic Model", start: hm(13, 40), pre: false },
-  { n: 5, name: "Track fitting", start: hm(14, 0), pre: true },
+  { n: 5, name: "Track fitting", start: hm(13, 55), pre: true },
 ];
 const Y0 = 80, ROW = 70;
 
@@ -50,8 +51,12 @@ export function CookingR6({ step }: { step: number }) {
               <>
                 <rect x={PRE0} y={y - 14} width={X0 - PRE0} height={28} rx={4} fill="url(#ck6-hatch)" stroke={C.accent} strokeWidth={1} />
                 <line x1={X0} y1={y} x2={tx(p.start)} y2={y} stroke={C.accent} strokeWidth={1.5} strokeDasharray="3 5" />
-                <circle cx={tx(p.start)} cy={y} r={7} fill={C.accent} />
-                <text x={tx(p.start) + 14} y={y + 6} fontSize={T.small} fill={C.ink} className="t-label">review</text>
+                {/* After lunch: a longer rerun to the serving, plus a review of the draft */}
+                <motion.rect x={tx(p.start)} y={y - 14} height={28} rx={4} fill={C.accent} opacity={0.85}
+                  initial={false} animate={{ width: tx(SERVE) - tx(p.start) }} transition={{ duration: 0.9, delay: 0.1 * i }} />
+                <text x={tx(p.start)} y={y - 22} fontSize={T.label} fill={C.muted} className="t-label">rerun after lunch</text>
+                <circle cx={tx(REVIEW)} cy={y} r={8} fill="#ffffff" stroke={C.ink} strokeWidth={2} />
+                <text x={tx(REVIEW)} y={y + 34} textAnchor="middle" fontSize={T.label} fill={C.ink} className="t-label">review</text>
               </>
             ) : (
               <>
@@ -76,7 +81,7 @@ export function CookingR6({ step }: { step: number }) {
             <text x={tx(h)} y={Y0 - 40} textAnchor="middle" fontSize={T.label} fill={C.ink} className="t-label">{label}</text>
           </g>
         ))}
-        <text x={34} y={yEnd + 122} fontSize={T.body} fill={C.ink}>Track fitting was cooked before today; we review it after lunch.</text>
+        <text x={34} y={yEnd + 122} fontSize={T.body} fill={C.ink}>Track fitting was pre-cooked; after lunch we rerun it longer and review the draft.</text>
       </Show>
     </Canvas>
   );

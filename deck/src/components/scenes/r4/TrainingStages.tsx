@@ -6,8 +6,8 @@ import { Arrowheads, C, Canvas, MONO, SANS, SERIF, stop } from "./kit";
 
 // llm-training: one panel per training approach, each a short animation of what
 // the learning signal is. Mechanisms from notes/round2/WEB-RESEARCH-R2.md item 3.
-// Step i shows stage i; the tabs can be clicked to jump (stage 5 needs steps = 5
-// in the timeline, otherwise it is reached by click).
+// Step i shows stage i (five steps, one per approach); the tabs can be clicked
+// to jump back or ahead.
 const STAGES = [
   { tab: "Pretraining", verb: "Predict", what: "the next token", signal: "raw text, which is its own label", ref: "GPT-3: Brown et al. 2020, arXiv:2005.14165" },
   { tab: "SFT", verb: "Imitate", what: "an ideal answer", signal: "answers written by people", ref: "InstructGPT: Ouyang et al. 2022, arXiv:2203.02155" },

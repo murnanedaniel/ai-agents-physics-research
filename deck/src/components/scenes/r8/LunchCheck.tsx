@@ -12,10 +12,10 @@ const tx = (min: number) => X0 + ((X1 - X0) * min) / 75;
 type Lane = { name: string; look: string; bar: "lunch" | "before" | "none"; note?: string };
 const LANES: Lane[] = [
   { name: "1  Galactic", look: "W&B runs", bar: "before" },
-  { name: "2  Fine-tuning", look: "Claude Science", bar: "none" },
+  { name: "2  Fine-tuning", look: "Claude Science", bar: "none", note: "to be decided live" },
   { name: "3  RANGE", look: "W&B, ScienceDash", bar: "before" },
   { name: "4  Basic Model", look: "starts after lunch", bar: "none" },
-  { name: "5  Track fitting", look: "pre-cooked paper", bar: "before" },
+  { name: "5  Track fitting", look: "pre-cooked paper", bar: "none", note: "pre-cooked; reruns after lunch" },
 ];
 
 export function LunchCheck() {
