@@ -116,6 +116,8 @@ export { default as "hands-on-2" } from "./hands-on-2";
 export { default as "show-2" } from "./show-2";
 export { default as "outer-intro" } from "./outer-intro";
 export { default as "research-memory" } from "./research-memory";
+export { default as "second-brain" } from "./second-brain";
+export { default as "vector-search" } from "./vector-search";
 export { default as "hands-on-3" } from "./hands-on-3";
 export { default as "ideation" } from "./ideation";
 export { default as "excalidraw" } from "./excalidraw";
