@@ -26,6 +26,8 @@ export { default as "llm-transformer" } from "./llm-transformer";
 export { default as "llm-inference" } from "./llm-inference";
 export { default as "llm-context-cost" } from "./llm-context-cost";
 export { default as "llm-scaling" } from "./llm-scaling";
+export { default as "bitter-lesson" } from "./bitter-lesson";
+export { default as "bitter-agents" } from "./bitter-agents";
 export { default as "llm-jagged" } from "./llm-jagged";
 export { default as "llm-star" } from "./llm-star";
 export { default as "llm-training" } from "./llm-training";
