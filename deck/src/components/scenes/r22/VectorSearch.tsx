@@ -6,9 +6,9 @@ import { Area, C, Show, T } from "../r11/kit";
 // vector-search: what it is, when it pays, and my view.
 // Step 0: embeddings as points; the query's nearest neighbours match on
 // meaning, keyword search (BM25) on shared words. Toy 2-D picture.
-// Step 1: hybrid search at scale. chATLAS facts from the public talks only
-// (LIPS 2024 corpus counts; CERN Bites of FM 2025, hybrid +13-14% document
-// match). Rank fusion: Cormack et al., SIGIR 2009, k = 60; the toy lists
+// Step 1: hybrid search at scale. chATLAS facts from the draft paper (ATLAS
+// ML Forum, 3 Sep 2026; slide 4 corpus ~31,000 docs / ~1.2M chunks, slide 10
+// RRF weighted document match 50% -> 65%), cleared for use by Daniel. Rank fusion: Cormack et al., SIGIR 2009, k = 60; the toy lists
 // below are fused with that formula (B .0325, A .0323, D .0161, C .0159).
 // Step 2: my opinion, with one sourced line each side (Cherny on Latent
 // Space, 7 May 2025; Cursor semsearch blog, 6 Nov 2025).
@@ -94,7 +94,7 @@ export function VectorSearch({ step }: { step: number }) {
             <div className="t-label text-center" style={{ ...T.label, ...mono, color: C.muted, marginTop: "1.2vh" }}>score = Σ 1 / (60 + rank)</div>
           </div>
           <div style={{ ...T.body, color: C.ink }}>Big shared corpus: run both, merge by rank.</div>
-          <div className="t-label" style={{ ...T.label, color: C.muted }}>chATLAS searches 440,440 Indico events and 66,465 CDS records. Hybrid search raised its document match by 13 to 14%.</div>
+          <div className="t-label" style={{ ...T.label, color: C.muted }}>chATLAS searches about 31,000 documents, cut into 1.2M chunks. Merging the two rankings lifts its document match from 50% to 65%.</div>
         </Column>
 
         <Column n={3} head="My view" when={step >= 2}>

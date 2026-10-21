@@ -6,7 +6,7 @@ import type { Beat } from "./_types";
 const beat: Beat = {
   title: "How does chATLAS find an answer?",
   Scene: ChatlasDetailR2,
-  source: "Pipeline: the chATLAS team, 2026 system update · scores: Murnane et al., chATLAS, Bites of Foundation Models, CERN, Jun 2025 (indico.cern.ch/event/1543967), results table",
+  source: "chATLAS draft paper (ATLAS ML Forum, Sep 2026); public in about two weeks",
 };
 
 export default beat;
