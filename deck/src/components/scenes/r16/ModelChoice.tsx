@@ -15,33 +15,35 @@ import { Area, C, Show, T } from "../r11/kit";
 // code.claude.com/docs/en/fast-mode.
 // Daniel's practice: memory notes use-latest-models (alias "sonnet" resolved to
 // claude-sonnet-5 on 2026-10-19) and codex-model-tiers; his global CLAUDE.md
-// (Claude plans and reviews, Codex implements and gives a second opinion).
+// ("Claude (Fable/Opus) works as orchestrator": plans and reviews; Codex
+// implements and gives a second opinion). Daniel writes code from a spec with
+// both Sonnet and GPT via Codex.
 
-const OUT_MAX = 40; // fast-mode Opus output price sets the bar scale
+const OUT_MAX = 50; // Fable 5.1 output price sets the bar scale
 
-type Job = { task: string; effort: string };
+type Job = { task: string; effort: string; note?: string };
 type Col = { name: string; price?: string; ratio: string; out?: number; jobs: Job[]; other?: boolean };
 
 const COLS: Col[] = [
+  { name: "Fable 5.1", price: "$10 in · $50 out", ratio: "2.5×", out: 50, jobs: [{ task: "orchestrating: planning and review", effort: "high" }] },
   {
     name: "Opus 5.5", price: "$4 in · $20 out", ratio: "1×", out: 20,
     jobs: [
-      { task: "planning and architecture", effort: "high" },
-      { task: "review and verification", effort: "high" },
       { task: "high-stakes judgement", effort: "xhigh" },
+      { task: "verification", effort: "high" },
     ],
   },
-  { name: "Sonnet 5.5", price: "$2 in · $10 out", ratio: "½×", out: 10, jobs: [{ task: "writing code from a spec", effort: "medium" }] },
+  { name: "Sonnet 5.5", price: "$2 in · $10 out", ratio: "½×", out: 10, jobs: [{ task: "writing code from a spec", effort: "medium", note: "also GPT via Codex: I do both" }] },
   { name: "Haiku 5.5", price: "$0.10 in · $0.50 out", ratio: "1/40×", out: 0.5, jobs: [{ task: "bulk search and summarising", effort: "low" }] },
-  { name: "GPT, via Codex", ratio: "", other: true, jobs: [{ task: "independent second review", effort: "trained by another lab" }] },
+  { name: "GPT, via Codex", ratio: "", other: true, jobs: [{ task: "code from a spec, and independent review", effort: "trained by another lab" }] },
 ];
 
-const chip = { background: C.card, border: `1px solid ${C.rule}`, borderRadius: 10, padding: "8px 12px", marginTop: 8 } as const;
+const chip = { background: C.card, border: `1px solid ${C.rule}`, borderRadius: 10, padding: "6px 10px", marginTop: 6 } as const;
 
 function Bar({ out }: { out: number }) {
   const h = (out / OUT_MAX) * 100;
   return (
-    <div style={{ position: "relative", height: "100%", width: "38%" }}>
+    <div style={{ position: "relative", height: "100%", width: "36%" }}>
       <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: `${Math.max(h, 1.2)}%`, background: C.accent, borderRadius: "4px 4px 0 0" }} />
     </div>
   );
@@ -50,16 +52,16 @@ function Bar({ out }: { out: number }) {
 export function ModelChoice({ step }: { step: number }) {
   return (
     <Area style={{ justifyContent: "center", gap: "1.6vh", bottom: "11vh" }}>
-      <div style={{ display: "grid", gridTemplateColumns: "1.25fr 1fr 1fr 1fr", columnGap: "1.6vw", alignItems: "start" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1.15fr 1fr 1fr 1fr", columnGap: "1.2vw", alignItems: "start" }}>
         {COLS.map((c) => {
           const body = (
             <>
-              <div style={{ height: "12vh", display: "flex", alignItems: "flex-end", gap: 10, borderBottom: `1.5px solid ${c.other ? "transparent" : C.ink}` }}>
+              <div style={{ height: "12vh", display: "flex", alignItems: "flex-end", gap: 8, borderBottom: `1.5px solid ${c.other ? "transparent" : C.ink}` }}>
                 {c.out !== undefined && <Bar out={c.out} />}
                 {c.name === "Opus 5.5" && (
-                  <div style={{ position: "relative", height: "100%", width: "38%" }}>
-                    <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "100%", border: `2px dashed ${C.warm}`, borderBottom: "none", borderRadius: "4px 4px 0 0" }} />
-                    <div className="t-label" style={{ ...T.label, ...T.mono, color: C.warm, position: "absolute", top: 4, left: 6 }}>fast</div>
+                  <div style={{ position: "relative", height: "100%", width: "36%" }}>
+                    <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: `${(40 / OUT_MAX) * 100}%`, border: `2px dashed ${C.warm}`, borderBottom: "none", borderRadius: "4px 4px 0 0" }} />
+                    <div className="t-label" style={{ ...T.label, ...T.mono, color: C.warm, position: "absolute", bottom: `${(40 / OUT_MAX) * 100}%`, left: 2 }}>fast</div>
                   </div>
                 )}
                 {c.out !== undefined && (
@@ -77,6 +79,9 @@ export function ModelChoice({ step }: { step: number }) {
                     <div className="t-label" style={{ ...T.label, ...T.mono, color: c.other ? C.warm : C.accent }}>
                       {c.other ? j.effort : `${j.effort} effort`}
                     </div>
+                    {j.note && (
+                      <div className="t-label" style={{ ...T.label, ...T.mono, color: C.warm }}>{j.note}</div>
+                    )}
                   </div>
                 ))}
               </Show>
@@ -87,12 +92,12 @@ export function ModelChoice({ step }: { step: number }) {
       </div>
 
       <div className="t-label" style={{ ...T.label, ...T.mono, color: C.muted }}>
-        bars: output price per token, relative to Opus · /effort: low, medium (default), high, xhigh, max · /fast: Opus up to 2.5× faster at 2× the price · Haiku is 1/8× above 100k-token prompts · Fable 5.1 sits above Opus at 2.5×
+        bars: output price per token, relative to Opus · /effort: low, medium (default), high, xhigh, max · /fast: Opus up to 2.5× faster at 2× the price · Haiku is 1/8× above 100k-token prompts
       </div>
 
       <Show when={step >= 2} style={{ display: "grid", gridTemplateColumns: "1fr 1.4fr", gap: "2.5vw", alignItems: "start" }}>
         <div style={{ ...T.body, color: C.muted }}>
-          I run the newest models by full name; “sonnet” once gave me Sonnet 5, not 5.5.
+          I name the newest models in full; “sonnet” once gave me Sonnet 5.
         </div>
         <div style={{ borderLeft: `4px solid ${C.warm}`, paddingLeft: 16, ...T.body, ...T.serif, color: C.ink }}>
           Wrong answers cost more than saved tokens. Use the strongest model for anything you trust. Downshift only for bulk work you can check.
