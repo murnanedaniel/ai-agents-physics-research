@@ -166,16 +166,18 @@ def gather_wandb(path: str | None, metric: str | None, since_days: int,
                 y_values = list(history[metric])
                 pairs = [(x, y) for x, y in zip(x_values, y_values) if y is not None]
                 if pairs:
-                    plt.rcParams.update({"font.size": 16})  # readable once scaled into the slide
-                    fig, axis = plt.subplots(figsize=(8, 4.5), dpi=160)
+                    # 3.3 x 1.65 in at 10.5 pt lands near 9 pt in beamer and above 14 px in HTML.
+                    plt.rcParams.update({"font.size": 10.5})
+                    fig, axis = plt.subplots(figsize=(3.3, 1.65), dpi=300)
                     xs, ys = zip(*pairs)
-                    axis.plot(xs, ys, color="#2a78d6", linewidth=2)
+                    fig.patch.set_facecolor("#fcfcfb"); axis.set_facecolor("#fcfcfb")
+                    axis.plot(xs, ys, color="#2a78d6", linewidth=1.8)
                     axis.grid(axis="y", color="#e6e5e0")
                     axis.spines[["top", "right"]].set_visible(False)
                     axis.set_xlabel("step"); axis.set_ylabel(metric)
                     axis.annotate(f"{ys[-1]:.4g}", (xs[-1], ys[-1]), xytext=(-6, 7),
                                   textcoords="offset points", ha="right", color="#2a78d6")
-                    fig.tight_layout()
+                    fig.tight_layout(pad=0.3)
                     safe_metric = re.sub(r"[^A-Za-z0-9_.-]+", "_", metric)
                     plot_name = f"wandb_{safe_metric}.png"
                     fig.savefig(out_dir / plot_name)
@@ -228,9 +230,8 @@ def html_slide_content(facts: dict[str, Any], title: str, author: str, date_text
     git = facts["git"]; wandb = facts.get("wandb"); figures = facts["figures"]
     esc = html.escape
     slides = [f'''    <section class="slide title" data-title="Project check-in" aria-roledescription="slide">
-      <p class="kicker">PROJECT · {esc(date_text.upper())}</p><h1 class="claim">{esc(title)}</h1>
+      <h1 class="claim">{esc(title)}</h1>
       <p class="subtitle">Project check-in generated from local evidence.</p><p class="byline">{esc(author or "Add author")} · {esc(date_text)}</p>
-      <p class="src">source: generated metadata · {esc(date_text)}</p>
     </section>''']
     points = []
     if git["is_repo"]:
@@ -252,9 +253,9 @@ def html_slide_content(facts: dict[str, Any], title: str, author: str, date_text
     commit_range = f"{git['commits'][-1]['hash']} to {git['commits'][0]['hash']}" if git["commits"] else "no commits in window"
     point_html = "".join(f"<li>{esc(shorten(point))}</li>" for point in points[:3]) or "<li>No status facts found.</li>"
     slides.append(f'''    <section class="slide fig-points" data-title="Status" aria-roledescription="slide">
-      <p class="kicker">STATUS · DRAFT CLAIM</p><h1 class="claim">Claim needed: current project status</h1>
+      <h1 class="claim">Claim needed: current project status</h1>
       <div class="body"><div class="fig">{visual}<p class="caption">{esc(caption)}</p></div><ul class="points">{point_html}</ul></div>
-      <p class="src">source: git {esc(commit_range)} · W&amp;B runs {esc(ids)}</p>
+      <p class="src">source: git {esc(commit_range)}{(" · W&amp;B runs " + esc(ids)) if wandb else ""}</p>
     </section>''')
     if len(git["commits"]) > 3:
         changed = [truncate_subject(item["subject"]) for item in git["commits"][:2]]
@@ -267,7 +268,7 @@ def html_slide_content(facts: dict[str, Any], title: str, author: str, date_text
     repository = (f"<p>{git['files_changed']} files changed</p><p>Branch: {esc(str(git['branch']))}</p>"
                   if git["is_repo"] else "<p>Git repository not detected.</p>")
     slides.append(f'''    <section class="slide two-col" data-title="What changed" aria-roledescription="slide">
-      <p class="kicker">WHAT CHANGED · DRAFT CLAIM</p><h1 class="claim">Claim needed: changes since {esc(since_date)}</h1>
+      <h1 class="claim">Claim needed: changes since {esc(since_date)}</h1>
       <div class="columns"><div class="column"><h2>Changes</h2><ul>{bullets}</ul></div><div class="column"><h2>Repository</h2>{repository}</div></div>
       <p class="src">source: git log {esc(commit_range)}</p>
     </section>''')
@@ -283,14 +284,14 @@ def html_slide_content(facts: dict[str, Any], title: str, author: str, date_text
         if facts["next_steps"] or facts["blockers"]:
             note_sources.insert(0, "command line")
         slides.append(f'''    <section class="slide next" data-title="Next steps" aria-roledescription="slide">
-      <p class="kicker">NEXT · DRAFT CLAIM</p><h1 class="claim">Claim needed: next steps and blockers</h1>
+      <h1 class="claim">Claim needed: next steps and blockers</h1>
       <div class="columns"><div class="column"><h2>Next steps</h2><ol>{steps}</ol></div><div class="column blockers"><h2>Blockers</h2>{blocker_html}</div></div>
       <p class="src">source: {esc(', '.join(note_sources))}</p>
     </section>''')
     if len(figures) > 1:
         second = figures[1]
         slides.append(f'''    <section class="slide full-fig" data-title="Figures" aria-roledescription="slide">
-      <p class="kicker">FIGURES · DRAFT CLAIM</p><h1 class="claim">Claim needed: {esc(Path(second['path']).stem)}</h1>
+      <h1 class="claim">Claim needed: {esc(Path(second['path']).stem)}</h1>
       <div class="fig"><img src="{esc(second['copied'])}" alt="Project figure"><p class="caption">{esc(second['path'])}</p></div>
       <p class="src">source: local file {esc(second['path'])}</p>
     </section>''')
@@ -317,7 +318,7 @@ def tex_document(facts: dict[str, Any], title: str, author: str, date_text: str,
         points.append(f"Best {facts['metric']} {wandb['best']['metric']:.4g} ({wandb['best']['id']})")
     if git["is_repo"]:
         points.append(f"{git['uncommitted_changes']} uncommitted changes")
-    points = (points + ["No additional status fact."] * 3)[:3]
+    points = (points + [""] * 3)[:3]  # empty arguments drop the bullet
     figure = wandb.get("plot") if wandb else None
     if not figure and figures and Path(figures[0]["copied"]).suffix.lower() in {".png", ".jpg", ".jpeg", ".pdf"}:
         figure = figures[0]["copied"]
@@ -325,12 +326,13 @@ def tex_document(facts: dict[str, Any], title: str, author: str, date_text: str,
     figure_argument = r"\detokenize{" + figure + "}"
     caption = "W&B metric history" if wandb and wandb.get("plot") else (figures[0]["path"] if figures else "No local figure found")
     commit_range = f"{git['commits'][-1]['hash']} to {git['commits'][0]['hash']}" if git["commits"] else "no commits in window"
-    body = [preamble, f"\\renewcommand{{\\shortdecktitle}}{{{tex_escape(title)}}}",
-            f"\\renewcommand{{\\deckdate}}{{{tex_escape(date_text)}}}", f"\\title{{{tex_escape(title)}}}",
+    run_ids = ", ".join(run["id"] for run in (wandb or {}).get("runs", [])) or "none"
+    wandb_src = f" · W\\&B runs {tex_escape(run_ids)}" if wandb else ""
+    body = [preamble, f"\\title[{tex_escape(title)}]{{{tex_escape(title)}}}",
             "\\subtitle{Project check-in generated from local evidence}", f"\\author{{{tex_escape(author or 'Add author')}}}",
             f"\\date{{{tex_escape(date_text)}}}", "\\begin{document}", "\\begin{frame}[plain]\\titlepage\\end{frame}",
-            f"\\figslide{{STATUS · DRAFT CLAIM}}{{Claim needed: current project status}}{{{figure_argument}}}{{{tex_escape(caption)}}}"
-            f"{{{tex_escape(points[0])}}}{{{tex_escape(points[1])}}}{{{tex_escape(points[2])}}}{{git {tex_escape(commit_range)}}}"]
+            f"\\figslide{{Claim needed: current project status}}{{{figure_argument}}}{{{tex_escape(caption)}}}"
+            f"{{{tex_escape(points[0])}}}{{{tex_escape(points[1])}}}{{{tex_escape(points[2])}}}{{git {tex_escape(commit_range)}{wandb_src}}}"]
     if len(git["commits"]) > 3:
         changed = [truncate_subject(commit["subject"]) for commit in git["commits"][:2]]
         changed.append(f"and {len(git['commits']) - 2} more commits")
@@ -339,7 +341,7 @@ def tex_document(facts: dict[str, Any], title: str, author: str, date_text: str,
     items = "".join(f"\\item {tex_escape(subject)}" for subject in changed)
     if not items:
         items = f"\\item No commits found in the {facts['since_days']}-day window."
-    body.append(f"\\textslide{{WHAT CHANGED · DRAFT CLAIM}}{{Claim needed: changes since {tex_escape(since_date)}}}"
+    body.append(f"\\textslide{{Claim needed: changes since {tex_escape(since_date)}}}"
                 f"{{\\begin{{itemize}}{items}\\end{{itemize}}\\src{{git log {tex_escape(commit_range)}}}}}")
     notes = [(clean_note(n["text"]), n) for n in facts["notes"]]
     next_items = [(text, None) for text in facts["next_steps"]]
@@ -348,14 +350,17 @@ def tex_document(facts: dict[str, Any], title: str, author: str, date_text: str,
     blockers += [(text, n) for (kind, text), n in notes if kind in {"BLOCKER", "BLOCKED"}][:2]
     if next_items or blockers:
         steps = "".join(f"\\item {tex_escape(shorten(text))}" for text, _ in next_items) or "\\item Add the next concrete action."
-        blocked = "\\\\[3mm]".join(tex_escape(shorten(text)) for text, _ in blockers) or "None recorded."
-        body.append(f"\\nextslide{{NEXT · DRAFT CLAIM}}{{Claim needed: next steps and blockers}}"
-                    f"{{\\begin{{enumerate}}{steps}\\end{{enumerate}}}}{{{blocked}}}")
+        blocked = "\\\\[3mm]".join("\\statusblocked{} " + tex_escape(shorten(text, 8)) for text, _ in blockers) or "\\statusok{} none recorded"
+        note_sources = [f"{n['file']}:{n['line']}" for _, n in next_items + blockers if n]
+        if facts["next_steps"] or facts["blockers"]:
+            note_sources.insert(0, "command line")
+        body.append(f"\\nextslide{{Claim needed: next steps and blockers}}"
+                    f"{{\\begin{{enumerate}}{steps}\\end{{enumerate}}}}{{{blocked}}}{{{tex_escape(', '.join(note_sources))}}}")
     if len(figures) > 1:
         second = figures[1]; path = second["copied"]
         usable = path if Path(path).suffix.lower() in {".png", ".jpg", ".jpeg", ".pdf"} else "plots/convert-svg-to-pdf.pdf"
         usable_argument = r"\detokenize{" + usable + "}"
-        body.append(f"\\kicker{{FIGURES · DRAFT CLAIM}}\\begin{{frame}}[t]{{Claim needed: {tex_escape(Path(second['path']).stem)}}}"
+        body.append(f"\\begin{{frame}}[t]{{Claim needed: {tex_escape(Path(second['path']).stem)}}}"
                     f"\\centering\\figurecontent{{{usable_argument}}}\\par\\small\\color{{Muted}}{tex_escape(second['path'])}"
                     f"\\src{{local file {tex_escape(second['path'])}}}\\end{{frame}}")
     body.append("\\end{document}\n")
