@@ -1,59 +1,75 @@
 ---
 name: research-setup
-description: Interview researchers to set up their agent for their research, onboard a research project, or respond to "interview me about my setup" with tailored project rules and starter skills.
+description: Interview researchers to set up their agent for their research, onboard a research project, or respond to "interview me about my setup" with tailored project rules and a starter skill.
 ---
 
 # Research setup
 
-For the one-day course **AI Agents in Practice for Physics Research**, supporting PhD students and postdocs in particle and astroparticle physics, theory, experiment and instrumentation. Aim for 20 minutes: 10 interviewing and 10 drafting.
+For the one-day course **AI Agents in Practice for Physics Research**, supporting PhD students and postdocs in particle and astroparticle physics, theory, experiment and instrumentation.
+
+**Time box: 5-10 minutes, four messages from you.** (1) Opening questions. (2) At most one follow-up. (3) Summary and drafts together, shown once. (4) Write and close. Never add rounds beyond these. Unknowns get conservative defaults, not more questions.
 
 ## Guardrails
 
-- Never ask for or record passwords, tokens or keys. Ask about credential handling policies only; omit any secrets volunteered.
+- Never ask for or record passwords, tokens or keys. Omit any secrets volunteered.
 - Never install software or run jobs during setup.
-- Use plain language and British spelling (-ise). Define any necessary jargon in one line. Never use em dashes.
-- Keep the generated rules file under 80 lines and each generated skill under 60 lines.
-- Read existing project rules before proposing changes. Preserve relevant content and flag conflicts; never overwrite silently.
-- Show complete drafts before writing anything. Write only after explicit OK for those drafts and paths, only within the current project directory. Never write home-directory configuration unless specifically requested.
+- Plain language and British spelling (-ise). Define any jargon in one line. Never use em dashes.
+- Generated rules file under 40 lines; the starter skill under 30 lines.
+- Write only after the user agrees, only inside the current project directory. Never write home-directory configuration unless asked.
 
-## Phase 1: interview, about 10 minutes
+## Message 1: opening questions
 
-Ask at most three short, plain questions per turn. Adapt follow-ups to answers, skip what is already known and avoid presenting the whole questionnaire at once. Cover:
+Before asking, silently check the project directory for an existing `CLAUDE.md`, `AGENTS.md` or skills folder and any obvious tools (languages, job scripts, notebooks). Do not ask what you can see.
 
-- Research: field; theory, experiment or instrumentation; a typical "experiment" (fit, simulation, derivation, detector test or training run); what counts as a result.
-- Tools: languages and frameworks such as ROOT, Python, Mathematica, C++ or Geant4; version control habits; papers in Overleaf or LaTeX in git.
-- Compute: laptop, group server or cluster; scheduler (Slurm, HTCondor or PBS); GPUs; login-node rules and shared quotas. Establish a concrete job-size threshold requiring approval, including resources and duration.
-- Data and collaboration: what must stay on a machine; internal-only results and collaboration policies; how credentials are handled, never their values.
-- Agents now: agents and subscriptions used; current delegated tasks; one failure; one action they would never delegate.
-- Preferences: progress reporting, autonomy and writing language/style.
+Send exactly this, adjusted only to skip what you already know:
 
-Stop when there is enough to draft, or when the user says "go". Leave missing details explicitly unresolved with conservative defaults, such as asking before any job when no size threshold is known. Summarise what you heard in exactly five bullets and ask for corrections. Wait for their response before drafting.
+> I'll ask three quick questions, then draft a short rules file and one starter skill for you to approve. Short answers are fine; say "go" at any point.
+> 1. What do you work on, and what does a typical result look like (a fit, a derivation, a simulation, a detector measurement, a trained model)?
+> 2. Where does the work run (laptop, lab PC, group server, cluster with a scheduler) and with which tools? Which AI tools do you use now?
+> 3. One thing an AI got wrong for you, or one thing it must never do or touch (data, collaboration rules, machines)?
 
-## Phase 2: draft, about 10 minutes
+## Message 2: at most one follow-up, often none
 
-Offer this menu, tailoring suggestions to the interview. Let the user choose one or two starter skills before drafting them:
+Ask at most two short questions, and only about gaps or contradictions that would change a rule. Typical cases:
 
-- **run-experiment**: state a hypothesis, reproduce the baseline, change one thing, evaluate against the baseline and log evidence in an experiment ledger (a record of runs and results).
-- **submit-job**: use their scheduler's job template, check requested resources and quotas, require approval above the agreed threshold, then inspect actual output rather than trusting an exit code.
-- **review-draft**: use three reviewer viewpoints, a physics expert, a methods sceptic and a clarity editor; include a claim-by-claim audit table with columns `claim | source | verdict` and verdicts `OK`, `WRONG`, `OVERCLAIM`, `UNSUPPORTED`.
-- **lit-check**: verify every citation exists and its source supports the precise claim; flag inaccessible sources as unverified, never invent references.
+- They use a cluster or scheduler: propose a threshold for them to confirm, such as "I'll have the agent ask before anything above 1 node or 4 hours. Change that?"
+- They mention collaboration or unpublished data and the boundary is unclear: "What must never leave the machine or the collaboration?"
 
-Read [templates/CLAUDE.md.template](templates/CLAUDE.md.template) and [templates/skill.template.md](templates/skill.template.md). Fill placeholders from the interview, removing comments and unresolved claims of fact. Draft:
+Skip this message if you can draft already, or if the user said "go". Do not ask about the date, CLAUDE.md versus AGENTS.md, progress reporting, autonomy or writing style; use the defaults below. If the user answers "don't know", use the default and move on.
 
-1. `CLAUDE.md`, or `AGENTS.md` for Codex users, with the same content. Use all template sections. Give Project context 3-5 lines. Include baseline-first evidence rules, tailored compute limits, reporting preferences and every approval gate. Add user-specific prohibitions.
-2. One or two skills using the skill template, normally at `.claude/skills/<name>/SKILL.md`, or `.agents/skills/<name>/SKILL.md` for Codex. Include task-specific evidence checks and relevant rules, gates and prohibitions. These describe future work, not permission to execute it during setup.
-3. `DECISIONS.md` with this three-line entry template and a first entry using today's date:
+## Message 3: summary and drafts, together, once
 
-   ```markdown
-   Date: <YYYY-MM-DD>
-   Decision: <what we decided>
-   Reason: <why>
-   ```
+Defaults when not stated:
+- File name from their tool: `CLAUDE.md` for Claude Code, `AGENTS.md` for Codex, Copilot or anything else (Copilot in VS Code reads `AGENTS.md`). Skills at `.claude/skills/<name>/SKILL.md`, or `.agents/skills/<name>/SKILL.md` for Codex.
+- Ask before any job or long run when no threshold is known; brief progress notes at milestones; British English for prose.
+- Today's date from the system.
 
-   First entry decision: `set up agent rules on <YYYY-MM-DD>`. Give the interview's reason without inventing facts.
+Then send one message containing, in order:
 
-Show every proposed path and complete draft, including any replacement of existing content. Ask for explicit OK to write. Wait; requested edits require revised drafts before approval. On OK, write only the approved files and check paths, line limits and absence of secrets/placeholders.
+1. **What I heard**: exactly three bullets (work and result; where and with what; limits and the one failure or never). One line saying what was defaulted.
+2. **Rules file**: fill [templates/CLAUDE.md.template](templates/CLAUDE.md.template). Remove comments. Keep only approval gates that apply: no "pushing to shared branches" for someone without git, no job gate without a scheduler. Turn their failure into a rule.
+3. **One starter skill**, picked by you with a one-line reason, using [templates/skill.template.md](templates/skill.template.md). Name the alternatives in one line so they can swap:
+   - **run-experiment**: hypothesis, reproduce the baseline, change one thing, compare, log the evidence.
+   - **submit-job**: scheduler template, resource and quota check, approval above the threshold, inspect real output.
+   - **check-calculation**: independent cross-check of a derivation or numerical result (limits, special cases, a second tool).
+   - **check-measurement**: units, calibration, plots against expectation, before any number is reported.
+   - **review-draft**: physics expert, methods sceptic and clarity editor, with a `claim | source | verdict` table.
+   - **lit-check**: every citation exists and supports the precise claim; never invent references.
+4. **`DECISIONS.md`**: one entry, `Date: <today>`, `Decision: set up agent rules`, `Reason: <their words>`.
+5. The proposed paths and one line: "Reply OK to write these, or tell me what to change."
 
-## Phase 3: close
+If a rules file already exists, do not redraft it: show only the lines you would add (at most ten) and flag any conflict.
 
-List the files written. Suggest one small task to try tomorrow, chosen from the interview. Remind the user: rules are a starting point; when the agent gets something wrong, add a rule or, better, an automated check.
+**Experienced users** who already have rules and ask for hooks, subagents or MCP: the starter can be one hook instead of a skill, turning their failure into an automated check (a short script plus its entry in the project's `.claude/settings.json`). Keep it to one item, drafted in the same message. MCP servers and home-directory settings are out of scope for the time box; name them as a next step.
+
+**Chat-only users** (browser chat, phone, no terminal agent): give a single block of at most 20 lines to paste into their chat tool's custom or project instructions, plus the starter skill as a reusable prompt. Skip `DECISIONS.md` and file paths.
+
+## Message 4: write and close
+
+Any clear yes ("ok", "looks good", "go") is approval for the drafts as shown. If they ask for changes, show only the changed lines, then write on their OK. Do not reprint unchanged drafts.
+
+After writing, check line limits and that no secrets or placeholders remain. Close in three lines: files written; one small task to try tomorrow with the skill; "When the agent gets something wrong, add a rule or, better, an automated check."
+
+## Stretch, only if asked or if time remains
+
+A second skill, a hook (an automated check that runs on an agent event) or a review subagent. Same rule: show the draft, write on OK.

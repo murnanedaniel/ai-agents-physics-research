@@ -1,16 +1,16 @@
 ---
 name: <short-task-name>
-description: <One-line purpose and the user request that should trigger this skill.>
+description: <One-line purpose and the request that should trigger this skill.>
 ---
 
 ## When to use
-<!-- fill: concrete research task and required inputs. -->
+<!-- fill: one or two lines: the concrete task and its inputs. -->
 
 ## Steps
-<!-- fill: short numbered procedure tailored to tools and research context; include human approval gates where relevant. -->
+<!-- fill: 3-6 numbered steps tailored to their tools; include an "ask me first" step where relevant. -->
 
 ## Checks before reporting done
-<!-- fill: observable evidence, comparison or source verification; show actual outputs and flag uncertainty. -->
+<!-- fill: 2-4 observable checks: comparison with a baseline or second method, actual outputs, uncertainty flagged. -->
 
 ## Never
-<!-- fill: relevant data, credential, compute and user-specific prohibitions; no invented results or sources. -->
+<!-- fill: 1-3 relevant prohibitions; never invent results or sources. -->
