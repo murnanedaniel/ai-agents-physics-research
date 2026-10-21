@@ -19,9 +19,10 @@ const PAGES = [
 export function CreditsPages() {
   const [hover, setHover] = useState<number | null>(null);
   return (
-    <Canvas label="Anthropic's AI for Science programme gives API credits to academic research. A March support page says up to 20,000 dollars with a biology focus; the newer August announcement says up to 50,000 dollars per project beyond biology. Live, we fill in the form for one of today's projects">
-      <text x={0} y={40} fontFamily={SANS} fontSize={27} fill={C.ink}>AI for Science: free API credits for academics.</text>
-      <text x={0} y={78} fontFamily={SANS} fontSize={27} fill={C.muted}>Two official pages disagree.</text>
+    <Canvas label="Anthropic's AI for Science programme gives API credits to academic research. A March support page says up to 20,000 dollars with a biology focus; the newer August announcement says up to 50,000 dollars per project beyond biology. The form itself says across the natural sciences and math, so physics is eligible. We go by the newer page. Live, we fill in the form for one of today's projects">
+      <text x={0} y={40} fontFamily={SANS} fontSize={27} fill={C.ink}>Anthropic&apos;s AI for Science: free API credits for academic research.</text>
+      <text x={0} y={78} fontFamily={SANS} fontSize={27} fill={C.muted}>Two official pages disagree on the amount and the fields.</text>
+      <text className="t-label" x={0} y={108} fontFamily={MONO} fontSize={15} fill={C.muted}>API CREDITS ONLY, NOT CLAUDE.AI (SUPPORT PAGE)</text>
 
       <line x1={X0} x2={X1} y1={AXIS} y2={AXIS} stroke={C.ink} strokeWidth={1.5} />
       {["Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"].map((m, i) => (
@@ -50,7 +51,14 @@ export function CreditsPages() {
           </g>
         );
       })}
-      <text x={0} y={548} fontFamily={SANS} fontSize={25} fill={C.ink}>Live: the form, for one of today&apos;s projects.</text>
+      {/* the form itself, read on 20 Oct: it settles the field question */}
+      <g>
+        <rect x={880} y={196} width={216} height={118} rx={12} fill={C.card} stroke={C.rule} strokeWidth={1.5} />
+        <text className="t-label" x={896} y={224} fontFamily={MONO} fontSize={15} fill={C.warm}>THE FORM, 20 OCT</text>
+        <text x={896} y={258} fontFamily={SANS} fontSize={21} fill={C.ink}>&ldquo;across the natural</text>
+        <text x={896} y={288} fontFamily={SANS} fontSize={21} fill={C.ink}>sciences and math&rdquo;</text>
+      </g>
+      <text x={0} y={548} fontFamily={SANS} fontSize={25} fill={C.ink}>We go by the newer page. Live: the form, for one of today&apos;s projects.</text>
     </Canvas>
   );
 }

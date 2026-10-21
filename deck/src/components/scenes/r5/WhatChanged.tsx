@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { C, Canvas, MONO, SANS, Step, Tag, stop } from "./common";
 
+// Scorecard line: notes/w12/SUMMARY.md (H1, H7 supported; H6 on a weak proxy; H2, H5 not; H3 inconclusive; H4 not testable).
 // notes/w12/RESULTS-perlmutter.md: §3 (H7), §8.4 (H2), §3 (H6 proxy), §6 (error mix), §8.2c (manual audit).
 // Early = May+Jun pooled (395 messages), late = Sep+Oct pooled (1,080). Hypotheses written before looking (PREREGISTRATION.md).
 type Row = { label: string; early: number; late: number; def: string; note: string };
@@ -41,31 +42,36 @@ export function WhatChanged({ step }: { step: number }) {
   return (
     <Canvas label="Dumbbell chart, May–June versus September–October 2026: more work accepted first time, the agent's errors shifted from not checking to misunderstanding, and only half of done claims were backed by a check">
       <Tag x={0} y={13} kind="mine" />
-      <text className="t-label" x={118} y={13} fontSize={14} fontFamily={MONO} fill={C.muted}>7 hypotheses written down before I looked at the data · same threads as before</text>
+      <text className="t-label" x={118} y={13} fontSize={14} fontFamily={MONO} fill={C.muted}>7 hypotheses written down before I looked at the data · same threads and labels as before</text>
       {[0, 20, 40, 60].map((t) => (
         <g key={t}>
-          <line x1={x(t)} x2={x(t)} y1={44} y2={470} stroke={C.rule} />
-          <text className="t-label" x={x(t)} y={494} textAnchor="middle" fontSize={14} fontFamily={MONO} fill={C.muted}>{t}%</text>
+          <line x1={x(t)} x2={x(t)} y1={44} y2={404} stroke={C.rule} />
+          <text className="t-label" x={x(t)} y={426} textAnchor="middle" fontSize={14} fontFamily={MONO} fill={C.muted}>{t}%</text>
         </g>
       ))}
       <g className="t-label" fontSize={14} fontFamily={MONO} fill={C.muted}>
-        <circle cx={14} cy={489} r={6} fill="#f6f1e7" stroke={C.muted} strokeWidth={2} />
-        <text x={28} y={494}>May–Jun (395 messages)</text>
-        <circle cx={14} cy={513} r={6} fill={C.accent} />
-        <text x={28} y={518}>Sep–Oct (1,080 messages)</text>
+        <circle cx={14} cy={415} r={6} fill="#f6f1e7" stroke={C.muted} strokeWidth={2} />
+        <text x={28} y={420}>May–Jun (395 messages)</text>
+        <circle cx={14} cy={439} r={6} fill={C.accent} />
+        <text x={28} y={444}>Sep–Oct (1,080 messages)</text>
       </g>
 
       <Step at={0} step={step}>
         <text className="t-label" x={X0 - 24} y={52} textAnchor="end" fontSize={14} fontFamily={MONO} fill={C.muted}>how we work, % of my messages</text>
-        {PRACTICE.map((r, i) => <Dumbbell key={r.label} r={r} yy={84 + i * 44} onHover={setHover} />)}
+        {PRACTICE.map((r, i) => <Dumbbell key={r.label} r={r} yy={80 + i * 40} onHover={setHover} />)}
       </Step>
       <Step at={1} step={step}>
-        <text className="t-label" x={X0 - 24} y={232} textAnchor="end" fontSize={14} fontFamily={MONO} fill={C.muted}>what goes wrong, % of the agent’s errors</text>
-        {ERRORS.map((r, i) => <Dumbbell key={r.label} r={r} yy={264 + i * 44} onHover={setHover} />)}
+        <text className="t-label" x={X0 - 24} y={208} textAnchor="end" fontSize={14} fontFamily={MONO} fill={C.muted}>what goes wrong, % of the agent’s errors</text>
+        {ERRORS.map((r, i) => <Dumbbell key={r.label} r={r} yy={236 + i * 40} onHover={setHover} />)}
       </Step>
       <Step at={2} step={step}>
-        <rect x={0} y={396} width={1110} height={60} rx={10} fill="rgba(180,83,9,0.08)" />
-        <Dumbbell r={AUDIT} yy={426} hot onHover={setHover} />
+        <rect x={0} y={338} width={1110} height={56} rx={10} fill="rgba(180,83,9,0.08)" />
+        <Dumbbell r={AUDIT} yy={366} hot onHover={setHover} />
+        <text x={0} y={476} fontSize={19} fontFamily={SANS} fill={C.ink}>Of my 7 hypotheses, 3 held (one only on a weak proxy), 2 did not, and 2 couldn't be settled.</text>
+        <text className="t-label" fontSize={14} fontFamily={MONO} fill={C.muted}>
+          <tspan x={0} y={498}>held: fewer challenges, more first-time accepts, more git use</tspan>
+          <tspan x={0} dy={18}>did not: delegation as a whole, structural fixes · unsettled: checked “done” claims, memory notes</tspan>
+        </text>
       </Step>
 
       {hover && (

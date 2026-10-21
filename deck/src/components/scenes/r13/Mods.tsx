@@ -4,14 +4,17 @@ import { Area, C, Show, T } from "../r11/kit";
 
 const card = { background: C.card, border: `1px solid ${C.rule}`, borderRadius: 14, padding: "18px 22px" } as const;
 
+// Daniel's spec (TODO, Mods demo, 21 Oct): what a mod is (hooks inside Claude
+// Code; draws panes; Claude writes it), where it draws (hooks still run
+// everywhere), and the security caveat. Facts: code.claude.com/docs, Mods.
 const CAN = [
-  { h: "Step into the loop", d: "hold, rewrite or answer a tool call" },
-  { h: "Draw", d: "a pane, a band above the prompt, buttons" },
+  { h: "Intervene", d: "hold, rewrite or answer a tool call" },
+  { h: "Draw", d: "panes, buttons, a band above the prompt" },
   { h: "Add commands", d: "/tally runs at once, no Claude turn" },
 ];
 
-const DRAWS = ["the terminal", "the Desktop app's Code tab", "VS Code"];
-const BLIND = ["claude.ai and cloud sessions", "the phone, via Remote Control", "claude -p"];
+const DRAWS = ["terminal", "Desktop app Code tab", "VS Code"];
+const BLIND = ["claude.ai, cloud sessions", "Remote Control", "claude -p"];
 
 export function Mods({ step }: { step: number }) {
   return (
@@ -25,7 +28,7 @@ export function Mods({ step }: { step: number }) {
         ))}
       </div>
       <div style={{ ...T.body, color: C.ink }}>
-        Code that runs <em>inside</em> Claude Code. You describe it, Claude writes it, and it reloads every turn.
+        A mod is code <em>inside</em> Claude Code. You describe it, Claude writes it, it reloads each turn.
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2vw", alignItems: "start" }}>
@@ -38,13 +41,14 @@ export function Mods({ step }: { step: number }) {
             <div>
               <div className="t-label" style={{ ...T.label, ...T.mono, color: C.muted }}>○ draws nothing in</div>
               {BLIND.map((d) => <div key={d} style={{ ...T.body, color: C.muted, marginTop: 6 }}>{d}</div>)}
+              <div className="t-label" style={{ ...T.label, ...T.mono, color: C.muted, marginTop: 6 }}>(its hooks still run there)</div>
             </div>
           </div>
         </Show>
         <Show when={step >= 2}>
           <div style={{ ...card, borderLeft: `4px solid ${C.warm}` }}>
             <div style={{ ...T.big, color: C.ink }}>Not sandboxed.</div>
-            <div style={{ ...T.body, color: C.muted, marginTop: 6 }}>It runs as you, sees every prompt and can approve tool calls. Install only from people you trust.</div>
+            <div style={{ ...T.body, color: C.muted, marginTop: 6 }}>It runs as you, sees every prompt and can approve tool calls.</div>
           </div>
         </Show>
       </div>

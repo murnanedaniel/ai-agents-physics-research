@@ -33,12 +33,13 @@ export function Quality({ step }: { step: number }) {
       <text x={0} y={76} fontSize={24} fontFamily={SERIF} fontStyle="italic" fill={C.ink}>Two kinds of pushback:</text>
       <rect x={0} y={100} width={14} height={14} fill={CORR} stroke={C.warm} />
       <text x={24} y={113} fontSize={21} fontFamily={SANS} fill={C.ink}>correction</text>
-      <text x={24} y={142} fontSize={19} fontFamily={SANS} fill={C.muted}>“That is wrong.”</text>
+      <text x={24} y={142} fontSize={19} fontFamily={SANS} fill={C.muted}>“That's wrong.”</text>
       <rect x={0} y={176} width={14} height={14} fill={CHAL} stroke={C.accent} />
       <text x={24} y={189} fontSize={21} fontFamily={SANS} fill={C.ink}>challenge</text>
       <text x={24} y={218} fontSize={19} fontFamily={SANS} fill={C.muted}>“Are you sure?”</text>
       <text className="t-label" x={0} y={252} fontSize={13} fontFamily={MONO} fill={C.muted}>examples paraphrased, not quoted</text>
 
+      <text className="t-label" x={P.l} y={16} fontSize={14} fontFamily={MONO} fill={C.muted}>each month: share of my messages to the agent that push back</text>
       {[0, 20, 40, 60].map((t) => (
         <g key={t}>
           <line x1={P.l} x2={P.r} y1={y(t)} y2={y(t)} stroke={C.rule} strokeWidth={1} />
@@ -75,11 +76,18 @@ export function Quality({ step }: { step: number }) {
         <text className="t-label" x={x(last) + 16} y={y(7) + 28} fontSize={15} fontFamily={MONO} fill={C.ink}>flat, about 15%</text>
       </Step>
 
-      {/* step 2: how to read it */}
+      {/* step 2: how to read it (w11 v2 §4, observation 1: confounds and reading) */}
       <Step at={2} step={step}>
-        <rect x={0} y={318} width={340} height={96} rx={10} fill="rgba(180,83,9,0.07)" stroke="rgba(180,83,9,0.35)" />
-        <text x={18} y={356} fontSize={20} fontFamily={SANS} fill={C.ink}>Model, projects, my skill:</text>
-        <text x={18} y={386} fontSize={20} fontFamily={SANS} fill={C.ink}>all changed together.</text>
+        <rect x={0} y={282} width={360} height={226} rx={10} fill="rgba(180,83,9,0.07)" stroke="rgba(180,83,9,0.35)" />
+        <text fontSize={19} fontFamily={SANS} fill={C.ink}>
+          <tspan x={18} y={316}>The model, the projects and my</tspan>
+          <tspan x={18} dy={25}>own skill all changed together.</tspan>
+          <tspan x={18} dy={35}>May–June was mostly one long</tspan>
+          <tspan x={18} dy={25}>training thread, where doubting</tspan>
+          <tspan x={18} dy={25}>results was the job.</tspan>
+          <tspan x={18} dy={35}>This can't separate better claims</tspan>
+          <tspan x={18} dy={25}>from more trust.</tspan>
+        </text>
       </Step>
 
       {MONTHS.map((d, i) => (

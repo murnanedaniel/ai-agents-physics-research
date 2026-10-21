@@ -25,6 +25,12 @@ const CAPTIONS = [
   "Memory grows with context. At 128k tokens the cache outweighs the model.",
 ];
 
+// Step 2: the link to the bill (WEB-RESEARCH-R2 4a, prompt-caching docs).
+const ECON = [
+  "That memory and the re-reading are why a long context costs more to serve.",
+  "A prefix the provider has already processed is billed at a lower rate: prompt caching.",
+];
+
 const COL = (i: number) => 190 + i * 92;
 const ROW = (j: number) => 110 + j * 70;
 
@@ -48,6 +54,12 @@ export function KvCacheR3({ step }: { step: number }) {
               <text x="20" y="30" fill={C.ink} fontSize="25" fontFamily={SANS}>{c}</text>
             </G>
           ))}
+
+          <G on={step === 2}>
+            {ECON.map((e, i) => (
+              <text key={e} x="20" y={66 + i * 28} fill={C.ink} fontSize="21" fontFamily={SANS}>{e}</text>
+            ))}
+          </G>
 
           {/* layer labels */}
           {LAYERS.map((l, j) => (
@@ -80,15 +92,15 @@ export function KvCacheR3({ step }: { step: number }) {
               <path key={i} d={`M ${COL(q)} ${ROW(0)} Q ${(COL(q) + COL(i)) / 2} ${ROW(0) - 34 - 4 * (q - i)} ${COL(i) - 16} ${ROW(0)}`} fill="none" stroke={C.ink} strokeOpacity="0.5" strokeWidth="1.5" />
             ))}
             {step === 0 && <text className="t-label" x={COL(q) + 44} y={ROW(0) + 20} fill={C.ink} fontSize="16" fontFamily={MONO}>new query · every key</text>}
-            {step === 0 && <text x="600" y={ROW(2) + 160} textAnchor="middle" fill={C.ink} fontSize="23" fontFamily={SANS}>Stored, not recomputed: the next token is fast, but memory grows with context.</text>}
+            {step === 0 && <text x="600" y={ROW(2) + 160} textAnchor="middle" fill={C.ink} fontSize="23" fontFamily={SANS}>They're stored, not recomputed. The next token is fast, but memory grows with context.</text>}
           </G>
 
           {/* prefill / decode braces */}
           <G on={step >= 1}>
             <path d={`M ${COL(0) - 40} ${ROW(2) + 104} L ${COL(PROMPT.length - 1) + 40} ${ROW(2) + 104}`} stroke={C.accent} strokeWidth="3" />
-            <text className="t-label" x={(COL(0) + COL(PROMPT.length - 1)) / 2} y={ROW(2) + 130} textAnchor="middle" fill={C.accent} fontSize="17" fontFamily={MONO}>prefill: in parallel, compute-bound</text>
+            <text className="t-label" x={(COL(0) + COL(PROMPT.length - 1)) / 2} y={ROW(2) + 130} textAnchor="middle" fill={C.accent} fontSize="17" fontFamily={MONO}>prefill: all at once, limited by compute</text>
             <path d={`M ${COL(PROMPT.length) - 40} ${ROW(2) + 104} L ${COL(ALL.length - 1) + 40} ${ROW(2) + 104}`} stroke={C.warm} strokeWidth="3" />
-            <text className="t-label" x={(COL(PROMPT.length) + COL(ALL.length - 1)) / 2} y={ROW(2) + 130} textAnchor="middle" fill={C.warmText} fontSize="17" fontFamily={MONO}>decode: reads it all, memory-bound</text>
+            <text className="t-label" x={(COL(PROMPT.length) + COL(ALL.length - 1)) / 2} y={ROW(2) + 130} textAnchor="middle" fill={C.warmText} fontSize="17" fontFamily={MONO}>decode: reads it all, limited by memory speed</text>
           </G>
 
           {/* memory bar */}

@@ -4,13 +4,14 @@ import { useState } from "react";
 import { Arrow, C, Canvas, MONO, SANS, Show, stop } from "./kit";
 
 // browser-automate: first what a browser agent is, then which tool gets each
-// kind of admin work. Step 0: forms and files. Step 1: the steps that stay human.
+// kind of admin work. Step 0: forms and files (with the upload workaround).
+// Step 1: the steps I keep.
 // Upload limits: code.claude.com/docs/en/chrome; bug reports #35850, #77240, #80632
 // (notes/w19/WEB-RESEARCH.md §6).
 const ROUTES = [
-  { at: 0, task: "Forms", eg: "portal fields, grant Part A", tool: "Browser agent", toolEg: "Claude in Chrome", note: ["did my ERC Part A,", "Oct 2026"], col: C.accent },
-  { at: 0, task: "Files", eg: "PDFs, source tarballs", tool: "Shell or API", toolEg: "curl, git, Playwright", note: ["browser upload: 10 MB cap,", "3 bug reports in 2026"], col: C.accent },
-  { at: 1, task: "The last click", eg: "submit, pay, sign, CAPTCHA", tool: "Me", toolEg: "the agent hands over", note: ["cannot be undone,", "so it stays human"], col: C.warm },
+  { at: 0, task: "Forms", eg: "portal fields, grant Part A", tool: "Browser agent", toolEg: "Claude in Chrome", note: ["filled in my ERC Part A,", "Oct 2026"], col: C.accent },
+  { at: 0, task: "Files", eg: "PDFs, source tarballs", tool: "Shell or API", toolEg: "curl, git, an API, Playwright", note: ["Chrome uploads: 10 MB cap,", "3 bug reports in 2026;", "test before a live demo"], col: C.accent },
+  { at: 1, task: "The last click", eg: "submit, pay, sign, CAPTCHA", tool: "Me", toolEg: "the agent stops and hands over", note: ["can't be undone,", "so I do it myself"], col: C.warm },
 ];
 const Y0 = 200, DY = 118, BW = 360, BH = 92;
 
@@ -30,11 +31,12 @@ function Browser({ x, y }: { x: number; y: number }) {
 export function BrowserRoutes({ step }: { step: number }) {
   const [hover, setHover] = useState<number | null>(null);
   return (
-    <Canvas label="A browser agent reads, clicks and types in my own browser. Forms go to the browser agent, files to the shell or an API, and the last click stays with me">
+    <Canvas label="A browser agent reads, clicks and types in my own browser. Forms go to the browser agent; files go through the shell or an API, since browser uploads are capped and have known bugs; the last click stays with me">
       <Arrow id="r10-br" />
       <Browser x={0} y={10} />
-      <text x={180} y={52} fontFamily={SANS} fontSize={27} fill={C.ink}>A browser agent reads the page, clicks and types</text>
-      <text x={180} y={90} fontFamily={SANS} fontSize={27} fill={C.ink}>in my own logged-in browser.</text>
+      <text x={180} y={44} fontFamily={SANS} fontSize={27} fill={C.ink}>A browser agent reads the page, clicks and types</text>
+      <text x={180} y={80} fontFamily={SANS} fontSize={27} fill={C.ink}>in my own logged-in browser.</text>
+      <text className="t-label" x={180} y={112} fontFamily={MONO} fontSize={16} fill={C.muted}>e.g. Claude in Chrome, an extension; logins and CAPTCHAs come back to me</text>
       <line x1={0} x2={1200} y1={140} y2={140} stroke={C.rule} strokeDasharray="4 6" />
       {ROUTES.map((r, i) => {
         const y = Y0 + i * DY;
@@ -50,7 +52,7 @@ export function BrowserRoutes({ step }: { step: number }) {
               <text x={BW + 159} y={y - 4} fontFamily={SANS} fontSize={28} fill={r.col === C.warm ? C.warm : C.ink}>{r.tool}</text>
               <text className="t-label" x={BW + 159} y={y + 28} fontFamily={MONO} fontSize={16} fill={C.muted}>{r.toolEg}</text>
               {r.note.map((n, k) => (
-                <text key={n} className="t-label" x={BW * 2 + 130} y={y - 6 + k * 26} fontFamily={MONO} fontSize={16} fill={C.muted}>{n}</text>
+                <text key={n} className="t-label" x={BW * 2 + 130} y={y - (r.note.length - 1) * 12 - 6 + k * 24} fontFamily={MONO} fontSize={16} fill={C.muted}>{n}</text>
               ))}
             </g>
           </Show>

@@ -6,7 +6,7 @@ import { C, Canvas, T, mono, serif } from "./kit";
 // which is asked the project's question.
 const INPUTS = [
   { name: "Literature review", sub: "tuning measures since 1988" },
-  { name: "Fine-Tuning", sub: "2019 PhD code" },
+  { name: "Fine-Tuning", sub: "my 2019 PhD code" },
   { name: "pyCHM", sub: "2026 public package" },
 ];
 

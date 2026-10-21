@@ -23,7 +23,7 @@ function Panel({ i, on, caption, children }: { i: number; on: boolean; caption: 
       <g transform={`translate(${PX[i]} 0)`}>
         {children}
         {caption.map((c, j) => (
-          <text key={c} x={PW / 2} y={TOP + PH + 78 + j * 30} textAnchor="middle" fill={C.ink} fontSize="22" fontFamily={SANS}>{c}</text>
+          <text key={c} x={PW / 2} y={TOP + PH + 78 + j * 28} textAnchor="middle" fill={j ? C.muted : C.ink} fontSize={j ? 20 : 22} fontFamily={SANS}>{c}</text>
         ))}
       </g>
     </G>
@@ -58,11 +58,11 @@ export function ScalingR3({ step }: { step: number }) {
     <Canvas>
       <svg viewBox="0 0 1200 560" className="h-full w-full" role="img" aria-label="Three panels: loss falls as a power law in training compute; at fixed compute a 70B model on more data beats a 280B model; thinking longer at inference can beat a 14 times larger model">
         <text x="20" y="34" fill={C.ink} fontSize="22" fontFamily={SANS}>
-          <tspan fill={C.muted}>Loss: how surprised the model is by the next token.</tspan>
+          <tspan fill={C.muted}>Loss: how surprised the model is by the next token. Lower is better.</tspan>
         </text>
 
         {/* 1. Kaplan */}
-        <Panel i={0} on={step >= 0} caption={["More compute, lower loss."]}>
+        <Panel i={0} on={step >= 0} caption={["More compute, lower loss.", "Fit to models up to 1.5B parameters"]}>
           {axes("training compute (PF-days)", "loss (log)")}
           {[-7, -5, -3, -1].map((e) => (
             <text key={e} className="t-label" x={k.x(10 ** e)} y={TOP + PH + 20} textAnchor="middle" fill={C.muted} fontSize="14" fontFamily={MONO}>1e{e}</text>
@@ -79,7 +79,7 @@ export function ScalingR3({ step }: { step: number }) {
         </Panel>
 
         {/* 2. Chinchilla */}
-        <Panel i={1} on={step >= 1} caption={["Same compute: smaller model, more data."]}>
+        <Panel i={1} on={step >= 1} caption={["Same compute: smaller model, more data.", "Fit to 400+ runs, 70M to 16B parameters"]}>
           {axes("model size (data shrinks →)", "loss, fixed compute")}
           {[[1e10, "10B"], [1e11, "100B"], [1e12, "1T"]].map(([n, l]) => (
             <text key={l as string} className="t-label" x={h.x(n as number)} y={TOP + PH + 20} textAnchor="middle" fill={C.muted} fontSize="14" fontFamily={MONO}>{l}</text>
@@ -105,7 +105,7 @@ export function ScalingR3({ step }: { step: number }) {
         </Panel>
 
         {/* 3. test-time compute */}
-        <Panel i={2} on={step >= 2} caption={["Or think longer per answer."]}>
+        <Panel i={2} on={step >= 2} caption={["Or think longer per answer.", "Maths problems, matched compute"]}>
           <text className="t-label" x="10" y={TOP + 40} fill={C.ink} fontSize="16" fontFamily={MONO}>same FLOPs per answer:</text>
           <rect x="10" y={TOP + 70} width="80" height="48" rx="6" fill={C.s1} fillOpacity="0.35" stroke={C.s1} />
           <text className="t-label" x="50" y={TOP + 101} textAnchor="middle" fill={C.ink} fontSize="17" fontFamily={SANS}>model</text>

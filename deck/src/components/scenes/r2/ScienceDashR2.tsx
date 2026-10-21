@@ -25,7 +25,8 @@ function Arrow() {
 
 export function ScienceDashR2({ step }: { step: number }) {
   return (
-    <Canvas style={{ justifyContent: "center", gap: "4vh" }}>
+    <Canvas style={{ justifyContent: "center", gap: "3vh" }}>
+      <span style={{ fontSize: T.body, lineHeight: 1.3 }}>ScienceDash: one dashboard on my own machine for projects, runs, papers and agents. Each project states a hypothesis and a metric; a supported hypothesis starts a paper.</span>
       <div style={{ display: "flex", gap: 8 }}>
         {CHAIN.map((c, i) => (
           <div key={c} style={{ display: "flex", gap: 8, flex: "1 1 0", minWidth: 0 }}>
@@ -38,12 +39,13 @@ export function ScienceDashR2({ step }: { step: number }) {
         ))}
       </div>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8, duration: 0.6 }}
-        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3vw", fontSize: T.body, lineHeight: 1.3 }}>
+        style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "2.4vw", fontSize: T.body, lineHeight: 1.3 }}>
         <div style={{ borderLeft: `3px solid ${C.ink}`, paddingLeft: 14 }}>Agents on the clusters report into it.</div>
+        <div style={{ borderLeft: `3px solid ${C.ink}`, paddingLeft: 14 }}>AI reviews come back as changes I can accept.</div>
         <div style={{ borderLeft: `3px solid ${C.ink}`, paddingLeft: 14 }}>One search box covers every past agent conversation.</div>
       </motion.div>
       <Reveal at={1} step={step}>
-        <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxHeight: "24vh" }} role="img" aria-label="Timeline: a working version on day one, 23 April 2026; built over five weeks of evenings to 29 May; open source in June; still in daily use in October">
+        <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxHeight: "22vh" }} role="img" aria-label="Timeline: a working version on day one, 23 April 2026; built over five weeks of evenings to 29 May; open source in June; still in daily use in October">
           <line x1={X0} x2={X1} y1={120} y2={120} stroke={C.ink} strokeWidth={1} />
           {MONTHS.map(([m, d]) => (
             <g key={m}>
@@ -60,7 +62,7 @@ export function ScienceDashR2({ step }: { step: number }) {
             <text className="t-label" x={xd(DAY1) + 8} y={180} fontFamily={mono} fontSize="16" fill={C.accent}>five weeks of evenings</text>
             <line x1={xd(OPEN)} x2={xd(OPEN)} y1={84} y2={106} stroke={C.muted} strokeWidth={1.5} />
             <text className="t-label" x={xd(OPEN) + 8} y={98} fontFamily={mono} fontSize="16" fill={C.muted}>open source (MIT)</text>
-            <text className="t-label" x={xd(NOW)} y={98} textAnchor="end" fontFamily={mono} fontSize="16" fill={C.muted}>used every morning</text>
+            <text className="t-label" x={xd(NOW)} y={98} textAnchor="end" fontFamily={mono} fontSize="16" fill={C.muted}>I open it every morning</text>
           </RevealG>
         </svg>
       </Reveal>

@@ -8,7 +8,9 @@ import { C, MONO, SANS, Show, Stage, stop } from "./kit";
 // with Claude", claude.dev blog, 28 Sep 2026: 44 customer-support tickets,
 // split at random into 30 the climber searches on and 14 held out. Keep a
 // patch only if both sets improve. Accuracy, %: searched 74.4 -> 98.9;
-// held out 78.6 -> 90.5, "at about one fifth of the cost".
+// held out 78.6 -> 90.5, "at about one fifth of the cost". Noise guard
+// (same post): the eval's noise must be smaller than the smallest improvement
+// you would act on. The path: model, effort and prompt changes (Fig. 8).
 const ROWS = [
   { label: "the 30 it saw", from: 74.4, to: 98.9, fromNote: "Opus 4.8, high effort, 4.6¢ a ticket", toNote: "Sonnet 5, low effort, better prompt, 1¢" },
   { label: "the 14 held out", from: 78.6, to: 90.5, fromNote: "original setup", toNote: "final setup, about one fifth of the cost" },
@@ -20,9 +22,9 @@ export function HeldOutSplit({ step }: { step: number }) {
   const [hover, setHover] = useState<number | null>(null);
   return (
     <Stage label="44 support tickets split into 30 the climber sees and 14 held out; keep a change only if both improve. Then accuracy: 74.4 to 98.9 percent on the 30 seen, 78.6 to 90.5 percent on the 14 held out">
-      <svg viewBox="0 0 1200 470" width="100%" style={{ width: "100%", height: "100%" }} onClick={stop}>
+      <svg viewBox="0 0 1200 530" width="100%" style={{ width: "100%", height: "100%" }} onClick={stop}>
         {/* the split */}
-        <text className="t-label" x={0} y={22} fontFamily={MONO} fontSize={16} fill={C.muted}>Anthropic’s example, not physics: tuning a customer-support agent on 44 graded tickets</text>
+        <text className="t-label" x={0} y={22} fontFamily={MONO} fontSize={16} fill={C.muted}>Anthropic’s example, not physics: a customer-support agent, 44 tickets with known answers</text>
         {Array.from({ length: 44 }, (_, i) => {
           const held = i >= 30;
           const col = held ? i - 30 : i;
@@ -33,23 +35,25 @@ export function HeldOutSplit({ step }: { step: number }) {
         <text x={0} y={158} fontFamily={SANS} fontSize={21} fill={C.accent} fontWeight={600}>30 the climber sees</text>
         <text x={330} y={158} fontFamily={SANS} fontSize={21} fill={C.ink} fontWeight={600}>14 held out</text>
         <line x1={310} x2={310} y1={36} y2={168} stroke={C.rule} strokeWidth={2} />
+        <text className="t-label" x={0} y={192} fontFamily={MONO} fontSize={15} fill={C.muted}>one change a round: the model, its effort or the prompt</text>
 
         {/* the rule */}
-        <text x={640} y={72} fontFamily={SANS} fontSize={24} fill={C.ink}><tspan fontWeight={700} fill={C.accent}>Keep</tspan> a change only if</text>
-        <text x={640} y={106} fontFamily={SANS} fontSize={24} fill={C.ink}>both sets improve.</text>
-        <text className="t-label" x={640} y={136} fontFamily={MONO} fontSize={15} fill={C.muted}>seen up, held-out flat: overfit, revert</text>
+        <text x={640} y={62} fontFamily={SANS} fontSize={24} fill={C.ink}><tspan fontWeight={700} fill={C.accent}>Keep</tspan> a change only if both sets improve.</text>
+        <text className="t-label" x={640} y={90} fontFamily={MONO} fontSize={15} fill={C.muted}>seen up, held-out flat: overfit, revert</text>
+        <text x={640} y={126} fontFamily={SANS} fontSize={20} fill={C.ink}>Before round one, check that the score’s noise</text>
+        <text x={640} y={152} fontFamily={SANS} fontSize={20} fill={C.ink}>is smaller than the smallest gain you’d act on.</text>
 
         {/* step 1: what happened */}
         <Show at={1} step={step}>
           {[70, 80, 90, 100].map((t) => (
             <g key={t}>
-              <line x1={x(t)} x2={x(t)} y1={210} y2={410} stroke={C.rule} />
-              <text className="t-label" x={x(t)} y={432} textAnchor="middle" fontFamily={MONO} fontSize={16} fill={C.muted}>{t}%</text>
+              <line x1={x(t)} x2={x(t)} y1={256} y2={460} stroke={C.rule} />
+              <text className="t-label" x={x(t)} y={482} textAnchor="middle" fontFamily={MONO} fontSize={16} fill={C.muted}>{t}%</text>
             </g>
           ))}
-          <text className="t-label" x={R} y={458} textAnchor="end" fontFamily={MONO} fontSize={15} fill={C.muted}>accuracy, start → after the climb</text>
+          <text className="t-label" x={R} y={508} textAnchor="end" fontFamily={MONO} fontSize={15} fill={C.muted}>accuracy, start → after the climb</text>
           {ROWS.map((r, i) => {
-            const y = 260 + i * 100;
+            const y = 310 + i * 100;
             const hero = i === 1;
             return (
               <g key={r.label} onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)} style={{ cursor: "default" }}>
@@ -63,11 +67,11 @@ export function HeldOutSplit({ step }: { step: number }) {
               </g>
             );
           })}
-          <line x1={x(98.9)} x2={x(98.9)} y1={272} y2={360} stroke={C.warm} strokeDasharray="4 5" strokeWidth={2} />
-          <path d={`M ${x(90.5)} 360 H ${x(98.9)}`} stroke={C.warm} strokeWidth={2} />
-          <text className="t-label" x={x(94.7)} y={396} textAnchor="middle" fontFamily={MONO} fontSize={17} fill={C.warm}>seen set overstates by 8.4 points</text>
-          <text x={640} y={172} fontFamily={SANS} fontSize={21} fill={C.warm}>Caveat: the held-out set now steers choices.</text>
-          <text x={640} y={200} fontFamily={SANS} fontSize={21} fill={C.warm}>Keep a final test set nobody touches.</text>
+          <line x1={x(98.9)} x2={x(98.9)} y1={322} y2={410} stroke={C.warm} strokeDasharray="4 5" strokeWidth={2} />
+          <path d={`M ${x(90.5)} 410 H ${x(98.9)}`} stroke={C.warm} strokeWidth={2} />
+          <text className="t-label" x={x(94.7)} y={446} textAnchor="middle" fontFamily={MONO} fontSize={17} fill={C.warm}>seen set overstates by 8.4 points</text>
+          <text x={640} y={196} fontFamily={SANS} fontSize={20} fill={C.warm}>Caveat: what’s kept now depends on the held-out set.</text>
+          <text x={640} y={222} fontFamily={SANS} fontSize={20} fill={C.warm}>So keep a final test set that nobody touches.</text>
         </Show>
       </svg>
     </Stage>

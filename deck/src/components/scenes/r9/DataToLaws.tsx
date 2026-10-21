@@ -4,7 +4,8 @@ import { Arrow, C, Canvas, MONO, SANS, Show } from "./kit";
 
 // newuniverse-history: three historical routes from data to laws, each a
 // three-rung climb (data, pattern, theory). Step 1: the machine lineage that
-// automates the middle rung, and what is different about the Basic Model.
+// automates the middle rung, what symbolic regression is, and what is
+// different about the Basic Model.
 const CASES = [
   {
     name: "planets",
@@ -25,13 +26,13 @@ const LINEAGE = [
   ["2016", "sparse equation fits", "SINDy, Brunton et al."],
   ["2020", "AI Feynman", "Udrescu, Tegmark"],
   ["2020", "laws from a neural net", "Cranmer et al."],
-  ["2025", "LLM proposes equations", "LLM-SR, Shojaee et al."],
+  ["2025", "LLM-written equations", "LLM-SR, Shojaee et al."],
 ];
 const COLX = [170, 520, 870], CW = 300, RY = [250, 160, 70]; // data at the bottom
 
 export function DataToLaws({ step }: { step: number }) {
   return (
-    <Canvas label="Planets, hydrogen and hadrons each went from data to a pattern to a theory; machine methods since 2009 automate the pattern step" viewBox="0 0 1200 600">
+    <Canvas label="Planets, hydrogen and hadrons each went from data to a pattern to a theory; symbolic regression since 2009 searches for the pattern in data someone else chose; the Basic Model lab also chooses its experiments" viewBox="0 0 1200 600">
       {RUNG.map((r, k) => (
         <text key={r} className="t-label" x={140} y={RY[k] + 36} textAnchor="end" fontFamily={MONO} fontSize={18} fill={C.muted}>{r}</text>
       ))}
@@ -48,10 +49,10 @@ export function DataToLaws({ step }: { step: number }) {
           ))}
         </g>
       ))}
-      <text x={170} y={360} fontFamily={SANS} fontSize={27} fill={C.ink}>Each time: data, then a pattern, then a theory that explains it.</text>
+      <text x={170} y={352} fontFamily={SANS} fontSize={25} fill={C.ink}>Each time the data came first, then a pattern, then a theory that explains it.</text>
 
       <Show at={1} step={step}>
-        <g transform="translate(0 400)">
+        <g transform="translate(0 372)">
           <text className="t-label" x={140} y={52} textAnchor="end" fontFamily={MONO} fontSize={18} fill={C.muted}>machines</text>
           <line x1={170} x2={1170} y1={46} y2={46} stroke={C.rule} strokeWidth={2} />
           {LINEAGE.map(([year, what, who], i) => {
@@ -65,9 +66,9 @@ export function DataToLaws({ step }: { step: number }) {
               </g>
             );
           })}
-          <text x={170} y={160} fontFamily={SANS} fontSize={27} fill={C.ink}>
-            They fit given data. <tspan fill={C.warm}>Here the agents also choose the experiments.</tspan>
-          </text>
+          <text x={170} y={146} fontFamily={SANS} fontSize={23} fill={C.ink}>Symbolic regression: a search over formulas for one that fits the data.</text>
+          <text x={170} y={180} fontFamily={SANS} fontSize={23} fill={C.ink}>It is tested mostly on laws we already knew, with data someone else chose.</text>
+          <text x={170} y={214} fontFamily={SANS} fontSize={23} fill={C.warm}>Our lab also chooses its own experiments.</text>
         </g>
       </Show>
       <Arrow id="r9-dl" />

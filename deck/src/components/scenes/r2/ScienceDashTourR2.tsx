@@ -10,9 +10,9 @@ import { C, Canvas, Reveal, T, mono, stop } from "../g1/kit";
 // Step 1: the search across every past agent conversation.
 // Click a tile to enlarge it; click again to close.
 const TILES = [
-  { img: "sd-poster.jpg", says: "a paper, as an explorable poster", at: 0, area: "1 / 1 / 3 / 2" },
-  { img: "sd-hypothesis.jpg", says: "a project, as a testable hypothesis", at: 0, area: "1 / 2 / 2 / 3" },
-  { img: "sd-search.jpg", says: "search every past agent conversation", at: 1, area: "2 / 2 / 3 / 3" },
+  { img: "sd-poster.jpg", says: "a paper, as a poster you can explore", at: 0, area: "1 / 1 / 3 / 2" },
+  { img: "sd-hypothesis.jpg", says: "a project, stated as a hypothesis you can test", at: 0, area: "1 / 2 / 2 / 3" },
+  { img: "sd-search.jpg", says: "search across every past agent conversation, from every machine", at: 1, area: "2 / 2 / 3 / 3" },
 ];
 
 export function ScienceDashTourR2({ step }: { step: number }) {

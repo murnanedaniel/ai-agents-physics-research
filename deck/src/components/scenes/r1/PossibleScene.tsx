@@ -8,17 +8,17 @@ import { C, Canvas, T, mono, serif, stop } from "./kit";
 // Each card deep-links to its first example scene.
 const COLUMNS = [
   { head: "Inner loop", sub: "one experiment", items: [
-    { id: "ex-trackfit", name: "Track fitting", when: "Apr 2026" },
-    { id: "ex-pandora", name: "Pandora speed-up", when: "May 2026" },
-    { id: "ex-hep4m", name: "HEP4M model", when: "Aug to Sep 2026" },
+    { id: "ex-trackfit", name: "Track fitting", when: "Apr 2026", what: "a beam-spot study, dictated on a run" },
+    { id: "ex-pandora", name: "Pandora speed-up", when: "May 2026", what: "particle flow, profiled and sped up" },
+    { id: "ex-hep4m", name: "HEP4M model", when: "Aug to Sep 2026", what: "one model for many tasks" },
   ] },
   { head: "Middle loop", sub: "a paper or a proposal", items: [
-    { id: "ex-erc", name: "ERC proposal", when: "Oct 2026" },
+    { id: "ex-erc", name: "ERC proposal", when: "Oct 2026", what: "writing, budget and the portal" },
   ] },
   { head: "Outer loop", sub: "a programme", items: [
-    { id: "ex-chatlas", name: "chATLAS", when: "2024 to 2026" },
-    { id: "ex-hamlet", name: "HAMLET app", when: "Aug 2026" },
-    { id: "ex-sciencedash", name: "ScienceDash", when: "Apr to Oct 2026" },
+    { id: "ex-chatlas", name: "chATLAS", when: "2024 to 2026", what: "search over ATLAS documentation" },
+    { id: "ex-hamlet", name: "HAMLET app", when: "Aug 2026", what: "a conference app and live panel" },
+    { id: "ex-sciencedash", name: "ScienceDash", when: "Apr to Oct 2026", what: "the dashboard I run my research from" },
   ] },
 ];
 
@@ -26,7 +26,7 @@ export function PossibleScene({ step }: { step: number }) {
   return (
     <Canvas style={{ justifyContent: "center", gap: "4vh" }}>
       <p style={{ fontSize: T.body, lineHeight: 1.35, color: C.ink, maxWidth: "52em", margin: 0 }}>
-        Seven things agents did in my work this year.
+        Seven things agents did in my own work this year, sorted by the loop they sit in: one experiment, one paper or proposal, or a whole programme.
       </p>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "2.4vw", alignItems: "start" }}>
         {COLUMNS.map((col, ci) => {
@@ -63,7 +63,7 @@ export function PossibleScene({ step }: { step: number }) {
                   }}
                 >
                   <span style={{ fontSize: T.body, lineHeight: 1.2 }}>{it.name}</span>
-                  <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>{it.when}</span>
+                  <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>{it.when} · {it.what}</span>
                 </motion.a>
               ))}
             </div>

@@ -14,16 +14,16 @@ const SW = 300;
 const LOG_Y = 196;
 
 const TOOLS = [
-  { name: "Weights & Biases", what: "metrics per step", write: "wandb.log(...)", read: "API or MCP server", detail: "cloud dashboard, run states" },
-  { name: "Repo files", what: "results.tsv, run folders", write: "append a line", read: "cat, grep, git log", detail: "plain text, versioned by git" },
-  { name: "ScienceDash", what: "hypotheses, runs, check-ins", write: "its tool API", read: "search old sessions", detail: "indexes session transcripts" },
+  { name: "Weights & Biases", what: ["hosted dashboard:", "metrics per step, run state"], write: "wandb.log(...)", read: "API, or an MCP server (a plug-in that gives the agent tools)", detail: "the run states show crashes" },
+  { name: "Repo files", what: ["results table,", "run folders, in git"], write: "append a line", read: "cat, grep, git log", detail: "plain text, versioned by git" },
+  { name: "ScienceDash", what: ["my dashboard:", "hypotheses, runs, check-ins"], write: "its tool API", read: "search old sessions", detail: "indexes session transcripts" },
 ];
 
 export function WhyLogs({ step }: { step: number }) {
   const [hover, setHover] = useState<number | null>(null);
   return (
     <Stage label="Three agent sessions, each starting blank, write to and read from one log that outlives them; then three places a log can live: Weights and Biases, files in the repo, ScienceDash">
-      <svg viewBox="0 0 1200 470" width="100%" style={{ width: "100%", height: "100%" }} onClick={stop}>
+      <svg viewBox="0 0 1200 500" width="100%" style={{ width: "100%", height: "100%" }} onClick={stop}>
         <Arrow id="wl-down" color={C.accent} />
         <Arrow id="wl-up" color={C.warm} />
         {/* sessions: each one's context ends */}
@@ -58,7 +58,7 @@ export function WhyLogs({ step }: { step: number }) {
           <text x={600} y={300} textAnchor="middle" fontFamily={SANS} fontSize={30} fill={C.ink}>
             In my W&amp;B since April: <tspan fontWeight={700} fill={C.warm}>70 of 516 runs</tspan> failed or crashed
           </text>
-          <text className="t-label" x={600} y={334} textAnchor="middle" fontFamily={MONO} fontSize={16} fill={C.muted}>six projects with run counts; an agent summary that skips them looks like success</text>
+          <text className="t-label" x={600} y={334} textAnchor="middle" fontFamily={MONO} fontSize={16} fill={C.muted}>six projects with run counts; a summary that skips the failed runs looks like success</text>
         </Show>
 
         {/* step 1: where a log can live */}
@@ -71,13 +71,14 @@ export function WhyLogs({ step }: { step: number }) {
                 <path d={`M ${x + w / 2} ${LOG_Y + 22} V ${y}`} stroke={C.accent} strokeWidth={1.5} strokeDasharray="4 4" />
                 <rect x={x} y={y} width={w} height={196} rx={12} fill={hot ? C.accentSoft : "#fff"} stroke={hot ? C.accent : C.faint} strokeWidth={hot ? 2 : 1.5} />
                 <text x={x + 20} y={y + 38} fontFamily={SANS} fontSize={25} fontWeight={600} fill={C.ink}>{t.name}</text>
-                <text x={x + 20} y={y + 72} fontFamily={SANS} fontSize={20} fill={C.ink}>{t.what}</text>
-                <text className="t-label" x={x + 20} y={y + 118} fontFamily={MONO} fontSize={16} fill={C.accent}>write: {t.write}</text>
-                <text className="t-label" x={x + 20} y={y + 148} fontFamily={MONO} fontSize={16} fill={C.warm}>read: {t.read}</text>
-                {hot && <text className="t-label" x={x + 20} y={y + 180} fontFamily={MONO} fontSize={14} fill={C.muted}>{t.detail}</text>}
+                {t.what.map((w, k) => <text key={w} x={x + 20} y={y + 70 + k * 25} fontFamily={SANS} fontSize={20} fill={C.ink}>{w}</text>)}
+                <text className="t-label" x={x + 20} y={y + 130} fontFamily={MONO} fontSize={16} fill={C.accent}>write: {t.write}</text>
+                <text className="t-label" x={x + 20} y={y + 156} fontFamily={MONO} fontSize={16} fill={C.warm}>read: {t.read}</text>
+                {hot && <text className="t-label" x={x + 20} y={y + 182} fontFamily={MONO} fontSize={14} fill={C.muted}>{t.detail}</text>}
               </g>
             );
           })}
+          <text x={600} y={488} textAnchor="middle" fontFamily={SANS} fontSize={21} fill={C.ink}>The agent writes as it runs and reads the log before it reports.</text>
         </Show>
       </svg>
       {/* step-aware source line, in the deck's source style */}

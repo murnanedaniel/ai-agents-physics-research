@@ -22,6 +22,14 @@ const REST = 1 - NEXT.reduce((a, [, p]) => a + p, 0);
 const TX = (i: number) => 80 + i * 88;
 const TY = 470, TW = 78, TH = 50;
 
+// Vaswani et al. 2017: each token's query is scored against every earlier key;
+// the scores weight a sum of the values. GPT-2 small has 12 layers.
+const MECH = [
+  "In every layer each token makes a query, a key and a value.",
+  "The query-key match sets how much of each value gets mixed in.",
+  "GPT-2 small stacks 12 such layers.",
+];
+
 const CAPTIONS = [
   "Text is cut into tokens. The last token looks back at all the others: attention.",
   "Out comes a probability for every possible next token. Pick one, append it, repeat.",
@@ -91,6 +99,11 @@ export function Transformer({ step }: { step: number }) {
           <G key={c} on={step === i}>
             <text x="20" y="30" fill={C.ink} fontSize="25" fontFamily={SANS}>{c}</text>
           </G>
+        ))}
+
+        {/* what attention is made of: the query, key and value the KV cache will store */}
+        {MECH.map((m, i) => (
+          <text key={m} className={i === 2 ? "t-label" : undefined} x="20" y={76 + i * 30} fill={i === 2 ? C.muted : C.ink} fontSize={i === 2 ? 18 : 21} fontFamily={i === 2 ? MONO : SANS}>{m}</text>
         ))}
       </svg>
     </Canvas>

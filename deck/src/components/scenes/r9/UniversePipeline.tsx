@@ -11,7 +11,7 @@ import { Arrow, C, Canvas, MONO, SANS, Show } from "./kit";
 const NODES = [
   { name: "Lagrangian", sub: "ours, frozen" },
   { name: "UFO", sub: "model in Python" },
-  { name: "MadGraph", sub: "+ MadSpin" },
+  { name: "MadGraph", sub: "+ MadSpin decays" },
   { name: "detector", sub: "fast sim" },
   { name: "oracle", sub: "the only door" },
   { name: "agent lab", sub: "sees hits only" },
@@ -77,7 +77,7 @@ export function UniversePipeline({ step }: { step: number }) {
         <circle cx={EX} cy={EY} r={4} fill={C.ink} />
         <text x={400} y={300} fontFamily={SANS} fontSize={26} fill={C.ink}>Raw hits: where, when, how much energy.</text>
         <text className="t-label" x={400} y={334} fontFamily={MONO} fontSize={16} fill={C.muted}>10 tracker layers in a 2 T field, then a calorimeter</text>
-        <text className="t-label" x={400} y={358} fontFamily={MONO} fontSize={16} fill={C.muted}>no particle names, no truth</text>
+        <text x={400} y={370} fontFamily={SANS} fontSize={22} fill={C.ink}>No particle names, no truth: the lab builds its own tracks.</text>
       </Show>
 
       {/* step 2: the oracle */}
@@ -85,8 +85,8 @@ export function UniversePipeline({ step }: { step: number }) {
         <g transform="translate(400 400)">
           <rect x={0} y={0} width={770} height={56} rx={8} fill={C.tint} stroke={C.accent} strokeWidth={1.5} />
           <text className="t-label" x={20} y={36} fontFamily={MONO} fontSize={19} fill={C.ink}>{"$ oracle request <beam1> <beam2> <√s> <n events>"}</text>
-          <text x={0} y={104} fontFamily={SANS} fontSize={26} fill={C.ink}>Every event costs budget; every request lands in a ledger.</text>
-          <text className="t-label" x={0} y={138} fontFamily={MONO} fontSize={16} fill={C.muted}>stable beams only · √s up to 500 GeV · 5 × 10⁶ events in total</text>
+          <text x={0} y={104} fontFamily={SANS} fontSize={24} fill={C.ink}>Each event costs one unit of budget; each request is logged.</text>
+          <text className="t-label" x={0} y={138} fontFamily={MONO} fontSize={16} fill={C.muted}>stable beams only · √s up to 500 GeV · 5 × 10⁶ events in total, in a ledger</text>
         </g>
       </Show>
       <Arrow id="r9-up" />

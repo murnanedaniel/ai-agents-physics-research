@@ -60,8 +60,9 @@ export function LayerModels({ step }: { step: number }) {
         <Card x={CX + w + 40} y={60} w={w} h={230} title="Open weights" lines={["Qwen, DeepSeek", "Llama, Mistral", "gpt-oss"]} sub="download and run on your own GPUs" color={C.violet} fill={TINT.violet} />
       </Show>
       <Show when={step >= 1}>
-        <Takeaway y={370}>Choose by task, data rules and cost.</Takeaway>
-        <text x={CX} y={416} fontSize={T.body} fill={C.ink}>Today: Claude builds; GPT, in Codex, reviews.</text>
+        <Takeaway y={360}>Choose by task, data rules and cost.</Takeaway>
+        <text x={CX} y={404} fontSize={T.body} fill={C.ink}>In my work: I build with Claude and review with GPT, in Codex.</text>
+        <text x={CX} y={436} fontSize={T.body} fill={C.ink}>Open weights: I use them for tests.</text>
       </Show>
     </Frame>
   );
@@ -71,13 +72,13 @@ export function LayerModels({ step }: { step: number }) {
 export function LayerHarness({ step }: { step: number }) {
   const w = 290, gap = 30;
   const cols = [
-    { title: "Chat apps", lines: ["claude.ai", "ChatGPT", "Gemini"], sub: "talks; you carry the results", color: C.faint, fill: TINT.paper },
+    { title: "Chat apps", lines: ["claude.ai", "ChatGPT", "Gemini"], sub: "chat only; you copy results across", color: C.faint, fill: TINT.paper },
     { title: "Coding agents", lines: ["Claude Code", "Codex", "Cursor"], sub: "edits files, runs commands", color: C.accent, fill: TINT.accent },
     { title: "Workbenches", lines: ["Claude Science"], sub: "data, compute, figures, review", color: C.violet, fill: TINT.violet },
   ];
   return (
     <Frame current="Harness">
-      <text x={CX} y={40} fontSize={T.body} fill={C.ink}>Harness: the program that runs the model’s loop.</text>
+      <text x={CX} y={40} fontSize={T.body - 1} fill={C.ink}>Harness: the program around the model. It handles context, tools and permissions.</text>
       <Show when={step >= 0}>
         {cols.map((c, i) => <Card key={c.title} x={CX + i * (w + gap)} y={80} w={w} h={230} {...c} />)}
       </Show>
@@ -85,7 +86,8 @@ export function LayerHarness({ step }: { step: number }) {
         <line x1={CX} y1={342} x2={CX + 3 * w + 2 * gap} y2={342} stroke={C.ink} strokeWidth={1.5} />
         <text x={CX} y={368} fontSize={T.label} fill={C.muted} className="t-label">you act</text>
         <text x={CX + 3 * w + 2 * gap} y={368} textAnchor="end" fontSize={T.label} fill={C.muted} className="t-label">the agent acts, you check</text>
-        <Takeaway y={430}>Today: claude.ai, Claude Code and Claude Science.</Takeaway>
+        <Takeaway y={426}>Today: claude.ai, Claude Code and Claude Science.</Takeaway>
+        <text x={CX} y={464} fontSize={T.body - 2} fill={C.ink}>claude.ai to start a project, Claude Code on the cluster, Claude Science for fine-tuning.</text>
       </Show>
     </Frame>
   );
@@ -113,7 +115,8 @@ export function LayerEnvironment({ step }: { step: number }) {
         })}
         <rect x={hubX - 150} y={hubY - 24} width={300} height={52} rx={26} fill={TINT.paper} stroke={C.ink} strokeWidth={1.5} />
         <text x={hubX} y={hubY + 9} textAnchor="middle" fontSize={T.body} fill={C.ink}>steered from one chat</text>
-        <Takeaway y={460}>Put the agent next to the data.</Takeaway>
+        <Takeaway y={450}>Put the agent next to the data.</Takeaway>
+        <text x={CX} y={490} fontSize={T.body} fill={C.ink}>Remote control and cloud sessions show up in claude.ai, on a laptop or a phone.</text>
       </Show>
     </Frame>
   );
@@ -150,7 +153,10 @@ export function LayerPractice({ step }: { step: number }) {
         );
       })}
       <Show when={step >= 0}>
-        <text x={CX} y={500} fontSize={T.label} fill={C.muted} className="t-label">a skill is a folder: SKILL.md (when to use it, the steps) plus templates and scripts</text>
+        <text x={CX} y={492} fontSize={T.small + 1} fill={C.ink}>A skill is a folder: SKILL.md (when to use it, the steps) plus templates and scripts.</text>
+      </Show>
+      <Show when={step >= 1}>
+        <text x={CX} y={528} fontSize={T.small + 1} fill={C.ink}>Around all six sits a working style: how you ask, delegate, check and interrogate.</text>
       </Show>
     </Frame>
   );

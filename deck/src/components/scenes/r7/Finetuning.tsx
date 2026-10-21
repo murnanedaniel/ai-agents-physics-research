@@ -37,12 +37,14 @@ export function Finetuning({ step }: { step: number }) {
       <div className="h-full flex-[0.8] min-w-0 flex items-center justify-center"><Bars /></div>
       <div className="flex-1 min-w-0 flex flex-col justify-center gap-[4.5vh]">
         <Reveal at={0} step={step}>
-          <div style={{ fontSize: T.body, lineHeight: 1.3 }}>A composite Higgs is bound by a new strong force. Keeping it light needs a cancellation.</div>
+          <div style={{ fontSize: T.body, lineHeight: 1.3 }}>A composite Higgs is bound by a new strong force. Keeping it light needs two large terms to nearly cancel.</div>
+          <div className="mt-3" style={{ fontSize: T.body, lineHeight: 1.3 }}>The finer the cancellation, the more tuned the model, and the less natural it looks.</div>
         </Reveal>
         <Reveal at={1} step={step}>
           <div className="t-label" style={{ ...mono, fontSize: T.label, color: C.muted }}>the classic measure: Barbieri and Giudice, 1988</div>
           <div className="mt-1 t-label" style={{ fontSize: "clamp(22px, 1.9vw, 36px)", lineHeight: 1.4 }}>Δ = max<sub>p</sub> |∂ log <i>O</i> / ∂ log <i>p</i>|</div>
           <div className="t-label" style={{ ...mono, fontSize: T.label, color: C.muted }}>O: an observable such as the Higgs mass · one parameter p at a time, first derivatives only</div>
+          <div className="mt-2" style={{ fontSize: T.body, lineHeight: 1.3 }}>Δ = 10: a 1% change in <i>p</i> moves <i>O</i> by 10%.</div>
         </Reveal>
         <Reveal at={2} step={step}>
           <div className="rounded-xl border-2 border-dashed px-5 py-3" style={{ borderColor: C.accent, background: C.accentSoft }}>

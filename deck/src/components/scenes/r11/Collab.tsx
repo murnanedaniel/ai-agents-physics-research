@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Area, C, Show, T, stop } from "./kit";
 import { EDGES, NODES, SECTIONS } from "../g9/nbiGraph";
 
-// The NBI research graph, anonymised. Step 0: 124 staff placed by
+// The NBI research graph, anonymised. Step 0: 124 professors placed by
 // what they work on. Step 1: the 321 suggested links (similar recent work,
 // different profiles); the ones that cross a section boundary in warm.
 const W = 1200, H = 460;
@@ -18,7 +18,7 @@ export function Collab({ step }: { step: number }) {
   const linked = hover === null ? null : new Set(EDGES.filter(([a, b]) => a === hover || b === hover).flat());
   return (
     <Area>
-      <svg viewBox={`0 0 ${W} ${H}`} className="min-h-0 w-full flex-1" role="img" aria-label="Scatter of 124 NBI staff placed by research similarity, with 321 suggested links between people who have not collaborated" onClick={stop}>
+      <svg viewBox={`0 0 ${W} ${H}`} className="min-h-0 w-full flex-1" role="img" aria-label="Scatter of 124 NBI professors placed by research similarity, with 321 suggested links between people whose recent papers are similar but whose staff pages are not" onClick={stop}>
         {EDGES.map(([a, b], i) => {
           const cross = NODES[a][2] !== NODES[b][2];
           const lit = linked && (a === hover || b === hover);
@@ -38,10 +38,14 @@ export function Collab({ step }: { step: number }) {
       <div className="t-label" style={{ ...T.label, ...T.mono, color: C.muted, minHeight: "1.4em" }}>
         {hover !== null ? `${SECTIONS[NODES[hover][2]]}${step >= 1 && linked ? ` · ${linked.size - 1} suggested links` : ""}` : ""}
       </div>
-      <div className="relative" style={{ ...T.body, color: C.ink, minHeight: "1.4em" }}>
-        <Show when={step < 1} className="absolute inset-0">124 NBI staff, placed by what they work on. Hover a dot.</Show>
+      <div className="relative" style={{ ...T.body, color: C.ink, minHeight: "3.9em" }}>
+        <Show when={step < 1} className="absolute inset-0">
+          124 NBI professors. Each dot is a person, placed by what their research description says,
+          so close dots work on similar things. Hover a dot for its section.
+        </Show>
         <Show when={step >= 1} className="absolute inset-0">
-          321 links: similar recent papers, different staff pages. <span style={{ color: C.warm }}>{CROSS} cross a section.</span>
+          Each person&apos;s three links go to people with similar recent papers but different staff pages.
+          321 links, <span style={{ color: C.warm }}>{CROSS} across sections</span>. Introductions to check: the data can&apos;t show who already talks.
         </Show>
       </div>
     </Area>

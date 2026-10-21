@@ -1,18 +1,17 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Arrow, C, Canvas, SERIF, Show, T, TINT } from "./kit";
+import { Arrow, C, Canvas, SERIF, Show, T } from "./kit";
 
 const X0 = 200, N = 6, BW = 140, GAP = 12;
 const bx = (k: number) => X0 + k * (BW + GAP);
 const YOU = 60, ROW0 = 175, ROWH = 42, PROJECTS = 5;
 
-// The three questions the lesson raises; each gets the next scene.
-const costs = ["the cost to your attention", "the elephant in the room", "what we become"];
 
 // The same work, first done by hand, then delegated across many projects
 // with the researcher at the checkpoints, then closed into feedback loops.
-// The lesson stays on screen from step 2; step 3 names what it costs.
+// The lesson stays on screen from step 2; step 3 names its cost and the
+// question it raises, which the next three scenes take up.
 export function OneLessonR6({ step }: { step: number }) {
   const many = step >= 1;
   return (
@@ -55,16 +54,12 @@ export function OneLessonR6({ step }: { step: number }) {
       <motion.text x={X0} y={440} fontSize={T.lead} fill={C.ink} initial={false}
         animate={{ opacity: step === 0 ? 1 : 0 }} transition={{ duration: 0.5 }} aria-hidden={step !== 0}>Today: one project, every step by hand.</motion.text>
       <Show when={step >= 1}>
-        <text x={X0} y={448} fontFamily={SERIF} fontStyle="italic" fontSize={T.big + 4} fill={C.warmText}>Be ambitious. Do more.</text>
+        <text x={X0} y={428} fontFamily={SERIF} fontStyle="italic" fontSize={T.big + 4} fill={C.warmText}>Be ambitious. Do more.</text>
+        <text x={X0} y={466} fontSize={T.body} fill={C.ink}>Pick ambitious projects, run several at once, and automate the routine steps.</text>
       </Show>
       <Show when={step >= 2}>
-        <text x={X0} y={510} fontSize={T.body} fill={C.ink}>It has costs:</text>
-        {costs.map((c, i) => (
-          <g key={c}>
-            <rect x={X0 + 140 + i * 265} y={482} width={250} height={42} rx={21} fill={TINT.paper} stroke={C.warm} strokeWidth={1.3} />
-            <text x={X0 + 140 + i * 265 + 125} y={509} textAnchor="middle" fontSize={T.small} fill={C.ink}>{c}</text>
-          </g>
-        ))}
+        <text x={X0} y={508} fontSize={T.body} fill={C.ink}>It comes at a cost to your attention. It also raises a harder question:</text>
+        <text x={X0} y={540} fontSize={T.body} fill={C.ink}>if agents do more of the work, what is left for us?</text>
       </Show>
     </Canvas>
   );

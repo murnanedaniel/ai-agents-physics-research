@@ -20,7 +20,7 @@ export function JudgePanel({ step }: { step: number }) {
   const [hover, setHover] = useState(false);
   const rank = (v: number) => 600 + ((v - 1) / 99) * 560;
   return (
-    <Canvas viewBox="0 0 1200 580" label="Three model judges calibrated on three past proposals; on eleven unseen past proposals they rank a funded one above an unfunded one 93 percent of the time; on my own unpublished proposal they ranked it a little better than the real ERC panel did">
+    <Canvas viewBox="0 0 1200 580" label="Three model judges calibrated on three past proposals; on eleven unseen past proposals they rank a funded one above an unfunded one 93 percent of the time; on my own earlier ERC proposal, never published, they ranked it a little better than the real ERC panel did. Live, we use this panel to score the EuroHPC draft">
       <Arrow id="r10-jp" />
       {/* legend */}
       <g>
@@ -32,17 +32,18 @@ export function JudgePanel({ step }: { step: number }) {
 
       {/* A: calibration */}
       <Show at={0} step={step}>
-        <text x={0} y={ROW.a - 30} fontFamily={SANS} fontSize={25} fill={C.ink}>Three past proposals, outcomes shown</text>
+        <text x={0} y={ROW.a - 30} fontFamily={SANS} fontSize={25} fill={C.ink}>Three past ERC proposals, outcomes shown</text>
         {[true, true, false].map((f, i) => <Doc key={i} x={i * 40} y={ROW.a - 8} filled={f} />)}
         <path d={`M440 ${ROW.a + 8} H540`} stroke={C.muted} strokeWidth={2} markerEnd="url(#r10-jp)" />
         {[0, 1, 2].map((i) => <circle key={i} cx={580 + i * 34} cy={ROW.a + 8} r={13} fill={C.paper} stroke={C.ink} strokeWidth={2} />)}
         <text x={700} y={ROW.a + 14} fontFamily={SANS} fontSize={24} fill={C.ink}>3 model judges</text>
-        <text className="t-label" x={700} y={ROW.a + 42} fontFamily={MONO} fontSize={15} fill={C.muted}>RANK EACH PROPOSAL 1 TO 100</text>
+        <text className="t-label" x={700} y={ROW.a + 42} fontFamily={MONO} fontSize={15} fill={C.muted}>EACH RANKS A PROPOSAL 1 (BEST) TO 100,</text>
+        <text className="t-label" x={700} y={ROW.a + 62} fontFamily={MONO} fontSize={15} fill={C.muted}>AGAINST THE THREE IT HAS SEEN</text>
       </Show>
 
       {/* B: held-out test */}
       <Show at={1} step={step} dim>
-        <text x={0} y={ROW.b - 50} fontFamily={SANS} fontSize={25} fill={C.ink}>Eleven more, hidden</text>
+        <text x={0} y={ROW.b - 50} fontFamily={SANS} fontSize={25} fill={C.ink}>Eleven more, outcomes hidden</text>
         {Array.from({ length: 11 }, (_, i) => <Doc key={i} x={i * 36} y={ROW.b - 28} filled={i < 7} />)}
         <path d={`M440 ${ROW.b - 10} H540`} stroke={C.muted} strokeWidth={2} markerEnd="url(#r10-jp)" />
         <g {...stop} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={{ cursor: "default" }}>
@@ -58,8 +59,9 @@ export function JudgePanel({ step }: { step: number }) {
 
       {/* C: unpublished proposal */}
       <Show at={2} step={step} dim>
-        <text x={0} y={ROW.c - 30} fontFamily={SANS} fontSize={25} fill={C.ink}>Mine, unpublished:</text>
-        <text className="t-label" x={0} y={ROW.c + 2} fontFamily={MONO} fontSize={15} fill={C.muted}>SO IT CANNOT BE MEMORISED</text>
+        <text x={0} y={ROW.c - 30} fontFamily={SANS} fontSize={25} fill={C.ink}>My earlier ERC proposal</text>
+        <text className="t-label" x={0} y={ROW.c + 2} fontFamily={MONO} fontSize={15} fill={C.muted}>NEVER PUBLISHED, SO NO MODEL</text>
+        <text className="t-label" x={0} y={ROW.c + 22} fontFamily={MONO} fontSize={15} fill={C.muted}>CAN HAVE MEMORISED ITS OUTCOME</text>
         <Doc x={380} y={ROW.c - 22} filled={false} />
         <path d={`M440 ${ROW.c - 6} H540`} stroke={C.muted} strokeWidth={2} markerEnd="url(#r10-jp)" />
         <line x1={rank(1)} x2={rank(100)} y1={ROW.c - 6} y2={ROW.c - 6} stroke={C.rule} strokeWidth={2} />
@@ -70,8 +72,8 @@ export function JudgePanel({ step }: { step: number }) {
         <text className="t-label" x={rank(REAL_LO)} y={ROW.c + 30} fontSize={15} fill={C.warm} fontFamily={MONO}>REAL ERC PANEL</text>
         <circle cx={rank(UNSEEN_PANEL)} cy={ROW.c - 6} r={10} fill={C.accent} />
         <text className="t-label" x={rank(UNSEEN_PANEL) - 18} y={ROW.c - 32} fontSize={15} textAnchor="end" fill={C.accent} fontFamily={MONO}>MODEL PANEL</text>
-        <text x={600} y={ROW.c + 76} fontFamily={SANS} fontSize={24} fill={C.ink}>Close to the real panel, a little kinder.</text>
-        <text className="t-label" x={1160} y={ROW.c + 108} textAnchor="end" fontFamily={MONO} fontSize={15} fill={C.muted}>LIVE, THIS PANEL SCORES THE EUROHPC DRAFT</text>
+        <text x={600} y={ROW.c + 76} fontFamily={SANS} fontSize={24} fill={C.ink}>Close to the real panel&apos;s rank, a little kinder.</text>
+        <text className="t-label" x={1160} y={ROW.c + 108} textAnchor="end" fontFamily={MONO} fontSize={15} fill={C.muted}>LIVE, WE SCORE THE EUROHPC DRAFT WITH THIS PANEL, REVISE AND SCORE AGAIN</text>
       </Show>
     </Canvas>
   );

@@ -13,8 +13,8 @@ const LOOPS = [
 ];
 const LINES = [
   <>One experiment: hypothesis, run, check, keep or discard.</>,
-  <>Three projects start from scratch: galactic clustering, fine-tuning, RANGE.</>,
-  <>Along the way: surfaces, skills, logs, hill-climbing.</>,
+  <>Three projects start from scratch: galactic clustering, fine-tuning and RANGE.</>,
+  <>Along the way: the surfaces we work from, skills, logging and hill-climbing.</>,
 ];
 
 export function InnerIntro({ step }: { step: number }) {

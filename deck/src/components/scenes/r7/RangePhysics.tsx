@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { C, Canvas, Reveal, T, mono, stop } from "./kit";
 
-// Left (step 0): what RANGE does. A chain molecule; a message-passing GNN
+// Left (step 0): what RANGE does, in words and as a drawing. A chain molecule; a message-passing GNN
 // only links atoms inside a cutoff; RANGE adds master nodes that gather from
 // every atom by attention and broadcast back (Caruso et al. 2026, Sec. 2).
 // Right (step 1): DHA errors for three models from one table, each defined,
@@ -11,11 +11,12 @@ import { C, Canvas, Reveal, T, mono, stop } from "./kit";
 // Li et al., arXiv:2304.13542, Table 2 (Equiformer 0.0506, MACE 0.0646).
 type Metric = "energy" | "force";
 // Caruso et al., Nat. Commun. 17 (2026), Table 1: MD22 DHA, PaiNN backbone,
-// mean of four seeds; time is inference time relative to PaiNN.
+// mean of four seeds; time is inference time relative to PaiNN. Setup line
+// (5 Å cutoff, ~70,000 DHA frames) from the same paper's Results section.
 const ROWS = [
   { name: "PaiNN", def: "local messages only: the baseline", energy: 0.199, force: 0.238, time: "time ×1" },
   { name: "+ Neural P3M", def: "adds long range through a grid, like an Ewald sum", energy: 0.113, force: 0.126, time: "time ×2.80" },
-  { name: "+ RANGE", def: "adds master nodes that see every atom", energy: 0.110, force: 0.160, time: "time ×1.47", hero: true },
+  { name: "+ RANGE", def: "adds master nodes linked to every atom", energy: 0.110, force: 0.160, time: "time ×1.47", hero: true },
 ];
 const UNIT: Record<Metric, string> = { energy: "energy error, kcal/mol", force: "force error, kcal/mol/Å" };
 
@@ -38,7 +39,7 @@ function Mechanism() {
       ))}
       {ATOMS.map((a, i) => <circle key={i} cx={a.x} cy={a.y} r={10} fill={i === CUT.i ? C.ink : "#d6d3d1"} stroke={C.ink} strokeWidth={1.2} />)}
       {MASTERS.map((m, k) => <rect key={k} x={m.x - 16} y={m.y - 16} width={32} height={32} rx={4} fill={C.accent} />)}
-      <text x={280} y={62} textAnchor="middle" fontSize={20} style={mono} fill={C.accent} className="t-label">RANGE master nodes: see every atom</text>
+      <text x={280} y={62} textAnchor="middle" fontSize={20} style={mono} fill={C.accent} className="t-label">RANGE master nodes: linked to every atom</text>
       <text x={c.x} y={c.y + CUT.r + 26} textAnchor="middle" fontSize={20} style={mono} fill={C.ink} className="t-label">cutoff: local messages only</text>
     </svg>
   );
@@ -81,11 +82,11 @@ export function RangePhysics({ step }: { step: number }) {
   return (
     <Canvas className="flex items-center gap-[3vw]">
       <div className="flex-1 min-w-0 flex flex-col justify-center gap-[1.5vh] h-full">
-        <div style={{ fontSize: T.body, lineHeight: 1.3 }}>ML force fields: molecular dynamics near quantum accuracy, far cheaper.</div>
+        <div style={{ fontSize: T.body, lineHeight: 1.3 }}>A message-passing network links each atom only to neighbours inside a cutoff. RANGE adds a few master nodes that gather from every atom, by attention, and send the result back.</div>
         <div className="min-h-0 flex-1 flex items-center justify-center overflow-hidden"><Mechanism /></div>
         <div className="t-label" style={{ ...mono, fontSize: T.label, color: C.muted, lineHeight: 1.4 }}>
           DHA: a 56-atom fatty-acid chain, one of seven molecules in the MD22 benchmark.<br />
-          Long range: atoms that pull on each other from beyond the cutoff.
+          Long range: atoms that pull on each other from beyond the cutoff, through electrostatics and dispersion.
         </div>
       </div>
       <Reveal at={1} step={step} className="flex-1 min-w-0 flex flex-col gap-[1.5vh]">
@@ -99,8 +100,9 @@ export function RangePhysics({ step }: { step: number }) {
           ))}
           <span className="t-label" style={{ ...mono, fontSize: T.label, color: C.muted }}>DHA · {UNIT[metric]} · lower is better</span>
         </div>
+        <div className="t-label" style={{ ...mono, fontSize: T.label, color: C.muted, lineHeight: 1.4 }}>setup: PaiNN, 5 Å cutoff, about 70,000 DHA frames; mean of four seeds</div>
         <Chart metric={metric} hover={hover} setHover={setHover} />
-        <div style={{ fontSize: T.body, lineHeight: 1.25 }}>RANGE costs less; Neural P3M wins on forces.</div>
+        <div style={{ fontSize: T.body, lineHeight: 1.25 }}>RANGE matches Neural P3M on energy in about half the time. Neural P3M has the lower force error.</div>
         <div className="t-label" style={{ ...mono, fontSize: T.label, color: C.muted, lineHeight: 1.4 }}>best published DHA force errors: about 0.05 to 0.07 kcal/mol/Å, with other training splits</div>
       </Reveal>
     </Canvas>

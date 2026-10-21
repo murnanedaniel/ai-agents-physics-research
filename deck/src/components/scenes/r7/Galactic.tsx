@@ -76,18 +76,19 @@ export function Galactic({ step }: { step: number }) {
           </motion.g>
         </svg>
       </div>
-      <div className="flex-1 min-w-0 flex flex-col justify-center gap-[5vh]">
+      <div className="flex-1 min-w-0 flex flex-col justify-center gap-[4vh]">
         <Reveal at={0} step={step}>
           <div style={{ ...serif, fontSize: T.big, lineHeight: 1.1 }}>Dark-matter particles in a box.</div>
           <div className="mt-2 t-label" style={{ ...mono, fontSize: T.label, color: C.muted }}>a simulated universe, one snapshot</div>
+          <div className="mt-3" style={{ fontSize: T.body, lineHeight: 1.3 }}>Gravity pulls the matter into clumps, called halos, joined by filaments.</div>
         </Reveal>
         <Reveal at={1} step={step}>
-          <div style={{ fontSize: T.body, lineHeight: 1.3 }}>Link every pair closer than <i>b</i>. Each linked group is a <span style={{ color: C.accent }}>halo</span>.</div>
-          <div className="mt-2 t-label" style={{ ...mono, fontSize: T.label, color: C.muted }}>friends-of-friends, usually b = 0.2 × mean spacing</div>
+          <div style={{ fontSize: T.body, lineHeight: 1.3 }}>Link every pair closer than <i>b</i>. Each linked group with enough members is a <span style={{ color: C.accent }}>halo</span>.</div>
+          <div className="mt-2 t-label" style={{ ...mono, fontSize: T.label, color: C.muted }}>friends-of-friends (Davis et al. 1985), usually b = 0.2 × mean spacing</div>
         </Reveal>
         <Reveal at={2} step={step}>
-          <div style={{ fontSize: T.body, lineHeight: 1.3 }}>Galaxies form in halos; halo counts test cosmology.</div>
-          <div className="mt-2" style={{ fontSize: T.body, lineHeight: 1.3 }}>One suite: <b style={{ fontWeight: 600 }}>44,100</b> simulations.</div>
+          <div style={{ fontSize: T.body, lineHeight: 1.3 }}>Galaxies form inside halos, so counting halos by mass is a test of cosmology.</div>
+          <div className="mt-3" style={{ fontSize: T.body, lineHeight: 1.3 }}>Quijote alone has <b style={{ fontWeight: 600 }}>44,100</b> simulations. Each snapshot needs its halos found, so speed matters.</div>
         </Reveal>
       </div>
     </Canvas>

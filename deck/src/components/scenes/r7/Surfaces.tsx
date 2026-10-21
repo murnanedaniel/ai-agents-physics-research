@@ -67,7 +67,8 @@ export function Surfaces({ step }: { step: number }) {
       </svg>
       <div className="min-h-[1.5em] t-label text-center" style={{ ...mono, fontSize: T.label, color: C.muted }} aria-live="polite">{info}</div>
       <Reveal at={1} step={step} className="text-center">
-        <div style={{ fontSize: T.body, lineHeight: 1.3 }}>The session lives on the cluster. Everything else reaches it through claude.ai.</div>
+        <div style={{ fontSize: T.body, lineHeight: 1.3 }}>The session runs on the cluster, next to the files, Slurm and the GPUs.</div>
+        <div style={{ fontSize: T.body, lineHeight: 1.3 }}>With Remote Control on, it shows up in claude.ai: chat, phone and ScienceDash all reach it there.</div>
       </Reveal>
     </Canvas>
   );

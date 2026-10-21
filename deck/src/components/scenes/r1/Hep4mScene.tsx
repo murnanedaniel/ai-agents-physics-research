@@ -41,7 +41,7 @@ function spoke(i: number, inward: boolean, off: number) {
 export function Hep4mScene({ step }: { step: number }) {
   return (
     <Canvas style={{ flexDirection: "row", gap: "3vw", alignItems: "center" }}>
-      <svg viewBox="-350 -245 700 490" style={{ flex: "1 1 58%", height: "100%", minWidth: 0 }} role="img" aria-label="Seven particle modalities around one model; particle flow and detector simulation are two choices of inputs and outputs">
+      <svg viewBox="-350 -245 700 490" style={{ flex: "1 1 54%", height: "100%", minWidth: 0 }} role="img" aria-label="Seven particle modalities around one model; particle flow and detector simulation are two choices of inputs and outputs">
         <defs>
           {PROMPTS.map((p) => (
             <marker key={p.name} id={`r1-hep-arrow-${p.bend}`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -73,26 +73,27 @@ export function Hep4mScene({ step }: { step: number }) {
           </motion.g>
         ))}
       </svg>
-      <div style={{ flex: "1 1 38%", display: "flex", flexDirection: "column", gap: "2.6vh", minWidth: 0 }}>
-        <div style={{ fontSize: T.body, lineHeight: 1.35 }}>Detector data becomes tokens, like words. A task picks the inputs and the outputs.</div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <div style={{ flex: "1 1 42%", display: "flex", flexDirection: "column", gap: "1.8vh", minWidth: 0 }}>
+        <div style={{ fontSize: T.body, lineHeight: 1.35 }}>We turn seven kinds of detector and truth data into tokens, like words, and train one model on all of them. A task is a choice of inputs and outputs.</div>
+        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "6px 20px" }}>
           {PROMPTS.map((p) => (
-            <span key={p.name} className="t-label" style={{ display: "flex", alignItems: "center", gap: 12, fontSize: T.body, color: C.ink }}>
-              <span style={{ width: 28, height: 4, background: p.color, borderRadius: 2, flex: "none" }} />{p.name}
+            <span key={p.name} className="t-label" style={{ display: "flex", alignItems: "center", gap: 10, fontSize: "clamp(16px, 1.3vw, 25px)", color: C.ink }}>
+              <span style={{ width: 24, height: 4, background: p.color, borderRadius: 2, flex: "none" }} />{p.name}
             </span>
           ))}
-          <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted, marginTop: 2 }}>two tasks, same weights</span>
+          <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>two tasks, same weights</span>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "auto auto auto", gap: "6px 18px", fontFamily: mono, fontSize: T.label, color: C.ink }}>
           <span className="t-label" style={{ color: C.muted }}>particle flow</span><span className="t-label" style={{ color: C.muted }}>jet pT IQR</span><span className="t-label" style={{ color: C.muted }}>classifier AUC</span>
           <span className="t-label">HGPflow</span><span className="t-label">0.0754</span><span className="t-label">0.902</span>
           <span className="t-label">nanoHEP (ours)</span><span className="t-label">0.0733</span><span className="t-label">0.691</span>
-          <span className="t-label" style={{ gridColumn: "1 / -1", color: C.muted }}>AUC: can a classifier tell it from truth? 0.5 = not at all</span>
+          <span className="t-label" style={{ gridColumn: "1 / -1", color: C.muted }}>IQR: jet response spread, lower is better · AUC: can a classifier tell it from truth? 0.5 = not at all</span>
         </div>
+        <span style={{ fontSize: T.body, lineHeight: 1.3 }}>On particle flow, our model matches HGPflow&apos;s resolution and is harder to tell from truth.</span>
         <Reveal at={1} step={step} style={{ display: "flex", flexDirection: "column", gap: 8, borderLeft: `3px solid ${C.accent}`, paddingLeft: 14 }}>
           <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>what the agents did</span>
-          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>Helped me design that classifier test.</span>
-          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>Audited every number, and caught a bug in the test.</span>
+          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>Helped me design the classifier test.</span>
+          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>Audited every number in the paper, and found an event-alignment bug in that test.</span>
           <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>training: about 24k GPU-hours on Perlmutter, Jun to Sep 2026</span>
         </Reveal>
       </div>

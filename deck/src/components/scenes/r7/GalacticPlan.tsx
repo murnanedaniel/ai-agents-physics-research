@@ -9,10 +9,10 @@ import { C, Canvas, Reveal, T, mono } from "./kit";
 const ART = [
   { name: "CPU codes", sub: "tree or grid neighbour search", note: "the standard in simulation pipelines", tone: "past" },
   { name: "jFoF (2025)", sub: "friends-of-friends on a GPU, in JAX", note: "up to about 10× faster than CPU codes", tone: "past" },
-  { name: "Our idea: FRNN", sub: "fixed-radius neighbour kernel on a GPU", note: "plus GPU connected components", tone: "new" },
+  { name: "Our idea: FRNN", sub: "fixed-radius nearest neighbours: a GPU kernel that finds every pair closer than b", note: "plus GPU connected components to form the groups", tone: "new" },
 ] as const;
 const PLAN = [
-  "Write the hypothesis down",
+  "Register hypothesis, budget and timeline",
   "Run jFoF as the baseline",
   "Check halo members exactly",
   "Only then, time both",
@@ -47,7 +47,8 @@ export function GalacticPlan({ step }: { step: number }) {
             </div>
           ))}
         </div>
-        <div className="mt-[7vh] rounded-xl border-l-4 pl-4 py-1" style={{ borderColor: C.accent }}>
+        <div className="mt-[5vh] rounded-xl border-l-4 pl-4 py-1" style={{ borderColor: C.accent }}>
+          <div style={{ fontSize: T.body, lineHeight: 1.3 }}>Hypothesis: FRNN finds the same halos as jFoF, in less time.</div>
           <div style={{ fontSize: T.body, lineHeight: 1.3 }}>Success: faster, with no loss of accuracy.</div>
           <div className="t-label mt-1" style={{ ...mono, fontSize: T.label, color: C.muted }}>figure of merit: the speed-accuracy Pareto frontier · accuracy = halo members against an exact answer · no results yet</div>
         </div>

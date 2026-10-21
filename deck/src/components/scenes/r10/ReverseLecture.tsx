@@ -33,7 +33,7 @@ function Bubble({ x, y, w, lines, tutor }: { x: number; y: number; w: number; li
 
 export function ReverseLecture({ step }: { step: number }) {
   return (
-    <Canvas label="A lecture puts new material in the room and problems at home. Reversed, students meet new material at home with a tutor agent that asks questions, and the room is for peer teaching and projects">
+    <Canvas label="A lecture puts new material in the room and problems at home. Reversed, students meet new material at home with a tutor agent that asks questions rather than giving answers, and the room is for peer teaching and projects. In one randomised trial, students with an AI tutor learned more, in less time, than in an active-learning class">
       <text x={0} y={80} fontFamily={SERIF} fontStyle="italic" fontSize={30} fill={C.ink}>Lecture</text>
       <Cell x={170} y={20} place="IN THE ROOM" what="new material" who="one speaker" room />
       <Cell x={490} y={20} place="AT HOME" what="problem sheets" who="alone" room={false} />
@@ -44,22 +44,24 @@ export function ReverseLecture({ step }: { step: number }) {
         <Cell x={490} y={174} place="IN THE ROOM" what="peer teaching" who="discussion, projects" room />
       </Show>
 
-      {/* the tutor, asking rather than telling */}
-      <text className="t-label" x={850} y={40} fontFamily={MONO} fontSize={15} fill={C.muted}>A TUTOR THAT ASKS</text>
-      <Bubble x={850} y={56} w={330} lines={["Why doesn\u2019t the result", "depend on the cutoff \u039b?"]} tutor />
-      <Bubble x={950} y={150} w={230} lines={["It\u2019s integrated out?"]} tutor={false} />
+      {/* the tutor, asking rather than telling (dialogue from the ETH scene) */}
+      <text className="t-label" x={850} y={22} fontFamily={MONO} fontSize={15} fill={C.muted}>A TUTOR THAT ASKS, NOT TELLS</text>
+      <Bubble x={850} y={34} w={330} lines={["What\u2019s the role of the", "cutoff \u039b in this calculation?"]} tutor />
+      <Bubble x={900} y={112} w={280} lines={["The scale where we stop", "trusting the EFT, right?"]} tutor={false} />
+      <Bubble x={850} y={190} w={330} lines={["Right. So why does the", "result not depend on \u039b?"]} tutor />
 
       <Show at={1} step={step}>
         <line x1={0} x2={1180} y1={330} y2={330} stroke={C.rule} strokeDasharray="4 6" />
-        <text x={0} y={398} fontFamily={SANS} fontSize={25} fill={C.ink}>Trial: AI-tutored students beat an active-learning class.</text>
-        <text className="t-label" x={0} y={432} fontFamily={MONO} fontSize={15} fill={C.muted}>HARVARD PHYSICS, RANDOMISED, N = 194 · KESTIN ET AL., SCI. REP. 2025</text>
+        <text x={0} y={384} fontFamily={SANS} fontSize={24} fill={C.ink}>One trial: students with an AI tutor learned more, in less time, than in an active-learning class.</text>
+        <text className="t-label" x={0} y={414} fontFamily={MONO} fontSize={15} fill={C.muted}>HARVARD PHYSICS, RANDOMISED, N = 194 · KESTIN ET AL., SCI. REP. 2025</text>
+        <text x={0} y={458} fontFamily={SANS} fontSize={24} fill={C.muted}>And a PhD? I hope students with many agents aim higher.</text>
         <a href={`${ETH_URL}?scene=faculty2031Teaching`} target="_blank" rel="noreferrer" {...stop}>
-          <rect x={0} y={480} width={330} height={48} rx={24} fill="none" stroke={C.accent} strokeWidth={1.5} />
-          <text className="t-label" x={165} y={511} textAnchor="middle" fontFamily={SANS} fontSize={20} fill={C.accent}>Teaching, in the ETH deck ↗</text>
+          <rect x={0} y={490} width={330} height={48} rx={24} fill="none" stroke={C.accent} strokeWidth={1.5} />
+          <text className="t-label" x={165} y={521} textAnchor="middle" fontFamily={SANS} fontSize={20} fill={C.accent}>Teaching, in the ETH deck ↗</text>
         </a>
         <a href={`${ETH_URL}?scene=phdPedagogy`} target="_blank" rel="noreferrer" {...stop}>
-          <rect x={350} y={480} width={330} height={48} rx={24} fill="none" stroke={C.accent} strokeWidth={1.5} />
-          <text className="t-label" x={515} y={511} textAnchor="middle" fontFamily={SANS} fontSize={20} fill={C.accent}>What is a PhD now? ↗</text>
+          <rect x={350} y={490} width={330} height={48} rx={24} fill="none" stroke={C.accent} strokeWidth={1.5} />
+          <text className="t-label" x={515} y={521} textAnchor="middle" fontFamily={SANS} fontSize={20} fill={C.accent}>What is a PhD now? ↗</text>
         </a>
       </Show>
     </Canvas>

@@ -67,12 +67,14 @@ export function Ideation({ step }: { step: number }) {
           </g>
         ))}
       </svg>
-      <div className="relative text-center" style={{ ...T.body, minHeight: "1.4em" }}>
+      <div className="relative text-center" style={{ ...T.body, minHeight: "2.7em" }}>
         <Show when={step < 1} className="absolute inset-x-0" style={{ color: C.ink }}>
-          Experts scored 43 NLP research ideas, blind to who wrote them.
+          In a 2024 study with 100+ NLP researchers, LLM ideas were rated more novel than experts&apos;.
+          The follow-up: 43 ideas, scored by experts blind to who wrote them.
         </Show>
         <Show when={step >= 1} className="absolute inset-x-0" style={{ color: C.ink }}>
-          Then each was carried out and scored again. The LLM ideas lost their lead.
+          Then an expert spent 100+ hours carrying out each idea, and it was scored again.
+          The LLM ideas dropped more than the experts&apos; on every metric, and lost their lead.
         </Show>
       </div>
     </Area>

@@ -82,9 +82,12 @@ export function HumanStar({ step }: { step: number }) {
         <rect x={843} y={312} width={26} height={18} fill={C.warm} fillOpacity="0.28" />
         <text x={884} y={328} fill={C.ink} fontSize="22" fontFamily={SANS}>not yet covered</text>
 
+        <text className="t-label" x={843} y={372} fill={C.muted} fontSize="16" fontFamily={MONO}>direction: a kind of task</text>
+        <text className="t-label" x={843} y={394} fill={C.muted} fontSize="16" fontFamily={MONO}>distance: how well it is done</text>
+
         <G on={step >= 2}>
-          <text x={840} y={420} fill={C.ink} fontSize="30" fontFamily={SERIF} fontStyle="italic">Bigger every year,</text>
-          <text x={840} y={460} fill={C.ink} fontSize="30" fontFamily={SERIF} fontStyle="italic">never the whole circle.</text>
+          <text x={840} y={450} fill={C.ink} fontSize="30" fontFamily={SERIF} fontStyle="italic">Bigger every year,</text>
+          <text x={840} y={490} fill={C.ink} fontSize="30" fontFamily={SERIF} fontStyle="italic">not yet the whole circle.</text>
         </G>
 
         <text className="t-label" x={20} y={590} fill={C.muted} fontSize="15" fontFamily={MONO}>{hov !== null ? TIPS[hov].note : "A cartoon, not data. Hover a label for the evidence behind it."}</text>

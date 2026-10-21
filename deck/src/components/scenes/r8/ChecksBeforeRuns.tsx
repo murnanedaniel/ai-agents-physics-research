@@ -3,23 +3,23 @@
 import { motion } from "motion/react";
 import { Arrow, C, MONO, SANS, SERIF, Show, Stage } from "./kit";
 
-// tdd. Step 0: why, with two catches from Daniel's own threads shown earlier
+// tdd. Step 0: why (zoom out), with two catches from Daniel's own threads shown earlier
 // in the day (beam-spot paper: a predict-zero baseline at 0.0159 mm against
 // the transformer's 0.0147 mm d0 resolution; Pandora log: the agent twice
 // reported results before its runs had finished). Step 1: the checks written
 // first and the baseline gate. Step 2: the happy path, a tiny slice end to
 // end. Baseline: Caruso et al., Nat. Commun. 17 (2026), Table 1 (PaiNN, DHA).
 const CATCHES = [
-  { where: "Beam-spot paper", big: "0.0159 vs 0.0147 mm", text: ["predicting zero nearly", "matched the model"] },
-  { where: "Pandora speed-up", big: "twice", text: ["results reported before", "the runs had finished"] },
+  { where: "Beam-spot paper: d0 resolution", big: "0.0159 vs 0.0147 mm", text: ["always predicting zero nearly", "matched the transformer"] },
+  { where: "Pandora speed-up", big: "twice", text: ["the agent reported results", "before the runs had finished"] },
 ];
-const CHECKS = ["error falls on a tiny slice", "baseline reproduces 0.199", "variant beats seed spread"];
+const CHECKS = ["loss falls on a tiny slice", "baseline reproduces 0.199", "variant beats the seed spread"];
 
 export function ChecksBeforeRuns({ step }: { step: number }) {
   const why = step === 0;
   return (
     <Stage label="First two catches where an agent's success was not real, then a pipeline: checks written first, a tiny end-to-end run, a baseline gate, then variants">
-      <svg viewBox="0 0 1200 460" width="100%" style={{ width: "100%", height: "100%" }}>
+      <svg viewBox="0 0 1200 540" width="100%" style={{ width: "100%", height: "100%" }}>
         <Arrow id="cb-arrow" />
         {/* step 0: why */}
         <motion.g initial={false} animate={{ opacity: why ? 1 : 0 }} transition={{ duration: 0.6 }} aria-hidden={!why} style={{ pointerEvents: why ? "auto" : "none" }}>
@@ -36,8 +36,9 @@ export function ChecksBeforeRuns({ step }: { step: number }) {
               </g>
             );
           })}
-          <text x={600} y={334} textAnchor="middle" fontFamily={SERIF} fontStyle="italic" fontSize={32} fill={C.ink}>An agent wants to report success.</text>
-          <text x={600} y={384} textAnchor="middle" fontFamily={SANS} fontSize={23} fill={C.muted}>A check written first cannot bend to fit.</text>
+          <text x={600} y={330} textAnchor="middle" fontFamily={SERIF} fontStyle="italic" fontSize={32} fill={C.ink}>Both looked like success until someone checked.</text>
+          <text x={600} y={380} textAnchor="middle" fontFamily={SANS} fontSize={23} fill={C.muted}>When an agent runs the experiments, the checks need to exist before the results do.</text>
+          <text x={600} y={418} textAnchor="middle" fontFamily={SANS} fontSize={23} fill={C.muted}>A check written before the run can&apos;t be bent to fit the result.</text>
         </motion.g>
 
         {/* steps 1 and 2: the checks, the gate, the happy path */}
@@ -53,8 +54,7 @@ export function ChecksBeforeRuns({ step }: { step: number }) {
               </g>
             );
           })}
-          <text className="t-label" x={0} y={30} fontFamily={MONO} fontSize={15} fill={C.muted}>test-driven development: the test</text>
-          <text className="t-label" x={0} y={50} fontFamily={MONO} fontSize={15} fill={C.muted}>exists before the code it tests</text>
+          <text x={0} y={34} fontFamily={SANS} fontSize={22} fill={C.ink}>Borrowed from software: in test-driven development, the test exists before the code.</text>
 
           {/* the baseline gate */}
           <path d="M 770 95 L 845 195 L 770 295 L 695 195 Z" fill={step === 1 ? C.accentSoft : C.card} stroke={step === 1 ? C.accent : C.faint} strokeWidth={step === 1 ? 2.5 : 1.5} />
@@ -67,7 +67,14 @@ export function ChecksBeforeRuns({ step }: { step: number }) {
           <text x={1050} y={186} textAnchor="middle" fontFamily={SANS} fontSize={23} fill={C.ink}>variants</text>
           <text x={1050} y={218} textAnchor="middle" fontFamily={SANS} fontSize={23} fill={C.ink}>start to count</text>
           <path d="M 770 300 V 410 H 165 V 326" fill="none" stroke={C.warm} strokeWidth={2} strokeDasharray="6 5" markerEnd="url(#cb-arrow)" />
-          <text className="t-label" x={470} y={436} textAnchor="middle" fontFamily={MONO} fontSize={16} fill={C.warm}>no: fix the setup, not the target</text>
+          <text className="t-label" x={470} y={436} textAnchor="middle" fontFamily={MONO} fontSize={16} fill={C.warm}>no: fix the setup and keep the target</text>
+        </Show>
+
+        <Show at={1} step={step}>
+          <text x={0} y={486} fontFamily={SANS} fontSize={21} fill={C.ink}>Write the baseline number and the checks first. A variant counts only once the baseline reproduces.</text>
+        </Show>
+        <Show at={2} step={step}>
+          <text x={0} y={522} fontFamily={SANS} fontSize={21} fill={C.ink}>Happy path: the simplest end-to-end run on a tiny slice, before any edge case. The tightest loop we can get.</text>
         </Show>
 
         {/* step 2: the happy path */}

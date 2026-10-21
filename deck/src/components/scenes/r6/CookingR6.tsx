@@ -16,11 +16,11 @@ const breaks = [[hm(10, 20), hm(10, 40)], [12, hm(13, 15)], [hm(14, 30), hm(14, 
 // Numbered in presentation order. Launch times follow the scene order in
 // today's timeline (approximate); the Basic Model starts after lunch.
 const projects = [
-  { n: 1, name: "Galactic clustering", start: hm(10, 55), pre: false },
-  { n: 2, name: "Fine-tuning", start: hm(11, 10), pre: false },
-  { n: 3, name: "RANGE", start: hm(11, 25), pre: false },
-  { n: 4, name: "The Basic Model", start: hm(13, 40), pre: false },
-  { n: 5, name: "Track fitting", start: hm(13, 55), pre: true },
+  { n: 1, name: "Galactic clustering", what: "finding dark-matter halos on a GPU", start: hm(10, 55), pre: false },
+  { n: 2, name: "Fine-tuning", what: "how tuned is a composite Higgs?", start: hm(11, 10), pre: false },
+  { n: 3, name: "RANGE", what: "a transformer against a force field", start: hm(11, 25), pre: false },
+  { n: 4, name: "The Basic Model", what: "laws of a new universe, from data", start: hm(13, 40), pre: false },
+  { n: 5, name: "Track fitting", what: "new models against the Kalman filter", start: hm(13, 55), pre: true },
 ];
 const Y0 = 80, ROW = 70;
 
@@ -47,6 +47,7 @@ export function CookingR6({ step }: { step: number }) {
           <g key={p.n} onClick={stop}>
             <text x={10} y={y + 8} fontFamily={MONO} fontSize={T.label} fill={C.muted} className="t-label">{p.n}</text>
             <text x={34} y={y + 8} fontFamily={SERIF} fontStyle="italic" fontSize={T.lead} fill={C.ink}>{p.name}</text>
+            <text x={34} y={y + 32} fontSize={T.label} fill={C.muted} className="t-label">{p.what}</text>
             {p.pre ? (
               <>
                 <rect x={PRE0} y={y - 14} width={X0 - PRE0} height={28} rx={4} fill="url(#ck6-hatch)" stroke={C.accent} strokeWidth={1} />
@@ -72,7 +73,7 @@ export function CookingR6({ step }: { step: number }) {
       })}
 
       <Show when={step >= 0}>
-        <text x={34} y={yEnd + 90} fontSize={T.body} fill={C.ink}>Four start from scratch today; we tested each once beforehand.</text>
+        <text x={34} y={yEnd + 82} fontSize={T.body} fill={C.ink}>Four start from scratch today. We tested each one once beforehand.</text>
       </Show>
       <Show when={step >= 1}>
         {[{ h: LUNCH_CHECK, label: "check" }, { h: SERVE, label: "serve" }].map(({ h, label }) => (
@@ -81,7 +82,8 @@ export function CookingR6({ step }: { step: number }) {
             <text x={tx(h)} y={Y0 - 40} textAnchor="middle" fontSize={T.label} fill={C.ink} className="t-label">{label}</text>
           </g>
         ))}
-        <text x={34} y={yEnd + 122} fontSize={T.body} fill={C.ink}>Track fitting was pre-cooked; after lunch we rerun it longer and review the draft.</text>
+        <text x={34} y={yEnd + 112} fontSize={T.body} fill={C.ink}>Track fitting was pre-cooked. After lunch we rerun it for longer and review the draft.</text>
+        <text x={34} y={yEnd + 142} fontSize={T.body} fill={C.ink}>We check on all five after lunch, and serve the results at about 15:40.</text>
       </Show>
     </Canvas>
   );

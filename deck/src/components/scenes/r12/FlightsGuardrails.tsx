@@ -4,8 +4,8 @@ import { motion } from "motion/react";
 import type { ReactNode } from "react";
 import { C, Canvas, Reveal, T, mono } from "./ui";
 
-// flights-guardrails. Step 0: a booking as five stages, and the risk: any page the
-// agent reads can carry hidden instructions. Step 1: the boundary. The agent does
+// flights-guardrails. Step 0: a booking as five stages, and the risk (prompt injection,
+// with the setup of Anthropic's 1% test). Step 1: the boundary. The agent does
 // the first three stages; a person pays and confirms, with two more limits around it.
 const STAGES = ["Search", "Compare", "Fill in details", "Pay", "Confirm"];
 const W = 1200, BOX = 190, GAP = (W - 40 - STAGES.length * BOX) / (STAGES.length - 1);
@@ -46,15 +46,15 @@ export function FlightsGuardrailsScene({ step }: { step: number }) {
         </motion.g>
       </svg>
 
-      <div style={{ position: "relative", width: "100%", minHeight: "16vh" }}>
+      <div style={{ position: "relative", width: "100%", minHeight: "20vh" }}>
         <motion.div initial={false} animate={{ opacity: gated ? 0 : 1 }} transition={{ duration: 0.5 }} aria-hidden={gated}
           style={{ position: "absolute", inset: 0, display: "flex", gap: "3vw", justifyContent: "center", alignItems: "flex-start" }}>
-          <Guard tone={C.red} text="Any page it reads can hide instructions for it: prompt injection." />
-          <Guard tone={C.red} text={<>Best case tested: about <b>1%</b> of attacks still succeed.</>} />
+          <Guard tone={C.red} text="Prompt injection: text on any page the agent reads can be written to look like an instruction to it." />
+          <Guard tone={C.red} text={<>Anthropic tested Claude Opus 4.5 in a browser against its own adaptive attacker: about <b>1%</b> of attacks still got through.</>} />
         </motion.div>
         <Reveal at={1} step={step} style={{ position: "absolute", inset: 0, display: "flex", gap: "3vw", justifyContent: "center", alignItems: "flex-start" }}>
-          <Guard tone={C.warm} text="A browser profile with no email or bank logins" />
-          <Guard tone={C.warm} text="A single-use card with a low limit" />
+          <Guard tone={C.warm} text="A separate browser profile with no email or bank logins, so a tricked agent can't reach my inbox or bank." />
+          <Guard tone={C.warm} text="A single-use card with a low limit, so the most I can lose is that limit." />
         </Reveal>
       </div>
     </Canvas>

@@ -5,12 +5,12 @@ import { C, Canvas, mono } from "./ui";
 
 // sec-reminders (section): the question is the title. Left, a quiet picture:
 // the agent inside a dashed boundary, with three places harm can land outside it.
-// Right, what the next six scenes cover.
+// Right, what the next five scenes cover.
 const LINES = [
-  "Booking travel live, inside boundaries set first",
-  "When an agent set-up becomes dangerous",
-  "Controls: permissions and sandboxes",
-  "Personal, professional and financial harm",
+  "I book real travel live, inside limits I set beforehand",
+  "Which mix of access makes an agent dangerous",
+  "What permission modes and the sandbox can stop",
+  "Personal, professional and financial harm, and what limits each",
 ];
 const TARGETS = [
   { label: "personal", a: -150 },
@@ -47,7 +47,7 @@ export function SecReminders() {
         </svg>
         <ol style={{ display: "flex", flexDirection: "column", gap: "3.2vh", margin: 0, padding: 0, listStyle: "none", color: C.ink }}>
           {LINES.map((l, i) => (
-            <motion.li key={l} style={{ display: "flex", alignItems: "baseline", gap: "1vw", fontSize: "clamp(20px, 2.1vw, 40px)", lineHeight: 1.3 }}
+            <motion.li key={l} style={{ display: "flex", alignItems: "baseline", gap: "1vw", fontSize: "clamp(20px, 1.9vw, 36px)", lineHeight: 1.3 }}
               initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.25 + 0.18 * i }}>
               <span style={{ ...mono, fontSize: "0.75em", color: C.accent }}>{i + 1}</span>
               <span>{l}</span>

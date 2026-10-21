@@ -5,7 +5,7 @@ import { ThanksScene } from "@/components/scenes/r12/Thanks";
 
 const beat: Beat = {
   title: "Which question do you want back first?",
-  source: "Questions: the section scenes q1-possible, q2-limits, q3-professional (click to jump back)",
+  source: "The day's three section questions; click a card to jump back to it",
   Scene: ThanksScene,
 };
 

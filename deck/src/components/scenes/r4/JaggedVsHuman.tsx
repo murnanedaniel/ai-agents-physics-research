@@ -62,12 +62,13 @@ export function JaggedVsHuman({ step }: { step: number }) {
 
         <G on={step >= 1}>
           <line x1={790} x2={790} y1={60} y2={440} stroke={C.rule} />
-          <text x={815} y={98} fill={C.ink} fontSize="30" fontFamily={SERIF} fontStyle="italic">The edge is hard to see</text>
-          <text className="t-label" x={815} y={128} fill={C.muted} fontSize="16" fontFamily={MONO}>758 consultants, with and without GPT-4</text>
-          <text x={815} y={188} fill={C.ink} fontSize="21" fontFamily={SANS}>tasks inside the frontier</text>
+          <text x={815} y={98} fill={C.ink} fontSize="30" fontFamily={SERIF} fontStyle="italic">What happens at the edge?</text>
+          <text className="t-label" x={815} y={128} fill={C.muted} fontSize="16" fontFamily={MONO}>randomised trial: 758 BCG consultants</text>
+          <text className="t-label" x={815} y={150} fill={C.muted} fontSize="16" fontFamily={MONO}>realistic tasks, with or without GPT-4</text>
+          <text x={815} y={188} fill={C.ink} fontSize="21" fontFamily={SANS}>18 tasks inside the frontier</text>
           <rect x={815} y={202} width={0.4 * 380} height="26" rx="4" fill={C.s1} />
           <text x={815 + 0.4 * 380 + 10} y={222} fill={C.ink} fontSize="21" fontFamily={MONO}>+40% quality</text>
-          <text x={815} y={290} fill={C.ink} fontSize="21" fontFamily={SANS}>a task just outside it</text>
+          <text x={815} y={290} fill={C.ink} fontSize="21" fontFamily={SANS}>1 task just outside it</text>
           <text className="t-label" x={815} y={352} fill={C.muted} fontSize="15" fontFamily={MONO}>less often correct</text>
           <rect x={815} y={304} width={0.19 * 380} height="26" rx="4" fill={C.warm} />
           <text x={815 + 0.19 * 380 + 10} y={324} fill={C.ink} fontSize="21" fontFamily={MONO}>−19 points</text>

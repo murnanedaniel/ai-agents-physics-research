@@ -3,9 +3,10 @@
 import { C, G } from "./kit";
 
 // website: how to set up a research site. Step 0: repo, push, Actions builds,
-// Pages serves it at you.github.io. Step 1: your own domain is the same Pages
-// route as this deck; the add-a-slide demo shows the CNAME file and the DNS
-// records (a CNAME for www, A records for the apex).
+// Pages serves it at you.github.io, with a few starting templates. Step 1:
+// building it with an agent (CV and publication list in, review the diff, DNS
+// by hand, check for private data; WEB-RESEARCH w19 §9), and a pointer to the
+// add-a-slide demo for the CNAME file and DNS records.
 const BOX_W = 250, BOX_H = 96;
 const mono = "var(--font-geist-mono), monospace";
 
@@ -30,10 +31,10 @@ function Arrow({ x1, x2, y, label }: { x1: number; x2: number; y: number; label?
 }
 
 export function Website({ step }: { step: number }) {
-  const y0 = 110;
+  const y0 = 60;
   return (
     <div className="absolute" style={{ top: "15vh", bottom: "8vh", left: "5vw", right: "5vw" }}>
-      <svg viewBox="0 0 1200 470" className="h-full w-full" role="img" aria-label="Deploy chain: repository, GitHub Actions build, GitHub Pages at you.github.io; your own domain uses the same route as this deck">
+      <svg viewBox="0 0 1200 470" className="h-full w-full" role="img" aria-label="Deploy chain: repository, GitHub Actions build, GitHub Pages at you.github.io; then how to build it with an agent, and a pointer to the add-a-slide demo for your own domain">
         <Box x={20} y={y0} title="Your repo" sub="papers, slides, CV" />
         <Arrow x1={270} x2={380} y={y0 + BOX_H / 2} label="git push" />
         <Box x={380} y={y0} title="Actions builds" sub="one workflow file" />
@@ -41,10 +42,18 @@ export function Website({ step }: { step: number }) {
         <Box x={720} y={y0} title="Pages serves" sub="free, up to 1 GB" />
         <Arrow x1={970} x2={1010} y={y0 + BOX_H / 2} />
         <text className="t-label" x={1018} y={y0 + 56} fontSize="22" fill={C.ink} fontFamily={mono}>you.github.io</text>
+        <text x={20} y={y0 + BOX_H + 56} fontSize="24" fill={C.ink}>
+          Starting points: Quarto, academicpages, Hugo Blox or Astro.
+        </text>
         <G when={step >= 1}>
-          <line x1="20" x2="1180" y1="290" y2="290" stroke={C.rule} strokeDasharray="4 6" />
-          <text x={20} y={350} fontSize="30" fill={C.accent}>Your own domain?</text>
-          <text x={20} y={396} fontSize="28" fill={C.ink}>Same Pages route as this deck: see the add-a-slide demo.</text>
+          <line x1="20" x2="1180" y1="250" y2="250" stroke={C.rule} strokeDasharray="4 6" />
+          <text x={20} y={296} fontSize="28" fill={C.accent}>With an agent</text>
+          <text fontSize="24" fill={C.ink}>
+            <tspan x={20} y={336}>Give it your CV and publication list, and ask for a site in a fresh repo.</tspan>
+            <tspan x={20} y={370}>Read the diff. Add the DNS records yourself.</tspan>
+            <tspan x={20} y={404}>Check for private data before you push: Pages sites are public.</tspan>
+          </text>
+          <text className="t-label" x={20} y={448} fontSize="20" fill={C.muted} fontFamily={mono}>your own domain: same route as this deck, see the add-a-slide demo</text>
         </G>
       </svg>
     </div>

@@ -5,14 +5,16 @@ import { motion } from "motion/react";
 import { C, Canvas, Label, Reveal, T, mono, serif, stop } from "./ui";
 
 // serving: the outro opens the five ovens. Projects are numbered in presentation
-// order. Step 0: the ovens closed, with when each one went in. Step 1: the ovens
-// open, each gets a status (click to set it live) and the room fills the trust tally.
+// order. Step 0: the ovens closed, each with its question (the project's
+// opening title) and when it went in. Step 1: the ovens open, each gets a
+// status (click to set it live) and the room fills the trust tally, with a
+// live spot check (run-of-day plan: "spot checks done live on the results").
 const OVENS = [
-  { n: "Project 1", name: "Galactic clustering", start: "this morning" },
-  { n: "Project 2", name: "Fine-tuning", start: "this morning" },
-  { n: "Project 3", name: "RANGE", start: "this morning" },
-  { n: "Project 4", name: "The Basic Model", start: "after lunch" },
-  { n: "Project 5", name: "Track fitting", start: "after lunch" },
+  { n: "Project 1", name: "Galactic clustering", q: "How do we find dark-matter halos?", start: "this morning" },
+  { n: "Project 2", name: "Fine-tuning", q: "How fine-tuned is a composite Higgs?", start: "this morning" },
+  { n: "Project 3", name: "RANGE", q: "Can a transformer beat RANGE?", start: "this morning" },
+  { n: "Project 4", name: "The Basic Model", q: "Can agents discover the laws of a new universe?", start: "after lunch" },
+  { n: "Project 5", name: "Track fitting", q: "Do the new models match the Kalman filter?", start: "after lunch" },
 ];
 
 // Trust tally: every claim an oven produced goes in one bin. Counted live on stage.
@@ -29,13 +31,13 @@ const STATUS = [
   { text: "failed", colour: C.red },
 ];
 
-function Oven({ n, name, chip, chipColour, open, onToggle }: { n: string; name: string; chip: string; chipColour: string; open: boolean; onToggle: () => void }) {
+function Oven({ n, name, q, chip, chipColour, open, onToggle }: { n: string; name: string; q: string; chip: string; chipColour: string; open: boolean; onToggle: () => void }) {
   return (
     <button
       type="button"
       {...stop}
       onClick={(e) => { e.stopPropagation(); if (open) onToggle(); e.currentTarget.blur(); }}
-      aria-label={`${n}, ${name}: ${chip}.${open ? " Click to change the status." : ""}`}
+      aria-label={`${n}, ${name}: ${q} ${chip}.${open ? " Click to change the status." : ""}`}
       style={{ flex: "1 1 0", minWidth: 0, textAlign: "left", alignSelf: "flex-start", background: "transparent", border: "none", padding: 0, cursor: open ? "pointer" : "default", color: C.ink }}
     >
       <svg viewBox="0 0 200 150" width="100%" style={{ display: "block" }} aria-hidden>
@@ -54,7 +56,8 @@ function Oven({ n, name, chip, chipColour, open, onToggle }: { n: string; name: 
         <motion.rect x="70" y="56" width="60" height="7" rx="3.5" fill={C.ink} initial={false} animate={{ opacity: open ? 0 : 1 }} />
       </svg>
       <div style={{ marginTop: "1.2vh" }}><Label>{n}</Label></div>
-      <div style={{ fontSize: T.body, lineHeight: 1.2, marginTop: "0.6vh", minHeight: "2.4em" }}>{name}</div>
+      <div style={{ fontSize: T.body, lineHeight: 1.2, marginTop: "0.6vh" }}>{name}</div>
+      <div style={{ ...serif, fontSize: "clamp(18px, 1.4vw, 27px)", lineHeight: 1.25, marginTop: "0.6vh", minHeight: "3.75em", color: C.muted }}>{q}</div>
       <span className="t-label" style={{ ...mono, display: "inline-block", marginTop: "0.6vh", fontSize: T.label, color: chipColour, border: `1.5px solid ${chipColour}`, borderRadius: 100, padding: "0.2em 0.8em" }}>{chip}</span>
     </button>
   );
@@ -70,7 +73,7 @@ export function ServingScene({ step }: { step: number }) {
     <Canvas style={{ justifyContent: "space-evenly" }}>
       <div style={{ display: "flex", gap: "2vw", width: "100%" }}>
         {OVENS.map((o, i) => (
-          <Oven key={o.n} n={o.n} name={o.name} open={open}
+          <Oven key={o.n} n={o.n} name={o.name} q={o.q} open={open}
             chip={open ? STATUS[status[i]].text : o.start}
             chipColour={open ? STATUS[status[i]].colour : C.muted}
             onToggle={() => setStatus((s) => s.map((v, j) => (j === i ? (v + 1) % STATUS.length : v)))} />
@@ -96,6 +99,9 @@ export function ServingScene({ step }: { step: number }) {
               </span>
             </div>
           ))}
+        </div>
+        <div style={{ fontSize: T.body, lineHeight: 1.3, marginTop: "2vh", color: C.ink }}>
+          For each claim we ask where the evidence is, and spot-check one live.
         </div>
       </Reveal>
     </Canvas>

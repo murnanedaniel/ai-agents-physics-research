@@ -32,7 +32,7 @@ for (auto* hit : calorimeterHitVector)
 for (auto& rels : caloRelCollections)
   for (auto&& link : *rels)                // one pass
     if (validHitKeys.count(keyOf(link))) accumulate(...);`,
-    note: "The first event never finished. Same relationships after the fix.",
+    note: "Matching calorimeter hits to true particles scanned every link for every hit. A lookup set makes it one pass, with identical links.",
   },
   {
     key: "profile", name: "Profile every algorithm", min: null, timeLabel: "measure", status: "info", at: 0,
@@ -40,21 +40,21 @@ for (auto& rels : caloRelCollections)
 MainFragmentRemoval       393 s
 ...
 reclustering (first guess)  0.03 s`,
-    note: "The first hypothesis was wrong. Fragment removal was 90% of the time.",
+    note: "The first guess was reclustering: it took 0.03 s. Fragment removal took 90% of the time.",
   },
   {
-    key: "prune", name: "Bounding-sphere prunes", min: 2980 / 60, timeLabel: "49.7 min", speed: "1.21×", status: "kept", at: 0,
+    key: "prune", name: "Bounding spheres, worklist", min: 2980 / 60, timeLabel: "49.7 min", speed: "1.21×", status: "kept", at: 0,
     before: `for each (daughter, parent) cluster pair:
   compare every hit with every hit`,
     after: `// per cluster: centre = mean hit, radius = max hit distance
 if (dist(daughter.centre, parent.centre)
       - daughter.radius - parent.radius > maxSeparation)
   continue;   // cannot contain a close hit pair`,
-    note: "Skip pairs that are too far apart to matter. Byte-identical output.",
+    note: "Skip cluster pairs too far apart to hold a close pair of hits, and re-check a hit only when a neighbour changes. Byte-identical output.",
   },
   {
     key: "grid", name: "Hash grids", min: null, timeLabel: "slower", status: "slower", at: 0,
-    note: "Two grid versions were slower than brute force. Discarded.",
+    note: "Two hash-grid versions for the hit search were slower than brute force. Discarded.",
   },
   {
     key: "sweep", name: "Sorted sweep", min: 1386 / 60, timeLabel: "23.1 min", speed: "2.61×", status: "kept", at: 0,
@@ -65,7 +65,7 @@ if (dist(daughter.centre, parent.centre)
   }`,
     after: `// exact nearest-hit search along one sorted axis
 // (described in the log; not in the committed code)`,
-    note: "Same answer, far fewer comparisons. Byte-identical output.",
+    note: "Sort the hits along one axis, so the nearest-hit search skips most pairs. Same answer, far fewer comparisons. Byte-identical output.",
   },
   {
     key: "kdtree", name: "3-D k-d tree", min: 1482 / 60, timeLabel: "24.7 min", speed: "2.44×", status: "slower", at: 0,
@@ -74,7 +74,7 @@ for (auto& I : daughterHits) {
   const float h = tree.NearestSquared(pos(I));
   minD2 = std::min(minD2, h);
 }`,
-    note: "Slower than the sweep. Discarded.",
+    note: "A 3-D tree for the nearest-hit search, cached per cluster. Slower than the sweep, so discarded.",
   },
   {
     key: "cache", name: "Cache across passes", min: 638 / 60, timeLabel: "10.6 min", speed: "5.66×", status: "kept", at: 0,
@@ -86,10 +86,10 @@ if (it != end && unchanged(it, pDaughter, pParent)) {
   if (it->second.passed) map[pDaughter].push_back(it->second.c);
   continue;   // both clusters unchanged: reuse
 }`,
-    note: "Reuse a contact while both clusters are unchanged. Shipped, byte-identical.",
+    note: "Reuse a cluster contact across the ~200 passes while both clusters are unchanged. Shipped, byte-identical.",
   },
   {
     key: "tuning", name: "Looser cuts, fewer passes", min: 485 / 60, timeLabel: "8.1 min", speed: "7.45×", status: "physics", at: 1,
-    note: "Faster, but jet response moved by up to 8.5%, over the 3% budget. Rejected.",
+    note: "Faster, but unmerged fragments count their energy twice. Jet response moved by up to 8.5%, over the 3% budget. Rejected.",
   },
 ];

@@ -30,9 +30,9 @@ const OTHERS = [
 ];
 
 const BARS = [
-  { key: "ckf", name: "Kalman filter (CKF)", um: 31.8, at: 0, color: C.faint },
-  { key: "ml", name: "Transformer", um: 14.7, at: 0, color: C.accent },
-  { key: "zero", name: "Guess d₀ = 0", um: 15.9, at: 1, color: C.warm },
+  { key: "ckf", name: "Kalman filter (CKF): the classical fit", um: 31.8, at: 0, color: C.faint },
+  { key: "ml", name: "Transformer trained on our data", um: 14.7, at: 0, color: C.accent },
+  { key: "zero", name: "Guess d₀ = 0 for every track", um: 15.9, at: 1, color: C.warm },
 ];
 const MAX = 34;
 
@@ -83,8 +83,8 @@ export function TrackfitScene({ step }: { step: number }) {
         </span>
       </div>
 
-      <div style={{ flex: "1 1 auto", display: "flex", flexDirection: "column", justifyContent: "center", gap: "2.8vh", minWidth: 0 }}>
-        <p style={{ fontSize: T.body, lineHeight: 1.35, margin: 0 }}>Users of our open dataset kept writing: your ML d₀ looks too good.</p>
+      <div style={{ flex: "1 1 auto", display: "flex", flexDirection: "column", justifyContent: "center", gap: "2.4vh", minWidth: 0 }}>
+        <p style={{ fontSize: T.body, lineHeight: 1.35, margin: 0 }}>Our simulated collider dataset, ColliderML, is fully open. I kept getting the same email: your ML d₀ looks too good.</p>
         <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>d₀ resolution, μm (shorter is better)</span>
         {BARS.map((b, i) => {
           const shown = step >= b.at;
@@ -104,7 +104,7 @@ export function TrackfitScene({ step }: { step: number }) {
           );
         })}
         <Reveal at={1} step={step} style={{ fontSize: T.body, lineHeight: 1.35, borderLeft: `3px solid ${C.warm}`, paddingLeft: 14 }}>
-          Simulated collisions all sit near the origin. The model learned that.
+          In the simulation every collision sits near the origin, so guessing zero is almost as good. The model learned that. The Kalman filter doesn&apos;t assume where the beam is.
         </Reveal>
       </div>
     </Canvas>

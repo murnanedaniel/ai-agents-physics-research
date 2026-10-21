@@ -31,7 +31,7 @@ export function ExcalidrawScene({ step }: { step: number }) {
   const built = step >= 1;
   return (
     <Canvas style={{ gap: "2vh" }}>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 15vw 1fr", alignItems: "center", width: "100%" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 17vw 1fr", alignItems: "center", width: "100%" }}>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.2vh" }}>
           <svg viewBox="0 0 500 380" width="100%" style={{ maxHeight: "50vh" }} role="img" aria-label="A hand sketch of three nested loops">
             {LOOPS.map((l, i) => (
@@ -54,7 +54,7 @@ export function ExcalidrawScene({ step }: { step: number }) {
             <path d="M 98 10 L 112 20 L 98 30" stroke={C.accent} strokeWidth="3" fill="none" />
             <path d="M 20 10 L 6 20 L 20 30" stroke={C.accent} strokeWidth="3" fill="none" />
           </svg>
-          <span style={{ fontSize: T.body, color: C.accent, textAlign: "center", lineHeight: 1.2 }}>via an Excalidraw MCP server, the agent reads and draws</span>
+          <span style={{ fontSize: T.body, color: C.accent, textAlign: "center", lineHeight: 1.2 }}>through an Excalidraw MCP server, the agent can read the board and draw on it</span>
         </Reveal>
 
         <Reveal at={1} step={step} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.2vh" }}>
@@ -72,7 +72,7 @@ export function ExcalidrawScene({ step }: { step: number }) {
           <Label>The agent&apos;s clean version</Label>
         </Reveal>
       </div>
-      <span style={{ fontSize: T.body, color: C.muted }}>Excalidraw: a free, open-source whiteboard with a hand-drawn look.</span>
+      <span style={{ fontSize: T.body, color: C.muted, textAlign: "center", lineHeight: 1.3, maxWidth: "80vw" }}>Excalidraw is a free, open-source whiteboard with a hand-drawn look. An MCP server is a small program that gives the agent new tools, here to read and edit the board.</span>
     </Canvas>
   );
 }

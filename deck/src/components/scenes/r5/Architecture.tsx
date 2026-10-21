@@ -31,12 +31,12 @@ function Bar({ y, fill, label }: { y: number; fill: number; label: string }) {
 export function Architecture({ step }: { step: number }) {
   const ended = step >= 1;
   return (
-    <Canvas label="Diagram: model weights are fixed after training, so there is no continual learning; within a session only the context window fills, and recall degrades as it grows; when the session ends only files on disk carry over to the next session">
+    <Canvas label="Diagram: model weights are fixed after training, so there is no continual learning; within a session only the context window fills, and recall degrades as it grows; when the session ends only files on disk carry over to the next session; in my threads, a memory note did not make the same error type return less often (37% vs 37%)">
       <Tag x={0} y={10} kind="published" />
       <text x={0} y={52} fontSize={22} fontFamily={SANS} fill={C.ink}>
         <tspan fontFamily={SERIF} fontStyle="italic" fontSize={25}>Continual learning</tspan>: updating the weights from new experience.
       </text>
-      <text x={0} y={86} fontSize={22} fontFamily={SANS} fill={C.ink}>Deployed models don’t; only the context changes.</text>
+      <text x={0} y={84} fontSize={22} fontFamily={SANS} fill={C.ink}>Deployed models don’t. Only the context window changes: the text the model reads each turn.</text>
 
       {/* weights: locked */}
       <rect x={20} y={150} width={240} height={250} rx={14} fill="#ece6da" stroke={C.rule} />
@@ -51,25 +51,29 @@ export function Architecture({ step }: { step: number }) {
       <text x={140} y={430} textAnchor="middle" fontSize={20} fontFamily={SANS} fill={C.ink}>weights: frozen</text>
 
       {/* session 1: the context fills, then is wiped */}
-      <Bar y={150} fill={ended ? 0 : 1} label={ended ? "session 1 ended: context gone" : "session 1: the context window fills"} />
+      <Bar y={146} fill={ended ? 0 : 1} label={ended ? "session 1 ended: context gone" : "session 1: the context window fills"} />
       <motion.g initial={false} animate={{ opacity: ended ? 0.2 : 1 }} data-dim={ended ? "" : undefined}>
-        <path d={curve(BX, BW, 212, 80)} fill="none" stroke={C.accent} strokeWidth={3} />
-        <text x={BX + BW / 2} y={322} textAnchor="middle" fontSize={19} fontFamily={SANS} fill={C.ink}>recall sags as the context grows</text>
-        <text className="t-label" x={BX} y={306} fontSize={13} fontFamily={MONO} fill={C.muted}>start</text>
-        <text className="t-label" x={BX + BW} y={306} textAnchor="end" fontSize={13} fontFamily={MONO} fill={C.muted}>end of context</text>
-        <text className="t-label" x={BX + BW / 2} y={344} textAnchor="middle" fontSize={13} fontFamily={MONO} fill={C.muted}>schematic, after Liu et al. 2023 and Chroma 2025</text>
+        <path d={curve(BX, BW, 200, 70)} fill="none" stroke={C.accent} strokeWidth={3} />
+        <text x={BX + BW / 2} y={300} textAnchor="middle" fontSize={19} fontFamily={SANS} fill={C.ink}>recall sags as the context grows, worst in the middle</text>
+        <text className="t-label" x={BX} y={286} fontSize={13} fontFamily={MONO} fill={C.muted}>start</text>
+        <text className="t-label" x={BX + BW} y={286} textAnchor="end" fontSize={13} fontFamily={MONO} fill={C.muted}>end of context</text>
+        <text className="t-label" x={BX + BW / 2} y={320} textAnchor="middle" fontSize={13} fontFamily={MONO} fill={C.muted}>schematic, after Liu et al. 2023 and Chroma 2025</text>
       </motion.g>
 
       {/* step 1: only files carry over */}
       <Step at={1} step={step}>
-        <g transform={`translate(${BX},372)`}>
+        <g transform={`translate(${BX},336)`}>
           <path d="M0,0 h28 l9,9 v37 h-37 z" fill="#fffaf0" stroke={C.ink} strokeWidth={1.5} />
           {[16, 24, 32].map((yy) => <line key={yy} x1={7} x2={30} y1={yy} y2={yy} stroke={C.faint} strokeWidth={2} />)}
           <text x={56} y={30} fontSize={21} fontFamily={SANS} fill={C.ink}>Only files carry over: CLAUDE.md, memory notes.</text>
         </g>
-        <Bar y={444} fill={0.08} label="session 2 starts by reading them" />
-        <Tag x={BX + BW} y={510} kind="mine" anchor="end" />
-        <text className="t-label" x={BX + BW - 116} y={510} textAnchor="end" fontSize={13} fontFamily={MONO} fill={C.ink}>after a memory note, the same error type returned as often as at random: 37% vs 37%</text>
+        <Bar y={402} fill={0.08} label="session 2 starts by reading them" />
+        <Tag x={BX} y={470} kind="mine" />
+        <text className="t-label" fontSize={15} fontFamily={MONO} fill={C.ink}>
+          <tspan x={BX + 116} y={470}>My test: after a memory note about an error, the same</tspan>
+          <tspan x={BX + 116} dy={19}>error type came back within the next 20 messages</tspan>
+          <tspan x={BX + 116} dy={19}>37% of the time. After random points: also 37%.</tspan>
+        </text>
       </Step>
     </Canvas>
   );

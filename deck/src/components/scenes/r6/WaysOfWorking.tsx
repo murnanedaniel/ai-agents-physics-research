@@ -60,6 +60,7 @@ export function WaysOfWorking({ step }: { step: number }) {
         <circle cx={goal.x} cy={goal.y} r={12} fill={C.warm} />
         <text x={goal.x - 380} y={goal.y - 12} fontFamily={SERIF} fontStyle="italic" fontSize={T.lead + 2} fill={C.ink}>Professional agentic science</text>
         <text x={goal.x - 380} y={goal.y + 16} fontSize={T.body - 1} fill={C.ink}>frozen metrics, held-out checks, logs</text>
+        <text x={L} y={BOT + 84} fontFamily={SERIF} fontStyle="italic" fontSize={T.lead} fill={C.ink}>Software engineering made this move in about a year. Today we try it in science.</text>
       </Show>
     </Canvas>
   );

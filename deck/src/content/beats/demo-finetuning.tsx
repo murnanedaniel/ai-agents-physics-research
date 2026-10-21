@@ -5,7 +5,7 @@ import type { Beat } from "./_types";
 
 const beat: Beat = {
   title: "Demo: give the workbench the literature and both codes.",
-  source: "Live demo on the day · inputs: Fine-Tuning (2019 PhD code), github.com/murnanedaniel/pyCHM",
+  source: "Live demo on the day · inputs: Fine-Tuning (my 2019 PhD code, private), github.com/murnanedaniel/pyCHM",
   Scene: FinetuningDemo,
 };
 

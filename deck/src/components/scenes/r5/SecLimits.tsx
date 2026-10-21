@@ -13,16 +13,17 @@ const ICONS: ReactNode[] = [
   <g key="m" {...ink}><rect x={-20} y={-4} width={40} height={30} rx={4} /><path d="M-11,-4 V-14 A11,11 0 0 1 11,-14 V-4" /><circle cx={0} cy={11} r={3} fill={C.ink} /></g>,
 ];
 const CARDS = [
-  { head: "Behaviour", line: ["What does training", "push agents to do?"], tags: ["published", "mine"] as const },
-  { head: "Writing", line: ["Does generated prose", "leave a trace?"], tags: ["published"] as const },
-  { head: "Memory", line: ["Does the agent", "learn from me?"], tags: ["published", "mine"] as const },
+  { head: "Behaviour", line: ["Do agent failures", "follow patterns?"], how: ["four patterns named in studies,", "one example each from my threads"], tags: ["published", "mine"] as const },
+  { head: "Writing", line: ["Does generated prose", "leave a trace?"], how: ["word counts in PubMed", "abstracts, 2010 to 2024"], tags: ["published"] as const },
+  { head: "Memory", line: ["Does the agent", "learn from me?"], how: ["what carries over between", "sessions; a test on my notes"], tags: ["published", "mine"] as const },
 ];
-const W = 344, GAP = 40, Y0 = 150, H = 300;
+const W = 344, GAP = 40, Y0 = 130, H = 350;
 
 export function SecLimits({ step }: { step: number }) {
   return (
-    <Canvas label="Section: where agents fail. Three questions follow: behaviour, writing, memory">
-      <text x={0} y={60} fontSize={26} fontFamily={SANS} fill={C.ink}>Answers from published studies and, where I can, my own threads.</text>
+    <Canvas label="Section: where agents fail. Three questions follow: behaviour, writing, memory, each with its evidence: published studies, my own threads, or both">
+      <text x={0} y={50} fontSize={26} fontFamily={SANS} fill={C.ink}>Answers from published studies and, where I can, my own threads.</text>
+      <text x={0} y={90} fontSize={20} fontFamily={SANS} fill={C.muted}>Each card is tagged with whose data it is.</text>
       {CARDS.map((c, i) => {
         const x0 = 12 + i * (W + GAP);
         return (
@@ -31,7 +32,11 @@ export function SecLimits({ step }: { step: number }) {
             <g transform={`translate(${x0 + 58},${Y0 + 66})`}>{ICONS[i]}</g>
             <text x={x0 + 108} y={Y0 + 76} fontSize={30} fontFamily={SERIF} fontStyle="italic" fill={C.ink}>{c.head}</text>
             {c.line.map((t, j) => (
-              <text key={t} x={x0 + 28} y={Y0 + 160 + j * 32} fontSize={22} fontFamily={SANS} fill={C.ink}>{t}</text>
+              <text key={t} x={x0 + 28} y={Y0 + 150 + j * 32} fontSize={22} fontFamily={SANS} fill={C.ink}>{t}</text>
+            ))}
+            <text className="t-label" x={x0 + 28} y={Y0 + 236} fontSize={13} fontFamily={MONO} fill={C.muted}>evidence</text>
+            {c.how.map((t, j) => (
+              <text key={t} className="t-label" x={x0 + 28} y={Y0 + 262 + j * 22} fontSize={15} fontFamily={MONO} fill={C.ink}>{t}</text>
             ))}
             {c.tags.map((k, j) => <Tag key={k} x={x0 + 28 + j * 112} y={Y0 + H - 30} kind={k === "mine" ? "mine" : "published"} />)}
           </Step>

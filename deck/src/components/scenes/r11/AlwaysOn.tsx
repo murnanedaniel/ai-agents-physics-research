@@ -21,9 +21,9 @@ function Glyph({ kind, x, y, colour }: { kind: Kind; x: number; y: number; colou
 }
 
 const CARDS: { name: string; line: string; note: string; kind: Kind }[] = [
-  { name: "OpenClaw", line: "Self-hosted; you chat with it on WhatsApp, Slack…", note: "open source", kind: "chat" },
-  { name: "OpenAI dots", line: "Hosted; each has its own cloud computer.", note: "launched 29 Sep 2026", kind: "chat" },
-  { name: "My setup", line: "Scheduled tasks; sessions messaging sessions.", note: "07:15: is the cluster up?", kind: "schedule" },
+  { name: "OpenClaw", line: "Runs on your own computer. You chat with it on WhatsApp, Slack or 20+ other apps.", note: "open source", kind: "chat" },
+  { name: "OpenAI dots", line: "Hosted. Each has its own cloud computer and works towards goals around the clock.", note: "launched 29 Sep 2026", kind: "chat" },
+  { name: "My setup", line: "Scheduled tasks, and sessions messaging sessions.", note: "07:15 on course day: is the cluster back up?", kind: "schedule" },
 ];
 
 // Illustrative day: hour of each trigger and its kind.
@@ -68,9 +68,9 @@ export function AlwaysOn({ step }: { step: number }) {
           <Glyph kind="session" x={990} y={16} colour={C.accent} /><text x={1008} y={22}>session</text>
         </g>
       </svg>
-      <div className="relative text-center" style={{ ...T.body, minHeight: "1.4em" }}>
-        <Show when={!risk} className="absolute inset-x-0" style={{ color: C.ink }}>It wakes on a trigger, not your prompt.</Show>
-        <Show when={risk} className="absolute inset-x-0" style={{ color: C.warm }}>Always on is always exposed, with nobody watching.</Show>
+      <div className="relative text-center" style={{ ...T.body, minHeight: "2.7em" }}>
+        <Show when={!risk} className="absolute inset-x-0" style={{ color: C.ink }}>It starts work when a trigger fires: a schedule, a chat message or another session.</Show>
+        <Show when={risk} className="absolute inset-x-0" style={{ color: C.warm }}>Each trigger is also a way in, and some fire while nobody is watching. More on this before the end.</Show>
       </div>
     </div>
   );

@@ -9,11 +9,13 @@ import { Arrow, C, MONO, SANS, Stage } from "./kit";
 // halo catalogue is correct). Daniel, 21 Oct: the galactic score is a Pareto
 // frontier, keep a change only if it is faster and halo membership against an
 // exact oracle does not drop. Fine-tuning: to be decided live.
-type Loop = { title: string; score: string[]; edit: string; check: string; open: boolean; pareto?: boolean };
+// Logging, from the outline: galactic to W&B; RANGE to W&B and ScienceDash.
+// Fine-tuning: Daniel's open question, whether theory work can be hill-climbed.
+type Loop = { title: string; score: string[]; edit: string; check: string; log: string; open: boolean; pareto?: boolean };
 const LOOPS: Loop[] = [
-  { title: "Galactic clustering", score: ["faster, with no", "loss of accuracy"], edit: "linking code", check: "halos vs exact finder", pareto: true, open: false },
-  { title: "Fine-tuning theory", score: ["to be decided live", ""], edit: "", check: "", open: true },
-  { title: "RANGE", score: ["force error at matched", "size and speed"], edit: "long-range module", check: "MD22 test split", open: false },
+  { title: "Galactic clustering", score: ["faster, with no", "loss of accuracy"], edit: "halo-finding code", check: "halos vs exact finder", log: "W&B", pareto: true, open: false },
+  { title: "Fine-tuning theory", score: ["to be decided live", ""], edit: "", check: "", log: "", open: true },
+  { title: "RANGE", score: ["force error at matched", "size and speed"], edit: "its long-range module", check: "MD22 test split", log: "W&B and ScienceDash", open: false },
 ];
 
 // Speed against accuracy: earlier versions as dots, the current best ringed;
@@ -41,8 +43,8 @@ function Pareto({ x, y }: { x: number; y: number }) {
 
 export function HillclimbPlan() {
   return (
-    <Stage label="Three climbs started live: galactic clustering and RANGE with a frozen score, an editable part and a held-out check; fine-tuning theory with no score yet">
-      <svg viewBox="0 0 1200 520" width="100%" style={{ width: "100%", height: "100%" }}>
+    <Stage label="Three climbs started live: galactic clustering and RANGE with a frozen score, an editable part, a held-out check and where each logs; fine-tuning theory with no score yet and an open question">
+      <svg viewBox="0 0 1200 590" width="100%" style={{ width: "100%", height: "100%" }}>
         <Arrow id="hp-a" color={C.accent} />
         <Arrow id="hp-w" color={C.warm} />
         {LOOPS.map((l, i) => {
@@ -57,14 +59,25 @@ export function HillclimbPlan() {
                 ["score", l.score[0], l.score[1]],
                 ["edits", l.edit, ""],
                 ["held out", l.check, ""],
-              ].filter(([, a]) => a).map(([k, a, b], j) => (
-                <g key={k}>
-                  <text className="t-label" x={cx - 170} y={cy + 160 + j * 62} fontFamily={MONO} fontSize={16} fill={C.muted}>{k}</text>
-                  <text x={cx - 70} y={cy + 160 + j * 62} fontFamily={SANS} fontSize={20} fill={l.open && j === 0 ? C.warm : C.ink}>{a}</text>
-                  {b && <text x={cx - 70} y={cy + 186 + j * 62} fontFamily={SANS} fontSize={20} fill={l.open && j === 0 ? C.warm : C.ink}>{b}</text>}
+                ["logged to", l.log, ""],
+              ].filter(([, a]) => a).map(([k, a, b], j) => {
+                const ry = cy + 160 + (j === 0 ? 0 : 76 + (j - 1) * 50);
+                return (
+                  <g key={k}>
+                    <text className="t-label" x={cx - 170} y={ry} fontFamily={MONO} fontSize={16} fill={C.muted}>{k}</text>
+                    <text x={cx - 70} y={ry} fontFamily={SANS} fontSize={20} fill={l.open && j === 0 ? C.warm : C.ink}>{a}</text>
+                    {b && <text x={cx - 70} y={ry + 26} fontFamily={SANS} fontSize={20} fill={l.open && j === 0 ? C.warm : C.ink}>{b}</text>}
+                  </g>
+                );
+              })}
+              {l.open && (
+                <g>
+                  <text x={cx - 70} y={cy + 236} fontFamily={SANS} fontSize={20} fill={C.ink}>Open question:</text>
+                  <text x={cx - 70} y={cy + 262} fontFamily={SANS} fontSize={20} fill={C.ink}>can theory work</text>
+                  <text x={cx - 70} y={cy + 288} fontFamily={SANS} fontSize={20} fill={C.ink}>be hill-climbed?</text>
                 </g>
-              ))}
-              {l.pareto && <Pareto x={cx - 170} y={cy + 322} />}
+              )}
+              {l.pareto && <Pareto x={cx - 170} y={cy + 382} />}
             </g>
           );
         })}

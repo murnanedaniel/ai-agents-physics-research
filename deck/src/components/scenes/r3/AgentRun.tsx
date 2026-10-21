@@ -8,9 +8,9 @@ import { Arrowheads, C, Canvas, G, MONO, SANS } from "../g2/kit";
 // appended to the context, and the model reads it all again. A concrete example
 // (fixing a failing test) fills the context window on the right.
 const NODES = [
-  { id: "model", x: 30, y: 235, w: 290, h: 100, name: "model", sub: "reads the context" },
-  { id: "harness", x: 390, y: 70, w: 310, h: 100, name: "harness", sub: "checks permission, runs it" },
-  { id: "world", x: 390, y: 400, w: 310, h: 100, name: "world", sub: "files, shell, web, cluster" },
+  { id: "model", x: 30, y: 235, w: 290, h: 100, name: "model", sub: ["reads the context"] },
+  { id: "harness", x: 390, y: 70, w: 310, h: 100, name: "harness", sub: ["checks permission, runs it"] },
+  { id: "world", x: 390, y: 400, w: 310, h: 112, name: "world", sub: ["files, shell, web, cluster,", "you, subagents, other agents"] },
 ];
 
 // Context blocks and the step at which each appears.
@@ -26,9 +26,9 @@ const BLOCKS: { text: string; at: number; kind: "in" | "act" | "res" }[] = [
 ];
 
 const CAPTIONS = [
-  "The model reads its context and proposes an action.",
-  "The harness runs it and appends the result.",
-  "It reads everything again and acts, until done.",
+  "The model reads its context and writes an action: a tool call.",
+  "The harness runs it and appends the result to the context.",
+  "It reads it all again and acts. It stops when the model answers without a tool call.",
 ];
 
 const fill = { in: "#e9e2d6", act: "#dbe8f3", res: "#f4e3cf" };
@@ -72,7 +72,9 @@ export function AgentRun({ step }: { step: number }) {
             <g key={n.id}>
               <motion.rect x={n.x} y={n.y} width={n.w} height={n.h} rx="14" fill={C.card} initial={false} animate={{ stroke: live ? C.accent : C.faint, strokeWidth: live ? 2.5 : 1.5 }} />
               <text x={n.x + n.w / 2} y={n.y + 44} textAnchor="middle" fill={C.ink} fontSize="28" fontFamily={SANS} fontWeight="500">{n.name}</text>
-              <text className="t-label" x={n.x + n.w / 2} y={n.y + 74} textAnchor="middle" fill={C.muted} fontSize="17" fontFamily={MONO}>{n.sub}</text>
+              {n.sub.map((t, j) => (
+                <text key={t} className="t-label" x={n.x + n.w / 2} y={n.y + 72 + j * 22} textAnchor="middle" fill={C.muted} fontSize="17" fontFamily={MONO}>{t}</text>
+              ))}
             </g>
           );
         })}

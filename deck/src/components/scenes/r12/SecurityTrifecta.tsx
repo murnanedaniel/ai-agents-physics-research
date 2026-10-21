@@ -9,8 +9,8 @@ import { C, Canvas, Reveal, T, mono, serif, stop } from "./ui";
 // Click a leg to remove it; the overlap then closes.
 const LEGS = [
   { name: "Private data", eg: "files, email, keys", cx: 480, cy: 230, lx: 270, ly: 120, anchor: "end" as const },
-  { name: "Untrusted content", eg: "web, PDFs, issues", cx: 720, cy: 230, lx: 930, ly: 120, anchor: "start" as const },
-  { name: "Outbound channel", eg: "fetch, email, git push", cx: 600, cy: 435, lx: 600, ly: 680, anchor: "middle" as const },
+  { name: "Untrusted content", eg: "web pages, PDFs, issues", cx: 720, cy: 230, lx: 930, ly: 120, anchor: "start" as const },
+  { name: "Outbound channel", eg: "web requests, email, git push", cx: 600, cy: 435, lx: 600, ly: 680, anchor: "middle" as const },
 ];
 const R = 190;
 
@@ -47,9 +47,10 @@ export function SecurityTrifectaScene({ step }: { step: number }) {
           </motion.g>
         </svg>
 
-        <Reveal at={1} step={step} style={{ flex: "0 0 28%", display: "flex", flexDirection: "column", gap: "2.4vh" }}>
+        <Reveal at={1} step={step} style={{ flex: "0 0 32%", display: "flex", flexDirection: "column", gap: "2.4vh" }}>
           <span style={{ ...serif, fontSize: T.big, color: live ? C.red : C.ink, lineHeight: 1.05 }}>{live ? "The lethal trifecta" : "One leg removed"}</span>
-          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>Injected instructions read your data and send it out. Remove any one leg: click a circle.</span>
+          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>With all three, text planted in anything the agent reads can get it to fetch your data and send it out.</span>
+          <span style={{ fontSize: T.body, lineHeight: 1.3, color: C.muted }}>Simon Willison&apos;s advice: avoid the combination entirely. Click a circle to remove one leg.</span>
         </Reveal>
       </div>
     </Canvas>

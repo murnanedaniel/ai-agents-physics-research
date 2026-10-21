@@ -7,8 +7,8 @@ import { C, Canvas, SERIF, Show, T, TINT } from "./kit";
 const layers = [
   { name: "Model", def: "predicts the next token", eg: "Claude, GPT, Gemini, open weights", color: C.accent, fill: TINT.accent, step: 0 },
   { name: "Harness", def: "runs the loop: context, tools, permissions", eg: "Claude Code, Codex, Cursor, claude.ai", color: C.accent, fill: TINT.accent, step: 1 },
-  { name: "Environment", def: "the machine, files and data it can reach", eg: "laptop, cluster, cloud, browser", color: C.accent, fill: TINT.accent, step: 1 },
-  { name: "Practice", def: "your rules, skills and checks", eg: "CLAUDE.md, skills, tests, logs", color: C.warm, fill: TINT.warm, step: 2 },
+  { name: "Environment", def: "the hardware, files and data it can reach", eg: "laptop, cluster, cloud, browser", color: C.accent, fill: TINT.accent, step: 1 },
+  { name: "Practice", def: "your rules, skills, checks and working style", eg: "CLAUDE.md, skills, plugins, tests, logs; how you ask, delegate and check", color: C.warm, fill: TINT.warm, step: 2 },
 ];
 
 const X = 60, W = 860, H = 100, GAP = 18, BASE = 510;

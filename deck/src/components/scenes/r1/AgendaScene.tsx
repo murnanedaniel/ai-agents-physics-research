@@ -12,17 +12,17 @@ import { C, Canvas, T, mono, stop } from "./kit";
 const bufferStart = SCENES.find((s) => s.id === "buffer")!.startSec;
 const GROUPS = [
   { name: "Why agents", loop: 0, scenes: SCENES.filter((s) => s.part === "setup"),
-    bullets: ["Examples", "How agents work", "Your setup"] },
+    bullets: ["Seven examples", "How agents work", "Where they fail", "Your setup"] },
   { name: "Inner loop", loop: 1, scenes: SCENES.filter((s) => s.part === "inner"),
     bullets: ["Galactic clustering", "Fine-tuning", "RANGE", "Hill-climbing"] },
   { name: "Middle loop", loop: 2, scenes: SCENES.filter((s) => s.part === "middle"),
-    bullets: ["New universe", "Tracking", "Automation"] },
+    bullets: ["Lunch check-in", "New universe", "Tracking", "Automation"] },
   { name: "Outer loop", loop: 3, scenes: SCENES.filter((s) => s.part === "outer"),
-    bullets: ["Memory", "Collaboration", "Looking ahead"] },
+    bullets: ["Memory", "Ideas and collaboration", "Looking ahead"] },
   { name: "Wrap-up", loop: 0, scenes: SCENES.filter((s) => s.part === "close" && s.startSec < bufferStart),
     bullets: ["Results", "Limiting harm"] },
   { name: "Hands-on", loop: -1, scenes: SCENES.filter((s) => s.startSec >= bufferStart),
-    bullets: ["Audits", "Checks"] },
+    bullets: ["Q&A", "Audit a draft", "Test a rule"] },
 ];
 type Block = { name: string; start: number; end: number; kind: "session" | "break" | "buffer"; loop: number; bullets: string[]; ids: string[] };
 const sessions: Block[] = GROUPS.map((g) => ({
@@ -54,7 +54,7 @@ export function AgendaScene() {
   const shown = open == null ? null : BLOCKS[open];
   return (
     <Canvas style={{ justifyContent: "center" }}>
-      <div style={{ position: "relative", display: "flex", gap: 6, width: "100%", alignItems: "stretch", height: "44vh" }} aria-label="The day from 09:00 to 17:00: sessions and hands-on time, with coffee and lunch breaks; click a session to list its scenes">
+      <div style={{ position: "relative", display: "flex", gap: 6, width: "100%", alignItems: "stretch", height: "50vh" }} aria-label="The day from 09:00 to 17:00: sessions and hands-on time, with coffee and lunch breaks; click a session to list its scenes">
         {BLOCKS.map((b, i) => (
           b.kind === "break" ? (
             <motion.div

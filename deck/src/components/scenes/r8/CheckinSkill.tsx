@@ -1,20 +1,23 @@
 "use client";
 
-import { useState } from "react";
 import { asset } from "@/lib/asset";
 import { C, MONO, SANS, Show, Stage, stop } from "./kit";
 
-// slides-project: the project-slides skill folder, file by file (step 0), then
-// a slide from the skill's own HTML template example (a fictional run,
-// skills/project-slides/examples/html-template-2.png) (step 1). Files and rules from
-// skills/project-slides/SKILL.md in the course site repo.
-const FILES = [
-  { name: "SKILL.md", role: "rules for every slide", more: "when to use it, layouts, what never goes on a slide" },
-  { name: "template.html", role: "HTML deck or artifact", more: "arrow keys, overview grid, prints to PDF" },
-  { name: "template.tex", role: "beamer, via tectonic", more: "\\figslide, \\nextslide, status marks" },
-  { name: "checkin.py", role: "gathers git, notes, W&B", more: "writes checkin.json with sources" },
-  { name: "shoot.mjs", role: "screenshots each slide", more: "flags overflow and console errors" },
-  { name: "CHECKLIST.md", role: "checks before showing", more: "every number sourced, no secrets" },
+// slides-project: what a check-in is and how runs become one (step 0): the
+// evidence (git, notes, W&B) goes to the agent with the project-slides skill,
+// which gives an HTML deck or a beamer PDF; then a slide from the skill's own
+// HTML template example (a fictional run,
+// skills/project-slides/examples/html-template-2.png) with its four rules
+// marked (step 1). Facts from skills/project-slides/SKILL.md in the course
+// site repo; the "perfectly respectable" line is Daniel's (outline, 20 Oct).
+const SOURCES = [
+  { name: "git commits", more: "commits, files changed, branch" },
+  { name: "notes, TODOs", more: "TODO, NEXT, BLOCKER lines in the notes" },
+  { name: "W&B runs", more: "run states and the key metric" },
+];
+const OUTPUTS = [
+  { name: "HTML deck", sub: "or Claude artifact" },
+  { name: "beamer PDF", sub: "via tectonic" },
 ];
 const IX = 600, IY = 30, IW = 600, IH = 338;
 const MARKS = [
@@ -25,28 +28,46 @@ const MARKS = [
 ];
 
 export function CheckinSkill({ step }: { step: number }) {
-  const [hover, setHover] = useState<number | null>(null);
   return (
-    <Stage label="The project-slides skill as a folder of six files, then a real check-in slide it made, with its four rules marked">
+    <Stage label="Git commits, notes and W&B runs go to the agent with the project-slides skill, which makes an HTML deck or a beamer PDF; then an example check-in slide with its four rules marked">
       <svg viewBox="0 0 1200 470" width="100%" style={{ width: "100%", height: "100%" }} onClick={stop}>
-        {/* the folder */}
-        <text x={0} y={34} fontFamily={MONO} fontSize={22} fontWeight={600} fill={C.accent}>skills/project-slides/</text>
-        {FILES.map((f, i) => {
-          const y = 76 + i * 50;
-          const hot = hover === i;
+        {/* what a check-in is */}
+        <text x={0} y={30} fontFamily={SANS} fontSize={21} fill={C.ink}>A check-in: 3 to 5 slides on where a project stands,</text>
+        <text x={0} y={58} fontFamily={SANS} fontSize={21} fill={C.ink}>the one plot that matters, and what you need.</text>
+
+        {/* evidence in */}
+        {SOURCES.map((src, i) => {
+          const y = 100 + i * 64;
           return (
-            <g key={f.name} onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)} style={{ cursor: "default" }}>
-              <rect x={14} y={y - 30} width={540} height={44} rx={8} fill={hot ? C.accentSoft : i === 0 ? C.card : "transparent"} stroke={i === 0 ? C.faint : "none"} />
-              <text className="t-label" x={28} y={y} fontFamily={MONO} fontSize={18} fontWeight={i === 0 ? 700 : 400} fill={C.ink}>{f.name}</text>
-              <text x={200} y={y} fontFamily={SANS} fontSize={20} fill={hot ? C.accent : C.ink}>{hot ? "" : f.role}</text>
-              {hot && <text className="t-label" x={200} y={y} fontFamily={MONO} fontSize={15} fill={C.accent}>{f.more}</text>}
+            <g key={src.name}>
+              <title>{src.more}</title>
+              <rect x={0} y={y} width={160} height={46} rx={8} fill={C.card} stroke={C.faint} />
+              <text x={14} y={y + 30} fontFamily={SANS} fontSize={20} fill={C.ink}>{src.name}</text>
+              <path d={`M 162 ${y + 23} L 192 ${Math.round(186 + (i - 1) * 24)}`} stroke={C.muted} strokeWidth={1.8} fill="none" />
             </g>
           );
         })}
-        <text x={14} y={400} fontFamily={SANS} fontSize={21} fill={C.muted}>
-          <tspan fontWeight={600} fill={C.ink}>A skill</tspan>: a folder like this,
-        </text>
-        <text x={14} y={430} fontFamily={SANS} fontSize={21} fill={C.muted}>loaded when the task matches.</text>
+        {/* the agent with the skill */}
+        <rect x={195} y={128} width={190} height={116} rx={12} fill={C.accentSoft} stroke={C.accent} strokeWidth={2} />
+        <text x={210} y={166} fontFamily={SANS} fontSize={21} fill={C.ink}>the agent,</text>
+        <text x={210} y={194} fontFamily={SANS} fontSize={21} fill={C.ink}>using the skill</text>
+        <text className="t-label" x={210} y={224} fontFamily={MONO} fontSize={13} fill={C.accent}>skills/project-slides</text>
+        {/* slides out */}
+        {OUTPUTS.map((o, i) => {
+          const y = 120 + i * 78;
+          return (
+            <g key={o.name}>
+              <path d={`M 387 186 L 416 ${y + 30}`} stroke={C.muted} strokeWidth={1.8} fill="none" />
+              <rect x={420} y={y} width={172} height={62} rx={8} fill="#fff" stroke={C.faint} />
+              <text x={432} y={y + 28} fontFamily={SANS} fontSize={20} fill={C.ink}>{o.name}</text>
+              <text className="t-label" x={432} y={y + 50} fontFamily={MONO} fontSize={13} fill={C.muted}>{o.sub}</text>
+            </g>
+          );
+        })}
+        <text className="t-label" x={0} y={326} fontFamily={MONO} fontSize={15} fill={C.muted}>checkin.py gathers the facts; the agent writes each</text>
+        <text className="t-label" x={0} y={348} fontFamily={MONO} fontSize={15} fill={C.muted}>headline as a claim the evidence supports</text>
+        <text x={0} y={404} fontFamily={SANS} fontSize={21} fill={C.ink}>A running deck per project is a perfectly</text>
+        <text x={0} y={432} fontFamily={SANS} fontSize={21} fill={C.ink}>respectable record of the work.</text>
 
         {/* a slide it made */}
         <Show at={1} step={step} ghost>

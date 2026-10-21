@@ -8,8 +8,8 @@ import { C, Canvas, MONO, SANS, Show } from "./kit";
 // what runs today.
 const SETUP = [
   ["data", "ColliderML tt̄, no pile-up", "drifting beam spot · 1.67 M training tracks"],
-  ["models", "four sequence models", "minGRU, Mamba-2, Transformer, diagonal SSM"],
-  ["baseline", "truth-seeded Kalman filter", "on identical tracks"],
+  ["models", "the paper's four models", "minGRU, Mamba-2, Transformer, diagonal SSM"],
+  ["baseline", "truth-seeded Kalman filter", "the paper's baseline, on identical tracks"],
   ["measure", "resolution ratio, model / filter", "IQR/1.349 of the residual; 1 = parity"],
 ];
 const PT = [1.41, 2.45, 3.87, 7.07, 14.1, 31.6, 74.2]; // geometric bin centres, edges 1-2-3-5-10-20-50-110 GeV
@@ -20,13 +20,13 @@ const SERIES = [
   { k: "z0", v: [1.35, 1.27, 1.19, 1.12, 1.07, 1.17, 1.28], c: C.faint, w: 2 },
   { k: "θ", v: [1.33, 1.29, 1.2, 1.15, 1.1, 1.05, 0.98], c: C.faint, w: 2 },
 ];
-const X0 = 530, X1 = 1080, Y0 = 400, Y1 = 40;
+const X0 = 530, X1 = 1080, Y0 = 370, Y1 = 40;
 const sx = (pt: number) => X0 + ((Math.log10(pt) - 0) / (Math.log10(110) - 0)) * (X1 - X0);
 const sy = (r: number) => Y0 - ((Math.log10(r) - Math.log10(0.8)) / (Math.log10(30) - Math.log10(0.8))) * (Y0 - Y1);
 
 export function TrackPlan({ step }: { step: number }) {
   return (
-    <Canvas label="Setup: tt-bar tracks, four sequence models, a truth-seeded Kalman filter baseline. Pre-cook: a short minGRU run is 1.1 to 1.9 times the filter's resolution on d0 and 3 to 23 times on q/p. Today: all four models, then found tracks.">
+    <Canvas label="Setup: tt-bar tracks, four sequence models, a truth-seeded Kalman filter baseline. Pre-cook: one short minGRU run is 8 to 35 percent behind the filter below 10 GeV on d0, z0, phi and theta, and its q/p stops improving above 5 GeV. Today: all four models, longer, then found tracks.">
       {SETUP.map(([k, a, b], i) => (
         <g key={k} transform={`translate(0 ${30 + i * 100})`}>
           <text className="t-label" x={0} y={0} fontFamily={MONO} fontSize={16} fill={C.muted}>{k}</text>
@@ -55,14 +55,16 @@ export function TrackPlan({ step }: { step: number }) {
             <text className="t-label" x={sx(PT[6]) + 12} y={sy(s.v[6]) + 5 + (s.k === "z0" ? -6 : s.k === "θ" ? 8 : 0)} fontFamily={MONO} fontSize={16} fill={s.c === C.faint ? C.muted : s.c}>{s.k}</text>
           </g>
         ))}
-        <text className="t-label" x={X0} y={Y0 + 80} fontFamily={MONO} fontSize={14} fill={C.muted}>short pre-cook: 8 epochs, one seed, 87,287 test tracks.</text>
-        <text className="t-label" x={X0} y={Y0 + 102} fontFamily={MONO} fontSize={14} fill={C.ink}>Not the answer yet: today's longer runs are.</text>
+        <text x={X0} y={Y0 + 88} fontFamily={SANS} fontSize={21} fill={C.ink}>Pre-cook, below 10 GeV: 8 to 35% behind the filter</text>
+        <text x={X0} y={Y0 + 116} fontFamily={SANS} fontSize={21} fill={C.ink}>on d0, z0, φ and θ; q/p stops improving above</text>
+        <text x={X0} y={Y0 + 144} fontFamily={SANS} fontSize={21} fill={C.ink}>about 5 GeV. Today&apos;s runs are longer.</text>
+        <text className="t-label" x={X0} y={Y0 + 168} fontFamily={MONO} fontSize={14} fill={C.muted}>one minGRU run: 8 epochs, one seed, 87,287 test tracks, few above 50 GeV</text>
       </Show>
 
       <Show at={2} step={step}>
         <g transform="translate(0 440)">
           <rect x={-6} y={-10} width={470} height={100} rx={10} fill={C.warmTint} stroke={C.warm} strokeWidth={1.5} />
-          <text x={14} y={24} fontFamily={SANS} fontSize={23} fill={C.ink}>Today: all four models, longer,</text>
+          <text x={14} y={24} fontFamily={SANS} fontSize={23} fill={C.ink}>Today: all four models,</text>
           <text x={14} y={56} fontFamily={SANS} fontSize={23} fill={C.ink}>then on CKF-found tracks.</text>
           <text className="t-label" x={14} y={80} fontFamily={MONO} fontSize={14} fill={C.muted}>one A100 each, 5 to 15 min per run</text>
         </g>

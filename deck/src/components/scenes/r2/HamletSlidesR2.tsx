@@ -28,15 +28,16 @@ export function HamletSlidesR2({ step }: { step: number }) {
   const card = CARDS[i];
   const go = (d: number) => (e: React.MouseEvent) => { stop(e); setSel((i + d + CARDS.length) % CARDS.length); };
   return (
-    <Canvas style={{ justifyContent: "center", gap: "3vh" }}>
+    <Canvas style={{ justifyContent: "center", gap: "2.4vh" }}>
+      <span style={{ fontSize: T.body, lineHeight: 1.3 }}>In the closing panel, Claude listened to the room microphone and put cards on the projector behind the panellists. It opened with three questions from the week&apos;s notes and talks.</span>
       <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: "1.5vw" }}>
         <button onClick={go(-1)} onKeyDown={stop} aria-label="previous card" style={btn}>‹</button>
-        <div style={{ position: "relative", height: "38vh", borderRadius: 12, background: "#fff", color: C.ink, border: `1px solid ${C.rule}`, padding: "3vh 4vw", overflow: "hidden", boxShadow: "0 18px 40px -20px rgba(20,20,20,0.35)" }}>
+        <div style={{ position: "relative", height: "32vh", borderRadius: 12, background: "#fff", color: C.ink, border: `1px solid ${C.rule}`, padding: "3vh 4vw", overflow: "hidden", boxShadow: "0 18px 40px -20px rgba(20,20,20,0.35)" }}>
           <AnimatePresence mode="wait">
             <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.45 }}
               style={{ display: "flex", flexDirection: "column", gap: "2vh", height: "100%", justifyContent: "center", alignItems: "center", textAlign: "center" }}>
               <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.accent, position: "absolute", top: 14, left: 18 }}>{card.t} · {card.kind}</span>
-              <span style={{ fontFamily: serif, fontSize: "clamp(24px, 2.4vw, 46px)", lineHeight: 1.3, maxWidth: "52ch" }}>{card.text}</span>
+              <span style={{ fontFamily: serif, fontSize: "clamp(22px, 2.2vw, 42px)", lineHeight: 1.3, maxWidth: "52ch" }}>{card.text}</span>
             </motion.div>
           </AnimatePresence>
           <span className="t-label" style={{ position: "absolute", right: 18, bottom: 12, fontFamily: mono, fontSize: T.label, color: C.muted }}>{i + 1} / {CARDS.length}</span>
@@ -44,7 +45,7 @@ export function HamletSlidesR2({ step }: { step: number }) {
         <button onClick={go(1)} onKeyDown={stop} aria-label="next card" style={btn}>›</button>
       </div>
       <Reveal at={1} step={step} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-        <span style={{ fontSize: T.body }}>61 cards in about 50 minutes.</span>
+        <span style={{ fontSize: T.body, lineHeight: 1.3 }}>61 cards in about 50 minutes. Afterwards it wrote the conference report. A fact-check pass showed quotes credited to the wrong speaker.</span>
         <div style={{ display: "flex", height: 30, gap: 2 }}>
           {KINDS.map((k) => (
             <div key={k.k} style={{ flex: k.n, background: k.k === "idea" ? C.accent : "#9bb8cc", borderRadius: 3, display: "flex", alignItems: "center", paddingLeft: 8, minWidth: 0 }}>

@@ -15,7 +15,7 @@ export function NoCode({ step }: { step: number }) {
       </div>
       <Show when={step >= 1}>
         <div style={{ ...T.serif, fontSize: "clamp(34px, 3.6vw, 68px)", lineHeight: 1.15, color: C.ink }}>
-          Not me. I haven&apos;t read or written a line of code since about April.
+          Not me. Claude and Codex wrote it. I haven&apos;t read or written a line of code since about April.
         </div>
       </Show>
       <Show when={step >= 2}>

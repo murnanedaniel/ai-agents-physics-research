@@ -12,7 +12,7 @@ const TRACKS = [0, 1, 2, 3];
 const TY = (i: number) => 34 + i * 44;
 const BARS = [
   { key: "pt", name: "per-track model", um: 35.4, at: 0, color: C.faint },
-  { key: "ctrl", name: "my control: +30 epochs only", um: 35.0, at: 1, color: C.faint },
+  { key: "ctrl", name: "my control: 30 more epochs, no cross-track attention", um: 35.0, at: 1, color: C.faint },
   { key: "ckf", name: "Kalman filter", um: 31.7, at: 0, color: C.muted },
   { key: "cross", name: "with cross-track attention", um: 18.9, at: 0, color: C.accent },
 ];
@@ -41,7 +41,7 @@ export function BeamspotAttentionScene({ step }: { step: number }) {
           <rect x={200} y={26} width={190} height={170} rx={6} fill="#fffdf8" stroke={C.ink} strokeWidth={1.2} />
           <text x={295} y={104} textAnchor="middle" fill={C.ink} fontSize="18">per-track</text>
           <text x={295} y={126} textAnchor="middle" fill={C.ink} fontSize="18">encoder</text>
-          <text x={295} y={150} textAnchor="middle" fill={C.muted}>sees one track</text>
+          <text x={295} y={150} textAnchor="middle" fill={C.muted}>one track at a time</text>
           {TRACKS.map((i) => <line key={i} x1={392} y1={TY(i) + 11} x2={455} y2={TY(i) + 11} stroke={C.faint} markerEnd="url(#r1-at-arr)" />)}
           {/* tokens and the attention block */}
           <rect x={430} y={14} width={250} height={230} rx={8} fill={C.accentSoft} stroke={C.accent} strokeWidth={1.4} />
@@ -81,19 +81,21 @@ export function BeamspotAttentionScene({ step }: { step: number }) {
               </motion.div>
             );
           })}
-          <span style={{ fontSize: T.body, lineHeight: 1.3, marginTop: "0.6vh" }}>Tracks that see each other find the collision point.</span>
+          <span style={{ fontSize: T.body, lineHeight: 1.3, marginTop: "0.6vh" }}>Let the tracks of one event share information, and d₀ falls well below the Kalman filter.</span>
         </div>
         <Reveal at={1} step={step} style={{ flex: "1 1 44%", minWidth: 0, display: "flex", gap: "1.6vw", alignItems: "center" }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1.4vh", minWidth: 0 }}>
-            <span style={{ fontSize: T.body, lineHeight: 1.3 }}>A straight line from the event token recovers the vertex.</span>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1vh", minWidth: 0 }}>
+            <span style={{ fontSize: T.body, lineHeight: 1.3 }}>A linear fit from the event token to the true vertex:</span>
             <span style={{ fontFamily: serif, fontStyle: "italic", fontSize: T.big, color: C.warmText, lineHeight: 1 }}>R² = 0.95</span>
             <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted, lineHeight: 1.5 }}>vertex x · y: 0.94 · z: 0.998</span>
+            <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted, lineHeight: 1.4 }}>event token: one extra token linked to every track</span>
+            <span style={{ fontSize: T.body, lineHeight: 1.3 }}>So the vertex position is visible in the event token.</span>
           </div>
           <a href="https://www.danielmurnane.com/ETH-Agentic-AI-for-Collider-Physics/" target="_blank" rel="noopener noreferrer" onClick={stop}
-            style={{ flex: "0 0 30%", display: "flex", flexDirection: "column", gap: 6, textDecoration: "none" }}>
+            style={{ flex: "0 0 26%", display: "flex", flexDirection: "column", gap: 6, textDecoration: "none" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={asset("/r1/beamspot-page-01.png")} alt="First page of the paper Beam Spot Sensitivity in ML-Based Track Parameter Regression" style={{ width: "100%", border: `1px solid ${C.rule}`, boxShadow: "0 10px 24px -12px rgba(20,20,20,0.35)", background: "#fff" }} />
-            <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>the agent&apos;s draft</span>
+            <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>the agent&apos;s 16-page draft, 7 Apr 2026</span>
           </a>
         </Reveal>
       </div>

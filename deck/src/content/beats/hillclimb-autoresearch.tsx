@@ -5,7 +5,7 @@ import type { Beat } from "./_types";
 
 const beat: Beat = {
   title: "How does autoresearch run the climb?",
-  source: "Karpathy, github.com/karpathy/autoresearch, program.md and README (Mar 2026) · result: x.com/karpathy/status/2031135152349524125 (9 Mar 2026)",
+  source: "Karpathy, github.com/karpathy/autoresearch, program.md and README (Mar 2026) · result: x.com/karpathy/status/2031135152349524125 · “give it to your agent”: x.com/karpathy/status/2031137476438548874 (both 9 Mar 2026)",
   Scene: AutoresearchRun,
 };
 

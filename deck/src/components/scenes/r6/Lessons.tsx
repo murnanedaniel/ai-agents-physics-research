@@ -49,8 +49,11 @@ export function LessonContextSwitch({ step }: { step: number }) {
       </Show>
       <Show when={step >= 1}>
         <rect x={DX0} y={yB + H + 48} width={24} height={20} fill="url(#cs-hatch)" />
-        <text x={DX0 + 36} y={yB + H + 64} fontSize={T.body} fill={C.ink}>reloading the last task: slower, more errors</text>
-        <text x={DX0} y={500} fontFamily={SERIF} fontStyle="italic" fontSize={T.lead + 4} fill={C.ink}>So the state must live outside your head: briefs, logs, check-ins.</text>
+        <text x={DX0 + 36} y={yB + H + 64} fontSize={T.body} fill={C.ink}>getting back into the last task: slower, more errors</text>
+        <text x={DX0} y={yB + H + 102} fontSize={T.small + 2} fill={C.ink}>Lab studies: just after a switch, people respond more slowly and make more errors.</text>
+        <text x={DX0} y={yB + H + 130} fontSize={T.small + 2} fill={C.ink}>Part of your attention stays on the unfinished task, so you do worse on the next.</text>
+        <text x={DX0} y={508} fontFamily={SERIF} fontStyle="italic" fontSize={T.lead + 4} fill={C.ink}>So agentic science needs structure:</text>
+        <text x={DX0} y={542} fontSize={T.body} fill={C.ink}>each project’s state goes into briefs, logs and check-ins, outside your head.</text>
       </Show>
     </Canvas>
   );
@@ -58,35 +61,47 @@ export function LessonContextSwitch({ step }: { step: number }) {
 
 /* ---------- lesson-elephant ---------- */
 
+// Hogg, arXiv:2602.10181 (abstract and sections, read 21 Oct 2026): the two
+// extreme policies he argues against, his "There must be! But I am not sure
+// I can find it." on a moderate one, and his point of agreement "People are
+// always the ends, not merely the means."
 const TASKS = ["design", "execute", "write up", "referee"];
 
 export function LessonElephant({ step }: { step: number }) {
-  const bw = 205, gap = 22, x0 = 140, by = 160;
+  const bw = 205, gap = 22, x0 = 140, by = 150;
+  const x1 = x0 + 4 * bw + 3 * gap, xm = (x0 + x1) / 2, ly = 330;
   return (
     <Canvas>
       <Show when={step >= 0}>
-        <text x={x0} y={50} fontSize={T.lead} fill={C.ink}>Language models “are beginning to obtain the ability to</text>
+        <text x={x0} y={40} fontSize={T.lead} fill={C.ink}>Language models “are beginning to obtain the ability to</text>
         {TASKS.map((t, i) => (
           <g key={t}>
-            <rect x={x0 + i * (bw + gap)} y={by - 60} width={bw} height={80} rx={12} fill={TINT.accent} stroke={C.accent} strokeWidth={1.5} />
-            <text x={x0 + i * (bw + gap) + bw / 2} y={by - 11} textAnchor="middle" fontFamily={SERIF} fontStyle="italic" fontSize={T.lead + 4} fill={C.ink}>{t}</text>
+            <rect x={x0 + i * (bw + gap)} y={by - 60} width={bw} height={76} rx={12} fill={TINT.accent} stroke={C.accent} strokeWidth={1.5} />
+            <text x={x0 + i * (bw + gap) + bw / 2} y={by - 13} textAnchor="middle" fontFamily={SERIF} fontStyle="italic" fontSize={T.lead + 4} fill={C.ink}>{t}</text>
           </g>
         ))}
-        <text x={x0} y={by + 58} fontSize={T.lead} fill={C.ink}>scientific projects”</text>
-        <text x={x0} y={by + 86} fontSize={T.label} fill={C.muted} className="t-label">D. W. Hogg, “Why do we do astrophysics?”, arXiv:2602.10181 (2026)</text>
+        <text x={x0} y={by + 52} fontSize={T.lead} fill={C.ink}>scientific projects”</text>
+        <text x={x0} y={by + 78} fontSize={T.label} fill={C.muted} className="t-label">D. W. Hogg, “Why do we do astrophysics?”, arXiv:2602.10181 (2026)</text>
       </Show>
 
       <Show when={step >= 1}>
-        {/* Hogg's two extremes, and the position he argues for between them */}
-        <line x1={x0} y1={390} x2={x0 + 4 * bw + 3 * gap} y2={390} stroke={C.ink} strokeWidth={1.5} />
-        <circle cx={x0} cy={390} r={8} fill={C.faint} />
-        <circle cx={x0 + 4 * bw + 3 * gap} cy={390} r={8} fill={C.faint} />
-        <circle cx={x0 + (4 * bw + 3 * gap) / 2} cy={390} r={13} fill={C.warm} />
-        <text x={x0} y={430} fontSize={T.body} fill={C.ink}>“let-them-cook”</text>
-        <text x={x0 + 4 * bw + 3 * gap} y={430} textAnchor="end" fontSize={T.body} fill={C.ink}>“ban-and-punish”</text>
-        <text x={x0 + (4 * bw + 3 * gap) / 2} y={360} textAnchor="middle" fontFamily={SERIF} fontStyle="italic" fontSize={T.lead + 4} fill={C.ink}>“people-centrism”</text>
-        <text x={x0 + (4 * bw + 3 * gap) / 2} y={430} textAnchor="middle" fontSize={T.small} fill={C.muted} className="t-label">Hogg argues for the middle</text>
-        <text x={x0} y={505} fontFamily={SERIF} fontStyle="italic" fontSize={T.lead + 2} fill={C.ink}>Then what is the scientist for? My answer, next.</text>
+        {/* Hogg's two extreme policies, both rejected; the middle he cannot yet find */}
+        <line x1={x0} y1={ly} x2={x1} y2={ly} stroke={C.ink} strokeWidth={1.5} />
+        <circle cx={x0} cy={ly} r={8} fill={C.faint} />
+        <circle cx={x1} cy={ly} r={8} fill={C.faint} />
+        <circle cx={xm} cy={ly} r={12} fill="none" stroke={C.warm} strokeWidth={3} strokeDasharray="4 4" />
+        <text x={xm} y={ly - 24} textAnchor="middle" fontFamily={SERIF} fontStyle="italic" fontSize={T.lead + 2} fill={C.ink}>a moderate policy?</text>
+        <text x={xm} y={ly + 40} textAnchor="middle" fontSize={T.small + 2} fill={C.ink}>“There must be! But I am not sure I can find it.”</text>
+
+        <text x={x0} y={ly + 40} fontSize={T.body} fill={C.ink}>“let-them-cook”</text>
+        <text x={x0} y={ly + 68} fontSize={T.small + 2} fill={C.ink}>LLMs design, run and write the papers</text>
+        <text x={x0} y={ly + 94} fontSize={T.small + 2} fill={C.ink}>but “we no longer are astrophysicists”</text>
+        <text x={x1} y={ly + 40} textAnchor="end" fontSize={T.body} fill={C.ink}>“ban-and-punish”</text>
+        <text x={x1} y={ly + 68} textAnchor="end" fontSize={T.small + 2} fill={C.ink}>outlaw LLMs and punish their use</text>
+
+        <text x={x0} y={462} fontSize={T.label} fill={C.muted} className="t-label">one of Hogg’s points of agreement</text>
+        <text x={x0} y={488} fontSize={T.body} fill={C.ink}>“People are always the ends, not merely the means.”</text>
+        <text x={x0} y={530} fontFamily={SERIF} fontStyle="italic" fontSize={T.lead + 2} fill={C.ink}>So what is left for us? My hypothesis, next.</text>
       </Show>
     </Canvas>
   );
@@ -108,7 +123,7 @@ function Circle2({ cx, cy, a, b, a2, b2 }: { cx: number; cy: number; a: string; 
         <g key={t as string}>
           <circle cx={x as number} cy={cy} r={r} fill={TINT.paper} stroke={C.ink} strokeWidth={1.5} />
           <text x={x as number} y={cy - 2} textAnchor="middle" fontFamily={SERIF} fontStyle="italic" fontSize={T.lead + 2} fill={C.ink}>{t}</text>
-          <text x={x as number} y={cy + 26} textAnchor="middle" fontSize={T.small} fill={C.accent}>{t2}</text>
+          <text x={x as number} y={cy + 26} textAnchor="middle" fontSize={T.small + 1} fill={C.accent}>{t2}</text>
         </g>
       ))}
     </g>
@@ -126,21 +141,23 @@ export function LessonHermeneutics({ step }: { step: number }) {
       <Show when={step >= 0}>
         <text x={20} y={40} fontSize={T.lead} fill={C.ink}>“Hermeneutics is the study of interpretation.”</text>
         <text x={20} y={66} fontSize={T.label} fill={C.muted} className="t-label">T. George, Stanford Encyclopedia of Philosophy, 2020</text>
-        <Circle2 cx={lx} cy={300} a="parts" b="whole" a2="data" b2="model" />
-        <text x={lx} y={470} textAnchor="middle" fontSize={T.body} fill={C.ink}>the hermeneutic circle</text>
-        <text x={lx} y={496} textAnchor="middle" fontSize={T.label} fill={C.accent} className="t-label">in physics: data and model</text>
+        <Circle2 cx={lx} cy={270} a="parts" b="whole" a2="data" b2="model" />
+        <text x={lx} y={428} textAnchor="middle" fontSize={T.body} fill={C.ink}>the hermeneutic circle</text>
+        <text x={lx} y={466} textAnchor="middle" fontSize={T.small + 2} fill={C.ink}>In physics, we read data through a model,</text>
+        <text x={lx} y={492} textAnchor="middle" fontSize={T.small + 2} fill={C.ink}>and revise the model when the data disagree.</text>
       </Show>
 
       <Show when={step >= 1}>
-        <rect x={rx} y={130} width={560} height={130} rx={14} fill={TINT.accent} stroke={C.accent} strokeWidth={1.5} />
-        <text x={rx + 26} y={178} fontFamily={SERIF} fontStyle="italic" fontSize={T.lead + 4} fill={C.ink}>Agents make the parts</text>
-        <text x={rx + 26} y={222} fontSize={T.body} fill={C.ink}>runs, fits, drafts</text>
-        <rect x={rx} y={290} width={560} height={130} rx={14} fill={TINT.warm} stroke={C.warm} strokeWidth={2.5} />
-        <text x={rx + 26} y={338} fontFamily={SERIF} fontStyle="italic" fontSize={T.lead + 4} fill={C.ink}>We hold the whole</text>
-        <text x={rx + 26} y={382} fontSize={T.body} fill={C.ink}>the question, the meaning, the explanation</text>
-        <text x={rx} y={462} fontSize={T.small} fill={C.ink}>Risk: “illusions of understanding”</text>
-        <text x={rx} y={486} fontSize={T.label} fill={C.muted} className="t-label">Messeri &amp; Crockett, Nature 627, 49 (2024)</text>
-        <text x={rx} y={530} fontSize={T.label} fill={C.warmText} className="t-label">my own framing, not a published result</text>
+        <rect x={rx} y={100} width={560} height={112} rx={14} fill={TINT.accent} stroke={C.accent} strokeWidth={1.5} />
+        <text x={rx + 26} y={146} fontFamily={SERIF} fontStyle="italic" fontSize={T.lead + 4} fill={C.ink}>Agents make more of the parts</text>
+        <text x={rx + 26} y={186} fontSize={T.body} fill={C.ink}>runs, fits, drafts</text>
+        <rect x={rx} y={230} width={560} height={112} rx={14} fill={TINT.warm} stroke={C.warm} strokeWidth={2.5} />
+        <text x={rx + 26} y={276} fontFamily={SERIF} fontStyle="italic" fontSize={T.lead + 4} fill={C.ink}>We hold the whole</text>
+        <text x={rx + 26} y={316} fontSize={T.body} fill={C.ink}>the question, the meaning, the explanation</text>
+        <text x={rx} y={388} fontSize={T.small + 2} fill={C.ink}>Risk: “we produce more but understand less”,</text>
+        <text x={rx} y={416} fontSize={T.small + 2} fill={C.ink}>through “illusions of understanding”.</text>
+        <text x={rx} y={442} fontSize={T.label} fill={C.muted} className="t-label">Messeri &amp; Crockett, Nature 627, 49 (2024)</text>
+        <text x={rx} y={484} fontSize={T.label} fill={C.warmText} className="t-label">agents as the parts, us as the whole: my framing, not a published result</text>
       </Show>
     </Canvas>
   );

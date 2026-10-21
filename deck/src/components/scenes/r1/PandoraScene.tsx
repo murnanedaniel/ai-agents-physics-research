@@ -19,15 +19,15 @@ const AXIS = "(100% - 11em - 18px)";
 export function PandoraScene({ step }: { step: number }) {
   const on = step >= 1;
   return (
-    <Canvas style={{ justifyContent: "center", gap: "4.5vh" }}>
+    <Canvas style={{ justifyContent: "center", gap: "4vh" }}>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3vw" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>what it is</span>
-          <span style={{ fontSize: T.body, lineHeight: 1.35 }}>Pandora: open-source particle-flow reconstruction, built for linear-collider detectors.</span>
+          <span style={{ fontSize: T.body, lineHeight: 1.35 }}>Pandora: open-source particle-flow reconstruction, built for linear-collider detectors. It combines tracker and calorimeter to rebuild each particle.</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>why I needed it</span>
-          <span style={{ fontSize: T.body, lineHeight: 1.35 }}>The next ColliderML open release runs it at HL-LHC pile-up.</span>
+          <span style={{ fontSize: T.body, lineHeight: 1.35 }}>The next ColliderML open release runs it at HL-LHC pile-up: about 200 collisions per bunch crossing, and about 6,500 calorimeter clusters per event.</span>
         </div>
       </div>
 
@@ -57,7 +57,7 @@ export function PandoraScene({ step }: { step: number }) {
           <span className="t-label" style={{ position: "absolute", top: -36, left: `calc(11em + 18px + ${AXIS} * ${GOAL / MAXMIN} + 8px)`, fontFamily: mono, fontSize: T.label, color: C.warmText, whiteSpace: "nowrap" }}>goal: 10 min</span>
         </div>
         <span style={{ fontSize: T.body, lineHeight: 1.35, borderLeft: `3px solid ${C.warm}`, paddingLeft: 14 }}>
-          My brief to the agent: under ten minutes, physics within 3%.
+          My brief to the agent: under ten minutes per event, with the physics within 3%.
         </span>
       </Reveal>
     </Canvas>

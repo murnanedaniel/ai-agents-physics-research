@@ -5,8 +5,9 @@ import { Arrow, C, Canvas, MONO, SANS, Show } from "./kit";
 
 // basic-model-paper: the outline exists before the results. Each section has a
 // source file in the lab's workspace (step 0). A section is written only after
-// its rung's check passes (step 1, one section fills as an illustration), and
-// the limits section is drafted in advance.
+// its rung's check passes (step 1, one section fills as an illustration), its
+// figures come from the ledger, "good enough" is per milestone, and the limits
+// section is drafted in advance.
 const SOURCES = [
   { f: "ledger.csv", d: "every run and its cost" },
   { f: "PARTICLES.md", d: "the table" },
@@ -28,7 +29,7 @@ const sy = (i: number) => PY + 30 + i * SH;
 export function PaperPlan({ step }: { step: number }) {
   const fill = step >= 1;
   return (
-    <Canvas label="The lab's files feed a paper outline written before the results; a section is written only after its milestone's check passes; the limits section is drafted in advance">
+    <Canvas label="The lab's files feed a paper outline written before the results; a section is written only after its milestone's check passes, with figures from the ledger; each milestone counts on its own; the limits section is drafted in advance">
       {SOURCES.map((s, i) => (
         <g key={s.f}>
           <rect x={10} y={60 + i * 110} width={260} height={74} rx={10} fill="#fffdf8" stroke={C.muted} strokeWidth={1.5} />
@@ -54,16 +55,22 @@ export function PaperPlan({ step }: { step: number }) {
         );
       })}
 
-      <g transform="translate(830 60)">
+      <g transform="translate(815 50)">
         <text x={0} y={0} fontFamily={SANS} fontSize={26} fill={C.ink}>Outline first,</text>
-        <text x={0} y={36} fontFamily={SANS} fontSize={26} fill={C.ink}>results later.</text>
+        <text x={0} y={34} fontFamily={SANS} fontSize={26} fill={C.ink}>results later.</text>
+        <text x={0} y={70} fontFamily={SANS} fontSize={21} fill={C.muted}>We decide now what</text>
+        <text x={0} y={96} fontFamily={SANS} fontSize={21} fill={C.muted}>each section must show.</text>
         <Show at={1} step={step}>
-          <text x={0} y={110} fontFamily={SANS} fontSize={24} fill={C.accent}>A section is written</text>
-          <text x={0} y={142} fontFamily={SANS} fontSize={24} fill={C.accent}>once its check passes.</text>
-          <text className="t-label" x={0} y={170} fontFamily={MONO} fontSize={14} fill={C.muted}>illustration, not today's state</text>
-          <text x={0} y={250} fontFamily={SANS} fontSize={24} fill={C.warm}>Limits, drafted now:</text>
+          <text x={0} y={146} fontFamily={SANS} fontSize={23} fill={C.accent}>A section is written once</text>
+          <text x={0} y={176} fontFamily={SANS} fontSize={23} fill={C.accent}>its milestone passes its check;</text>
+          <text x={0} y={206} fontFamily={SANS} fontSize={23} fill={C.accent}>its figures come from the ledger.</text>
+          <text className="t-label" x={0} y={230} fontFamily={MONO} fontSize={14} fill={C.muted}>illustration, not today&apos;s state</text>
+          <text x={0} y={272} fontFamily={SANS} fontSize={21} fill={C.ink}>Good enough: each milestone</text>
+          <text x={0} y={298} fontFamily={SANS} fontSize={21} fill={C.ink}>counts on its own, so the paper</text>
+          <text x={0} y={324} fontFamily={SANS} fontSize={21} fill={C.ink}>covers the ones the lab reaches.</text>
+          <text x={0} y={378} fontFamily={SANS} fontSize={23} fill={C.warm}>Limits, drafted now:</text>
           {["states above the beam energy", "theories that predict alike", "detector blind spots"].map((t, i) => (
-            <text key={t} className="t-label" x={0} y={284 + i * 30} fontFamily={MONO} fontSize={16} fill={C.ink}>· {t}</text>
+            <text key={t} className="t-label" x={0} y={408 + i * 28} fontFamily={MONO} fontSize={16} fill={C.ink}>· {t}</text>
           ))}
         </Show>
       </g>

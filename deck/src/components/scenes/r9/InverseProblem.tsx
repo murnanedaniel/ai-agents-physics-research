@@ -6,7 +6,9 @@ import { Arrow, C, Canvas, MONO, SANS, SERIF, Show } from "./kit";
 // p-newuniverse: the concept first. Step 0: from laws to data is routine
 // (generators and detector simulation). Step 1: from data to laws is the
 // inverse problem, which is what discovery is. Step 2: the Basic Model, a new
-// universe with sealed laws. Step 3: why it is a fair test for agents.
+// universe with sealed laws, and what the agents do (choose collisions and
+// energies, read detector hits; P6 context, method only). Step 3: why it is a
+// fair test for agents.
 function Box({ x, big, small, ink }: { x: number; big: string; small: string; ink: string }) {
   return (
     <g>
@@ -33,7 +35,7 @@ export function InverseProblem({ step }: { step: number }) {
       <Show at={1} step={step}>
         <path d="M 860 180 C 760 230, 700 140, 605 180 S 450 140, 350 180" stroke={C.warm} strokeWidth={3.5} strokeDasharray="9 7" fill="none" markerEnd="url(#r9-ip-w)" />
         <text x={605} y={232} textAnchor="middle" fontFamily={SANS} fontSize={26} fill={C.warm}>inverse: discovery</text>
-        <text className="t-label" x={605} y={262} textAnchor="middle" fontFamily={MONO} fontSize={16} fill={C.muted}>many theories can fit the same data</text>
+        <text x={605} y={266} textAnchor="middle" fontFamily={SANS} fontSize={22} fill={C.muted}>Many theories fit the same data, so we choose experiments that separate them.</text>
       </Show>
 
       {/* the Basic Model */}
@@ -43,16 +45,18 @@ export function InverseProblem({ step }: { step: number }) {
           <path d="M 0 0 L 56 44 L 112 0" fill="none" stroke={C.ink} strokeWidth={2} />
           <text className="t-label" x={56} y={72} textAnchor="middle" fontFamily={MONO} fontSize={18} fill={C.ink}>a b c …</text>
           <text x={150} y={36} fontFamily={SANS} fontSize={28} fill={C.ink}>A new universe, particles named only by letters.</text>
-          <text className="t-label" x={150} y={72} fontFamily={MONO} fontSize={17} fill={C.muted}>its laws are sealed: the lab sees only the detector</text>
+          <text className="t-label" x={150} y={68} fontFamily={MONO} fontSize={17} fill={C.muted}>its laws are sealed: the lab sees only the detector</text>
+          <text x={150} y={104} fontFamily={SANS} fontSize={22} fill={C.ink}>Agents choose the collisions and their energy, then read the detector hits.</text>
         </g>
       </Show>
 
       {/* why */}
       <Show at={3} step={step}>
-        <g transform="translate(60 460)">
-          <text x={0} y={30} fontFamily={SANS} fontSize={28} fill={C.ink}>
-            <tspan fill={C.accent}>Why:</tspan> no training data holds the answer, yet we can check it.
+        <g transform="translate(60 470)">
+          <text x={0} y={30} fontFamily={SANS} fontSize={26} fill={C.ink}>
+            <tspan fill={C.accent}>Why:</tspan> no training data holds the answer, so agents can&apos;t recall it.
           </text>
+          <text x={0} y={66} fontFamily={SANS} fontSize={26} fill={C.ink}>We wrote the laws, so we can check the answer.</text>
         </g>
       </Show>
       <Arrow id="r9-ip-a" color={C.accent} />

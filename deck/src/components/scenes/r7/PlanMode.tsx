@@ -9,7 +9,7 @@ import { C, Canvas, Reveal, T, mono, serif } from "./kit";
 // text read via api.fxtwitter.com on 21 Oct 2026.
 const CYCLE = ["default", "accept edits", "plan"];
 
-function Tweet({ date, text, at, step }: { date: string; text: string; at: number; step: number }) {
+function Tweet({ date, text, note, at, step }: { date: string; text: string; note?: string; at: number; step: number }) {
   return (
     <Reveal at={at} step={step}>
       <div className="rounded-2xl border px-6 py-6" style={{ borderColor: C.rule, background: "#fff" }}>
@@ -17,7 +17,8 @@ function Tweet({ date, text, at, step }: { date: string; text: string; at: numbe
           <span className="t-label" style={{ ...mono, fontSize: T.label, color: C.ink }}>Thariq · Claude Code team</span>
           <span className="t-label" style={{ ...mono, fontSize: T.label, color: C.muted }}>{date}</span>
         </div>
-        <div className="mt-3" style={{ fontSize: "clamp(24px, 2.3vw, 44px)", lineHeight: 1.25 }}>&ldquo;{text}&rdquo;</div>
+        <div className="mt-3" style={{ fontSize: T.body, lineHeight: 1.3 }}>&ldquo;{text}&rdquo;</div>
+        {note && <div className="mt-2 t-label" style={{ ...mono, fontSize: T.label, color: C.muted }}>{note}</div>}
       </div>
     </Reveal>
   );
@@ -38,14 +39,17 @@ export function PlanMode({ step }: { step: number }) {
         </div>
         <div>
           <div style={{ ...serif, fontSize: T.big, lineHeight: 1.12 }}>&ldquo;Research and propose changes without making them.&rdquo;</div>
-          <div className="mt-2 t-label" style={{ ...mono, fontSize: T.label, color: C.muted }}>the docs on plan mode</div>
+          <div className="mt-2 t-label" style={{ ...mono, fontSize: T.label, color: C.muted }}>the Claude Code docs on plan mode; Shift+Tab cycles the modes</div>
         </div>
       </div>
-      <div className="flex-1 min-w-0 flex flex-col gap-[4vh]">
-        <Tweet at={1} step={step} date="23 Sep 2026" text="I don't think the models need plan mode anymore" />
-        <Tweet at={1} step={step} date="24 Sep 2026" text="make plan mode into a built-in mod" />
+      <div className="flex-1 min-w-0 flex flex-col gap-[3vh]">
+        <Tweet at={1} step={step} date="23 Sep 2026" text="we're thinking of killing plan mode … I don't think the models need plan mode anymore" />
+        <Tweet at={1} step={step} date="24 Sep 2026, after the replies" text="make plan mode into a built-in mod" note="a mod: an add-on that changes Claude Code from inside" />
         <Reveal at={1} step={step}>
-          <div className="rounded-xl border-l-4 pl-4 py-1" style={{ borderColor: C.warm, fontSize: T.body }}>21 Oct: still shipping.</div>
+          <div className="rounded-xl border-l-4 pl-4 py-1" style={{ borderColor: C.warm, fontSize: T.body, lineHeight: 1.35 }}>
+            <div>On 21 Oct it is still in the docs, and the changelog shows no removal.</div>
+            <div>My view: it&rsquo;s out of date.</div>
+          </div>
         </Reveal>
       </div>
     </Canvas>

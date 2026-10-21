@@ -11,7 +11,7 @@ import { C, Canvas, RevealG, mono, serif } from "../g1/kit";
 const W = 1160, H = 500;
 
 const BARS = [
-  { what: "embeddings tuned on 13,806 forum threads", from: 0.55, to: 0.71 },
+  { what: "embeddings tuned on 13,806 ATLAS forum threads", from: 0.55, to: 0.71 },
   { what: "a better vector index", from: 0.41, to: 0.71 },
 ];
 const AX = { l: 560, r: 1120, lo: 0.3, hi: 0.8 };
@@ -38,7 +38,7 @@ export function ChatlasDetailR2({ step }: { step: number }) {
   return (
     <Canvas>
       <svg viewBox={`0 0 ${W} ${H}`} width="100%" height="100%" preserveAspectRatio="xMidYMid meet" role="img"
-        aria-label="A question is routed and safety-checked, searched two ways, by meaning and by keywords, the rankings are fused, and a model of any provider writes an answer that cites its sources">
+        aria-label="An example question, which good-run list do I use, is routed and safety-checked, searched two ways, by meaning and by keywords, the two rankings are merged, and a model of any provider writes an answer that cites its sources">
         <defs>
           <marker id="r2-cd-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
             <path d="M0,0 L10,5 L0,10 z" fill={C.muted} />
@@ -46,8 +46,9 @@ export function ChatlasDetailR2({ step }: { step: number }) {
         </defs>
         {/* question */}
         <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1, duration: 0.5 }}>
-          <rect x={10} y={100} width={170} height={64} rx={32} fill="#fff" stroke={C.ink} strokeWidth={1.5} />
-          <text x={95} y={139} textAnchor="middle" fontSize="20" fill={C.ink}>a question</text>
+          <rect x={10} y={92} width={170} height={80} rx={22} fill="#fff" stroke={C.ink} strokeWidth={1.5} />
+          <text x={95} y={126} textAnchor="middle" fontSize="20" fill={C.ink}>Which good-run</text>
+          <text x={95} y={152} textAnchor="middle" fontSize="20" fill={C.ink}>list do I use?</text>
         </motion.g>
         <Arrow d="M184,132 L222,132" delay={0.22} />
         <Box x={228} y={92} w={180} h={80} title="route, check" sub="intent and safety" delay={0.28} />
@@ -57,7 +58,7 @@ export function ChatlasDetailR2({ step }: { step: number }) {
         <Box x={456} y={160} w={230} h={80} title="by keywords" sub="sparse full-text search" delay={0.55} stroke={C.accent} />
         <Arrow d="M690,64 Q718,64 726,118" delay={0.77} />
         <Arrow d="M690,200 Q718,200 726,146" delay={0.77} />
-        <Box x={732} y={92} w={160} h={80} title="fuse ranks" sub="RRF" delay={0.83} />
+        <Box x={732} y={92} w={160} h={80} title="merge rankings" sub="RRF" delay={0.83} />
         <Arrow d="M896,132 L934,132" delay={1.04} />
         <Box x={940} y={82} w={210} h={100} title="cited answer" sub="any model provider" delay={1.1} stroke={C.accent} />
         <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.3, duration: 0.5 }}>
@@ -66,9 +67,10 @@ export function ChatlasDetailR2({ step }: { step: number }) {
         {/* step 1: what improved retrieval */}
         <RevealG at={1} step={step}>
           <text x={20} y={340} fontFamily={serif} fontStyle="italic" fontSize="24" fill={C.ink}>What made retrieval better?</text>
-          <text className="t-label" x={20} y={366} fontFamily={mono} fontSize="16" fill={C.muted}>document-match score, ATLAS benchmark questions, 2025</text>
+          <text className="t-label" x={20} y={366} fontFamily={mono} fontSize="16" fill={C.muted}>document-match score on a benchmark, 2025: questions generated from</text>
+          <text className="t-label" x={20} y={388} fontFamily={mono} fontSize="16" fill={C.muted}>the most-viewed TWiki pages of 2023, screened by hand</text>
           {BARS.map((b, i) => {
-            const y = 410 + i * 50;
+            const y = 424 + i * 48;
             return (
               <g key={b.what}>
                 <text x={20} y={y + 6} fontSize="19" fill={C.ink}>{b.what}</text>

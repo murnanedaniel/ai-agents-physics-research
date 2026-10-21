@@ -31,8 +31,16 @@ function wrap(t: string, max: number) {
 
 const TIPS = [
   "One task per session, with a short handoff note.",
-  "Send exploration to subagents. Keep their summaries.",
-  "Pause over 5 minutes and the cache empties.",
+  "Send exploration to subagents and keep only their summaries.",
+  "If a thread has to run long, compact it.",
+  "After a pause of over 5 minutes the cache expires, and the next step pays to write it again.",
+];
+
+// What each style does, in the simulation's own numbers (costModel.ts).
+const DEFS: { id: StyleId; text: string }[] = [
+  { id: "compact", text: `summarise to ${A.summary / 1000}k tokens every ${A.compactEvery} steps` },
+  { id: "fresh", text: `new session per ${A.task}-step task, ${A.note / 1000}k-token note` },
+  { id: "sub", text: `${A.task - A.mainSteps} of every ${A.task} steps in a side thread, ${A.subReturn / 1000}k summary back` },
 ];
 
 export function ContextCost({ step }: { step: number }) {
@@ -117,13 +125,24 @@ export function ContextCost({ step }: { step: number }) {
             <text className="t-label" x={RX} y="140" fill={C.muted} fontSize="16" fontFamily={MONO}>context {Math.round(long.ctx[at - 1] / 1000)}k tokens</text>
             <text className="t-label" x={RX} y="166" fill={C.muted} fontSize="16" fontFamily={MONO}>this step ${(long.cum[at - 1] - (at > 1 ? long.cum[at - 2] : 0)).toFixed(3)}</text>
             <text className="t-label" x={RX} y="192" fill={C.muted} fontSize="16" fontFamily={MONO}>step 1 cost ${long.cum[0].toFixed(3)}</text>
+            <text className="t-label" x={RX} y="218" fill={C.muted} fontSize="16" fontFamily={MONO}>cached re-reads: 5% of input price</text>
+          </G>
+          <G on={step === 1}>
+            {DEFS.map((d, i) => (
+              <g key={d.id}>
+                <line x1={RX} x2={RX + 18} y1={262 + i * 64} y2={262 + i * 64} stroke={COLORS[d.id]} strokeWidth="4" strokeDasharray={d.id === "sub" ? "6 4" : undefined} />
+                {wrap(d.text, 30).map((ln, j) => (
+                  <text key={j} className="t-label" x={RX + 26} y={267 + i * 64 + j * 20} fill={C.ink} fontSize="15" fontFamily={MONO}>{ln}</text>
+                ))}
+              </g>
+            ))}
           </G>
           <G on={step >= 2}>
             {TIPS.map((t, i) => (
               <g key={t}>
-                <text x={RX} y={110 + i * 125} fill={C.accent} fontSize="26" fontFamily={MONO}>{i + 1}</text>
+                <text x={RX} y={110 + i * 92} fill={C.accent} fontSize="26" fontFamily={MONO}>{i + 1}</text>
                 {wrap(t, 27).map((line, j) => (
-                  <text key={j} x={RX + 30} y={110 + i * 125 + j * 28} fill={C.ink} fontSize="20" fontFamily={SANS}>{line}</text>
+                  <text key={j} x={RX + 30} y={110 + i * 92 + j * 26} fill={C.ink} fontSize="20" fontFamily={SANS}>{line}</text>
                 ))}
               </g>
             ))}

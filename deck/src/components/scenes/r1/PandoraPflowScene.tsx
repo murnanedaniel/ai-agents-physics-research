@@ -85,16 +85,16 @@ export function PandoraPflowScene({ step }: { step: number }) {
       <div style={{ flex: "1 1 44%", display: "flex", flexDirection: "column", gap: "2.6vh", minWidth: 0 }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "1.2vh" }}>
           <span style={{ display: "flex", alignItems: "center", gap: 12, fontSize: T.body }}>
-            <span style={{ width: 30, height: 3, background: C.accent, flex: "none" }} />Tracks measure momentum.
+            <span style={{ width: 30, height: 3, background: C.accent, flex: "none" }} />Tracks: charge and momentum.
           </span>
           <span style={{ display: "flex", alignItems: "center", gap: 12, fontSize: T.body }}>
-            <span style={{ width: 16, height: 16, borderRadius: 8, background: "rgba(87,83,78,0.22)", border: `1.4px solid ${C.muted}`, flex: "none", marginLeft: 7, marginRight: 7 }} />Clusters measure energy.
+            <span style={{ width: 16, height: 16, borderRadius: 8, background: "rgba(87,83,78,0.22)", border: `1.4px solid ${C.muted}`, flex: "none", marginLeft: 7, marginRight: 7 }} />Clusters: energy.
           </span>
         </div>
-        <Reveal at={1} step={step} style={{ display: "flex", flexDirection: "column", gap: "2.2vh" }}>
-          <span style={{ fontSize: T.body, lineHeight: 1.35 }}>Each track claims its cluster; the leftovers are neutral.</span>
+        <Reveal at={1} step={step} style={{ display: "flex", flexDirection: "column", gap: "2vh" }}>
+          <span style={{ fontSize: T.body, lineHeight: 1.35 }}>Each track is matched to its cluster, and the energy comes from the more precise track. Clusters with no track are photons or neutral hadrons.</span>
           <span style={{ fontSize: T.body, lineHeight: 1.35, borderLeft: `3px solid ${C.warm}`, paddingLeft: 14 }}>
-            Is a small cluster a fragment of a shower? Checking every pair took 90% of the time.
+            Fragment removal: is a small cluster really part of a nearby charged shower? Merge it back, or its energy is counted twice. Checking every pair took 90% of the time.
           </span>
           <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted, lineHeight: 1.5 }}>one event at 200 pile-up: about 6,500 clusters, 2.8 million contact checks</span>
         </Reveal>

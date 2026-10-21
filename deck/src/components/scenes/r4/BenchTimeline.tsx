@@ -25,15 +25,15 @@ const BENCH: B[] = [
   { id: "gpqa", name: "GPQA Diamond", group: 0, pts: [{ t: 2023.87, v: 39, lab: "GPT-4, Nov 2023" }, { t: 2026.2, v: 97, soft: true, lab: "GPT-5.4, Mar 2026" }], dy: -4,
     what: "198 graduate questions in physics, chemistry and biology, written to be hard to look up.", setup: "PhD experts 65%; non-experts with the web 34%.", src: "Rein et al., arXiv:2311.12022 · capitalandcompute.net, Mar 2026" },
   { id: "swe", name: "SWE-bench", group: 1, pts: [{ t: 2023.78, v: 1.96, lab: "Claude 2, Oct 2023" }, { t: 2024.62, v: 33.2, lab: "GPT-4o, Aug 2024" }, { t: 2025.9, v: 80.9, lab: "Claude Opus 4.5, Nov 2025" }],
-    what: "Real GitHub issues from Python projects. The agent writes a patch; hidden tests decide.", setup: "2,294 tasks, then 500 checked (Verified). Dropped by OpenAI, Feb 2026.", src: "Jimenez et al., arXiv:2310.06770 · OpenAI, Aug 2024 · bdtechtalks, Nov 2025" },
+    what: "Real GitHub issues from Python projects. The agent writes a patch, and hidden tests pass or fail it.", setup: "2,294 tasks; later a checked subset of 500 (Verified). OpenAI dropped it, Feb 2026.", src: "Jimenez et al., arXiv:2310.06770 · OpenAI, Aug 2024 · bdtechtalks, Nov 2025" },
   { id: "fm", name: "FrontierMath", group: 2, pts: [{ t: 2024.85, v: 2, tag: "<2%", lab: "launch, Nov 2024" }, { t: 2026.5, v: 88, soft: true, lab: "tiers 1 to 3, mid 2026" }], dy: -8,
     what: "Unpublished research-level maths problems; answers are checked by a program.", setup: "Problems revised in v2, Jun 2026.", src: "Glazer et al., arXiv:2411.04872 · epoch.ai" },
-  { id: "hle", name: "Humanity's Last Exam", short: "HLE", group: 2, pts: [{ t: 2025.07, v: 9.1, lab: "o1, Jan 2025" }, { t: 2026.57, v: 53.3, lab: "Jul 2026; others say 60 to 65%" }],
+  { id: "hle", name: "Humanity's Last Exam", short: "HLE", group: 2, pts: [{ t: 2025.07, v: 9.1, lab: "o1, Jan 2025" }, { t: 2026.57, v: 53.3, lab: "Jul 2026; other boards give 60 to 65%" }],
     what: "3,000 expert-written questions at the edge of knowledge (first version).", setup: "Every model's calibration error was above 80% at launch.", src: "Phan et al., arXiv:2501.14249 · Artificial Analysis, Jul 2026" },
   { id: "arc2", name: "ARC-AGI-2", group: 2, pts: [{ t: 2025.23, v: 4, lab: "o3-low, Mar 2025" }, { t: 2026.45, v: 85, soft: true, lab: "aggregators, 2026" }], dy: 36,
     what: "Abstract grid puzzles: infer the rule from a few examples.", setup: "Average human test-taker 60%.", src: "ARC Prize, 24 Mar 2025 · leaderboard mirrors, 2026" },
   { id: "phy", name: "PHYBench", group: 3, pts: [{ t: 2025.29, v: 36.9, lab: "Gemini 2.5 Pro, Apr 2025" }, { t: 2026.69, v: 77.4, soft: true, lab: "Sep 2026" }],
-    what: "500 physics problems; the model must write the final expression.", setup: "Physics experts 61.9%.", src: "Qiu et al., arXiv:2504.16074 · llm-stats, Sep 2026" },
+    what: "500 physics problems; the answer is a full expression, not a number or a letter.", setup: "Physics experts 61.9%.", src: "Qiu et al., arXiv:2504.16074 · llm-stats, Sep 2026" },
   { id: "crit", name: "CritPt", group: 3, pts: [{ t: 2025.74, v: 5.7, lab: "GPT-5, Sep 2025" }, { t: 2026.79, v: 32.9, lab: "Muse Wonder Full, Oct 2026" }],
     what: "71 unpublished research-level physics challenges, written by 50+ physicists.", setup: "Under review by its authors after outside feedback.", src: "arXiv:2509.26574 · Artificial Analysis, Oct 2026" },
 ];
@@ -41,6 +41,12 @@ const BENCH: B[] = [
 const NOW = [2025.1, 2026.0, 2026.82];
 const WHEN = ["January 2025", "end of 2025", "October 2026"];
 const FOCUS = ["gpqa", "swe", "crit"];
+// What happened by each date, said in words under the date (values from BENCH).
+const STORY = [
+  "Knowledge quizzes went first: MMLU was called saturated by January 2025.",
+  "SWE-bench Verified went from 33% in August 2024 to 81% by November 2025.",
+  "Most lines are above 75%, some unconfirmed. Research-level physics (CritPt) is at 33%.",
+];
 const L = 70, R = 680, T = 60, Bt = 500, T0 = 2020.5, T1 = 2027;
 const x = (t: number) => L + ((t - T0) / (T1 - T0)) * (R - L);
 const y = (v: number) => Bt - (v / 100) * (Bt - T);
@@ -62,7 +68,7 @@ export function BenchTimeline({ step }: { step: number }) {
   labels.forEach((lb, i) => { if (i && lb.ly < labels[i - 1].ly + 20) lb.ly = labels[i - 1].ly + 20; });
   return (
     <Canvas>
-      <svg viewBox="0 0 1200 600" className="h-full w-full" role="img" aria-label="Benchmark scores from launch to latest: quizzes, coding, maths and physics tests all rise; most reach 80 to 97% within two to three years">
+      <svg viewBox="0 0 1200 600" className="h-full w-full" role="img" aria-label="Benchmark scores from launch to latest, for quizzes, coding, maths and physics tests. All rise; by October 2026 six of eight are above 75%, some unconfirmed, and research-level physics (CritPt) is at 33%">
         {/* legend */}
         {GROUPS.map((g, i) => (
           <g key={g.name} transform={`translate(${L + [0, 175, 340, 545][i]}, 22)`}>
@@ -86,6 +92,12 @@ export function BenchTimeline({ step }: { step: number }) {
         <motion.line y1={T - 6} y2={Bt} stroke={C.ink} strokeWidth="1.5" strokeDasharray="2 4" initial={false} animate={{ x1: x(now), x2: x(now) }} transition={{ duration: 0.9 }} />
         <AnimatePresence mode="wait">
           <motion.text key={s} x={L + 16} y={T + 26} textAnchor="start" fill={C.ink} fontSize="30" fontFamily={SERIF} fontStyle="italic" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>{WHEN[s]}</motion.text>
+        </AnimatePresence>
+        {/* what happened by this date: the empty lower-left corner of the plot */}
+        <AnimatePresence mode="wait">
+          <motion.g key={`story-${s}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
+            {wrap(STORY[s], 26).map((ln, k) => <text key={k} x={L + 16} y={T + 340 + k * 24} fill={C.ink} fontSize="20" fontFamily={SANS}>{ln}</text>)}
+          </motion.g>
         </AnimatePresence>
 
         {BENCH.map((b) => {

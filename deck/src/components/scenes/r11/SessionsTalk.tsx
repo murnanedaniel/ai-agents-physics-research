@@ -35,9 +35,9 @@ function Msg({ d, colour, label, lx, ly, dashed }: { d: string; colour: string; 
 }
 
 const CAPTIONS = [
-  "A workstation session briefs a cluster worker and reads its report.",
-  "Two cluster sessions agreed a queue split in one round.",
-  "A relayed message is information, not authority.",
+  "A session on my workstation writes a brief and starts a worker on the cluster, then reads its transcript or gets a report back. I mined the evidence for this course that way.",
+  "Two cluster sessions on different projects shared my queue limits. One sent its plans and asked for a split. They agreed a split by queue in one round, and the one open question came back to me.",
+  "A message from another session arrives labelled as one. The browser session reported it to me and didn't act on it. Relayed instructions don't carry my authority.",
 ];
 
 export function SessionsTalk({ step }: { step: number }) {
@@ -76,7 +76,7 @@ export function SessionsTalk({ step }: { step: number }) {
           <Msg d="M 756 340 C 900 360, 1000 350, 1078 330" colour={C.warm} label="reports it" lx={940} ly={385} />
         </G>
       </svg>
-      <div className="relative" style={{ ...T.body, minHeight: "1.4em" }}>
+      <div className="relative" style={{ ...T.body, minHeight: "3.9em" }}>
         {CAPTIONS.map((c, i) => (
           <Show key={c} when={step === i} className="absolute inset-x-0 text-center" style={{ color: i === 2 ? C.warm : C.ink }}>{c}</Show>
         ))}

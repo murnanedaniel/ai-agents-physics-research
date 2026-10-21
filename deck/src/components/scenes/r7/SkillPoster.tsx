@@ -3,7 +3,8 @@
 import { asset } from "@/lib/asset";
 import { C, Canvas, Reveal, T, mono, serif } from "./kit";
 
-// Step 0: what a skill is, shown as the real folder (line counts from
+// Step 0: what a skill is and how it is loaded (name and description always
+// in context, the rest read on demand), shown as the real folder (line counts from
 // skills/super-poster/ in the course repo, 21 Oct 2026). Step 1: what the
 // SKILL.md tells the agent to do. Step 2: what it made for RANGE
 // (ScienceDash screenshot, 21 Oct 2026, sidebar cropped).
@@ -12,13 +13,16 @@ const FILES = [
   { name: "template.html", lines: 576, what: "the page skeleton" },
   { name: "CHECKLIST.md", lines: 54, what: "checks before handing over" },
 ];
-const STEPS = ["Read the paper; log every number", "Fill the template from that log", "Render, look, fix"];
+const STEPS = ["Read the paper; log every number", "Fill the template from that log", "Check each number against the log", "Render it, look, fix"];
 
 export function SkillPoster({ step }: { step: number }) {
   return (
     <Canvas className="flex items-center gap-[3vw]">
-      <div className="flex-[1.05] min-w-0 flex flex-col justify-center gap-[3.5vh]">
-        <div style={{ ...serif, fontSize: T.big, lineHeight: 1.1 }}>A skill is a folder of instructions, loaded when the task matches.</div>
+      <div className="flex-[1.05] min-w-0 flex flex-col justify-center gap-[2.5vh]">
+        <div>
+          <div style={{ ...serif, fontSize: "clamp(28px, 2.8vw, 54px)", lineHeight: 1.1 }}>A skill is a folder of instructions, loaded when the task matches.</div>
+          <div className="mt-2" style={{ fontSize: T.body, lineHeight: 1.3 }}>Only its name and description sit in the agent&rsquo;s context. The agent reads the rest when a task calls for it.</div>
+        </div>
         <div className="rounded-xl border px-5 py-3" style={{ borderColor: C.rule, background: C.card }}>
           <div className="t-label" style={{ ...mono, fontSize: T.label, color: C.accent }}>skills/super-poster/</div>
           {FILES.map((f) => (
@@ -29,12 +33,13 @@ export function SkillPoster({ step }: { step: number }) {
             </div>
           ))}
           <div className="mt-2 t-label" style={{ ...mono, fontSize: T.label, color: C.muted, lineHeight: 1.4 }}>
-            description: &ldquo;Turn one scientific paper (…) into a self-contained interactive super-poster.&rdquo;
+            description: &ldquo;Turn one scientific paper (…) into a self-contained interactive super-poster.&rdquo;<br />
+            super-poster: one paper as an interactive page, about three minutes of reading
           </div>
         </div>
         <Reveal at={1} step={step}>
           <div className="t-label mb-2" style={{ ...mono, fontSize: T.label, color: C.muted }}>what SKILL.md asks for · budget under 15 minutes</div>
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-1">
             {STEPS.map((s, i) => (
               <div key={s} className="flex items-baseline gap-3" style={{ fontSize: T.body, lineHeight: 1.25 }}>
                 <span className="t-label" style={{ ...mono, fontSize: T.label, color: C.accent }}>{i + 1}</span>{s}

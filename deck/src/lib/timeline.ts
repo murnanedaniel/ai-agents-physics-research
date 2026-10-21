@@ -9,7 +9,7 @@ export type Scene = { id: SceneId; label: string; part: Part; theme: Theme; step
 // Storyboard block budgets are preserved; untimed scenes share each block evenly.
 // S4: 50 min outer loop, 20 min outro, 10 min reminders. Buffer/hands-on: 16:10–17:00.
 export const SCENES = [
-  {"id": "title", "part": "setup", "theme": "light", "steps": 1, "startSec": 0, "endSec": 78, "label": "AI agents change how we do physics."},
+  {"id": "title", "part": "setup", "theme": "light", "steps": 1, "startSec": 0, "endSec": 78, "label": "How are AI agents changing the way we do physics?"},
   {"id": "agenda", "part": "setup", "theme": "light", "steps": 1, "startSec": 78, "endSec": 155, "label": "How will the day run?"},
   {"id": "q1-possible", "part": "setup", "theme": "light", "steps": 4, "startSec": 155, "endSec": 233, "label": "What can agentic science look like today?"},
   {"id": "ex-trackfit", "part": "setup", "theme": "light", "steps": 2, "startSec": 233, "endSec": 311, "label": "Why does ML seem to fit tracks twice as well?"},
@@ -46,7 +46,7 @@ export const SCENES = [
   {"id": "quality", "part": "setup", "theme": "light", "steps": 3, "startSec": 2562, "endSec": 2640, "label": "I push back on the agent less than I did in May."},
   {"id": "what-changed", "part": "setup", "theme": "light", "steps": 3, "startSec": 2640, "endSec": 2718, "label": "What else changed between spring and autumn?"},
   {"id": "q2-limits", "part": "setup", "theme": "light", "steps": 4, "startSec": 2718, "endSec": 2795, "label": "Where do agents fail?"},
-  {"id": "limits-patterns", "part": "setup", "theme": "light", "steps": 2, "startSec": 2795, "endSec": 2873, "label": "Studies name four failure patterns; my threads show all four."},
+  {"id": "limits-patterns", "part": "setup", "theme": "light", "steps": 2, "startSec": 2795, "endSec": 2873, "label": "Studies name four failure patterns, and I've hit all four."},
   {"id": "limits-style", "part": "setup", "theme": "light", "steps": 2, "startSec": 2873, "endSec": 2951, "label": "Does generated prose leave a trace?"},
   {"id": "limits-architecture", "part": "setup", "theme": "light", "steps": 2, "startSec": 2951, "endSec": 3028, "label": "Does the agent learn from working with me?"},
   {"id": "q3-professional", "part": "setup", "theme": "light", "steps": 3, "startSec": 3028, "endSec": 3106, "label": "What makes agentic science professional?"},
@@ -83,7 +83,7 @@ export const SCENES = [
   {"id": "tdd", "part": "inner", "theme": "light", "steps": 3, "startSec": 9757, "endSec": 9965, "label": "Why write the checks before the experiment?"},
   {"id": "hillclimb-what", "part": "inner", "theme": "light", "steps": 2, "startSec": 9965, "endSec": 10174, "label": "What is research hill-climbing?"},
   {"id": "hillclimb-autoresearch", "part": "inner", "theme": "light", "steps": 2, "startSec": 10174, "endSec": 10383, "label": "How does autoresearch run the climb?"},
-  {"id": "hillclimb-anthropic", "part": "inner", "theme": "light", "steps": 2, "startSec": 10383, "endSec": 10591, "label": "How do you know the climb is not overfitting?"},
+  {"id": "hillclimb-anthropic", "part": "inner", "theme": "light", "steps": 2, "startSec": 10383, "endSec": 10591, "label": "How do you know the climb isn't overfitting?"},
   {"id": "demo-hillclimbing", "part": "inner", "theme": "light", "steps": 1, "startSec": 10591, "endSec": 10695, "label": "What will each project climb today?"},
   {"id": "mods", "part": "inner", "theme": "light", "steps": 3, "label": "What if you could change Claude Code itself?", "startSec": 10695, "endSec": 10800},
   {"id": "demo-progress", "part": "middle", "theme": "light", "steps": 1, "startSec": 15300, "endSec": 15571, "label": "What did the projects cook over lunch?"},
@@ -98,7 +98,7 @@ export const SCENES = [
   {"id": "p-tracking", "part": "middle", "theme": "light", "steps": 3, "startSec": 17743, "endSec": 18014, "label": "Project 5: do the new models match the Kalman filter for us?"},
   {"id": "demo-tracking-review", "part": "middle", "theme": "light", "steps": 1, "startSec": 18014, "endSec": 18286, "label": "Demo: who reads the draft before a referee does?"},
   {"id": "sec-automate", "part": "middle", "theme": "light", "steps": 1, "startSec": 18286, "endSec": 18557, "label": "What am I happy to automate?"},
-  {"id": "browser-automate", "part": "middle", "theme": "light", "steps": 2, "startSec": 18557, "endSec": 18829, "label": "The browser for forms, the shell for files, me for the last click."},
+  {"id": "browser-automate", "part": "middle", "theme": "light", "steps": 2, "startSec": 18557, "endSec": 18829, "label": "A browser agent fills in my forms, and I press submit."},
   {"id": "demo-eurohpc", "part": "middle", "theme": "light", "steps": 1, "startSec": 18829, "endSec": 19100, "label": "Demo: which EuroHPC call fits the Basic Model?"},
   {"id": "judges", "part": "middle", "theme": "light", "steps": 3, "startSec": 19100, "endSec": 19371, "label": "Can a panel of model judges be trusted?"},
   {"id": "demo-arxiv", "part": "middle", "theme": "light", "steps": 1, "startSec": 19371, "endSec": 19643, "label": "Before arXiv: how do we stop the paper overfitting its reviewer?"},
@@ -129,7 +129,7 @@ export const SCENES = [
   {"id": "thanks", "part": "close", "theme": "light", "steps": 1, "startSec": 25600, "endSec": 25800, "label": "Which question do you want back first?"},
   {"id": "buffer", "part": "close", "theme": "light", "steps": 1, "startSec": 25800, "endSec": 26800, "label": "How shall we use the last fifty minutes?"},
   {"id": "hands-on-2", "part": "close", "theme": "light", "steps": 2, "startSec": 26800, "endSec": 27800, "label": "Which claims in this draft survive a check?"},
-  {"id": "hands-on-3", "part": "close", "theme": "light", "steps": 2, "startSec": 27800, "endSec": 28800, "label": "Can your most important rule fail a test?"},
+  {"id": "hands-on-3", "part": "close", "theme": "light", "steps": 2, "startSec": 27800, "endSec": 28800, "label": "Can you turn your most important rule into a test?"},
 ] as const satisfies readonly { id: string; label: string; part: Part; theme: Theme; steps: number; startSec: number; endSec: number }[];
 export const TOTAL_SEC = 28800;
 export function formatMMSS(sec: number) {

@@ -10,16 +10,16 @@ import { Arrow, C, Canvas, MONO, SANS, Show, stop } from "./kit";
 // with one dot travelling round it once. The check-in skill (project-slides)
 // was shown in the inner loop, so it only gets a back-reference here.
 const FILES = [
-  { name: "SKILL.md", role: "20 rules, the workflow", more: "12 on design, 8 on narrative: signpost, motivate, context" },
-  { name: "DESIGN.md", role: "do and don't", more: "examples from the NBI and ETH decks" },
-  { name: "CHECKLIST.md", role: "checks before showing", more: "word count, font size, overlaps, sources" },
-  { name: "examples/", role: "good scenes", more: "what the house style looks like" },
+  { name: "SKILL.md", role: "20 rules and the workflow", more: "12 on design, 8 on narrative: signpost, motivate" },
+  { name: "DESIGN.md", role: "do and don't, side by side", more: "pairs from the ETH deck and this course deck" },
+  { name: "CHECKLIST.md", role: "checks before I show it", more: "word count, font size, overlaps, sources" },
+  { name: "examples/", role: "screenshots of good scenes", more: "ETH, course and template scenes at 1280x720" },
 ];
 const CX = 900, CY = 270, R = 135;
 const NODES = [
   { a: -90, name: "Conversation", sub: "I describe one idea" },
-  { a: 0, name: "Scene file", sub: "React" },
-  { a: 90, name: "Screenshot", sub: "every step, two sizes" },
+  { a: 0, name: "Scene file", sub: "React code" },
+  { a: 90, name: "Screenshot", sub: "every step, two sizes, auto-checked" },
   { a: 180, name: "Critique", sub: "checklist and my notes" },
 ];
 const pt = (a: number) => ({ x: CX + R * Math.cos((a * Math.PI) / 180), y: CY + R * Math.sin((a * Math.PI) / 180) });
@@ -28,25 +28,22 @@ export function DeckSkill({ step }: { step: number }) {
   const [hover, setHover] = useState<number | null>(null);
   const ring = [-90, 0, 90, 180, 270].map(pt);
   return (
-    <Canvas label="The keynote-slides skill is a folder: SKILL.md with twenty rules, DESIGN.md, CHECKLIST.md and examples. Each scene of this deck went round a loop: conversation, scene file, screenshot, critique">
+    <Canvas label="The keynote-slides skill is a folder: SKILL.md with twenty rules and the workflow, DESIGN.md with do and don't pairs, CHECKLIST.md and example screenshots. Each scene of this deck went round a loop, all in conversation with the agent: I describe one idea, the agent writes the scene file, every step is screenshotted and checked, and I critique it, until it passes">
       <Arrow id="r10-ds" />
       <text className="t-label" x={0} y={40} fontFamily={MONO} fontSize={21} fill={C.accent}>skills/keynote-slides/</text>
       {FILES.map((f, i) => {
-        const y = 100 + i * 62;
+        const y = 96 + i * 74;
         const hot = hover === i;
         return (
           <g key={f.name} {...stop} onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)} style={{ cursor: "default" }}>
-            <rect x={0} y={y - 34} width={600} height={52} rx={8} fill={hot ? C.tint : i === 0 ? C.card : "transparent"} stroke={i === 0 ? C.rule : "none"} />
+            <rect x={0} y={y - 32} width={640} height={66} rx={8} fill={hot ? C.tint : i === 0 ? C.card : "transparent"} stroke={i === 0 ? C.rule : "none"} />
             <text className="t-label" x={16} y={y} fontFamily={MONO} fontSize={18} fontWeight={i === 0 ? 700 : 400} fill={C.ink}>{f.name}</text>
-            {hot ? (
-              <text className="t-label" x={176} y={y} fontFamily={MONO} fontSize={15} fill={C.accent}>{f.more}</text>
-            ) : (
-              <text x={176} y={y} fontFamily={SANS} fontSize={22} fill={C.ink}>{f.role}</text>
-            )}
+            <text x={176} y={y} fontFamily={SANS} fontSize={22} fill={C.ink}>{f.role}</text>
+            <text className="t-label" x={176} y={y + 24} fontFamily={MONO} fontSize={15} fill={hot ? C.accent : C.muted}>{f.more}</text>
           </g>
         );
       })}
-      <text x={0} y={400} fontFamily={SANS} fontSize={23} fill={C.muted}>Check-ins use project-slides instead.</text>
+      <text x={0} y={412} fontFamily={SANS} fontSize={23} fill={C.muted}>Check-ins use the quicker project-slides skill instead.</text>
 
       <Show at={1} step={step} dim>
         <circle cx={CX} cy={CY} r={R} fill="none" stroke={C.rule} strokeWidth={2} />
@@ -68,6 +65,7 @@ export function DeckSkill({ step }: { step: number }) {
           animate={step >= 1 ? { cx: ring.map((p) => p.x), cy: ring.map((p) => p.y) } : { cx: ring[0].x, cy: ring[0].y }}
           transition={{ duration: 3.2, ease: "easeInOut" }} />
         <text x={CX} y={CY + 8} textAnchor="middle" fontFamily={SANS} fontSize={22} fill={C.muted}>until it passes</text>
+        <text x={600} y={540} textAnchor="middle" fontFamily={SANS} fontSize={24} fill={C.ink}>All of it in conversation with the agent: I describe, look and critique.</text>
       </Show>
     </Canvas>
   );

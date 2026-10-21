@@ -8,7 +8,8 @@ import { Arrow, C, MONO, SANS, Show, Stage } from "./kit";
 // improvements, so it settles on the nearest peak. Step 1: the three limits,
 // from Karpathy's autoresearch discussion #43 (validation-set spoiling), the
 // AlphaEvolve paper (needs an automated evaluator, arXiv 2506.13131) and the
-// greedy one-step rule itself.
+// greedy one-step rule itself. Text: WEB-RESEARCH-R2 section 2 (how to run it,
+// the main idea, the limits).
 const BASE = 410;
 const f = (x: number) => 30 + 120 * Math.exp(-(((x - 470) / 150) ** 2)) + 250 * Math.exp(-(((x - 930) / 105) ** 2));
 const Y = (x: number) => BASE - f(x);
@@ -62,7 +63,8 @@ export function HillClimbIdea({ step }: { step: number }) {
         <text x={110} y={76} fontFamily={SANS} fontSize={24} fill={C.ink}>
           <tspan fill={C.accent} fontWeight={600}>Keep</tspan> it if the score rises, else <tspan fill={C.warm} fontWeight={600}>undo</tspan>.
         </text>
-        <text className="t-label" x={110} y={112} fontFamily={MONO} fontSize={16} fill={C.muted}>autoresearch: an agent runs this loop alone, overnight</text>
+        <text x={110} y={116} fontFamily={SANS} fontSize={21} fill={C.muted}>Autoresearch: an agent runs this loop alone, overnight.</text>
+        <text className="t-label" x={110} y={142} fontFamily={MONO} fontSize={16} fill={C.muted}>Karpathy, March 2026</text>
 
         {/* step 1: limits */}
         <Show at={1} step={step}>
@@ -70,16 +72,18 @@ export function HillClimbIdea({ step }: { step: number }) {
           <text x={470} y={Y(470) + 46} textAnchor="middle" fontFamily={SANS} fontSize={19} fontWeight={700} fill={C.warm} className="t-label">1</text>
           <text className="t-label" x={930} y={Y(930) + 74} textAnchor="middle" fontFamily={MONO} fontSize={16} fill={C.warm}>higher peak, never reached</text>
           {[
-            ["1", "stops on the nearest peak"],
-            ["2", "needs a cheap, trusted score"],
-            ["3", "chases the score, not physics"],
-          ].map(([n, t], k) => (
+            ["1", "it stops on the nearest peak", "one greedy step at a time"],
+            ["2", "it needs a cheap score we trust", "the main limit AlphaEvolve's authors name"],
+            ["3", "a noisy score gets chased", "autoresearch #43: do many runs spoil the val set?"],
+          ].map(([n, t, why], k) => (
             <g key={n}>
-              <circle cx={720} cy={30 + k * 40} r={14} fill={C.warmSoft} stroke={C.warm} strokeWidth={2} />
-              <text className="t-label" x={720} y={36 + k * 40} textAnchor="middle" fontFamily={SANS} fontSize={18} fontWeight={700} fill={C.warm}>{n}</text>
-              <text x={744} y={37 + k * 40} fontFamily={SANS} fontSize={21} fill={C.ink}>{t}</text>
+              <circle cx={690} cy={30 + k * 56} r={14} fill={C.warmSoft} stroke={C.warm} strokeWidth={2} />
+              <text className="t-label" x={690} y={36 + k * 56} textAnchor="middle" fontFamily={SANS} fontSize={18} fontWeight={700} fill={C.warm}>{n}</text>
+              <text x={714} y={37 + k * 56} fontFamily={SANS} fontSize={21} fill={C.ink}>{t}</text>
+              <text className="t-label" x={714} y={58 + k * 56} fontFamily={MONO} fontSize={14} fill={C.muted}>{why}</text>
             </g>
           ))}
+          <text x={110} y={184} fontFamily={SANS} fontSize={21} fill={C.accent}>It works where the score is cheap and automatic.</text>
         </Show>
       </svg>
     </Stage>

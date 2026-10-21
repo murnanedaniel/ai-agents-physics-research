@@ -32,10 +32,10 @@ export function SecModel() {
   return (
     <Section
       lines={[
-        "What a transformer computes.",
-        "What it keeps in memory as it writes.",
+        "What a transformer computes, and what it keeps in memory as it writes.",
         "What that means for your token bill.",
-        "Where better models came from.",
+        "Where better models came from, and where they still fall short.",
+        "How a model is trained, and where agents come in.",
       ]}
     >
       <svg viewBox="0 0 510 300" className="h-full max-h-[46vh] w-full" aria-hidden>

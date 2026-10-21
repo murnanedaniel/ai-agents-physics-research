@@ -5,7 +5,7 @@ import type { Beat } from "./_types";
 
 const beat: Beat = {
   title: "What code do we start from?",
-  source: "github.com/murnanedaniel/pyCHM, validation vs the mass-eigenvalue engine of arXiv:2101.00428 · test run 18 Oct 2026",
+  source: "github.com/murnanedaniel/pyCHM, built mostly 21 to 22 Jun 2026 · validation against the mass-eigenvalue engine of arXiv:2101.00428 · test run 18 Oct 2026",
   Scene: Pychm,
 };
 

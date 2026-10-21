@@ -12,7 +12,7 @@ const TIP: Record<string, string> = {
   draft: "the paper source in git; every revision is a commit",
   a: "a model with a referee's rubric: structure, clarity, claims",
   b: "a different model and rubric, used once on the final",
-  arxiv: "next: the submission form",
+  arxiv: "next slide: the submission form",
 };
 
 function Box({ x, y, w, title, sub, col, id, hover, setHover, dashed }: {
@@ -31,7 +31,7 @@ function Box({ x, y, w, title, sub, col, id, hover, setHover, dashed }: {
 export function ReviewerClimb() {
   const [hover, setHover] = useState<string | null>(null);
   return (
-    <Canvas label="A loop: the draft is revised and scored by reviewer A until the score stops rising. Reviewer B, held out of the loop, reads only the final. Then the paper goes to arXiv">
+    <Canvas label="A loop: the draft is revised and scored by reviewer A, and a revision is kept if the score rises, so the draft ends up tuned to A. Reviewer B, held out of the loop, reads only the final. Then the paper goes to arXiv. My grant drafts, tuned to model judges, grew too dense">
       <Arrow id="r10-rc" />
       <Arrow id="r10-rcw" color={C.warm} />
       {/* the climb */}
@@ -39,8 +39,8 @@ export function ReviewerClimb() {
       <Box x={400} y={170} w={260} title="Reviewer A" sub="in the loop" col={C.accent} id="a" hover={hover} setHover={setHover} />
       <path d="M150 162 C 210 70, 440 70, 510 162" fill="none" stroke={C.muted} strokeWidth={2} markerEnd="url(#r10-rc)" />
       <text className="t-label" x={330} y={82} textAnchor="middle" fontFamily={MONO} fontSize={16} fill={C.muted}>score and comments</text>
-      <path d="M510 278 C 440 370, 210 370, 150 278" fill="none" stroke={C.muted} strokeWidth={2} markerEnd="url(#r10-rc)" />
-      <text className="t-label" x={330} y={382} textAnchor="middle" fontFamily={MONO} fontSize={16} fill={C.muted}>revise; keep if the score rises</text>
+      <path d="M510 278 C 440 360, 210 360, 150 278" fill="none" stroke={C.muted} strokeWidth={2} markerEnd="url(#r10-rc)" />
+      <text className="t-label" x={330} y={376} textAnchor="middle" fontFamily={MONO} fontSize={16} fill={C.muted}>revise; keep if the score rises</text>
 
       {/* the held-out check */}
       <line x1={720} x2={720} y1={70} y2={380} stroke={C.warm} strokeWidth={3} strokeDasharray="10 8" />
@@ -52,9 +52,10 @@ export function ReviewerClimb() {
         <text x={1080} y={228} fontFamily={SANS} fontSize={27} fill={C.ink}>arXiv</text>
       </g>
 
-      <text x={600} y={460} textAnchor="middle" fontFamily={SANS} fontSize={26} fill={C.ink}>A reviewer you climb against becomes the target.</text>
-      <text x={600} y={500} textAnchor="middle" fontFamily={SANS} fontSize={23} fill={C.muted}>My grant drafts, tuned to model judges, grew too dense.</text>
-      <text className="t-label" x={600} y={540} textAnchor="middle" fontFamily={MONO} fontSize={16} fill={C.accent}>{hover ? TIP[hover] : " "}</text>
+      <text x={600} y={440} textAnchor="middle" fontFamily={SANS} fontSize={25} fill={C.ink}>Every revision is scored by reviewer A, so the draft ends up tuned to A.</text>
+      <text x={600} y={478} textAnchor="middle" fontFamily={SANS} fontSize={25} fill={C.ink}>Only the final goes to reviewer B, so the loop can&apos;t have tuned the draft to B.</text>
+      <text x={600} y={516} textAnchor="middle" fontFamily={SANS} fontSize={22} fill={C.muted}>From my grants: drafts I tuned to model judges grew too dense.</text>
+      <text className="t-label" x={600} y={552} textAnchor="middle" fontFamily={MONO} fontSize={16} fill={C.accent}>{hover ? TIP[hover] : "published: Style Wins, Substance Loses, on LLM judges (arXiv:2608.01666)"}</text>
     </Canvas>
   );
 }

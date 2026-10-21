@@ -7,8 +7,8 @@ import { C, Canvas, Label, T, mono, serif, stop } from "./ui";
 // buffer: the last fifty minutes. The blocks are read from the timeline so it cannot drift.
 const BLOCKS: { id: string; name: string; what: string; card?: string }[] = [
   { id: "buffer", name: "Questions", what: "anything from today" },
-  { id: "hands-on-2", name: "Hands-on 2", what: "review a draft", card: "exercises/review-a-draft/" },
-  { id: "hands-on-3", name: "Hands-on 3", what: "turn a rule into a check", card: "exercises/gates-and-checks/" },
+  { id: "hands-on-2", name: "Hands-on 2", what: "review a draft, then check its claims", card: "exercises/review-a-draft/" },
+  { id: "hands-on-3", name: "Hands-on 3", what: "turn one of your rules into a check that can fail", card: "exercises/gates-and-checks/" },
 ];
 const DAY_START_H = 9; // startSec 0 is 09:00
 const clock = (sec: number) => {
@@ -21,7 +21,7 @@ const t0 = rows[0].scene.startSec, t1 = rows[rows.length - 1].scene.endSec;
 export function BufferScene() {
   return (
     <Canvas style={{ gap: "3vh" }}>
-      <div style={{ position: "relative", width: "100%", display: "flex", height: "30vh" }}>
+      <div style={{ position: "relative", width: "100%", display: "flex", height: "34vh" }}>
         {rows.map((r, i) => {
           const w = ((r.scene.endSec - r.scene.startSec) / (t1 - t0)) * 100;
           return (

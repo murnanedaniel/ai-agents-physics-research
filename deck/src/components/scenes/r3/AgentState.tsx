@@ -13,20 +13,20 @@ type Part = { id: string; label: string; info: string };
 
 const INFO: Record<string, string> = {
   model: "The model: an LLM. It reads the context and writes text or a tool call.",
-  context: "Context window: everything the model can see now. Up to 1M tokens.",
-  tools: "Tools: actions the harness runs for the model. Read, edit, search, run.",
-  memory: "CLAUDE.md is read at every start. A skill is read when its task comes up.",
-  perms: "Permissions: some actions run freely, others ask you first.",
+  context: "Context window: everything the model can see right now. Up to 1M tokens.",
+  tools: "Tools: actions the harness runs on the model's behalf. Read, edit, search, run.",
+  memory: "CLAUDE.md is loaded at every start. A skill is loaded when its task comes up.",
+  perms: "Permissions: some actions go ahead, others wait for you to approve them.",
 };
 
 // The outside world, each reached through a gate in the membrane.
 const OUT: (Part & { x: number; y: number; rule: "allow" | "ask" })[] = [
-  { id: "you", label: "you", x: 95, y: 290, rule: "allow", info: "You: the task, answers to its questions, approvals." },
+  { id: "you", label: "you", x: 95, y: 290, rule: "allow", info: "You: the task, answers to its questions, approvals, review." },
   { id: "files", label: "project files", x: 215, y: 62, rule: "allow", info: "Project files: read and edited freely." },
   { id: "web", label: "web", x: 985, y: 62, rule: "allow", info: "Web: search and fetch pages." },
-  { id: "shell", label: "shell", x: 1105, y: 290, rule: "ask", info: "Shell: git, Python, anything installed. Risky ones ask first." },
-  { id: "cluster", label: "cluster", x: 985, y: 520, rule: "ask", info: "Cluster: jobs on shared compute ask first." },
-  { id: "agents", label: "other agents", x: 215, y: 520, rule: "allow", info: "Other agents: subagents it starts, or peers it messages." },
+  { id: "shell", label: "shell", x: 1105, y: 290, rule: "ask", info: "Shell: git, Python, Slurm, anything installed. Risky commands ask first." },
+  { id: "cluster", label: "cluster", x: 985, y: 520, rule: "ask", info: "Cluster: jobs on shared compute (HPC) ask first." },
+  { id: "agents", label: "other agents", x: 215, y: 520, rule: "allow", info: "Other agents: subagents it starts and manages, or peers in other sessions." },
 ];
 
 function onMembrane(x: number, y: number, pad = 0) {
@@ -39,8 +39,8 @@ export function AgentState({ step }: { step: number }) {
   const caption = sel
     ? INFO[sel] ?? OUT.find((o) => o.id === sel)?.info
     : step === 0
-      ? "Beyond its training, the model knows only what is in its context window."
-      : "The harness adds tools, memory files and permissions. Hover any part.";
+      ? "Beyond its training, the model knows only what's in its context window."
+      : "The harness (e.g. Claude Code) wraps the model: tools, memory files, permissions.";
   const hover = (id: string) => ({
     onMouseEnter: () => setSel(id),
     onMouseLeave: () => setSel(null),
@@ -109,7 +109,7 @@ export function AgentState({ step }: { step: number }) {
           );
         })}
         <G on={step >= 1} delay={0.7}>
-          <text className="t-label" x={CX} y={CY + RY + 32} textAnchor="middle" fill={C.muted} fontSize="17" fontFamily={MONO}>membrane = permissions (example rules)</text>
+          <text className="t-label" x={CX} y={CY + RY + 32} textAnchor="middle" fill={C.muted} fontSize="17" fontFamily={MONO}>membrane = permissions (example rules) · hover any part</text>
         </G>
 
         <motion.text key={caption} x="600" y="628" textAnchor="middle" fill={C.ink} fontSize="25" fontFamily={SANS} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.35 }}>{caption}</motion.text>

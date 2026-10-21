@@ -42,7 +42,7 @@ export function PandoraStepsScene({ step }: { step: number }) {
   return (
     <Canvas style={{ flexDirection: "row", gap: "3vw", alignItems: "stretch" }}>
       <div style={{ flex: "0 0 40%", display: "flex", flexDirection: "column", gap: "0.9vh", minWidth: 0, justifyContent: "center" }}>
-        <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted, paddingBottom: 4 }}>order tried · min per event · speed-up vs stock</span>
+        <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted, paddingBottom: 4 }}>in the order tried · minutes per event · speed-up against stock</span>
         {STEPS.map((s) => {
           const shown = step >= s.at;
           const active = s.key === sel;
@@ -79,7 +79,7 @@ export function PandoraStepsScene({ step }: { step: number }) {
       <div style={{ flex: "1 1 auto", minWidth: 0, display: "flex", flexDirection: "column", justifyContent: "center", gap: "2.4vh" }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: 14, borderBottom: `1px solid ${C.rule}`, paddingBottom: "1.4vh" }}>
           <span style={{ fontFamily: serif, fontStyle: "italic", fontSize: T.big, color: C.accent, lineHeight: 1 }}>5.66×</span>
-          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>faster: 60.2 to 10.6 min, identical output.</span>
+          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>faster: 60.2 to 10.6 min per event, byte-identical output.</span>
         </div>
         <Panel s={current} />
         <Reveal at={1} step={step} style={{ borderLeft: `3px solid ${C.warm}`, paddingLeft: 14, display: "flex", flexDirection: "column", gap: 4 }}>

@@ -52,8 +52,8 @@ function SpotGlyph({ dx, dy, r, spread }: { dx: number; dy: number; r: number; s
 export function BeamspotScene({ step }: { step: number }) {
   const full = step >= 1;
   return (
-    <Canvas style={{ flexDirection: "row", gap: "3.5vw", alignItems: "center" }}>
-      <div style={{ flex: "0 0 27%", display: "flex", flexDirection: "column", gap: "2.2vh", minWidth: 0 }}>
+    <Canvas style={{ flexDirection: "row", gap: "3vw", alignItems: "center" }}>
+      <div style={{ flex: "0 0 28%", display: "flex", flexDirection: "column", gap: "1.8vh", minWidth: 0 }}>
         <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>dictated on a 5 km run, Easter 2026</span>
         <ol style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "1.2vh" }}>
           {PLAN.map((p, i) => (
@@ -65,10 +65,12 @@ export function BeamspotScene({ step }: { step: number }) {
         <div style={{ borderTop: `1px solid ${C.rule}`, paddingTop: "1.6vh", display: "flex", flexDirection: "column", gap: 6 }}>
           <span style={{ fontFamily: serif, fontStyle: "italic", fontSize: T.body }}>Then the agent ran it on Perlmutter.</span>
           <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted, lineHeight: 1.5 }}>4 days · 61 Slurm jobs · 293 GPU-hours</span>
+          <span style={{ fontSize: T.body, lineHeight: 1.3, marginTop: "0.8vh" }}>I checked in three or four times, for example to add a guess-zero baseline.</span>
         </div>
       </div>
 
       <div style={{ flex: "1 1 auto", minWidth: 0, display: "flex", flexDirection: "column", gap: "1.4vh" }}>
+        <span style={{ fontSize: T.body, lineHeight: 1.3 }}>Train on one beam-spot position, test on all three.</span>
         <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1.25fr) repeat(3, minmax(0,1fr))", gap: 4, alignItems: "center" }}>
           <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted, alignSelf: "end" }}>trained on ↓ · tested on →</span>
           {COLS.map((c) => (
@@ -106,10 +108,10 @@ export function BeamspotScene({ step }: { step: number }) {
             </Fragment>
           ))}
         </div>
-        <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>d₀ resolution in μm, held-out tt̄ events · blue: better than the Kalman filter · orange: worse</span>
+        <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>d₀ resolution in μm, held-out tt̄ events · randomised: spot spread with σ = 300 μm · blue: better than the Kalman filter · orange: worse</span>
         <Reveal at={1} step={step} style={{ display: "flex", gap: "2.4vw", fontSize: T.body, lineHeight: 1.3 }}>
-          <span style={{ borderLeft: `3px solid ${C.warm}`, paddingLeft: 12 }}>Moved 300 μm: 1.8× worse than the Kalman filter.</span>
-          <span style={{ borderLeft: `3px solid ${C.faint}`, paddingLeft: 12 }}>Randomised: stable, 12% worse.</span>
+          <span style={{ borderLeft: `3px solid ${C.warm}`, paddingLeft: 12 }}>Tested 300 μm from its training spot: up to 1.8× worse than the Kalman filter.</span>
+          <span style={{ borderLeft: `3px solid ${C.faint}`, paddingLeft: 12 }}>Trained on a randomised spot: stable, up to 12% worse.</span>
         </Reveal>
       </div>
     </Canvas>

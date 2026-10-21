@@ -9,7 +9,9 @@ import { Arrow, C, MONO, SANS, Show, Stage, stop } from "./kit";
 // lower, otherwise git reset. Step 1: his two-day result (x.com/karpathy/
 // status/2031135152349524125, 9 Mar 2026): about 700 changes, about 20 kept,
 // time to GPT-2 from 2.02 h to 1.80 h; "not novel, ground-breaking research
-// (yet)".
+// (yet)". The ~20 kept changes "were additive and transferred to larger
+// (depth=24) models" (same tweet). "Give it to your agent": x.com/karpathy/
+// status/2031137476438548874 (9 Mar 2026). About 100 runs overnight: README.
 const FILES = [
   { name: "program.md", role: "the human's instructions", lock: false, edit: false, detail: "ends: NEVER STOP" },
   { name: "prepare.py", role: "data and score, frozen", lock: true, edit: false, detail: "the agent may not touch it" },
@@ -27,7 +29,7 @@ export function AutoresearchRun({ step }: { step: number }) {
   const [hover, setHover] = useState<number | null>(null);
   return (
     <Stage label="Three files, one frozen and one editable, and a loop: edit, train five minutes, compare the score, keep or reset. Then the result of two days: about 700 changes, about 20 kept, time to GPT-2 from 2.02 to 1.80 hours">
-      <svg viewBox="0 0 1200 470" width="100%" style={{ width: "100%", height: "100%" }} onClick={stop}>
+      <svg viewBox="0 0 1200 545" width="100%" style={{ width: "100%", height: "100%" }} onClick={stop}>
         <Arrow id="ar2-arrow" />
         {FILES.map((f, i) => {
           const y = 20 + i * 112;
@@ -47,6 +49,9 @@ export function AutoresearchRun({ step }: { step: number }) {
         })}
         <text className="t-label" x={10} y={372} fontFamily={MONO} fontSize={16} fill={C.muted}>to run: one GPU, then tell the agent</text>
         <text className="t-label" x={10} y={394} fontFamily={MONO} fontSize={16} fill={C.muted}>“have a look at program.md”</text>
+        <text x={10} y={440} fontFamily={SANS} fontSize={20} fill={C.ink}>Karpathy: “give it to your agent and</text>
+        <text x={10} y={466} fontFamily={SANS} fontSize={20} fill={C.ink}>apply to what you care about”</text>
+        <text x={600} y={530} textAnchor="middle" fontFamily={SANS} fontSize={23} fill={C.ink}>The human edits the prompt; the agent edits the code.</text>
 
         <path d={`M 436 ${20 + 2 * 112 + 46} C 540 ${20 + 2 * 112 + 46}, 560 ${CY - RY}, ${CX - 100} ${CY - RY}`} fill="none" stroke={C.accent} strokeWidth={2} strokeDasharray="5 5" />
         {NODES.map((n, i) => {
@@ -65,16 +70,17 @@ export function AutoresearchRun({ step }: { step: number }) {
             </g>
           );
         })}
-        <text x={CX} y={CY - 4} textAnchor="middle" fontFamily={SANS} fontSize={21} fill={C.ink} fontWeight={600}>~12 runs</text>
-        <text x={CX} y={CY + 24} textAnchor="middle" fontFamily={SANS} fontSize={21} fill={C.ink} fontWeight={600}>an hour</text>
+        <text x={CX} y={CY - 4} textAnchor="middle" fontFamily={SANS} fontSize={21} fill={C.ink} fontWeight={600}>~12 runs an hour,</text>
+        <text x={CX} y={CY + 24} textAnchor="middle" fontFamily={SANS} fontSize={21} fill={C.ink} fontWeight={600}>~100 overnight</text>
 
         {/* step 1: what two days gave */}
         <Show at={1} step={step}>
-          <rect x={500} y={372} width={700} height={92} rx={12} fill={C.card} stroke={C.accent} strokeWidth={2} />
+          <rect x={500} y={374} width={700} height={118} rx={12} fill={C.card} stroke={C.accent} strokeWidth={2} />
           <text x={524} y={410} fontFamily={SANS} fontSize={23} fill={C.ink}>
             Two days: <tspan fontWeight={700}>~700 changes, ~20 kept</tspan>
           </text>
-          <text className="t-label" x={524} y={444} fontFamily={MONO} fontSize={18} fill={C.ink}>time to GPT-2: 2.02 → 1.80 h · “not novel … (yet)”</text>
+          <text x={524} y={442} fontFamily={SANS} fontSize={20} fill={C.ink}>The kept changes added up and carried over to a bigger model.</text>
+          <text className="t-label" x={524} y={474} fontFamily={MONO} fontSize={17} fill={C.ink}>time to GPT-2: 2.02 → 1.80 h · “not novel … (yet)”</text>
         </Show>
       </svg>
     </Stage>
