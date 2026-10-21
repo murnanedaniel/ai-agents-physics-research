@@ -90,6 +90,11 @@ nav:
   - A resilient Perlmutter bridge: demos/perlmutter-bridge.md
 - Hands-on:
   - All hands-on exercises: exercises/index.md
+  - 'Hands-on 0: get set up': exercises/hands-on-0-setup.md
+  - 'Hands-on 1: what could your project hill-climb?': exercises/hands-on-1-hill-climb.md
+  - 'Hands-on 2: what have you been putting off?': exercises/hands-on-2-putting-off.md
+  - 'Hands-on 3: what dashboard would fit your research?': exercises/hands-on-3-dashboard.md
+  - Show and tell: exercises/show-and-tell.md
   - Research memory kit: kit/research-memory.md
   - Interview your research setup: exercises/setup-interview.md
   - Review a draft, then audit its claims: exercises/review-a-draft.md

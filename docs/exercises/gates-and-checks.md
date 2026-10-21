@@ -77,4 +77,4 @@ A good check is cheap, runs every time, and fails with a message that says which
 - Ask the agent to try to get round your check, and close any gap it finds.
 - Add the check to the starter skill from Hands-on 1, so every new project gets it. See also [Reproduce the baseline](../patterns/reproduce-baseline.md) and [Exit zero is not evidence](../patterns/exit-zero-is-not-evidence.md).
 
-[Back to the deck ↩](../../../?scene=hands-on-3)
+[Back to the deck ↩](../../../?scene=hands-on-1)
