@@ -44,7 +44,7 @@ const OPTIONS: Option[] = [
     is: "a scriptable headless browser",
     good: "Repeatable checks with no human",
     eg: "mine today: every screenshot of this deck, the cover QR code, the live-wall test",
-    risk: "no logins unless scripted; brittle on complex portals",
+    risk: "almost a full browser, but logins mean fiddling with tokens and cookies; very dynamic pages and bot blockers can stop it",
     rule: "if it's a script you'll rerun",
     icon: <ScriptIcon />,
   },
