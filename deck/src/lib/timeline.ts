@@ -1,5 +1,5 @@
 export type Part = "setup" | "inner" | "middle" | "outer" | "close";
-export type Theme = "light";
+export type Theme = "light" | "dark";
 export const PART_NAMES: Record<Part, string> = {
   setup: "Intro", inner: "Inner loop", middle: "Middle loop", outer: "Outer loop", close: "Outro",
 };
@@ -11,11 +11,11 @@ export type Scene = { id: SceneId; label: string; part: Part; theme: Theme; step
 export const SCENES = [
   {"id": "title", "part": "setup", "theme": "light", "steps": 1, "startSec": 0, "endSec": 73, "label": "How are AI agents changing the way we do physics?"},
   {"id": "agenda", "part": "setup", "theme": "light", "steps": 1, "startSec": 73, "endSec": 145, "label": "How will the day run?"},
-  {"id": "eth-rate", "part": "setup", "theme": "light", "steps": 3, "startSec": 145, "endSec": 218, "label": "Why do we need to be fast?"},
-  {"id": "eth-gnn", "part": "setup", "theme": "light", "steps": 3, "startSec": 218, "endSec": 291, "label": "How do we find tracks?"},
-  {"id": "eth-speed", "part": "setup", "theme": "light", "steps": 4, "startSec": 291, "endSec": 364, "label": "How fast did we get?"},
-  {"id": "eth-history", "part": "setup", "theme": "light", "steps": 2, "startSec": 364, "endSec": 436, "label": "How long has ML been in tracking?"},
-  {"id": "ml-vs-agentic", "part": "setup", "theme": "light", "steps": 3, "startSec": 436, "endSec": 509, "label": "Is all of this agentic AI?"},
+  {"id": "eth-rate", "part": "setup", "theme": "dark", "steps": 3, "startSec": 145, "endSec": 218, "label": "Why do we need to be fast?"},
+  {"id": "eth-gnn", "part": "setup", "theme": "dark", "steps": 3, "startSec": 218, "endSec": 291, "label": "How do we find tracks?"},
+  {"id": "eth-speed", "part": "setup", "theme": "dark", "steps": 4, "startSec": 291, "endSec": 364, "label": "How fast did we get?"},
+  {"id": "eth-history", "part": "setup", "theme": "dark", "steps": 2, "startSec": 364, "endSec": 436, "label": "How long has ML been in tracking?"},
+  {"id": "ml-vs-agentic", "part": "setup", "theme": "dark", "steps": 3, "startSec": 436, "endSec": 509, "label": "Is all of this agentic AI?"},
   {"id": "q1-possible", "part": "setup", "theme": "light", "steps": 4, "startSec": 509, "endSec": 582, "label": "What can agentic science look like today?"},
   {"id": "ex-trackfit", "part": "setup", "theme": "light", "steps": 2, "startSec": 582, "endSec": 655, "label": "Why does ML seem to fit tracks twice as well?"},
   {"id": "ex-beamspot", "part": "setup", "theme": "light", "steps": 2, "startSec": 655, "endSec": 727, "label": "What happens when the beam spot moves?"},
