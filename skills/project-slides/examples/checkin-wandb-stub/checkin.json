@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-20T21:19:33.285769+00:00",
-  "project_dir": "/home/murnanedaniel/Research/teaching/ai-agents-physics-research",
+  "generated_at": "2026-10-21T09:37:45.408333+00:00",
+  "project_dir": "<path to this repository>",
   "title": "EXAMPLE: W&B stub run",
   "author": "Daniel Murnane",
   "since_days": 7,
@@ -8,6 +8,31 @@
   "git": {
     "is_repo": true,
     "commits": [
+      {
+        "hash": "86fad6f",
+        "date": "2026-10-20",
+        "subject": "Scrub machine names from code comments"
+      },
+      {
+        "hash": "69bb8eb",
+        "date": "2026-10-20",
+        "subject": "Merge deck rebuild"
+      },
+      {
+        "hash": "7e268d2",
+        "date": "2026-10-20",
+        "subject": "Deck: 91 scenes rebuilt in the house style (light, no kickers, one picture per scene, sourced numbers)"
+      },
+      {
+        "hash": "3132b53",
+        "date": "2026-10-20",
+        "subject": "Deck rebuild prep: custom scenes, no kickers, light theme, checker, 91-scene timeline; slide skills and template"
+      },
+      {
+        "hash": "204d628",
+        "date": "2026-10-20",
+        "subject": "Deck: project 6 scene for the new-universe design"
+      },
       {
         "hash": "14cde70",
         "date": "2026-10-20",
@@ -84,9 +109,9 @@
         "subject": "Course site draft 1: HTML deck (beats as placeholders) + docs"
       }
     ],
-    "files_changed": 133,
+    "files_changed": 403,
     "branch": "main",
-    "uncommitted_changes": 3
+    "uncommitted_changes": 15
   },
   "notes": [],
   "next_steps": [],
@@ -98,14 +123,14 @@
       "copied": "figure-1.png"
     },
     {
-      "path": "docs/assets/quality/behaviour_shifts.png",
-      "mtime": 1792106473.9722311,
+      "path": "deck/public/quality/subagents.png",
+      "mtime": 1792106473.6532328,
       "copied": "figure-2.png"
     },
     {
-      "path": "deck/public/quality/subagents.png",
-      "mtime": 1792106473.6532328,
-      "copied": "figure-3.png"
+      "path": "deck/public/g6/superposter-poster.jpg",
+      "mtime": 1792535844.097504,
+      "copied": "figure-3.jpg"
     }
   ],
   "wandb": {
