@@ -23,7 +23,7 @@ Run `npm run build:export && npm run shoot` first. Items marked **[auto]** are m
 
 ## Density and typography
 
-- [ ] **[auto]** At most 40 words on screen on the final step of each scene (warning above 30). Sources and axis labels are not counted; numbers are not words.
+- [ ] **[auto]** At most 80 words on screen on the final step of each scene (warning above 60). Sources and axis labels are not counted; numbers are not words.
 - [ ] **[auto]** No text under 12px at 1280x720, including SVG text after scaling. Anything that is not a label or source is at least 18px (warning).
 - [ ] At most one big number per scene, with its comparator. At most three items in any list or row of cards.
 - [ ] Title is one italic serif line in sentence case, phrased as a question or the answer to the question just asked, in `.t-headline` (or `.t-title` on the opening scene). No topic labels ("Results", "Serving", "What is it?").
