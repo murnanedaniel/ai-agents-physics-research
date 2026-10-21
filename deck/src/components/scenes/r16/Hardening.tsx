@@ -29,18 +29,23 @@ const MONO = "var(--font-geist-mono), monospace";
 const card = { background: C.card, border: `1px solid ${C.rule}`, borderRadius: 14, padding: "1.6vh 1.2vw" } as const;
 
 const MACHINES = [
-  { name: "My home server", keeper: "Services start at boot; updates build beside the live copy.", ok: true },
-  { name: "The NERSC cluster", keeper: "A scheduled job restarts the bridge within 5 minutes.", ok: true },
-  { name: "The Argonne cluster", keeper: "A keeper loop in tmux. Reboots kill it.", ok: false },
+  { name: "Home server", keeper: "Services start at boot; updates build beside the live copy.", ok: true },
+  { name: "NERSC cluster", keeper: "A job every 5 minutes restarts the bridge.", ok: true },
+  { name: "Argonne cluster", keeper: "A keeper loop in tmux. Reboots kill it.", ok: false },
 ];
 
 const BROKE = [
-  { where: "home server, 20 Oct", what: "Ten agents and builds on 4 cores: load 15. My session restarted." },
-  { where: "NERSC maintenance, 21 Oct", what: "Code living only on the cluster was stranded." },
-  { where: "cloud session", what: "Unpushed commits lost. Recovered from a git bundle." },
+  { where: "home server, 20 Oct", what: "Ten agents and builds on 4 cores: load 15, session restarted." },
+  { where: "NERSC maintenance, 21 Oct", what: "Cluster-only code was stranded." },
+  { where: "cloud session", what: "Unpushed commits lost; a git bundle saved them." },
 ];
 
-const CHECK = ["A keeper or scheduler", "State on disk", "Push every milestone", "A morning check (07:15 tomorrow)"];
+const CHECK = [
+  { c: "Keeper or scheduler" },
+  { c: "State on disk" },
+  { c: "Push every milestone" },
+  { c: "Morning check", note: "07:15 tomorrow" },
+];
 
 export function Hardening({ step }: { step: number }) {
   return (
@@ -70,9 +75,10 @@ export function Hardening({ step }: { step: number }) {
 
       <Show when={step >= 2}>
         <div style={{ display: "flex", gap: "2.4vw", flexWrap: "wrap", justifyContent: "center" }}>
-          {CHECK.map((c) => (
-            <div key={c} style={{ ...T.body, color: C.ink, display: "flex", alignItems: "center", gap: "0.6vw" }}>
+          {CHECK.map(({ c, note }) => (
+            <div key={c} style={{ ...T.body, color: C.ink, display: "flex", alignItems: "baseline", gap: "0.6vw" }}>
               <span aria-hidden style={{ color: C.accent }}>☑</span>{c}
+              {note && <span className="t-label" style={{ ...T.label, fontFamily: MONO, color: C.muted }}>{note}</span>}
             </div>
           ))}
         </div>

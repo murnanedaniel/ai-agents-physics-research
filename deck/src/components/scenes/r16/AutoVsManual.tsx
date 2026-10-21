@@ -36,8 +36,8 @@ function Chip({ children, tone = C.ink, fill = "transparent" }: { children: Reac
 const Arrow = () => <span className="t-label" style={{ ...T.label, color: C.faint }}>→</span>;
 
 const LANES = [
-  { mode: "Manual", gate: "you", line: "Asks you before edits, shell commands and network access." },
-  { mode: "Auto", gate: "classifier", line: "A second model, the classifier, approves or blocks each action." },
+  { mode: "Manual", gate: "you", line: "Asks before edits, shell commands and network access." },
+  { mode: "Auto", gate: "classifier", line: "A classifier model approves or blocks each action." },
 ];
 
 // Overnight strip, 23:00 to 09:00 CEST.
@@ -51,9 +51,9 @@ const BLOCKS = [
 ];
 
 const RULES = [
-  { mode: "Manual", when: "new code, anything you can't undo" },
-  { mode: "Auto", when: "long runs that git can roll back" },
-  { mode: "Overnight", when: "allow the commands you know it needs" },
+  { mode: "Manual", when: "new code, anything irreversible" },
+  { mode: "Auto", when: "long runs git can roll back" },
+  { mode: "Overnight", when: "allow the commands it needs" },
 ];
 
 export function AutoVsManual({ step }: { step: number }) {
@@ -92,7 +92,7 @@ export function AutoVsManual({ step }: { step: number }) {
               ))}
             </svg>
             <div style={{ ...T.body, color: C.ink, marginTop: "0.8vh" }}>
-              In auto mode overnight, my build agent sat idle after the classifier refused it.
+              Overnight in auto mode, the classifier blocked my build agent. It sat idle.
             </div>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "1.2vh" }}>

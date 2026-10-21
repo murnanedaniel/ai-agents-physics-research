@@ -49,12 +49,12 @@ function Bar({ out }: { out: number }) {
 
 export function ModelChoice({ step }: { step: number }) {
   return (
-    <Area style={{ justifyContent: "center", gap: "2vh" }}>
+    <Area style={{ justifyContent: "center", gap: "1.6vh", bottom: "11vh" }}>
       <div style={{ display: "grid", gridTemplateColumns: "1.25fr 1fr 1fr 1fr", columnGap: "1.6vw", alignItems: "start" }}>
         {COLS.map((c) => {
           const body = (
             <>
-              <div style={{ height: "15vh", display: "flex", alignItems: "flex-end", gap: 10, borderBottom: `1.5px solid ${c.other ? "transparent" : C.ink}` }}>
+              <div style={{ height: "12vh", display: "flex", alignItems: "flex-end", gap: 10, borderBottom: `1.5px solid ${c.other ? "transparent" : C.ink}` }}>
                 {c.out !== undefined && <Bar out={c.out} />}
                 {c.name === "Opus 5.5" && (
                   <div style={{ position: "relative", height: "100%", width: "38%" }}>
@@ -92,10 +92,10 @@ export function ModelChoice({ step }: { step: number }) {
 
       <Show when={step >= 2} style={{ display: "grid", gridTemplateColumns: "1fr 1.4fr", gap: "2.5vw", alignItems: "start" }}>
         <div style={{ ...T.body, color: C.muted }}>
-          I always run the newest models, named in full. The alias “sonnet” once gave me Sonnet 5, not 5.5.
+          I run the newest models by full name; “sonnet” once gave me Sonnet 5, not 5.5.
         </div>
         <div style={{ borderLeft: `4px solid ${C.warm}`, paddingLeft: 16, ...T.body, ...T.serif, color: C.ink }}>
-          A wrong answer costs more than the tokens you save. Use the strongest model for anything you will trust, and downshift only for bulk work you can check.
+          Wrong answers cost more than saved tokens. Use the strongest model for anything you trust. Downshift only for bulk work you can check.
         </div>
       </Show>
     </Area>
