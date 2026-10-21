@@ -98,7 +98,7 @@ export function BitterAgents({ step }: { step: number }) {
 
             <motion.line x1={ax(0)} y1={ay(cap(0))} x2={ax(12)} y2={ay(cap(12))} stroke={C.accent} strokeWidth="3" initial={false} animate={{ pathLength: step >= 1 ? 1 : 0 }} transition={{ duration: 1 }} />
             {RELEASES.map((m) => <circle key={m} cx={ax(m)} cy={ay(cap(m))} r="6" fill={C.accent} />)}
-            <text x={AX0 + AXW} y={200} textAnchor="end" fill={C.accent} fontSize="20" fontFamily={SANS}>general frontier models</text>
+            <text x={AX0 + AXW} y={200} textAnchor="end" fill={C.accent} fontSize="20" fontFamily={SANS}>frontier models</text>
 
             <text x={ax(BUILT)} y={46} fill={C.warm} fontSize="20" fontFamily={SANS}>tuned physics agent</text>
             <line x1={ax(BUILT)} y1={74} x2={ax(BUILT)} y2={agentY - 12} stroke={C.warm} strokeWidth="1.2" strokeDasharray="3 4" />
