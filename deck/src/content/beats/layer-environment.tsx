@@ -1,11 +1,12 @@
 "use client";
 
 import type { Beat } from "./_types";
+import { LayerEnvironment } from "@/components/scenes/r6/Layers";
 
 const beat: Beat = {
   title: "Where does the agent work?",
-  lines: ["Round 2 stub: built by the round-2 fan-out."],
-  draft: true,
+  source: "Remote control and cloud sessions: Claude Code docs, code.claude.com · browser: Claude in Chrome (Anthropic)",
+  Scene: LayerEnvironment,
 };
 
 export default beat;

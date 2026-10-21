@@ -1,12 +1,12 @@
 "use client";
 
 import type { Beat } from "./_types";
-import { ReviewCarry } from "@/components/scenes/g7/ReviewCarry";
+import { MiddleIntro } from "@/components/scenes/r9/MiddleIntro";
 
 const beat: Beat = {
-  title: "Experiments become an argument through review.",
-  source: "Pattern seen a few times in six months of agent work: course pattern catalogue, 2026",
-  Scene: ReviewCarry,
+  title: "How do experiments become a paper?",
+  source: 'Loops: course plan (Oct 2026) · projects 4 and 5: course project notes, 20 Oct 2026',
+  Scene: MiddleIntro,
 };
 
 export default beat;

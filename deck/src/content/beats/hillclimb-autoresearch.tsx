@@ -1,12 +1,12 @@
 "use client";
 
-import { AutoresearchLoop } from "@/components/scenes/g6/AutoresearchLoop";
+import { AutoresearchRun } from "@/components/scenes/r8/AutoresearchRun";
 import type { Beat } from "./_types";
 
 const beat: Beat = {
-  title: "Freeze the metric, change one file, keep or reset.",
-  source: "Karpathy, autoresearch, program.md, github.com/karpathy/autoresearch (March 2026; read 20 Oct 2026)",
-  Scene: AutoresearchLoop,
+  title: "How does autoresearch run the climb?",
+  source: "Karpathy, github.com/karpathy/autoresearch, program.md and README (Mar 2026) · result: x.com/karpathy/status/2031135152349524125 (9 Mar 2026)",
+  Scene: AutoresearchRun,
 };
 
 export default beat;

@@ -1,11 +1,12 @@
 "use client";
 
+import { ScienceDashTourR2 } from "@/components/scenes/r2/ScienceDashTourR2";
 import type { Beat } from "./_types";
 
 const beat: Beat = {
-  title: "A tour of ScienceDash.",
-  lines: ["Round 2 stub: built by the round-2 fan-out."],
-  draft: true,
+  title: "What does it look like in use?",
+  Scene: ScienceDashTourR2,
+  source: "ScienceDash screenshots, 21 Oct 2026 · github.com/murnanedaniel/sciencedash",
 };
 
 export default beat;

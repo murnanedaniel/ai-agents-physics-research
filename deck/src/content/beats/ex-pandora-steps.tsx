@@ -1,11 +1,12 @@
 "use client";
 
+import { PandoraStepsScene } from "@/components/scenes/r1/PandoraStepsScene";
 import type { Beat } from "./_types";
 
 const beat: Beat = {
-  title: "Each optimisation step and its speed-up.",
-  lines: ["Round 2 stub: built by the round-2 fan-out."],
-  draft: true,
+  title: "Which changes made it faster?",
+  Scene: PandoraStepsScene,
+  source: "ColliderML testbed optimisation log and LCContent / k4GaudiPandora commits, May to Jun 2026 · code trimmed · one μ=200 tt̄ event, one thread",
 };
 
 export default beat;

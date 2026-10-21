@@ -1,10 +1,10 @@
 "use client";
 
-import { InnerIntro } from "@/components/scenes/g5/InnerIntro";
+import { InnerIntro } from "@/components/scenes/r7/InnerIntro";
 import type { Beat } from "./_types";
 
 const beat: Beat = {
-  title: "One experiment is one turn of the inner loop.",
+  title: "What does one experiment look like with an agent?",
   Scene: InnerIntro,
 };
 

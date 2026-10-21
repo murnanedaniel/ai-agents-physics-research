@@ -1,12 +1,12 @@
 "use client";
 
 import type { Beat } from "./_types";
-import { HandsOnInterview } from "@/components/scenes/g4/HandsOnInterview";
+import { HandsOnSetup } from "@/components/scenes/r6/HandsOnSetup";
 
 const beat: Beat = {
-  title: "Interview your research setup.",
-  source: "Exercise card and research-setup skill, this course (skills/research-setup)",
-  Scene: HandsOnInterview,
+  title: "What should your agent know about your research?",
+  source: "research-setup skill (skills/research-setup, Oct 2026) · card: exercises/setup-interview",
+  Scene: HandsOnSetup,
 };
 
 export default beat;

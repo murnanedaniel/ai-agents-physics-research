@@ -1,12 +1,12 @@
 "use client";
 
-import { GalacticRepo } from "@/components/scenes/g5/GalacticRepo";
+import { GalacticLaunch } from "@/components/scenes/r7/GalacticLaunch";
 import type { Beat } from "./_types";
 
 const beat: Beat = {
-  title: "One Project holds the threads; one repo holds the record.",
-  source: "Project folder audit, 20 Oct 2026: git initialised in May, no commits, no remote",
-  Scene: GalacticRepo,
+  title: "Demo: launch galactic clustering from a chat.",
+  source: "Live demo on the day · surfaces as on the previous scene",
+  Scene: GalacticLaunch,
 };
 
 export default beat;

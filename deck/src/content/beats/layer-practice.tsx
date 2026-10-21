@@ -1,11 +1,12 @@
 "use client";
 
 import type { Beat } from "./_types";
+import { LayerPractice } from "@/components/scenes/r6/Layers";
 
 const beat: Beat = {
   title: "Which practices make it science?",
-  lines: ["Round 2 stub: built by the round-2 fan-out."],
-  draft: true,
+  source: "CLAUDE.md, skills, hooks: Claude Code docs, code.claude.com · “Give Claude a check it can run”: Claude Code best practices",
+  Scene: LayerPractice,
 };
 
 export default beat;

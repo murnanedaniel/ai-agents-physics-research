@@ -1,12 +1,12 @@
 "use client";
 
 import type { Beat } from "./_types";
-import { TwoAxes } from "@/components/scenes/g4/TwoAxes";
+import { WaysOfWorking } from "@/components/scenes/r6/WaysOfWorking";
 
 const beat: Beat = {
-  title: "Choose the loop, then choose the tools.",
-  source: "Framing: course plan, two axes (Oct 2026) · docs/environments",
-  Scene: TwoAxes,
+  title: "Where do today’s ways of working sit?",
+  source: "A. Karpathy on X, 2 Feb 2025 (vibe coding) and 4 Feb 2026 (agentic engineering) · see also S. Willison, simonwillison.net, 7 Oct 2025",
+  Scene: WaysOfWorking,
 };
 
 export default beat;

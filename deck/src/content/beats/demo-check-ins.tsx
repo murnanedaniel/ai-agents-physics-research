@@ -1,12 +1,12 @@
 "use client";
 
-import { CheckInsDemo } from "@/components/scenes/g6/CheckInsDemo";
+import { SlideSkills } from "@/components/scenes/r8/SlideSkills";
 import type { Beat } from "./_types";
 
 const beat: Beat = {
-  title: "Demo: turn run results into slides and a report.",
-  source: "Course skill skills/project-slides/",
-  Scene: CheckInsDemo,
+  title: "Which slide skill fits which job?",
+  source: "Course skills skills/project-slides/ and skills/keynote-slides/ (SKILL.md of each)",
+  Scene: SlideSkills,
 };
 
 export default beat;

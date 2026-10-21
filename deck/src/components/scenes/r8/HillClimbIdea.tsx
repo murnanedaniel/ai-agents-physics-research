@@ -1,0 +1,87 @@
+"use client";
+
+import { motion } from "motion/react";
+import { Arrow, C, MONO, SANS, Show, Stage } from "./kit";
+
+// hillclimb-what. A cartoon landscape (not data): score against the settings
+// being changed. Step 0: the climber tries one change at a time and keeps only
+// improvements, so it settles on the nearest peak. Step 1: the three limits,
+// from Karpathy's autoresearch discussion #43 (validation-set spoiling), the
+// AlphaEvolve paper (needs an automated evaluator, arXiv 2506.13131) and the
+// greedy one-step rule itself.
+const BASE = 410;
+const f = (x: number) => 30 + 120 * Math.exp(-(((x - 470) / 150) ** 2)) + 250 * Math.exp(-(((x - 930) / 105) ** 2));
+const Y = (x: number) => BASE - f(x);
+const PATH = Array.from({ length: 105 }, (_, i) => { const x = 80 + i * 10; return `${i ? "L" : "M"} ${x} ${Y(x)}`; }).join(" ");
+
+// Attempts: from a kept position, try a new one; keep if higher.
+const ATTEMPTS: { from: number; to: number }[] = [
+  { from: 150, to: 230 }, { from: 230, to: 170 }, { from: 230, to: 310 },
+  { from: 310, to: 390 }, { from: 390, to: 455 }, { from: 455, to: 540 }, { from: 455, to: 400 },
+];
+
+function Hop({ from, to, i }: { from: number; to: number; i: number }) {
+  const keep = f(to) > f(from);
+  const x1 = from, y1 = Y(from) - 10, x2 = to, y2 = Y(to) - 10;
+  const mx = (x1 + x2) / 2, my = Math.min(y1, y2) - 34 - (i % 2) * 12;
+  return (
+    <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 + i * 0.17, duration: 0.3 }}>
+      <path d={`M ${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}`} fill="none" stroke={keep ? C.accent : C.warm} strokeWidth={2.5} strokeDasharray={keep ? undefined : "5 5"} markerEnd={`url(#${keep ? "hc-k" : "hc-r"})`} />
+      {keep ? (
+        <circle cx={x2} cy={Y(to)} r={7} fill={C.accent} />
+      ) : (
+        <g stroke={C.warm} strokeWidth={2.5}>
+          <line x1={x2 - 6} x2={x2 + 6} y1={Y(to) - 6} y2={Y(to) + 6} />
+          <line x1={x2 - 6} x2={x2 + 6} y1={Y(to) + 6} y2={Y(to) - 6} />
+        </g>
+      )}
+    </motion.g>
+  );
+}
+
+export function HillClimbIdea({ step }: { step: number }) {
+  return (
+    <Stage label="A score landscape with two peaks. A climber tries one change at a time, keeps improvements, undoes the rest, and settles on the lower, nearer peak. Then three limits are marked">
+      <svg viewBox="0 0 1200 560" width="100%" style={{ width: "100%", height: "100%" }}>
+        <Arrow id="hc-k" color={C.accent} />
+        <Arrow id="hc-r" color={C.warm} />
+        <g transform="translate(0 90)">
+        {/* axes */}
+        <line x1={80} x2={1120} y1={BASE} y2={BASE} stroke={C.muted} strokeWidth={1.5} />
+        <line x1={80} x2={80} y1={BASE} y2={60} stroke={C.muted} strokeWidth={1.5} />
+        <text className="t-label" x={92} y={70} fontFamily={MONO} fontSize={16} fill={C.muted}>score</text>
+        <text className="t-label" x={1120} y={BASE + 28} textAnchor="end" fontFamily={MONO} fontSize={16} fill={C.muted}>the code and settings being changed</text>
+        <text className="t-label" x={92} y={BASE + 28} fontFamily={MONO} fontSize={16} fill={C.warm}>cartoon, not data</text>
+        <path d={PATH} fill="none" stroke={C.ink} strokeWidth={2} />
+        <circle cx={150} cy={Y(150)} r={7} fill={C.accent} />
+        {ATTEMPTS.map((a, i) => <Hop key={i} {...a} i={i} />)}
+        </g>
+
+        {/* the rule */}
+        <text x={110} y={40} fontFamily={SANS} fontSize={24} fill={C.ink}>Change one thing, measure.</text>
+        <text x={110} y={76} fontFamily={SANS} fontSize={24} fill={C.ink}>
+          <tspan fill={C.accent} fontWeight={600}>Keep</tspan> it if the score rises, else <tspan fill={C.warm} fontWeight={600}>undo</tspan>.
+        </text>
+        <text className="t-label" x={110} y={112} fontFamily={MONO} fontSize={16} fill={C.muted}>autoresearch: an agent runs this loop alone, overnight</text>
+
+        {/* step 1: limits */}
+        <Show at={1} step={step}>
+          <circle cx={470} cy={Y(470) + 40} r={15} fill={C.warmSoft} stroke={C.warm} strokeWidth={2} />
+          <text x={470} y={Y(470) + 46} textAnchor="middle" fontFamily={SANS} fontSize={19} fontWeight={700} fill={C.warm} className="t-label">1</text>
+          <text className="t-label" x={930} y={Y(930) + 74} textAnchor="middle" fontFamily={MONO} fontSize={16} fill={C.warm}>higher peak, never reached</text>
+          {[
+            ["1", "stops on the nearest peak"],
+            ["2", "needs a cheap, trusted score"],
+            ["3", "chases the score, not physics"],
+          ].map(([n, t], k) => (
+            <g key={n}>
+              <circle cx={720} cy={30 + k * 40} r={14} fill={C.warmSoft} stroke={C.warm} strokeWidth={2} />
+              <text className="t-label" x={720} y={36 + k * 40} textAnchor="middle" fontFamily={SANS} fontSize={18} fontWeight={700} fill={C.warm}>{n}</text>
+              <text x={744} y={37 + k * 40} fontFamily={SANS} fontSize={21} fill={C.ink}>{t}</text>
+            </g>
+          ))}
+        </Show>
+      </svg>
+    </Stage>
+  );
+}

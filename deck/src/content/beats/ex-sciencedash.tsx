@@ -1,12 +1,12 @@
 "use client";
 
-import { ScienceDashScene } from "@/components/scenes/g1/ScienceDashScene";
+import { ScienceDashR2 } from "@/components/scenes/r2/ScienceDashR2";
 import type { Beat } from "./_types";
 
 const beat: Beat = {
-  title: "A search box outlived the dashboard.",
-  Scene: ScienceDashScene,
-  source: "ScienceDash database, read-only audit (17 to 20 Oct 2026) · github.com/murnanedaniel/sciencedash",
+  title: "Can an agent build the tool you run your research from?",
+  Scene: ScienceDashR2,
+  source: "ScienceDash git history (first commit 23 Apr 2026) and changelog · github.com/murnanedaniel/sciencedash",
 };
 
 export default beat;

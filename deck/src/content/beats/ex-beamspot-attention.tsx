@@ -1,11 +1,12 @@
 "use client";
 
+import { BeamspotAttentionScene } from "@/components/scenes/r1/BeamspotAttentionScene";
 import type { Beat } from "./_types";
 
 const beat: Beat = {
-  title: "Cross-track attention recovers the beam spot.",
-  lines: ["Round 2 stub: built by the round-2 fan-out."],
-  draft: true,
+  title: "Can the model find the beam spot by itself?",
+  Scene: BeamspotAttentionScene,
+  source: "Murnane (7 Apr 2026): §3.2 architecture · Table 5, truncated Huber, randomised xy · Table 6, linear probe on held-out events",
 };
 
 export default beat;

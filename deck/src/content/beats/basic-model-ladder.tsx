@@ -1,12 +1,12 @@
 "use client";
 
 import type { Beat } from "./_types";
-import { MilestoneLadder } from "@/components/scenes/g7/MilestoneLadder";
+import { CheckLadder } from "@/components/scenes/r9/CheckLadder";
 
 const beat: Beat = {
-  title: "Each discovery must pass the next test.",
-  source: "Milestones, evidence and scoring: project 5 design notes, 20 Oct 2026",
-  Scene: MilestoneLadder,
+  title: "How do we know each discovery is real?",
+  source: 'Milestones, evidence and held-out scoring: project 5 design notes and lab brief, 20 Oct 2026',
+  Scene: CheckLadder,
 };
 
 export default beat;

@@ -1,11 +1,10 @@
-"use client";
-
 import type { Beat } from "./_types";
+import { SecPractice } from "@/components/scenes/r5/SecPractice";
 
 const beat: Beat = {
   title: "How has working with agents changed in my own threads?",
-  lines: ["Round 2 stub: built by the round-2 fan-out."],
-  draft: true,
+  Scene: SecPractice,
+  source: "Daniel's own Claude Code threads on Perlmutter, 28 Apr–15 Oct 2026 · labels: Claude Haiku, cross-checked by Claude Sonnet on 150 messages (Cohen's κ 0.65)",
 };
 
 export default beat;

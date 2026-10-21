@@ -1,12 +1,12 @@
 "use client";
 
 import type { Beat } from "./_types";
-import { OneLesson } from "@/components/scenes/g4/OneLesson";
+import { OneLessonR6 } from "@/components/scenes/r6/OneLessonR6";
 
 const beat: Beat = {
-  title: "Be ambitious, then automate yourself.",
-  source: "The one lesson: course plan, 17 Oct 2026",
-  Scene: OneLesson,
+  title: "What is the one lesson of today?",
+  source: "The lesson: Daniel, course notes, 17 and 21 Oct 2026 · picture schematic",
+  Scene: OneLessonR6,
 };
 
 export default beat;

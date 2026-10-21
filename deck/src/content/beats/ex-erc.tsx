@@ -1,12 +1,12 @@
 "use client";
 
-import { ErcScene } from "@/components/scenes/g1/ErcScene";
+import { ErcR2 } from "@/components/scenes/r2/ErcR2";
 import type { Beat } from "./_types";
 
 const beat: Beat = {
-  title: "Writing together needs a pull-first workflow.",
-  Scene: ErcScene,
-  source: "Git log of the ERC Starting Grant 2027 Overleaf project, 7 to 14 Oct 2026",
+  title: "Can an agent help write a grant proposal?",
+  Scene: ErcR2,
+  source: "ERC StG 2027 working files, Oct 2026: Overleaf git log (7 to 14 Oct); mock-panel scores, 3 anchors and 11 held-out real proposals (7 funded, 4 not), AUC with bootstrap CI",
 };
 
 export default beat;

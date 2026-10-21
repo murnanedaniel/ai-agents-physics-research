@@ -1,12 +1,12 @@
 "use client";
 
 import type { Beat } from "./_types";
-import { Professional } from "@/components/scenes/g4/Professional";
+import { Professional2x2 } from "@/components/scenes/r6/Professional2x2";
 
 const beat: Beat = {
-  title: "Professional science needs more than a model.",
-  source: "Framing: course plan, Q3 (Oct 2026) · docs/professional",
-  Scene: Professional,
+  title: "What makes agentic science professional?",
+  source: "Framing: Daniel’s argument for this course (Oct 2026)",
+  Scene: Professional2x2,
 };
 
 export default beat;

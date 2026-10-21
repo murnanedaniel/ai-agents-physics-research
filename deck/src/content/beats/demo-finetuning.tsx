@@ -1,10 +1,11 @@
 "use client";
 
-import { FinetuningDemo } from "@/components/scenes/g5/FinetuningDemo";
+import { FinetuningDemo } from "@/components/scenes/r7/FinetuningDemo";
 import type { Beat } from "./_types";
 
 const beat: Beat = {
-  title: "Give the workbench the literature and both codes.",
+  title: "Demo: give the workbench the literature and both codes.",
+  source: "Live demo on the day · inputs: Fine-Tuning (2019 PhD code), github.com/murnanedaniel/pyCHM",
   Scene: FinetuningDemo,
 };
 

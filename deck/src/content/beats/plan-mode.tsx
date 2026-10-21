@@ -1,11 +1,11 @@
 "use client";
 
-import { PlanMode } from "@/components/scenes/g5/PlanMode";
+import { PlanMode } from "@/components/scenes/r7/PlanMode";
 import type { Beat } from "./_types";
 
 const beat: Beat = {
-  title: "Plan mode feels dated to me, yet it is still maintained.",
-  source: "Claude Code CHANGELOG.md and GitHub release dates, read 20 Oct 2026 · thread audit, May to Sep 2026",
+  title: "Do we still need plan mode?",
+  source: "code.claude.com/docs/en/permission-modes · x.com/trq212, 23 and 24 Sep 2026 · changelog read 21 Oct 2026 (v2.1.306)",
   Scene: PlanMode,
 };
 

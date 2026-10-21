@@ -1,11 +1,12 @@
 "use client";
 
+import { GalacticPlan } from "@/components/scenes/r7/GalacticPlan";
 import type { Beat } from "./_types";
 
 const beat: Beat = {
-  title: "How will we launch the galactic clustering project?",
-  lines: ["Round 2 stub: built by the round-2 fan-out."],
-  draft: true,
+  title: "What exists already, and what will we try today?",
+  source: "jFoF: Horowitz and Bayer, arXiv:2510.26851 (2025) · FRNN kernel: github.com/lxxue/FRNN · plan: course project brief, Oct 2026",
+  Scene: GalacticPlan,
 };
 
 export default beat;

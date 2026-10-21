@@ -1,12 +1,12 @@
 "use client";
 
-import { RangeQuestion } from "@/components/scenes/g6/RangeQuestion";
+import { RangeWhy } from "@/components/scenes/r7/RangeWhy";
 import type { Beat } from "./_types";
 
 const beat: Beat = {
-  title: "Project 1: can transformers beat RANGE?",
-  source: "Caruso et al., Nat. Commun. 17 (2026), Table 1 · data: MD22 via sgdml.org · code: github.com/ClementiGroup/range · literature check 17 Oct 2026",
-  Scene: RangeQuestion,
+  title: "Can a transformer beat RANGE?",
+  source: "RANGE: Caruso et al., Nat. Commun. 17 (2026), arXiv:2502.13797 · MD22: sgdml.org · code: github.com/ClementiGroup/range (MIT) · axes schematic",
+  Scene: RangeWhy,
 };
 
 export default beat;

@@ -1,11 +1,9 @@
-"use client";
-
 import type { Beat } from "./_types";
+import { SecBench } from "@/components/scenes/r4/SecBench";
 
 const beat: Beat = {
   title: "How good are agents now?",
-  lines: ["Round 2 stub: built by the round-2 fan-out."],
-  draft: true,
+  Scene: SecBench,
 };
 
 export default beat;

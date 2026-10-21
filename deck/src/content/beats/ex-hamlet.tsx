@@ -1,12 +1,12 @@
 "use client";
 
-import { HamletScene } from "@/components/scenes/g1/HamletScene";
+import { HamletR2 } from "@/components/scenes/r2/HamletR2";
 import type { Beat } from "./_types";
 
 const beat: Beat = {
-  title: "Building was fast; engagement was harder.",
-  Scene: HamletScene,
-  source: "HAMLET 2026 meeting app: git log, 12 to 21 Aug 2026 · production database snapshot, 21 Aug 2026 (before the final afternoon)",
+  title: "What can an agent do for a conference?",
+  Scene: HamletR2,
+  source: "HAMLET Meet, app for HAMLET-PHYSICS 2026, NBI Copenhagen, 19 to 21 Aug 2026 (indico.nbi.ku.dk/event/2253) · attendees from its 9,591 pair scores",
 };
 
 export default beat;

@@ -1,11 +1,12 @@
 "use client";
 
 import type { Beat } from "./_types";
+import { UniversePipeline } from "@/components/scenes/r9/UniversePipeline";
 
 const beat: Beat = {
-  title: "From a hidden Lagrangian to detector hits.",
-  lines: ["Round 2 stub: built by the round-2 fan-out."],
-  draft: true,
+  title: "How do we build a universe nobody has seen?",
+  source: 'Project 5 build spec and validation log, 20 to 21 Oct 2026: hand-written UFO, MadGraph with MadSpin, custom fast detector; the geometry, field and budget are what the lab is told',
+  Scene: UniversePipeline,
 };
 
 export default beat;

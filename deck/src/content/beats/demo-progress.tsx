@@ -1,12 +1,12 @@
 "use client";
 
 import type { Beat } from "./_types";
-import { LunchOvens } from "@/components/scenes/g7/LunchOvens";
+import { LunchCheck } from "@/components/scenes/r8/LunchCheck";
 
 const beat: Beat = {
-  title: "Check the runs, not the summaries.",
+  title: "What did the projects cook over lunch?",
   source: "Session times: course schedule, Daniel Murnane, 20 Oct 2026",
-  Scene: LunchOvens,
+  Scene: LunchCheck,
 };
 
 export default beat;

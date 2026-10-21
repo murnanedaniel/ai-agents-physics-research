@@ -1,10 +1,10 @@
 import type { Beat } from "./_types";
-import { BenchUnsolved } from "@/components/scenes/g2/BenchUnsolved";
+import { BenchOpen } from "@/components/scenes/r4/BenchOpen";
 
 const beat: Beat = {
-  title: "Interactive work leaves harder tests open.",
-  source: "GPQA Diamond: Rein et al. 2023, arXiv:2311.12022; capitalandcompute.net, Mar 2026 · ARC-AGI-3: ARC Prize launch post, 25 Mar 2026",
-  Scene: BenchUnsolved,
+  title: "Which tests are still open, and why?",
+  source: "ARC Prize, 25 Mar 2026 · METR time horizons, May 2026 · CritPt arXiv:2509.26574, Artificial Analysis Oct 2026 · Vending-Bench arXiv:2502.15840",
+  Scene: BenchOpen,
 };
 
 export default beat;

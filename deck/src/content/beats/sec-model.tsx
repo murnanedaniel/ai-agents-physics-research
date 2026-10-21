@@ -1,11 +1,9 @@
-"use client";
-
 import type { Beat } from "./_types";
+import { SecModel } from "@/components/scenes/r3/SecScenes";
 
 const beat: Beat = {
   title: "What is inside the model?",
-  lines: ["Round 2 stub: built by the round-2 fan-out."],
-  draft: true,
+  Scene: SecModel,
 };
 
 export default beat;

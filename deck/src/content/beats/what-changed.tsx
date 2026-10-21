@@ -1,10 +1,10 @@
 import type { Beat } from "./_types";
-import { WhatChanged } from "@/components/scenes/g3/WhatChanged";
+import { WhatChanged } from "@/components/scenes/r5/WhatChanged";
 
 const beat: Beat = {
-  title: "Practice improved, but errors remained.",
+  title: "What else changed between spring and autumn?",
   Scene: WhatChanged,
-  source: "Same threads, preregistered tests: May–Jun (395 messages) vs Sep–Oct (1,080) · error mix κ 0.49, indicative · audit: 30 claims each",
+  source: "Daniel's own threads, preregistered 15 Oct 2026 · May–Jun vs Sep–Oct, two-proportion tests · error types κ 0.49 (indicative) · check of “done” claims: 30 per period, read by Sonnet",
 };
 
 export default beat;

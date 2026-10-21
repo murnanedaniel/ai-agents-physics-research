@@ -1,12 +1,12 @@
 "use client";
 
-import { PandoraScene } from "@/components/scenes/g1/PandoraScene";
+import { PandoraScene } from "@/components/scenes/r1/PandoraScene";
 import type { Beat } from "./_types";
 
 const beat: Beat = {
-  title: "Profile, change, check, then keep or discard.",
+  title: "Can an agent speed up an hour-long reconstruction?",
   Scene: PandoraScene,
-  source: "ColliderML testbed optimisation log, 30 May to 1 Jun 2026 · one μ=200 tt̄ event, one thread, AMD EPYC 7763 (Perlmutter)",
+  source: "ColliderML testbed optimisation log, 30 May to 1 Jun 2026 · Pandora on the Open Data Detector (key4hep), one μ=200 tt̄ event, one thread, Perlmutter CPU node",
 };
 
 export default beat;

@@ -1,12 +1,12 @@
 "use client";
 
 import type { Beat } from "./_types";
-import { ThreeReaders } from "@/components/scenes/g7/ThreeReaders";
+import { ReviewDraft } from "@/components/scenes/r9/ReviewDraft";
 
 const beat: Beat = {
-  title: "Give the draft three readers, each with one job.",
-  source: "Flag example: wording in the draft beam-spot paper. Citation errors are usually real but wrong: course pattern catalogue, 2026",
-  Scene: ThreeReaders,
+  title: "Demo: who reads the draft before a referee does?",
+  source: 'Flag example: wording in the draft beam-spot paper (Apr 2026) · course pattern catalogue, 2026',
+  Scene: ReviewDraft,
 };
 
 export default beat;

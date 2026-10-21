@@ -1,10 +1,10 @@
 import type { Beat } from "./_types";
-import { Style } from "@/components/scenes/g3/Style";
+import { Style } from "@/components/scenes/r5/Style";
 
 const beat: Beat = {
-  title: "Generated prose leaves a vocabulary fingerprint.",
+  title: "Does generated prose leave a trace?",
   Scene: Style,
-  source: "Kobak et al., Science Advances 2025, arXiv:2406.07016v5 §2.1–2.2: 15.1M PubMed abstracts, 2010–2024",
+  source: "Kobak et al., Science Advances 2025, arXiv:2406.07016v5 §2.1–2.2: 15.1M PubMed abstracts, 2010–2024; expected frequency extrapolated from 2021–22",
 };
 
 export default beat;

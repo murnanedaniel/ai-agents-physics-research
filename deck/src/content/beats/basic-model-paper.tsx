@@ -1,12 +1,12 @@
 "use client";
 
 import type { Beat } from "./_types";
-import { PaperFill } from "@/components/scenes/g7/PaperFill";
+import { PaperPlan } from "@/components/scenes/r9/PaperPlan";
 
 const beat: Beat = {
-  title: "Let validated milestones fill the paper.",
-  source: "Milestones and the bar for good enough: project 5 design notes, 20 Oct 2026",
-  Scene: PaperFill,
+  title: "How does the lab's work become a paper?",
+  source: 'Lab files: project 5 lab brief, 20 Oct 2026 · expected limits: project 5 design notes, 20 Oct 2026',
+  Scene: PaperPlan,
 };
 
 export default beat;

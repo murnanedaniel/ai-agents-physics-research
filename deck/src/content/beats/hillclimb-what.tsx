@@ -1,11 +1,12 @@
 "use client";
 
+import { HillClimbIdea } from "@/components/scenes/r8/HillClimbIdea";
 import type { Beat } from "./_types";
 
 const beat: Beat = {
   title: "What is research hill-climbing?",
-  lines: ["Round 2 stub: built by the round-2 fan-out."],
-  draft: true,
+  source: "Cartoon, not data · limits: Karpathy, autoresearch discussion #43 (Mar 2026); Novikov et al., AlphaEvolve, arXiv 2506.13131",
+  Scene: HillClimbIdea,
 };
 
 export default beat;

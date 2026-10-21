@@ -1,12 +1,12 @@
 "use client";
 
-import { CheckInSlides } from "@/components/scenes/g6/CheckInSlides";
+import { CheckinSkill } from "@/components/scenes/r8/CheckinSkill";
 import type { Beat } from "./_types";
 
 const beat: Beat = {
-  title: "Choose slides that suit the check-in.",
-  source: "Course skill skills/project-slides/ · tectonic: tectonic-typesetting.github.io",
-  Scene: CheckInSlides,
+  title: "How do runs become a check-in?",
+  source: "Course skill skills/project-slides/ · slide: project 4 precook check-in, 21 Oct 2026, page 3 of 6 (beamer, tectonic)",
+  Scene: CheckinSkill,
 };
 
 export default beat;

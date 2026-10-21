@@ -1,12 +1,12 @@
 "use client";
 
 import type { Beat } from "./_types";
-import { SecretWall } from "@/components/scenes/g7/SecretWall";
+import { LabKit } from "@/components/scenes/r9/LabKit";
 
 const beat: Beat = {
-  title: "The swarm sees the detector, never the theory.",
-  source: "Project 5 build spec, 20 Oct 2026: secrecy is enforced where possible and audited afterwards",
-  Scene: SecretWall,
+  title: "Demo: what does the agent lab work with?",
+  source: 'Project 5 lab brief, role files and day-of runbook, 20 to 21 Oct 2026',
+  Scene: LabKit,
 };
 
 export default beat;
