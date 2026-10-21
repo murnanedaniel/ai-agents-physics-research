@@ -121,6 +121,7 @@ export { default as "workflows-what" } from "./workflows-what";
 export { default as "workflows-patterns" } from "./workflows-patterns";
 export { default as "ultracode" } from "./ultracode";
 export { default as "always-on" } from "./always-on";
+export { default as "home-hardware" } from "./home-hardware";
 export { default as "hardening" } from "./hardening";
 export { default as "landscape" } from "./landscape";
 export { default as "big-science" } from "./big-science";
