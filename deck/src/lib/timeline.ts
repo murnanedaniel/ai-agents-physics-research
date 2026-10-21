@@ -128,7 +128,7 @@ export const SCENES = [
   {"id": "research-memory", "part": "outer", "theme": "light", "steps": 3, "startSec": 20561, "endSec": 20722, "label": "Can an agent remember last month's work?"},
   {"id": "hands-on-3", "part": "outer", "theme": "light", "steps": 2, "startSec": 20722, "endSec": 20882, "label": "Hands-on 3: what dashboard would fit your research?"},
   {"id": "ideation", "part": "outer", "theme": "light", "steps": 2, "startSec": 20882, "endSec": 21043, "label": "Can agents come up with good research ideas?"},
-  {"id": "excalidraw", "part": "outer", "theme": "light", "steps": 2, "startSec": 21043, "endSec": 21204, "label": "Can you sketch an idea with Claude?"},
+  {"id": "excalidraw", "part": "outer", "theme": "light", "steps": 3, "startSec": 21043, "endSec": 21204, "label": "Can you sketch an idea with Claude?"},
   {"id": "collab", "part": "outer", "theme": "light", "steps": 2, "startSec": 21204, "endSec": 21365, "label": "Who should be working together but isn't?"},
   {"id": "website", "part": "outer", "theme": "light", "steps": 2, "startSec": 21365, "endSec": 21526, "label": "How do I set up a research website?"},
   {"id": "sessions-talk", "part": "outer", "theme": "light", "steps": 3, "startSec": 21526, "endSec": 21686, "label": "Can agents work with each other?"},

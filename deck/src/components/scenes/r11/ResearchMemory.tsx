@@ -81,6 +81,7 @@ export function ResearchMemory({ step }: { step: number }) {
       </div>
       <Show when={step >= 2} className="text-center" style={{ ...T.body, color: C.ink }}>
         <span style={{ ...T.serif }}>Course kit:</span> all three in local files, with no server.
+        <div style={{ ...T.body, color: C.warm, marginTop: "1vh" }}>Claude Code deletes transcripts after 30 days. Keep them: set <code style={T.mono}>cleanupPeriodDays</code> to 3650.</div>
       </Show>
     </div>
   );

@@ -44,7 +44,8 @@ Choose a tier:
 
 5. **The setup interview.** Open your project folder (or an empty one), start `claude` and say "interview me about my research setup". It asks three questions about your work, your compute and what it must never do, then drafts a `CLAUDE.md` for you to approve. Details and tiers: [Interview your research setup](setup-interview.md).
 6. **Memory.** Keep talking for a minute: tell it what resources you have (cluster, GPUs, collaboration tools, deadlines) and ask "save what is worth remembering about me as memory notes". Run `/memory` to see and edit what it stored. See [how Claude remembers your project](https://code.claude.com/docs/en/memory).
-7. **First pull request.** Share what you did (see Show and tell below). That PR is your first.
+7. **Keep your transcripts.** By default Claude Code deletes session transcripts after 30 days, silently. They are your research record, so keep them: add `"cleanupPeriodDays": 3650` to `~/.claude/settings.json` (0 is not allowed; a large number means about ten years). See [cleanupPeriodDays](https://code.claude.com/docs/en/settings-reference#cleanupperioddays).
+8. **First pull request.** Share what you did (see Show and tell below). That PR is your first.
 
 Done looks like:
 
