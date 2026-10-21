@@ -53,7 +53,7 @@ export function BitterAgents({ step }: { step: number }) {
             <text key={l as string} className="t-label" x={lx(n as number)} y={JY0 + 20} textAnchor="middle" fill={C.muted} fontSize="15" fontFamily={MONO}>{l}</text>
           ))}
           <text className="t-label" x={JX0 + JXW} y={JY0 + 44} textAnchor="end" fill={C.muted} fontSize="15" fontFamily={MONO}>jets used in training (log) →</text>
-          <text className="t-label" x={JX0 + 8} y={14} fill={C.muted} fontSize="15" fontFamily={MONO}>background rejection (higher is better)</text>
+          <text className="t-label" x={JX0 + 8} y={14} fill={C.muted} fontSize="15" fontFamily={MONO}>rejection, higher is better</text>
 
           <motion.path d={line(PNET)} fill="none" stroke={C.faint} strokeWidth="3" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1 }} />
           <motion.path d={line(LORENTZ)} fill="none" stroke={C.warm} strokeWidth="3.5" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.2 }} />
@@ -64,7 +64,7 @@ export function BitterAgents({ step }: { step: number }) {
             </g>
           ))}
           <text x={90} y={150} fill={C.warm} fontSize="20" fontFamily={SANS}>symmetry</text>
-          <text x={90} y={172} fill={C.warm} fontSize="20" fontFamily={SANS}>built in</text>
+          <text x={90} y={176} fill={C.warm} fontSize="20" fontFamily={SANS}>built in</text>
           <text x={205} y={258} fill={C.muted} fontSize="20" fontFamily={SANS}>no Lorentz symmetry</text>
           <text className="t-label" x={lx(1.2e6) + 10} y={ry(2195) + 22} fill={C.warm} fontSize="15" fontFamily={MONO}>LorentzNet 2195</text>
           <text className="t-label" x={lx(1.2e6) + 10} y={ry(1615) + 12} fill={C.muted} fontSize="15" fontFamily={MONO}>ParticleNet 1615</text>
@@ -79,10 +79,10 @@ export function BitterAgents({ step }: { step: number }) {
           </motion.g>
         </svg>
         <div style={{ ...T.body, color: C.ink, marginTop: "1vh" }}>
-          Symmetry’s lead shrinks with data. A transformer pretrained on 100M jets passes it. Symmetry inside that transformer still adds a little.
+          Symmetry’s lead shrinks with data; a transformer pretrained on 100M jets passes it. Symmetry inside the transformer still adds a little.
         </div>
         <div className="t-label" style={{ ...T.label, ...T.mono, color: C.muted, marginTop: 6 }}>
-          LorentzNet over ParticleNet: 2.8× at 6k jets, 1.4× at 1.2M. On 100M JetClass jets, accuracy 0.855 → 0.864 when a plain transformer is made exactly Lorentz-equivariant, at 2× the training time.
+          LorentzNet over ParticleNet: 2.8× at 6k jets, 1.4× at 1.2M. JetClass, 100M jets: a plain transformer made Lorentz-equivariant goes 0.855 → 0.864, at 2× the training time.
         </div>
       </div>
 
@@ -125,7 +125,7 @@ export function BitterAgents({ step }: { step: number }) {
               I broadly expect it to. A well-tuned domain setup buys a couple of months of intelligence, measured in frontier-model releases.
             </div>
           </div>
-          <div className="t-label" style={{ ...T.label, ...T.mono, color: C.muted, marginTop: "1.5vh" }}>closest real case, a model rather than an agent (2023):</div>
+          <div className="t-label" style={{ ...T.label, ...T.mono, color: C.muted, marginTop: "1.5vh" }}>closest real case (a model, not an agent; 2023):</div>
           <div style={{ ...T.body, color: C.muted }}>
             GPT-4 with general prompting passed the medically tuned Med-PaLM 2 on MedQA, 90.2% to 86.5%.
           </div>
