@@ -2,6 +2,10 @@
 
 import { motion } from "motion/react";
 import { C, Canvas, T, mono, serif } from "./kit";
+import { asset } from "@/lib/asset";
+
+const SITE = "https://www.danielmurnane.com/ai-agents-physics-research/";
+const stop = (e: { stopPropagation: () => void }) => e.stopPropagation();
 
 // Cover: three nested loops (experiment inside paper inside programme), each with a dot
 // orbiting on its own line. Periods double outwards: four experiments per lap of the
@@ -32,6 +36,21 @@ export function TitleScene() {
         >
           <span>Daniel Murnane</span>
           <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>KIT · KSETA · 22 October 2026</span>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.8 }}
+          style={{ display: "flex", alignItems: "center", gap: "1.6vw", marginTop: "2vh" }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={asset("/qr-deck.svg")} alt="QR code: the slides at danielmurnane.com/ai-agents-physics-research" style={{ width: "19vh", height: "19vh", background: "#fff", padding: "0.6vh", borderRadius: 8 }} />
+          <div style={{ display: "flex", flexDirection: "column", gap: "1vh", fontSize: T.label, fontFamily: mono }}>
+            <span style={{ color: C.ink }}>Slides, docs and exercises:</span>
+            <a href={SITE} onClick={stop} target="_blank" rel="noopener noreferrer" style={{ color: C.accent, textDecoration: "none", fontSize: T.body }}>danielmurnane.com/ai-agents-physics-research</a>
+            <a href={`${SITE}docs/`} onClick={stop} target="_blank" rel="noopener noreferrer" style={{ color: C.ink, textDecoration: "none" }}>→ docs: …/docs</a>
+            <a href={`${SITE}docs/exercises/`} onClick={stop} target="_blank" rel="noopener noreferrer" style={{ color: C.ink, textDecoration: "none" }}>→ hands-on exercises: …/docs/exercises</a>
+          </div>
         </motion.div>
       </div>
       <svg viewBox="-236 -236 472 472" style={{ flex: "1 1 40%", height: "64vh", minWidth: 0 }} role="img" aria-label="Three nested loops, experiments inside papers inside programmes, each with a dot moving round it">

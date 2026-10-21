@@ -89,6 +89,7 @@ nav:
   - Galactic neighbour finding: demos/galactic-neighbours.md
   - A resilient Perlmutter bridge: demos/perlmutter-bridge.md
 - Hands-on:
+  - All hands-on exercises: exercises/index.md
   - Research memory kit: kit/research-memory.md
   - Interview your research setup: exercises/setup-interview.md
   - Review a draft, then audit its claims: exercises/review-a-draft.md

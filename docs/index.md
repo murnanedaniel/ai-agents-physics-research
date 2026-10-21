@@ -2,6 +2,8 @@
 
 KIT · 22 October 2026 · 09:00–17:00 · Daniel Murnane. A draft companion for particle and astroparticle PhD students and postdocs, across theory and experiment.
 
+**[All hands-on exercises →](exercises/index.md)** · [The slides](../)
+
 ## Working notes
 
 - Show what agentic science can achieve today.
