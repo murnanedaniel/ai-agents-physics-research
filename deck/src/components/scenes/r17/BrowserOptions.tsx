@@ -41,10 +41,10 @@ const OPTIONS: Option[] = [
   },
   {
     name: "Playwright",
-    is: "a scriptable headless browser",
+    is: "a scriptable headless browser, almost a full one",
     good: "Repeatable checks with no human",
     eg: "mine today: every screenshot of this deck, the cover QR code, the live-wall test",
-    risk: "almost a full browser, but logins mean fiddling with tokens and cookies; very dynamic pages and bot blockers can stop it",
+    risk: "logins need tokens and cookies; very dynamic pages and bot blockers can stop it",
     rule: "if it's a script you'll rerun",
     icon: <ScriptIcon />,
   },
