@@ -73,9 +73,9 @@ export function BitterAgents({ step }: { step: number }) {
             <circle cx={lx(PRE)} cy={ry(2766)} r="6" fill={C.accent} />
             <rect x={lx(PRE) - 5} y={ry(2894) - 5} width="10" height="10" fill={C.warm} transform={`rotate(45 ${lx(PRE)} ${ry(2894)})`} />
             <text x={lx(PRE) - 14} y={ry(2894) - 4} textAnchor="end" fill={C.warm} fontSize="20" fontFamily={SANS}>+ symmetry</text>
-            <text className="t-label" x={lx(PRE) - 14} y={ry(2894) + 12} textAnchor="end" fill={C.warm} fontSize="15" fontFamily={MONO}>L-GATr 2894</text>
-            <text x={lx(PRE) - 14} y={ry(2766) + 24} textAnchor="end" fill={C.accent} fontSize="20" fontFamily={SANS}>transformer, 100M jets</text>
-            <text className="t-label" x={lx(PRE) - 14} y={ry(2766) + 41} textAnchor="end" fill={C.accent} fontSize="15" fontFamily={MONO}>ParT 2766</text>
+            <text className="t-label" x={lx(PRE) - 14} y={ry(2894) + 16} textAnchor="end" fill={C.warm} fontSize="15" fontFamily={MONO}>L-GATr 2894</text>
+            <text x={lx(PRE) - 14} y={ry(2766) + 22} textAnchor="end" fill={C.accent} fontSize="20" fontFamily={SANS}>transformer, 100M jets</text>
+            <text className="t-label" x={lx(PRE) - 14} y={ry(2766) + 42} textAnchor="end" fill={C.accent} fontSize="15" fontFamily={MONO}>ParT 2766</text>
           </motion.g>
         </svg>
         <div style={{ ...T.body, color: C.ink, marginTop: "1vh" }}>
@@ -99,10 +99,8 @@ export function BitterAgents({ step }: { step: number }) {
             <motion.line x1={ax(0)} y1={ay(cap(0))} x2={ax(12)} y2={ay(cap(12))} stroke={C.accent} strokeWidth="3" initial={false} animate={{ pathLength: step >= 1 ? 1 : 0 }} transition={{ duration: 1 }} />
             {RELEASES.map((m) => <circle key={m} cx={ax(m)} cy={ay(cap(m))} r="6" fill={C.accent} />)}
             <text x={AX0 + AXW} y={200} textAnchor="end" fill={C.accent} fontSize="20" fontFamily={SANS}>general frontier models</text>
-            <text className="t-label" x={AX0 + AXW} y={220} textAnchor="end" fill={C.accent} fontSize="15" fontFamily={MONO}>each dot a release</text>
 
             <text x={ax(BUILT)} y={46} fill={C.warm} fontSize="20" fontFamily={SANS}>tuned physics agent</text>
-            <text className="t-label" x={ax(BUILT)} y={66} fill={C.warm} fontSize="15" fontFamily={MONO}>custom tools, prompts, skills</text>
             <line x1={ax(BUILT)} y1={74} x2={ax(BUILT)} y2={agentY - 12} stroke={C.warm} strokeWidth="1.2" strokeDasharray="3 4" />
             <circle cx={ax(BUILT)} cy={agentY} r="9" fill={C.paper} stroke={C.warm} strokeWidth="2" strokeDasharray="3 3" opacity={step >= 2 ? 0 : 1} />
 

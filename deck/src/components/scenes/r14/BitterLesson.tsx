@@ -34,7 +34,7 @@ export function BitterLesson({ step }: { step: number }) {
         <div style={{ ...T.big, ...T.serif, color: C.ink, maxWidth: "62em" }}>
           “The biggest lesson that can be read from 70 years of AI research is that general methods that leverage computation are ultimately the most effective, and by a large margin.”
         </div>
-        <div className="t-label" style={{ ...T.label, ...T.mono, color: C.muted, marginTop: 8 }}>Rich Sutton, “The Bitter Lesson”, 13 March 2019</div>
+        <div className="t-label" style={{ ...T.label, ...T.mono, color: C.muted, marginTop: 8 }}>Rich Sutton, “The Bitter Lesson”, 2019</div>
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4vw", alignItems: "center" }}>
@@ -68,7 +68,7 @@ export function BitterLesson({ step }: { step: number }) {
               </div>
             ))}
             <span />
-            <span className="t-label" style={{ ...T.label, ...T.mono, color: C.muted, gridColumn: "2 / 4" }}>Sutton’s cases. Even the vision winners keep convolution and “certain kinds of invariances”.</span>
+            <span className="t-label" style={{ ...T.label, ...T.mono, color: C.muted, gridColumn: "2 / 4" }}>Even Sutton’s vision winners keep convolution and “certain kinds of invariances”.</span>
           </div>
         </Show>
       </div>
