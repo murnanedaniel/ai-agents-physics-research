@@ -124,8 +124,8 @@ export function BitterAgents({ step }: { step: number }) {
             </div>
           </div>
           <div className="t-label" style={{ ...T.label, ...T.mono, color: C.muted, marginTop: "1.5vh" }}>closest real case (a model, not an agent; 2023):</div>
-          <div style={{ ...T.body, color: C.muted }}>
-            GPT-4 with general prompting beat the medically tuned Med-PaLM 2 on MedQA: 90.2% to 86.5%.
+          <div className="t-label" style={{ ...T.label, ...T.mono, color: C.ink }}>
+            GPT-4, generally prompted, beat the medically tuned Med-PaLM 2 on MedQA: 90.2% to 86.5%.
           </div>
         </Show>
       </div>
