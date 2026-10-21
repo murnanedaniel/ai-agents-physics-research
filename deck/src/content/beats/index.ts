@@ -1,6 +1,11 @@
 // One export per timeline beat, in storyboard order.
 export { default as "title" } from "./title";
 export { default as "agenda" } from "./agenda";
+export { default as "eth-rate" } from "./eth-rate";
+export { default as "eth-gnn" } from "./eth-gnn";
+export { default as "eth-speed" } from "./eth-speed";
+export { default as "eth-history" } from "./eth-history";
+export { default as "ml-vs-agentic" } from "./ml-vs-agentic";
 export { default as "q1-possible" } from "./q1-possible";
 export { default as "ex-trackfit" } from "./ex-trackfit";
 export { default as "ex-beamspot" } from "./ex-beamspot";
@@ -113,6 +118,7 @@ export { default as "outer-intro" } from "./outer-intro";
 export { default as "research-memory" } from "./research-memory";
 export { default as "hands-on-3" } from "./hands-on-3";
 export { default as "ideation" } from "./ideation";
+export { default as "excalidraw" } from "./excalidraw";
 export { default as "collab" } from "./collab";
 export { default as "website" } from "./website";
 export { default as "sessions-talk" } from "./sessions-talk";
@@ -134,7 +140,6 @@ export { default as "demo-flights" } from "./demo-flights";
 export { default as "security-trifecta" } from "./security-trifecta";
 export { default as "security-controls" } from "./security-controls";
 export { default as "security-identity-money" } from "./security-identity-money";
-export { default as "excalidraw" } from "./excalidraw";
 export { default as "show-3" } from "./show-3";
 export { default as "thanks" } from "./thanks";
 export { default as "buffer" } from "./buffer";
