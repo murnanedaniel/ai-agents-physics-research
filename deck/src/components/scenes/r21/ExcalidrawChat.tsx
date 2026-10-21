@@ -87,7 +87,7 @@ function Sketch({ edited }: { edited: boolean }) {
 function Bubble({ who, children, align = "left" }: { who: string; children: ReactNode; align?: "left" | "right" }) {
   return (
     <div className="flex flex-col" style={{ alignItems: align === "right" ? "flex-end" : "flex-start", gap: "0.3vh" }}>
-      <span className="t-label" style={{ ...T.label, ...T.mono, color: C.faint }}>{who}</span>
+      <span className="t-label" style={{ ...T.label, ...T.mono, color: C.muted }}>{who}</span>
       <div style={{ ...T.body, color: C.ink, background: align === "right" ? "#ece5d6" : "transparent", borderRadius: 14, padding: align === "right" ? "0.5em 0.9em" : "0 0.1em", maxWidth: "92%" }}>
         {children}
       </div>
@@ -104,7 +104,7 @@ export function ExcalidrawChat({ step }: { step: number }) {
         <span className="t-label" style={{ ...T.label, ...T.mono, color: C.muted, borderBottom: `1px solid ${C.rule}`, paddingBottom: "0.8vh" }}>claude.ai · Excalidraw connector on</span>
         <Bubble who="you" align="right">Sketch our pipeline, from detector hits to fitted tracks.</Bubble>
         <div className="flex flex-col" style={{ gap: "0.6vh" }}>
-          <span className="t-label" style={{ ...T.label, ...T.mono, color: C.faint }}>Claude</span>
+          <span className="t-label" style={{ ...T.label, ...T.mono, color: C.muted }}>Claude</span>
           <div style={{ background: "#fff", border: `1px solid ${C.rule}`, borderRadius: 12, padding: "1vh 1vw" }}>
             <div className="flex items-center justify-between" style={{ marginBottom: "0.4vh" }}>
               <span className="t-label" style={{ ...T.label, ...T.mono, color: C.muted }}>Excalidraw</span>
@@ -114,7 +114,7 @@ export function ExcalidrawChat({ step }: { step: number }) {
           </div>
         </div>
         <Show when={edited} delay={0.6}>
-          <Bubble who="Claude">I see your new step: a cut on the GNN score before the fit. I&apos;ll add a threshold scan to the plan.</Bubble>
+          <Bubble who="Claude">I see your new step: a cut on the GNN score before the fit. I&apos;ll add a threshold scan.</Bubble>
         </Show>
       </div>
 
@@ -127,8 +127,8 @@ export function ExcalidrawChat({ step }: { step: number }) {
           Open it full screen, add a box, move an arrow. Claude gets your edit back and carries on from your version.
         </Show>
         <Show when={step >= 2} className="absolute inset-x-0 flex flex-col" style={{ top: "12%", gap: "3vh" }}>
-          <span>Agree the picture before anyone builds anything. Then export it to excalidraw.com for a talk or a paper.</span>
-          <span style={{ color: C.accent }}>Turn it on: claude.ai → Connectors → Excalidraw. Nothing to install, no sign-in.</span>
+          <span>Agree the picture before anyone builds. Export it to excalidraw.com for talks or papers.</span>
+          <span style={{ color: C.accent }}>Turn on: claude.ai → Connectors → Excalidraw. No install, no sign-in.</span>
         </Show>
       </div>
     </Area>

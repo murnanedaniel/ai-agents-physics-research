@@ -14,12 +14,13 @@ import { Area, D, MONO, SERIF, Show, T } from "./kit";
 //   target: 10 ms/event (ATLAS TDAQ requirement, Murnane ACAT 2024 slide 15)
 //   100 kHz: 10 ms per event on ~1000 GPUs (ETH deck arithmetic, projected)
 
-type Stop = { year: string; time: string; sub: string; projected: boolean };
+// sub is split over two lines so neighbouring stops (293 units apart) never touch.
+type Stop = { year: string; time: string; sub: [string, string?]; projected: boolean };
 const STOPS: Stop[] = [
-  { year: "2021", time: "~200 s", sub: "Exa.TrkX · one CPU core (3.3 s on a GPU)", projected: false },
-  { year: "2025", time: "a few hundred ms", sub: "GNN4ITk · full pipeline · one GPU", projected: false },
-  { year: "target", time: "10 ms", sub: "trigger requirement", projected: true },
-  { year: "projected", time: "100 kHz", sub: "10 ms × ~1000 GPUs", projected: true },
+  { year: "2021", time: "~200 s", sub: ["Exa.TrkX · one CPU core", "(3.3 s on a GPU)"], projected: false },
+  { year: "2025", time: "a few hundred ms", sub: ["GNN4ITk · full pipeline", "one GPU"], projected: false },
+  { year: "target", time: "10 ms", sub: ["trigger requirement"], projected: true },
+  { year: "projected", time: "100 kHz", sub: ["10 ms × ~1000 GPUs"], projected: true },
 ];
 
 export function SpeedJourney({ step }: { step: number }) {
@@ -27,7 +28,7 @@ export function SpeedJourney({ step }: { step: number }) {
   const H = 300;
   const left = 110;
   const right = W - 110;
-  const axisY = H - 110;
+  const axisY = H - 135;
   const xs = [0, 1, 2, 3].map((i) => left + (i * (right - left)) / 3);
 
   return (
@@ -51,7 +52,9 @@ export function SpeedJourney({ step }: { step: number }) {
               </g>
               <text className="t-label" x={x} y={axisY + 30} textAnchor="middle" fontSize="16" fill={D.muted} fontFamily={MONO} letterSpacing="0.15em">{s.year.toUpperCase()}</text>
               <text x={x} y={axisY + 66} textAnchor="middle" fontSize="30" fill={D.ink} fontFamily={SERIF} fontStyle="italic">{s.time}</text>
-              <text className="t-label" x={x} y={axisY + 94} textAnchor="middle" fontSize="15" fill={D.faint} fontFamily={MONO}>{s.sub}</text>
+              {s.sub.map((line, j) => line && (
+                <text key={j} className="t-label" x={x} y={axisY + 94 + j * 20} textAnchor="middle" fontSize="15" fill={D.faint} fontFamily={MONO}>{line}</text>
+              ))}
             </motion.g>
           );
         })}

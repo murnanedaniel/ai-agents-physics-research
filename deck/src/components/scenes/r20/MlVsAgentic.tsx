@@ -6,16 +6,19 @@ import { FIELD_LABEL, FIELD_ORDER, MONTHS, PAPERS, type Field, type Paper } from
 import { Area, D, G, MONO, SANS, SERIF, Show, T } from "./kit";
 
 // ml-vs-agentic: ported from the ETH deck's StatsFeint (4 steps) and cut to 3.
-//   step 0: agentic-AI papers in particle physics, with titles (ETH step 0)
+//   step 0: agentic-AI papers in particle physics, with titles (ETH step 0).
+//           Counter: N_PARTICLE = 21 papers.
 //   step 1: the same timeline across seven fields (ETH step 2; the chips and
-//           the Schwartz feature, ETH steps 1 and 3, are dropped)
+//           the Schwartz feature, ETH steps 1 and 3, are dropped).
+//           Counter: PAPERS.length = 102 papers (the 21 above plus 81 in six
+//           other fields), matching the source line.
 //   step 2: new bridge: machine learning (a model inside the pipeline) against
 //           agentic AI (a model in charge of the loop around it). Leads into
 //           q1-possible.
 
 const W = 1700;
 const H = 760;
-const PAD0 = { left: 80, right: 330, top: 50, bottom: 70 };
+const PAD0 = { left: 60, right: 40, top: 16, bottom: 70 };
 const BODY_W0 = W - PAD0.left - PAD0.right;
 const BODY_H0 = H - PAD0.top - PAD0.bottom;
 const PAD = { left: 220, right: 60, top: 40, bottom: 70 };
@@ -33,7 +36,7 @@ function Counter({ total }: { total: number }) {
   useEffect(() => {
     let cur = 0;
     const id = window.setInterval(() => {
-      cur = Math.min(total, cur + Math.max(1, Math.floor(total / 60)));
+      cur = Math.min(total, cur + Math.max(1, Math.ceil(total / 24)));
       setN(cur);
       if (cur >= total) window.clearInterval(id);
     }, 50);
@@ -41,40 +44,38 @@ function Counter({ total }: { total: number }) {
   }, [total]);
   return (
     <div style={{ textAlign: "right", fontFamily: MONO, fontVariantNumeric: "tabular-nums" }}>
-      <div style={{ ...T.big, color: D.ink, lineHeight: 1 }}>{n}</div>
+      <div style={{ ...T.big, color: D.ink, lineHeight: 1.25, marginBottom: "0.6vh" }}>{n}</div>
       <div className="t-label" style={{ ...T.label, color: D.muted, letterSpacing: "0.2em", textTransform: "uppercase" }}>papers · 30 months</div>
     </div>
   );
 }
 
+// One row per paper, oldest at the bottom, so the dots climb as a staircase and
+// no two labels can share a line. Labels sit LEFT of their dot (the papers bunch
+// up at the right edge); the lone 2024 paper is labelled to the right. Title and
+// arXiv id share one line. Font sizes are viewBox units; the chart renders at
+// about 0.56-0.65 px per unit at 1280x720, so 23/22 units stay above 12px.
 function ParticleOnly() {
-  const list = PAPERS.filter((p) => p.field === "particle").sort((a, b) => a.month - b.month);
-  const byMonth = new Map<number, Paper[]>();
-  for (const p of list) byMonth.set(p.month, [...(byMonth.get(p.month) ?? []), p]);
-  const stride = 150;
-  const midY = PAD0.top + BODY_H0 / 2;
-  const dots: { p: Paper; cx: number; cy: number; k: number }[] = [];
-  let k = 0;
-  for (const [m, ps] of [...byMonth.entries()].sort((a, b) => a[0] - b[0])) {
-    const start = midY + (((m * 5) % 7) - 3) * 12 - ((ps.length - 1) * stride) / 2;
-    ps.forEach((p, j) => dots.push({ p, cx: x0(m), cy: start + j * stride, k: k++ }));
-  }
+  const list = PAPERS.filter((p) => p.field === "particle").sort((a, b) => a.month - b.month || a.id.localeCompare(b.id));
+  const rowH = BODY_H0 / list.length;
+  const dots = list.map((p, k) => ({ p, k, cx: x0(p.month), cy: PAD0.top + BODY_H0 - (k + 0.5) * rowH, right: p.month < 12 }));
   return (
     <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", height: "100%" }} preserveAspectRatio="xMidYMid meet" role="img" aria-label="Timeline of agentic-AI papers in particle physics: one in 2024, then a steady rise through 2025 and 2026">
       <line x1={PAD0.left} x2={PAD0.left + BODY_W0} y1={H - PAD0.bottom + 4} y2={H - PAD0.bottom + 4} stroke={D.rule} />
       {YEAR_TICKS.map((t) => (
         <g key={t.m}>
-          <line x1={x0(t.m)} x2={x0(t.m)} y1={PAD0.top - 6} y2={H - PAD0.bottom + 12} stroke="rgba(255,255,255,0.10)" strokeDasharray="3 6" />
-          <text className="t-label" x={x0(t.m)} y={H - PAD0.bottom + 38} textAnchor="middle" fontSize={22} fontFamily={MONO} fill={D.muted} letterSpacing="0.18em">{t.label}</text>
+          <line x1={x0(t.m)} x2={x0(t.m)} y1={H - PAD0.bottom - 4} y2={H - PAD0.bottom + 12} stroke={D.muted} strokeOpacity={0.6} />
+          <text className="t-label" x={x0(t.m)} y={H - PAD0.bottom + 42} textAnchor="middle" fontSize={24} fontFamily={MONO} fill={D.muted} letterSpacing="0.18em">{t.label}</text>
         </g>
       ))}
-      <text className="t-label" x={x0(MONTHS - 1)} y={H - PAD0.bottom + 38} textAnchor="end" fontSize={17} fontFamily={MONO} fill={D.warm}>Jun 2026</text>
+      <text className="t-label" x={x0(MONTHS - 1)} y={H - PAD0.bottom + 42} textAnchor="end" fontSize={24} fontFamily={MONO} fill={D.warm}>Jun 2026</text>
       {dots.map((d) => (
         <motion.g key={d.p.id} initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.45, delay: (d.p.month / MONTHS) * 1.8 + d.k * 0.05 }}>
           <circle cx={d.cx} cy={d.cy} r={7} fill={D.accent} stroke="#bae6fd" strokeWidth={0.8} />
-          <line x1={d.cx + 9} y1={d.cy} x2={d.cx + 22} y2={d.cy} stroke={D.accent} strokeOpacity={0.55} strokeWidth={0.8} />
-          <text className="t-label" x={d.cx + 26} y={d.cy + 5} fontSize={16} fontFamily={SERIF} fill={D.soft}>{d.p.title}</text>
-          <text className="t-label" x={d.cx + 26} y={d.cy + 23} fontSize={12} fontFamily={MONO} fill={D.faint}>{d.p.id}</text>
+          <text className="t-label" x={d.right ? d.cx + 16 : d.cx - 16} y={d.cy + 7} textAnchor={d.right ? "start" : "end"}>
+            <tspan fontSize={23} fontFamily={SERIF} fill={D.soft}>{d.p.title}</tspan>
+            <tspan fontSize={22} fontFamily={MONO} fill={D.muted} dx={14}>{d.p.id}</tspan>
+          </text>
         </motion.g>
       ))}
     </svg>
@@ -112,10 +113,10 @@ function AllFields() {
       {YEAR_TICKS.map((t) => (
         <g key={t.m}>
           <line x1={x1(t.m)} x2={x1(t.m)} y1={PAD.top - 6} y2={H - PAD.bottom + 8} stroke="rgba(255,255,255,0.10)" strokeDasharray="2 5" />
-          <text className="t-label" x={x1(t.m)} y={H - PAD.bottom + 34} textAnchor="middle" fontSize={20} fontFamily={MONO} fill={D.muted} letterSpacing="0.18em">{t.label}</text>
+          <text className="t-label" x={x1(t.m)} y={H - PAD.bottom + 38} textAnchor="middle" fontSize={24} fontFamily={MONO} fill={D.muted} letterSpacing="0.18em">{t.label}</text>
         </g>
       ))}
-      <text className="t-label" x={x1(MONTHS - 1)} y={H - PAD.bottom + 34} textAnchor="end" fontSize={16} fontFamily={MONO} fill={D.warm}>Jun 2026</text>
+      <text className="t-label" x={x1(MONTHS - 1)} y={H - PAD.bottom + 38} textAnchor="end" fontSize={24} fontFamily={MONO} fill={D.warm}>Jun 2026</text>
       {dots}
     </svg>
   );
@@ -193,7 +194,7 @@ function Bridge({ step }: { step: number }) {
 export function MlVsAgentic({ step }: { step: number }) {
   const timeline = step <= 1;
   return (
-    <Area style={{ gap: "2vh" }}>
+    <Area>
       <div style={{ position: "relative", flex: 1, minHeight: 0 }}>
         {/* steps 0-1: the paper timeline */}
         <motion.div data-reveal aria-hidden={!timeline} initial={false} animate={{ opacity: timeline ? 1 : 0 }} transition={{ duration: 0.5 }} style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", gap: "1vh", pointerEvents: timeline ? "auto" : "none" }}>
@@ -203,16 +204,19 @@ export function MlVsAgentic({ step }: { step: number }) {
           </div>
           <div style={{ flex: 1, minHeight: 0 }}>{step <= 0 ? <ParticleOnly /> : <AllFields />}</div>
         </motion.div>
-        {/* step 2: the distinction */}
-        <div style={{ position: "absolute", inset: 0 }}>
-          <Bridge step={step} />
+        {/* step 2: the distinction. The caption lives in this layer, so steps 0-1
+            get the full height for the timeline instead of reserving its space. */}
+        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", gap: "2vh" }}>
+          <div style={{ flex: 1, minHeight: 0 }}>
+            <Bridge step={step} />
+          </div>
+          <Show when={step >= 2} delay={0.9}>
+            <div style={{ ...T.big, ...T.serif, color: D.ink, textAlign: "center" }}>
+              Machine learning puts a trained model inside the analysis; agentic AI puts a model in charge of the research loop.
+            </div>
+          </Show>
         </div>
       </div>
-      <Show when={step >= 2} delay={0.9}>
-        <div style={{ ...T.big, ...T.serif, color: D.ink, textAlign: "center" }}>
-          Machine learning puts a trained model inside the analysis; agentic AI puts a model in charge of the research loop.
-        </div>
-      </Show>
     </Area>
   );
 }

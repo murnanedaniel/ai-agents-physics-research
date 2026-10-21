@@ -39,16 +39,17 @@ function YearsCounter({ run }: { run: boolean }) {
 
 export function InnerLoopHistory({ step }: { step: number }) {
   return (
-    <Area style={{ display: "grid", gridTemplateRows: "auto 1fr auto", rowGap: "3vh", justifyItems: "center" }}>
+    <Area style={{ display: "grid", gridTemplateRows: "auto 1fr auto", rowGap: "3vh", justifyItems: "center", paddingBottom: "3vh" }}>
       <div style={{ ...T.big, ...T.serif, color: D.soft, justifySelf: "start" }}>None of this is new.</div>
 
-      <div style={{ position: "relative", display: "grid", gridTemplateColumns: "1fr 1fr", columnGap: "4vw", width: "100%", maxWidth: 1200, alignSelf: "center" }}>
+      {/* card | ribbon | card: the ribbon has its own column, so it never covers card text */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", columnGap: "1.5vw", alignItems: "stretch", width: "100%", maxWidth: 1200, alignSelf: "center" }}>
         {CARDS.map((c, i) => (
           <motion.div
             key={c.heading}
             initial={{ opacity: 0, x: c.side === "left" ? -60 : 60 }}
             animate={{ opacity: 1, x: 0, transition: { duration: 0.7, delay: 0.25 + i * 0.25 } }}
-            style={{ justifySelf: c.side === "left" ? "end" : "start", width: "min(100%, 30vw)", minHeight: "26vh", display: "flex", flexDirection: "column", gap: "1.5vh", padding: "2.4vh 1.6vw", borderRadius: 6, border: `1px solid ${D.rule}`, background: D.card, boxShadow: "0 25px 50px -12px rgba(0,0,0,0.6)" }}
+            style={{ gridColumn: c.side === "left" ? 1 : 3, gridRow: 1, justifySelf: c.side === "left" ? "end" : "start", width: "min(100%, 30vw)", minHeight: "26vh", display: "flex", flexDirection: "column", gap: "1.5vh", padding: "2.4vh 1.6vw", borderRadius: 6, border: `1px solid ${D.rule}`, background: D.card, boxShadow: "0 25px 50px -12px rgba(0,0,0,0.6)" }}
           >
             <div style={{ fontFamily: SERIF, fontStyle: "italic", color: D.ink, ...T.big }}>{c.heading}</div>
             <div style={{ ...T.body, color: D.body }}>{c.body}</div>
@@ -62,7 +63,7 @@ export function InnerLoopHistory({ step }: { step: number }) {
           animate={{ opacity: step >= 1 ? 1 : 0, scale: step >= 1 ? 1 : 0.9 }}
           transition={{ duration: 0.6 }}
           className="t-label"
-          style={{ position: "absolute", left: "50%", top: "50%", translate: "-50% -50%", fontFamily: MONO, ...T.label, letterSpacing: "0.25em", color: D.body, padding: "0.4em 0.9em", border: `1px solid ${D.rule}`, borderRadius: 3, background: "rgba(24,24,27,0.9)", whiteSpace: "nowrap" }}
+          style={{ gridColumn: 2, gridRow: 1, alignSelf: "center", fontFamily: MONO, ...T.label, letterSpacing: "0.2em", color: D.body, padding: "0.4em 0.9em", border: `1px solid ${D.rule}`, borderRadius: 3, background: "rgba(24,24,27,0.9)", whiteSpace: "nowrap" }}
         >
           1988 → 1991
         </motion.div>

@@ -160,6 +160,8 @@ body {
 .beat-custom > header { position: relative; z-index: 2; pointer-events: none; }
 .beat-custom-scene { position: absolute; inset: 0; overflow: hidden; }
 .beat-source { position: absolute; right: 5vw; bottom: 2.5vh; max-width: 90vw; text-align: right; font: 12px/1.4 var(--font-geist-mono), monospace; color: #625d54; z-index: 2; }
+/* On the dark (#050607) scenes the paper-theme citation colour is only ~3:1; use the ETH faint zinc. */
+.theme-dark .beat-source { color: #a1a1aa; }
 .day-grid { display: flex; width: 100%; gap: 3px; align-items: stretch; min-height: 36vh; }
 .day-block { display: flex; flex-direction: column; justify-content: space-between; gap: 16px; padding: 16px 10px; background: #dce6e7; min-width: 0; }
 .day-block strong { font-size: 20px; font-weight: 400; }
