@@ -32,7 +32,7 @@ export function PresenterClock({ elapsed, sceneIdx, stepIdx, fallback, running }
       </div>
       <div className="flex items-center gap-3 mt-1">
         <span className="text-zinc-200">{scene.label}</span>
-        <span className="text-zinc-600">[{sceneIdx + 1}/{SCENES.length}]</span>
+        <span className="text-sky-300 tabular-nums">[{sceneIdx + 1}/{SCENES.length}]</span>
       </div>
       <div className="flex items-center gap-3 mt-1">
         <span className="text-zinc-500">step</span>
