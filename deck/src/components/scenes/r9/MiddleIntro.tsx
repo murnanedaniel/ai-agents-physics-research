@@ -1,20 +1,24 @@
 "use client";
 
+import { motion } from "motion/react";
 import { C, Canvas, MONO, SANS, Show } from "./kit";
 
 // middle-intro (section): the three loops, with the middle loop lit and a dot
-// orbiting it. Step 0: what the middle loop is. Steps 1-2: the two projects
-// that follow in this section.
+// travelling once round it. Step 0: what the middle loop is. Step 1: the two
+// projects. Step 2: the automation block that follows them.
 const CX = 250, CY = 280;
 const LOOPS = [
   { r: 80, name: "experiment", lit: false },
   { r: 150, name: "paper", lit: true },
   { r: 220, name: "programme", lit: false },
 ];
+// One trip round the paper orbit on entry, then the dot rests.
+const ORBIT = Array.from({ length: 37 }, (_, k) => [CX + 150 * Math.cos((-k * Math.PI) / 18), CY + 150 * Math.sin((-k * Math.PI) / 18)]);
 const LINES = [
   { at: 0, head: "Results become an argument", tail: "that others can check." },
-  { at: 1, head: "Project 5, the Basic Model:", tail: "discovery, written up as it goes." },
-  { at: 2, head: "Project 4, tracking:", tail: "rerun against a new paper, then review." },
+  { at: 1, head: "Project 4, the Basic Model:", tail: "discovery, written up live." },
+  { at: 1, head: "Project 5, tracking:", tail: "rerun for a new paper, then review." },
+  { at: 2, head: "What am I happy to automate?", tail: "forms, grants, arXiv, judges, slides, teaching" },
 ];
 
 export function MiddleIntro({ step }: { step: number }) {
@@ -27,18 +31,15 @@ export function MiddleIntro({ step }: { step: number }) {
         </g>
       ))}
       {/* one quiet dot on the middle orbit: the loop we are now in */}
-      <g>
-        <circle cx={CX + 150} cy={CY} r={11} fill={C.accent} />
-        <animateTransform attributeName="transform" type="rotate" from={`0 ${CX} ${CY}`} to={`-360 ${CX} ${CY}`} dur="30s" repeatCount="indefinite" />
-      </g>
+      <motion.circle r={11} fill={C.accent} initial={{ cx: ORBIT[0][0], cy: ORBIT[0][1] }} animate={{ cx: ORBIT.map((p) => p[0]), cy: ORBIT.map((p) => p[1]) }} transition={{ duration: 1.5, ease: "easeInOut" }} />
       <circle cx={CX} cy={CY} r={6} fill={C.muted} />
 
       {LINES.map((ln, i) => (
         <Show key={ln.head} at={ln.at} step={step}>
-          <g transform={`translate(560 ${130 + i * 140})`}>
-            <rect x={0} y={-30} width={6} height={78} rx={3} fill={i === 0 ? C.accent : C.warm} />
-            <text x={28} y={0} fontFamily={SANS} fontSize={30} fill={C.ink}>{ln.head}</text>
-            <text x={28} y={40} fontFamily={SANS} fontSize={30} fill={C.muted}>{ln.tail}</text>
+          <g transform={`translate(560 ${70 + i * 125})`}>
+            <rect x={0} y={-28} width={6} height={72} rx={3} fill={i === 0 ? C.accent : i === 3 ? C.good : C.warm} />
+            <text x={28} y={0} fontFamily={SANS} fontSize={28} fill={C.ink}>{ln.head}</text>
+            <text className={i === 3 ? "t-label" : undefined} x={28} y={36} fontFamily={i === 3 ? MONO : SANS} fontSize={i === 3 ? 20 : 28} fill={C.muted}>{ln.tail}</text>
           </g>
         </Show>
       ))}

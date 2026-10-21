@@ -1,11 +1,12 @@
 "use client";
 
-import type { Beat } from "./_types";
-import { HandsOnCheckScene } from "@/components/scenes/g10/HandsOnCheck";
+import { d, type Beat } from "./_types";
+import { HandsOnCheckScene } from "@/components/scenes/r12/HandsOnCheck";
 
 const beat: Beat = {
-  title: "Turn a rule into a check that can fail.",
+  title: "Can your most important rule fail a test?",
   source: "Course docs: patterns/hooks-over-memory, patterns/reproduce-baseline",
+  links: [d("exercises/gates-and-checks/", "Hands-on 3: gates and checks")],
   Scene: HandsOnCheckScene,
 };
 

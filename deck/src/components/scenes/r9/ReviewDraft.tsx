@@ -7,9 +7,9 @@ import { C, Canvas, MONO, SANS, stop } from "./kit";
 // one tool (hover a reader to light the line it flags). Below: every finding
 // becomes a ledger row that is closed only by a re-check.
 const READERS = [
-  { key: "voice", job: "Is it plain and in my voice?", tool: "my-voice skill: a SKILL.md of style rules", flag: "hype words, long sentences", line: 1 },
-  { key: "referee", job: "Are the claims sized to the evidence?", tool: "a second model, read-only: GPT-6 Astra via Codex", flag: "“first systematic study” from one run", line: 3 },
-  { key: "citations", job: "Is each citation real, and the right paper?", tool: "[Daniel: which citation checker?]", flag: "a real id pointing at the wrong paper", line: 6 },
+  { key: "voice", job: "Plain, and in my voice?", tool: "my-voice skill: a SKILL.md of style rules", flag: "hype words, long sentences", line: 1 },
+  { key: "referee", job: "Claims sized to the evidence?", tool: "a second model, read-only: GPT-6 Astra via Codex", flag: "“first systematic study” from one run", line: 3 },
+  { key: "citations", job: "Citations real, and the right paper?", tool: "a skill we write live: arXiv, INSPIRE, DOI lookup; claim check", flag: "a real id pointing at the wrong paper", line: 6 },
 ];
 const COL = [C.accent, C.warm, C.good];
 const PX = 20, PY = 10, PW = 330, PH = 400;
@@ -23,7 +23,8 @@ export function ReviewDraft() {
       {Array.from({ length: 13 }, (_, k) => (
         <line key={k} x1={PX + 26} x2={PX + PW - (k % 4 === 3 ? 100 : 26)} y1={PY + 72 + k * 25} y2={PY + 72 + k * 25} stroke={C.rule} strokeWidth={6} strokeLinecap="round" />
       ))}
-      <text className="t-label" x={PX + PW / 2} y={PY + PH + 26} textAnchor="middle" fontFamily={MONO} fontSize={15} fill={C.muted}>the draft</text>
+      <text className="t-label" x={PX + PW / 2} y={PY + PH + 26} textAnchor="middle" fontFamily={MONO} fontSize={15} fill={C.muted}>the beam-spot draft (Apr 2026),</text>
+      <text className="t-label" x={PX + PW / 2} y={PY + PH + 46} textAnchor="middle" fontFamily={MONO} fontSize={15} fill={C.muted}>redone with the new models</text>
       {READERS.map((r, i) => {
         const ly = PY + 72 + r.line * 50;
         const on = hover === null || hover === r.key;
@@ -48,8 +49,8 @@ export function ReviewDraft() {
           </g>
         ))}
       </g>
-      <text className="t-label" x={20} y={480} fontFamily={MONO} fontSize={15} fill={C.muted}>Every finding becomes a row;</text>
-      <text className="t-label" x={20} y={502} fontFamily={MONO} fontSize={15} fill={C.muted}>only a re-check closes it.</text>
+      <text className="t-label" x={20} y={500} fontFamily={MONO} fontSize={15} fill={C.muted}>Every finding becomes a row;</text>
+      <text className="t-label" x={20} y={522} fontFamily={MONO} fontSize={15} fill={C.muted}>only a re-check closes it.</text>
     </Canvas>
   );
 }

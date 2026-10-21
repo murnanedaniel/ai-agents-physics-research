@@ -20,9 +20,8 @@ export function SecBench() {
         <text x={40} y={204} fill={C.ink} fontSize="34" fontFamily={SERIF} fontStyle="italic">scored the same way for every model.</text>
         {LINES.map((l, i) => (
           <g key={l.n}>
-            <circle cx={58} cy={300 + i * 70} r={18} fill="none" stroke={C.accent} strokeWidth="2" />
-            <text className="t-label" x={58} y={307 + i * 70} textAnchor="middle" fill={C.accent} fontSize="20" fontFamily={MONO}>{l.n}</text>
-            <text x={96} y={308 + i * 70} fill={C.ink} fontSize="26" fontFamily={SANS}>{l.text}</text>
+            <circle cx={56} cy={299 + i * 70} r={7} fill={C.accent} />
+            <text x={80} y={308 + i * 70} fill={C.ink} fontSize="26" fontFamily={SANS}>{l.text}</text>
           </g>
         ))}
 

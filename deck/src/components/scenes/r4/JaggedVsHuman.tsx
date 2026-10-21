@@ -9,7 +9,7 @@ import { C, Canvas, G, MONO, SANS, SERIF, stop } from "./kit";
 // Facts checked 2026-10-21 (arXiv abstracts, ARC Prize posts); hollow = secondary.
 type Row = { name: string; what: string; ai: number; hu: number; aiNote: string; huNote: string; soft?: boolean };
 const ROWS: Row[] = [
-  { name: "GPQA Diamond", what: "graduate science quiz", ai: 97, hu: 65, aiNote: "AI 97%: GPT-5.4, Mar 2026 (capitalandcompute.net, secondary)", huNote: "Humans 65%: PhD experts in the field, full 448-question set (Rein et al. 2023, arXiv:2311.12022)" },
+  { name: "GPQA Diamond", what: "graduate science quiz", ai: 97, hu: 65, soft: true, aiNote: "AI 97%: GPT-5.4, Mar 2026 (capitalandcompute.net, secondary)", huNote: "Humans 65%: PhD experts in the field, full 448-question set (Rein et al. 2023, arXiv:2311.12022)" },
   { name: "PHYBench", what: "500 physics problems", ai: 77.4, hu: 61.9, soft: true, aiNote: "AI 77.4%: top of llm-stats, Sep 2026 (unconfirmed). At launch, Apr 2025: 36.9%", huNote: "Humans 61.9%: physics experts (Qiu et al. 2025, arXiv:2504.16074)" },
   { name: "ARC-AGI-2", what: "abstract grid puzzles", ai: 85, hu: 60, soft: true, aiNote: "AI about 85 to 92%: aggregator mirrors, Jun to Sep 2026 (unconfirmed). At launch, Mar 2025: about 4%", huNote: "Humans 60%: average of 400+ test-takers (ARC Prize, 24 Mar 2025)" },
   { name: "ARC-AGI-3", what: "games learned while playing", ai: 0.51, hu: 100, aiNote: "AI 0.51%: best frontier model at launch (ARC Prize, 25 Mar 2026)", huNote: "Humans 100%: every game solved by human testers (ARC Prize, 25 Mar 2026)" },
@@ -68,13 +68,17 @@ export function JaggedVsHuman({ step }: { step: number }) {
           <rect x={815} y={202} width={0.4 * 380} height="26" rx="4" fill={C.s1} />
           <text x={815 + 0.4 * 380 + 10} y={222} fill={C.ink} fontSize="21" fontFamily={MONO}>+40% quality</text>
           <text x={815} y={290} fill={C.ink} fontSize="21" fontFamily={SANS}>a task just outside it</text>
-          <text className="t-label" x={815} y={352} fill={C.muted} fontSize="15" fontFamily={MONO}>share of correct answers</text>
+          <text className="t-label" x={815} y={352} fill={C.muted} fontSize="15" fontFamily={MONO}>less often correct</text>
           <rect x={815} y={304} width={0.19 * 380} height="26" rx="4" fill={C.warm} />
-          <text x={815 + 0.19 * 380 + 10} y={324} fill={C.ink} fontSize="21" fontFamily={MONO}>−19 points right</text>
+          <text x={815 + 0.19 * 380 + 10} y={324} fill={C.ink} fontSize="21" fontFamily={MONO}>−19 points</text>
           <text className="t-label" x={815} y={402} fill={C.muted} fontSize="15" fontFamily={MONO}>Dell&apos;Acqua et al. 2023,</text>
           <text className="t-label" x={815} y={422} fill={C.muted} fontSize="15" fontFamily={MONO}>HBS working paper 24-013</text>
         </G>
 
+        <G on={step >= 1}>
+          <text className="t-label" x={20} y={526} fill={C.ink} fontSize="19" fontFamily={SERIF} fontStyle="italic">“At the same time a genius polymath and a confused and cognitively challenged grade schooler.”</text>
+          <text className="t-label" x={20} y={550} fill={C.muted} fontSize="15" fontFamily={MONO}>Andrej Karpathy, “2025 LLM Year in Review”, 19 Dec 2025</text>
+        </G>
         <text className="t-label" x={20} y={590} fill={C.muted} fontSize="15" fontFamily={MONO}>{note}{!hov && " · hollow = secondary, unconfirmed"}</text>
       </svg>
     </Canvas>

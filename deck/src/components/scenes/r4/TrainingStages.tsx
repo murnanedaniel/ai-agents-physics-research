@@ -157,7 +157,7 @@ function RLVR() {
         <text x={485} y={282} textAnchor="middle" fill={C.ink} fontSize="21" fontFamily={SANS}>checker</text>
         <text className="t-label" x={485} y={306} textAnchor="middle" fill={C.muted} fontSize="16" fontFamily={MONO}>is it 1/3?</text>
       </motion.g>
-      <Label x={730} y={322} delay={3.0} color={C.ink}>vs group mean</Label>
+      <Label x={560} y={520} delay={3.0} color={C.ink}>arrows: vs group mean</Label>
       <Label x={40} y={520} delay={3.3}>no human labels needed</Label>
     </g>
   );
@@ -207,8 +207,8 @@ export function TrainingStages({ step }: { step: number }) {
           const seen = i <= Math.min(step, STAGES.length - 1) || i === s;
           return (
             <g key={g.tab} onClick={(e) => { stop(e); setPick(i); }} style={{ cursor: "pointer" }} data-dim={seen ? undefined : ""}>
-              <rect x={x} y={8} width={TW} height="48" rx="24" fill={on ? C.accent : "#ffffff"} stroke={on ? C.accent : seen ? C.ink : C.rule} strokeWidth="1.5" />
-              <text x={x + TW / 2} y={39} textAnchor="middle" fill={on ? "#ffffff" : seen ? C.ink : C.faint} fontSize="20" fontFamily={SANS}>{g.tab}</text>
+              <rect x={x} y={8} width={TW} height="48" rx="24" fill={on ? "#dcebf7" : "#ffffff"} stroke={on ? C.accent : seen ? C.ink : C.rule} strokeWidth={on ? 3 : 1.5} />
+              <text x={x + TW / 2} y={39} textAnchor="middle" fill={seen ? C.ink : C.faint} fontWeight={on ? 600 : 400} fontSize="20" fontFamily={SANS}>{g.tab}</text>
             </g>
           );
         })}
@@ -225,7 +225,6 @@ export function TrainingStages({ step }: { step: number }) {
             {wrap(st.signal, 22).map((ln, k) => (
               <text key={k} x={860} y={332 + k * 30} fill={C.ink} fontSize="22" fontFamily={SANS}>{ln}</text>
             ))}
-            <text className="t-label" x={20} y={590} fill={C.muted} fontSize="15" fontFamily={MONO}>{st.ref}</text>
           </motion.g>
         </AnimatePresence>
       </svg>

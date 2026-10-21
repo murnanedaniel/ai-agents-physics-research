@@ -49,8 +49,8 @@ export function CheckLadder({ step }: { step: number }) {
             </g>
           ))}
           <rect x={0} y={y(5) + 330} width={400} height={86} rx={10} fill={C.tint} stroke={C.good} strokeWidth={2} />
-          <text x={16} y={y(5) + 362} fontFamily={SANS} fontSize={21} fill={C.ink}>Final score: 8 held-out experiments,</text>
-          <text x={16} y={y(5) + 392} fontFamily={SANS} fontSize={21} fill={C.ink}>predictions, not the Lagrangian's form.</text>
+          <text x={16} y={y(5) + 362} fontFamily={SANS} fontSize={21} fill={C.ink}>Final score: predictions for 8 held-out</text>
+          <text x={16} y={y(5) + 392} fontFamily={SANS} fontSize={21} fill={C.ink}>experiments, not the Lagrangian's form.</text>
         </g>
       </Show>
       <Arrow id="r9-cl" />

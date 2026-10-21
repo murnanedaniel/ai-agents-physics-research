@@ -3,7 +3,7 @@ import { TrainingStages } from "@/components/scenes/r4/TrainingStages";
 
 const beat: Beat = {
   title: "How is a model trained to be useful?",
-  source: "Brown et al. 2020 · Ouyang et al. 2022 · Christiano et al. 2017 · Lambert et al. 2024 · DeepSeek-R1 2025 · Snell et al. 2024 (arXiv ids per stage)",
+  source: "arXiv: pretraining 2005.14165 (Brown) · SFT 2203.02155 (Ouyang) · RLHF 1706.03741 (Christiano) · RLVR 2411.15124, 2501.12948 · test-time 2408.03314 (Snell)",
   Scene: TrainingStages,
 };
 

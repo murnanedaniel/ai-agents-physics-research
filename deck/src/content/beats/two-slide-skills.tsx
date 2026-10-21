@@ -1,10 +1,10 @@
 import type { Beat } from "./_types";
-import { TwoSlideKinds } from "@/components/scenes/g8/TwoSlideKinds";
+import { DeckSkill } from "@/components/scenes/r10/DeckSkill";
 
 const beat: Beat = {
-  title: "Keynotes and check-ins need different slides.",
-  source: "Course repo skills: keynote-slides; project-slides (check-in budget about 10 minutes of agent time)",
-  Scene: TwoSlideKinds,
+  title: "How was this deck made?",
+  source: "Course repo skills/keynote-slides/ (SKILL.md, DESIGN.md, CHECKLIST.md) · screenshots by deck/scripts/shoot.mjs at 1280x720 and 1920x1080",
+  Scene: DeckSkill,
 };
 
 export default beat;

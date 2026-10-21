@@ -10,7 +10,7 @@ import { C, Canvas, MONO, SANS, SERIF, stop } from "./kit";
 // Values checked 2026-10-21 against arXiv abstracts and ARC Prize posts; hollow
 // points come from aggregator sites and are unconfirmed.
 type P = { t: number; v: number; soft?: boolean; tag?: string; lab: string };
-type B = { id: string; name: string; group: number; pts: P[]; what: string; setup: string; src: string; dy?: number };
+type B = { id: string; name: string; short?: string; group: number; pts: P[]; what: string; setup: string; src: string; dy?: number };
 
 const GROUPS = [
   { name: "knowledge quiz", color: C.s1 },
@@ -28,20 +28,20 @@ const BENCH: B[] = [
     what: "Real GitHub issues from Python projects. The agent writes a patch; hidden tests decide.", setup: "2,294 tasks, then 500 checked (Verified). Dropped by OpenAI, Feb 2026.", src: "Jimenez et al., arXiv:2310.06770 · OpenAI, Aug 2024 · bdtechtalks, Nov 2025" },
   { id: "fm", name: "FrontierMath", group: 2, pts: [{ t: 2024.85, v: 2, tag: "<2%", lab: "launch, Nov 2024" }, { t: 2026.5, v: 88, soft: true, lab: "tiers 1 to 3, mid 2026" }], dy: -8,
     what: "Unpublished research-level maths problems; answers are checked by a program.", setup: "Problems revised in v2, Jun 2026.", src: "Glazer et al., arXiv:2411.04872 · epoch.ai" },
-  { id: "hle", name: "Humanity's Last Exam", group: 2, pts: [{ t: 2025.07, v: 9.1, lab: "o1, Jan 2025" }, { t: 2026.57, v: 53.3, lab: "Jul 2026; others say 60 to 65%" }],
+  { id: "hle", name: "Humanity's Last Exam", short: "HLE", group: 2, pts: [{ t: 2025.07, v: 9.1, lab: "o1, Jan 2025" }, { t: 2026.57, v: 53.3, lab: "Jul 2026; others say 60 to 65%" }],
     what: "3,000 expert-written questions at the edge of knowledge (first version).", setup: "Every model's calibration error was above 80% at launch.", src: "Phan et al., arXiv:2501.14249 · Artificial Analysis, Jul 2026" },
   { id: "arc2", name: "ARC-AGI-2", group: 2, pts: [{ t: 2025.23, v: 4, lab: "o3-low, Mar 2025" }, { t: 2026.45, v: 85, soft: true, lab: "aggregators, 2026" }], dy: 36,
     what: "Abstract grid puzzles: infer the rule from a few examples.", setup: "Average human test-taker 60%.", src: "ARC Prize, 24 Mar 2025 · leaderboard mirrors, 2026" },
   { id: "phy", name: "PHYBench", group: 3, pts: [{ t: 2025.29, v: 36.9, lab: "Gemini 2.5 Pro, Apr 2025" }, { t: 2026.69, v: 77.4, soft: true, lab: "Sep 2026" }],
     what: "500 physics problems; the model must write the final expression.", setup: "Physics experts 61.9%.", src: "Qiu et al., arXiv:2504.16074 · llm-stats, Sep 2026" },
-  { id: "crit", name: "CritPt", group: 3, pts: [{ t: 2025.74, v: 5.7, lab: "GPT-5, Sep 2025" }, { t: 2026.79, v: 32.9, lab: "Oct 2026" }],
+  { id: "crit", name: "CritPt", group: 3, pts: [{ t: 2025.74, v: 5.7, lab: "GPT-5, Sep 2025" }, { t: 2026.79, v: 32.9, lab: "Muse Wonder Full, Oct 2026" }],
     what: "71 unpublished research-level physics challenges, written by 50+ physicists.", setup: "Under review by its authors after outside feedback.", src: "arXiv:2509.26574 · Artificial Analysis, Oct 2026" },
 ];
 
 const NOW = [2025.1, 2026.0, 2026.82];
 const WHEN = ["January 2025", "end of 2025", "October 2026"];
 const FOCUS = ["gpqa", "swe", "crit"];
-const L = 70, R = 840, T = 60, Bt = 500, T0 = 2020.5, T1 = 2027;
+const L = 70, R = 680, T = 60, Bt = 500, T0 = 2020.5, T1 = 2027;
 const x = (t: number) => L + ((t - T0) / (T1 - T0)) * (R - L);
 const y = (v: number) => Bt - (v / 100) * (Bt - T);
 
@@ -52,6 +52,14 @@ export function BenchTimeline({ step }: { step: number }) {
   const sel = BENCH.find((b) => b.id === (pick ?? FOCUS[s]))!;
   const now = NOW[s];
   const focusGroup = sel.group;
+  // Direct end labels, sorted by latest value and pushed apart to avoid overlap.
+  const labels = BENCH.map((b) => {
+    const vis = b.pts.filter((p) => p.t <= now);
+    if (!vis.length) return null;
+    const last = vis[vis.length - 1];
+    return { id: b.id, group: b.group, lit: b.group === focusGroup, px: x(last.t), py: y(last.v), ly: y(last.v) + 5, text: `${b.short ?? b.name} ${last.tag ?? `${last.v}%`}` };
+  }).filter((v): v is NonNullable<typeof v> => v !== null).sort((a, b) => a.py - b.py);
+  labels.forEach((lb, i) => { if (i && lb.ly < labels[i - 1].ly + 20) lb.ly = labels[i - 1].ly + 20; });
   return (
     <Canvas>
       <svg viewBox="0 0 1200 600" className="h-full w-full" role="img" aria-label="Benchmark scores from launch to latest: quizzes, coding, maths and physics tests all rise; most reach 80 to 97% within two to three years">
@@ -95,28 +103,34 @@ export function BenchTimeline({ step }: { step: number }) {
               {vis.map((p, i) => (
                 <circle key={i} cx={x(p.t)} cy={y(p.v)} r={isSel ? 7 : 5.5} fill={p.soft ? C.paper : col} stroke={col} strokeWidth={p.soft ? 2.5 : 0} />
               ))}
-              {lit && (
-                <text className="t-label" x={x(last.t) + (last.t > 2026.1 ? -12 : 12)} y={y(last.v) + (last.t > 2026.1 ? -12 : 6) + (b.dy ?? 0)} textAnchor={last.t > 2026.1 ? "end" : "start"} fill={C.ink} fontSize="16" fontFamily={MONO}>{b.name} {last.tag ?? `${last.v}%`}</text>
-              )}
             </g>
           );
         })}
 
+        {/* direct labels: one per visible line, stacked in a column right of the plot */}
+        {labels.map((lb) => (
+          <g key={lb.id} onMouseEnter={() => setPick(lb.id)} onClick={(e) => { stop(e); setPick(lb.id); }} style={{ cursor: "pointer" }}>
+            <line x1={lb.px + 8} y1={lb.py} x2={R + 14} y2={lb.ly - 5} stroke={GROUPS[lb.group].color} strokeOpacity={lb.lit ? 0.8 : 0.3} strokeWidth="1" />
+            <text className="t-label" x={R + 18} y={lb.ly} fill={lb.lit ? C.ink : C.muted} fontSize="15" fontWeight={lb.id === sel.id ? 700 : 400} fontFamily={MONO}>{lb.text}</text>
+          </g>
+        ))}
+
         {/* explanation card for the selected benchmark */}
         <AnimatePresence mode="wait">
           <motion.g key={sel.id} initial={{ opacity: 0, x: 8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-            <rect x={870} y={50} width={318} height={470} rx="14" fill={C.card} stroke={GROUPS[sel.group].color} strokeWidth="2" />
+            <rect x={870} y={50} width={318} height={490} rx="14" fill={C.card} stroke={GROUPS[sel.group].color} strokeWidth="2" />
             <text x={892} y={96} fill={C.ink} fontSize="28" fontFamily={SERIF} fontStyle="italic">{sel.name}</text>
             <text className="t-label" x={892} y={124} fill={C.muted} fontSize="15" fontFamily={MONO}>what it tests</text>
             {wrap(sel.what, 27).map((ln, k) => <text key={k} x={892} y={152 + k * 26} fill={C.ink} fontSize="19" fontFamily={SANS}>{ln}</text>)}
             <text className="t-label" x={892} y={272} fill={C.muted} fontSize="15" fontFamily={MONO}>setup</text>
             {wrap(sel.setup, 30).map((ln, k) => <text key={k} className="t-label" x={892} y={296 + k * 22} fill={C.ink} fontSize="16" fontFamily={MONO}>{ln}</text>)}
             <text className="t-label" x={892} y={366} fill={C.muted} fontSize="15" fontFamily={MONO}>scores</text>
-            {sel.pts.filter((p) => p.t <= now).map((p) => `${p.tag ?? `${p.v}%`}: ${p.lab}`).map((ln, k) => <text key={k} className="t-label" x={892} y={390 + k * 24} fill={C.ink} fontSize="16" fontFamily={MONO}>{ln}</text>)}
+            {sel.pts.filter((p) => p.t <= now).map((p) => `${p.tag ?? `${p.v}%`}: ${p.lab}`).flatMap((ln) => wrap(ln, 32)).map((ln, k) => <text key={k} className="t-label" x={892} y={390 + k * 22} fill={C.ink} fontSize="16" fontFamily={MONO}>{ln}</text>)}
+            {wrap(sel.src, 36).map((ln, k) => <text key={k} className="t-label" x={892} y={496 + k * 17} fill={C.muted} fontSize="14" fontFamily={MONO}>{ln}</text>)}
           </motion.g>
         </AnimatePresence>
 
-        <text className="t-label" x={20} y={590} fill={C.muted} fontSize="15" fontFamily={MONO}>{sel.src} · hollow = unconfirmed · click a line</text>
+        <text className="t-label" x={20} y={590} fill={C.muted} fontSize="15" fontFamily={MONO}>Dashed line, hollow point = aggregator value, unconfirmed · click a line or label</text>
       </svg>
     </Canvas>
   );

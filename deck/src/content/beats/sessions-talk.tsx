@@ -1,11 +1,12 @@
 "use client";
 
-import { type Beat } from "./_types";
-import { SessionsTalk } from "@/components/scenes/g9/SessionsTalk";
+import { type Beat, d } from "./_types";
+import { SessionsTalk } from "@/components/scenes/r11/SessionsTalk";
 
 const beat: Beat = {
-  title: "Any session can message any other.",
-  source: "Course sessions, Sep to Oct 2026 (workstation, HPC cluster, desktop) · docs: patterns/sessions-message-sessions",
+  title: "Can agents work with each other?",
+  source: "My sessions, Sep to Oct 2026 (workstation, HPC cluster, desktop browser) · docs: patterns/sessions-message-sessions",
+  links: [d("patterns/sessions-message-sessions/", "sessions message sessions")],
   Scene: SessionsTalk,
 };
 

@@ -5,8 +5,8 @@ import { asset } from "@/lib/asset";
 import { C, MONO, SANS, Show, Stage, stop } from "./kit";
 
 // slides-project: the project-slides skill folder, file by file (step 0), then
-// one real slide it produced: the project 4 (track fitting) precook check-in,
-// 21 Oct 2026, beamer via tectonic, page 3 of 6 (step 1). Files and rules from
+// a slide from the skill's own HTML template example (a fictional run,
+// skills/project-slides/examples/html-template-2.png) (step 1). Files and rules from
 // skills/project-slides/SKILL.md in the course site repo.
 const FILES = [
   { name: "SKILL.md", role: "rules for every slide", more: "when to use it, layouts, what never goes on a slide" },
@@ -18,10 +18,10 @@ const FILES = [
 ];
 const IX = 600, IY = 30, IW = 600, IH = 338;
 const MARKS = [
-  { n: 1, x: 0.04, y: 0.08, label: "claim as headline" },
-  { n: 2, x: 0.10, y: 0.38, label: "one figure" },
-  { n: 3, x: 0.60, y: 0.33, label: "three bullets at most" },
-  { n: 4, x: 0.04, y: 0.84, label: "a source for every number" },
+  { n: 1, x: 0.05, y: 0.14, label: "claim as headline" },
+  { n: 2, x: 0.045, y: 0.60, label: "one figure" },
+  { n: 3, x: 0.60, y: 0.49, label: "three bullets at most" },
+  { n: 4, x: 0.05, y: 0.96, label: "a source for every number" },
 ];
 
 export function CheckinSkill({ step }: { step: number }) {
@@ -51,7 +51,7 @@ export function CheckinSkill({ step }: { step: number }) {
         {/* a slide it made */}
         <Show at={1} step={step} ghost>
           <rect x={IX - 1} y={IY - 1} width={IW + 2} height={IH + 2} fill="#fff" stroke={C.faint} />
-          <image href={asset("/r8/checkin-p4-claim.png")} x={IX} y={IY} width={IW} height={IH} preserveAspectRatio="xMidYMid meet" />
+          <image href={asset("/r8/checkin-template-example.png")} x={IX} y={IY} width={IW} height={IH} preserveAspectRatio="xMidYMid meet" />
           {MARKS.map((m) => (
             <g key={m.n}>
               <circle cx={IX + m.x * IW - 16} cy={IY + m.y * IH} r={15} fill={C.warmSoft} stroke={C.warm} strokeWidth={2} />

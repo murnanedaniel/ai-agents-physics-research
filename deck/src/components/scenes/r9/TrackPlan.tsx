@@ -55,7 +55,8 @@ export function TrackPlan({ step }: { step: number }) {
             <text className="t-label" x={sx(PT[6]) + 12} y={sy(s.v[6]) + 5 + (s.k === "z0" ? -6 : s.k === "θ" ? 8 : 0)} fontFamily={MONO} fontSize={16} fill={s.c === C.faint ? C.muted : s.c}>{s.k}</text>
           </g>
         ))}
-        <text className="t-label" x={X0} y={Y0 + 80} fontFamily={MONO} fontSize={14} fill={C.muted}>pre-cook: 8 epochs, one seed, 87,287 test tracks; the paper trains far longer</text>
+        <text className="t-label" x={X0} y={Y0 + 80} fontFamily={MONO} fontSize={14} fill={C.muted}>short pre-cook: 8 epochs, one seed, 87,287 test tracks.</text>
+        <text className="t-label" x={X0} y={Y0 + 102} fontFamily={MONO} fontSize={14} fill={C.ink}>Not the answer yet: today's longer runs are.</text>
       </Show>
 
       <Show at={2} step={step}>

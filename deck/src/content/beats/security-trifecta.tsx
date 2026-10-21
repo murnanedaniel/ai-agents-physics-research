@@ -1,10 +1,10 @@
 "use client";
 
 import type { Beat } from "./_types";
-import { SecurityTrifectaScene } from "@/components/scenes/g10/SecurityTrifecta";
+import { SecurityTrifectaScene } from "@/components/scenes/r12/SecurityTrifecta";
 
 const beat: Beat = {
-  title: "Risk grows where three capabilities meet.",
+  title: "When does an agent become dangerous?",
   source: "S. Willison, The lethal trifecta for AI agents, simonwillison.net, 16 Jun 2025",
   Scene: SecurityTrifectaScene,
 };

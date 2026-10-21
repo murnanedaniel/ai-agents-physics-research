@@ -80,6 +80,12 @@ export function WhyLogs({ step }: { step: number }) {
           })}
         </Show>
       </svg>
+      {/* step-aware source line, in the deck's source style */}
+      <div className="beat-source t-source" data-region="source" style={{ position: "fixed" }}>
+        {step === 0
+          ? "Daniel's W&B: six projects with run counts since April 2026, read-only API query 20 Oct 2026"
+          : "W&B Python API and MCP server · ScienceDash: tool API and transcript search (system audit)"}
+      </div>
     </Stage>
   );
 }

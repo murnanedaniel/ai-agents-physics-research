@@ -1,11 +1,11 @@
 "use client";
 
 import { type Beat } from "./_types";
-import { Landscape } from "@/components/scenes/g9/Landscape";
+import { Landscape } from "@/components/scenes/r11/Landscape";
 
 const beat: Beat = {
-  title: "Choose an ecosystem around the work.",
-  source: "Course evidence synthesis §7: Claude Code and Codex sessions on workstation and cluster, Apr to Oct 2026",
+  title: "Which ecosystem should we build on?",
+  source: "My Perlmutter threads, Apr to Oct 2026, mined for the course (course evidence notes, \"Codex vs Claude\") · leakage figure: one Codex consolidation pass, Sep 2026",
   Scene: Landscape,
 };
 

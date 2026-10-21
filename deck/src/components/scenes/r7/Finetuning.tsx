@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Ask, C, Canvas, Reveal, T, mono, serif } from "./kit";
+import { C, Canvas, Reveal, T, mono, serif } from "./kit";
 
 // Left: why tuning arises. Two large contributions to the Higgs potential
 // nearly cancel and leave a small remainder (schematic, not to scale).
@@ -46,8 +46,8 @@ export function Finetuning({ step }: { step: number }) {
         </Reveal>
         <Reveal at={2} step={step}>
           <div className="rounded-xl border-2 border-dashed px-5 py-3" style={{ borderColor: C.accent, background: C.accentSoft }}>
-            <div style={{ ...serif, fontSize: "clamp(28px, 2.6vw, 50px)", lineHeight: 1.15 }}>Today: derive one measure from first principles.</div>
-            <div className="mt-2"><Ask>open design: which measure, and what counts as done today?</Ask></div>
+            <div style={{ ...serif, fontSize: "clamp(28px, 2.6vw, 50px)", lineHeight: 1.15 }}>Today: put this question to Claude Science.</div>
+            <div className="mt-2 t-label" style={{ ...mono, fontSize: T.label, color: C.muted }}>what exactly we measure, and what counts as done: to be decided live</div>
           </div>
         </Reveal>
       </div>

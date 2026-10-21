@@ -56,7 +56,7 @@ export function ScienceDashR2({ step }: { step: number }) {
             <rect x={xd(BUILT)} y={114} width={xd(NOW) - xd(BUILT)} height={12} rx={3} fill="#9bb8cc" />
             <line x1={xd(DAY1)} x2={xd(DAY1)} y1={30} y2={106} stroke={C.accent} strokeWidth={1.5} />
             <text x={xd(DAY1) + 8} y={44} fontFamily={serif} fontStyle="italic" fontSize="24" fill={C.ink}>day one: a working version</text>
-            <text className="t-label" x={xd(DAY1) + 8} y={70} fontFamily={mono} fontSize="16" fill={C.muted}>about 15,000 lines</text>
+            <text className="t-label" x={xd(DAY1) + 8} y={70} fontFamily={mono} fontSize="16" fill={C.muted}>projects, runs, papers, AI review</text>
             <text className="t-label" x={xd(DAY1) + 8} y={180} fontFamily={mono} fontSize="16" fill={C.accent}>five weeks of evenings</text>
             <line x1={xd(OPEN)} x2={xd(OPEN)} y1={84} y2={106} stroke={C.muted} strokeWidth={1.5} />
             <text className="t-label" x={xd(OPEN) + 8} y={98} fontFamily={mono} fontSize="16" fill={C.muted}>open source (MIT)</text>

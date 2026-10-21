@@ -1,9 +1,9 @@
 import type { Beat } from "./_types";
-import { SceneToWeb } from "@/components/scenes/g8/SceneToWeb";
+import { SceneToWeb } from "@/components/scenes/r10/SceneToWeb";
 
 const beat: Beat = {
-  title: "A scene travels from the repo to the web.",
-  source: "github.com/murnanedaniel/ai-agents-physics-research, .github/workflows/pages.yml; GitHub Pages custom domains, checked Oct 2026",
+  title: "Demo: how does a new slide reach the web?",
+  source: "github.com/murnanedaniel/ai-agents-physics-research, .github/workflows/pages.yml · GitHub Docs, Pages custom domains (read Oct 2026)",
   Scene: SceneToWeb,
 };
 

@@ -2,26 +2,28 @@
 
 import { motion } from "motion/react";
 import { SCENES, TOTAL_SEC, formatClock } from "@/lib/timeline";
-import { C, Canvas, T, mono } from "./kit";
+import { C, Canvas, T, mono, stop } from "./kit";
 
 // Sessions and breaks are derived from the timeline, so the picture follows any re-timing.
-// Each session lists what it covers, in the order of its scenes.
+// Each session lists what it covers, in the order of its scenes, and links to its first scene.
 const bufferStart = SCENES.find((s) => s.id === "buffer")!.startSec;
 const GROUPS = [
   { name: "Why agents", loop: 0, scenes: SCENES.filter((s) => s.part === "setup"),
-    bullets: ["Examples", "How they work", "Failures", "Your setup"] },
+    bullets: ["Examples", "How agents work", "Your setup"] },
   { name: "Inner loop", loop: 1, scenes: SCENES.filter((s) => s.part === "inner"),
     bullets: ["Galactic clustering", "Fine-tuning", "RANGE", "Hill-climbing"] },
   { name: "Middle loop", loop: 2, scenes: SCENES.filter((s) => s.part === "middle"),
-    bullets: ["New universe", "Tracking", "Reviewers"] },
-  { name: "Outer loop", loop: 3, scenes: SCENES.filter((s) => (s.part === "outer" || s.part === "close") && s.startSec < bufferStart),
-    bullets: ["Research memory", "Collaboration", "Security"] },
+    bullets: ["New universe", "Tracking", "Automation"] },
+  { name: "Outer loop", loop: 3, scenes: SCENES.filter((s) => s.part === "outer"),
+    bullets: ["Memory", "Collaboration", "Looking ahead"] },
+  { name: "Wrap-up", loop: 0, scenes: SCENES.filter((s) => s.part === "close" && s.startSec < bufferStart),
+    bullets: ["Results", "Limiting harm"] },
   { name: "Hands-on", loop: -1, scenes: SCENES.filter((s) => s.startSec >= bufferStart),
-    bullets: ["Audit a draft", "Write a check"] },
+    bullets: ["Audits", "Checks"] },
 ];
-type Block = { name: string; start: number; end: number; kind: "session" | "break" | "buffer"; loop: number; bullets: string[] };
+type Block = { name: string; start: number; end: number; kind: "session" | "break" | "buffer"; loop: number; bullets: string[]; first?: string };
 const sessions: Block[] = GROUPS.map((g) => ({
-  name: g.name, loop: g.loop, bullets: g.bullets,
+  name: g.name, loop: g.loop, bullets: g.bullets, first: g.scenes[0].id,
   start: g.scenes[0].startSec, end: Math.min(g.scenes.at(-1)!.endSec, TOTAL_SEC), kind: g.loop < 0 ? "buffer" : "session",
 }));
 const BLOCKS: Block[] = sessions.flatMap((s, i) => {
@@ -60,13 +62,16 @@ export function AgendaScene() {
               </span>
             </motion.div>
           ) : (
-            <motion.div
+            <motion.a
               key={b.start}
+              href={`?scene=${b.first}`}
+              onClick={stop}
+              onKeyDown={stop}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.1 + i * 0.12 }}
               style={{
-                flex: "1 1 0", minWidth: 0, display: "flex", flexDirection: "column", gap: "2vh",
+                flex: "1 1 0", minWidth: 0, display: "flex", textDecoration: "none", color: C.ink, cursor: "pointer", flexDirection: "column", gap: "2vh",
                 background: b.kind === "session" ? "rgba(219,231,238,0.55)" : "repeating-linear-gradient(135deg, #f1ebdf, #f1ebdf 8px, #e9e2d5 8px, #e9e2d5 10px)",
                 borderTop: `3px solid ${b.kind === "session" ? C.accent : C.faint}`, padding: "1.6vh 0.9vw",
               }}
@@ -89,7 +94,7 @@ export function AgendaScene() {
                   </motion.li>
                 ))}
               </ul>
-            </motion.div>
+            </motion.a>
           )
         ))}
       </div>

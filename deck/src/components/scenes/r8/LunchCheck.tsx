@@ -3,17 +3,19 @@
 import { C, Canvas, MONO, SANS } from "../g7/kit";
 
 // demo-progress: the lunch break as a time axis. Lanes that kept running show
-// a bar across it; at 13:15 each lane names where to look.
+// a bar across it (started in the morning, so it fades in from the left);
+// at 13:15 each lane names where to look. Project numbers follow the
+// round-2 order: 1 galactic, 2 fine-tuning, 3 RANGE, 4 Basic Model, 5 tracking.
 const X0 = 330, X1 = 960; // 12:00 and 13:15
 const tx = (min: number) => X0 + ((X1 - X0) * min) / 75;
 
 type Lane = { name: string; look: string; bar: "lunch" | "before" | "none"; note?: string };
 const LANES: Lane[] = [
-  { name: "1  RANGE", look: "W&B, ScienceDash", bar: "lunch" },
-  { name: "2  Galactic", look: "W&B runs", bar: "lunch" },
-  { name: "3  Fine-tuning", look: "Claude Science", bar: "none", note: "[Daniel: running over lunch?]" },
-  { name: "4  Track fitting", look: "pre-cooked paper", bar: "before" },
-  { name: "5  Basic Model", look: "notebook, ledger", bar: "before" },
+  { name: "1  Galactic", look: "W&B runs", bar: "before" },
+  { name: "2  Fine-tuning", look: "Claude Science", bar: "none" },
+  { name: "3  RANGE", look: "W&B, ScienceDash", bar: "before" },
+  { name: "4  Basic Model", look: "starts after lunch", bar: "none" },
+  { name: "5  Track fitting", look: "pre-cooked paper", bar: "before" },
 ];
 
 export function LunchCheck() {

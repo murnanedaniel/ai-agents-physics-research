@@ -18,7 +18,7 @@ const SKILLS = [
   {
     name: "keynote-slides",
     use: "talks, like this one",
-    lines: ["one React scene per idea", "reveal steps follow the speech"],
+    lines: ["one React scene per idea", "steps follow the speech"],
     files: ["SKILL.md", "DESIGN.md", "CHECKLIST.md", "examples/"],
     live: false,
   },
@@ -70,7 +70,7 @@ export function SlideSkills() {
             </g>
           );
         })}
-        <text x={600} y={456} textAnchor="middle" fontFamily={SANS} fontSize={20} fill={C.muted}>Live: morning check-ins</text>
+        <text x={600} y={456} textAnchor="middle" fontFamily={SANS} fontSize={20} fill={C.muted}>Live: a check-in from today’s runs</text>
       </svg>
     </Stage>
   );

@@ -12,13 +12,14 @@ const SERVE = hm(15, 40);
 const LUNCH_CHECK = hm(13, 15);
 const breaks = [[hm(10, 20), hm(10, 40)], [12, hm(13, 15)], [hm(14, 30), hm(14, 50)]];
 
-// Launch times follow the scene order in today's timeline (approximate).
+// Numbered in presentation order. Launch times follow the scene order in
+// today's timeline (approximate); the Basic Model starts after lunch.
 const projects = [
-  { n: 2, name: "Galactic clustering", start: hm(10, 55), pre: false },
-  { n: 3, name: "Fine-tuning", start: hm(11, 10), pre: false },
-  { n: 1, name: "RANGE", start: hm(11, 25), pre: false },
-  { n: 5, name: "The Basic Model", start: hm(13, 40), pre: false },
-  { n: 4, name: "Track fitting", start: hm(14, 0), pre: true },
+  { n: 1, name: "Galactic clustering", start: hm(10, 55), pre: false },
+  { n: 2, name: "Fine-tuning", start: hm(11, 10), pre: false },
+  { n: 3, name: "RANGE", start: hm(11, 25), pre: false },
+  { n: 4, name: "The Basic Model", start: hm(13, 40), pre: false },
+  { n: 5, name: "Track fitting", start: hm(14, 0), pre: true },
 ];
 const Y0 = 80, ROW = 70;
 
@@ -58,6 +59,7 @@ export function CookingR6({ step }: { step: number }) {
                 <text x={PRE0 + (X0 - PRE0) / 2} y={y + 6} textAnchor="middle" fontSize={T.label} fill={C.muted} className="t-label">tested</text>
                 <motion.rect x={tx(p.start)} y={y - 14} height={28} rx={4} fill={C.warm} opacity={0.85}
                   initial={false} animate={{ width: tx(SERVE) - tx(p.start) }} transition={{ duration: 0.9, delay: 0.1 * i }} />
+                {p.start > 13 && <text x={tx(p.start)} y={y - 22} fontSize={T.label} fill={C.muted} className="t-label">after lunch</text>}
               </>
             )}
           </g>

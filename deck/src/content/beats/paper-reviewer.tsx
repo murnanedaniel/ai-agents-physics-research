@@ -1,10 +1,11 @@
 import type { Beat } from "./_types";
-import { HeldOutReviewer } from "@/components/scenes/g8/HeldOutReviewer";
+import { ArxivEdge } from "@/components/scenes/r10/ArxivEdge";
 
+// Round 2: comes after demo-arxiv (the review), so it carries the submission.
 const beat: Beat = {
-  title: "A held-out reviewer tests the revision.",
-  source: "Grant lesson: mock ERC panel, Oct 2026 · LLM judges and style: Style Wins, Substance Loses, arXiv:2608.01666",
-  Scene: HeldOutReviewer,
+  title: "Demo: how close to submitting can the agent go?",
+  source: "arXiv submission tabs: info.arxiv.org/help/submit · paper: D. T. Murnane, Beam spot sensitivity in ML-based track parameter regression (draft, 2026)",
+  Scene: ArxivEdge,
 };
 
 export default beat;

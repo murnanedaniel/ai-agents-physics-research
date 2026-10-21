@@ -17,7 +17,7 @@ const PHONES = [
 function Missing({ file }: { file: string }) {
   return (
     <div style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center", padding: 14, textAlign: "center" }}>
-      <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.warmText }}>[Daniel: screenshot {file} from the offline run]</span>
+      <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.warmText }}>screenshot not found: {file}</span>
     </div>
   );
 }

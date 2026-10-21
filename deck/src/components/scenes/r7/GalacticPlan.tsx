@@ -1,6 +1,6 @@
 "use client";
 
-import { Ask, C, Canvas, Reveal, T, mono } from "./kit";
+import { C, Canvas, Reveal, T, mono } from "./kit";
 
 // Step 0: where halo finding stands (CPU codes, jFoF on GPU, our idea).
 // Step 1: the order of work for today; correctness before any timing.
@@ -20,7 +20,7 @@ const PLAN = [
 
 export function GalacticPlan({ step }: { step: number }) {
   return (
-    <Canvas className="flex flex-col justify-center gap-[5vh]">
+    <Canvas className="flex flex-col justify-start pt-[3vh] gap-[6vh]">
       <div className="grid grid-cols-3 gap-[2vw]">
         {ART.map((a) => {
           const isNew = a.tone === "new";
@@ -47,7 +47,10 @@ export function GalacticPlan({ step }: { step: number }) {
             </div>
           ))}
         </div>
-        <div className="mt-4"><Ask>stretch goal: Quijote halo catalogues?</Ask></div>
+        <div className="mt-[4vh] rounded-xl border-l-4 pl-4 py-1" style={{ borderColor: C.accent }}>
+          <div style={{ fontSize: T.body, lineHeight: 1.3 }}>Success: faster, with no loss of accuracy.</div>
+          <div className="t-label mt-1" style={{ ...mono, fontSize: T.label, color: C.muted }}>figure of merit: the speed-accuracy Pareto frontier · accuracy = halo members against an exact answer · no results yet</div>
+        </div>
       </Reveal>
     </Canvas>
   );

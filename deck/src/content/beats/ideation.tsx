@@ -1,11 +1,11 @@
 "use client";
 
 import { type Beat } from "./_types";
-import { Ideation } from "@/components/scenes/g9/Ideation";
+import { Ideation } from "@/components/scenes/r11/Ideation";
 
 const beat: Beat = {
-  title: "A promising idea still has to survive execution.",
-  source: "Si, Hashimoto & Yang, The Ideation-Execution Gap, arXiv:2506.20803, Table 4 · 43 NLP ideas, each executed for 100+ h",
+  title: "Can agents come up with good research ideas?",
+  source: "Si, Hashimoto & Yang, The Ideation-Execution Gap, arXiv:2506.20803, Table 4 · 24 LLM and 19 expert NLP ideas, each executed for 100+ h, blind review on a 1-10 scale",
   Scene: Ideation,
 };
 

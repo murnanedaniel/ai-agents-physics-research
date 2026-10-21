@@ -1,11 +1,11 @@
 "use client";
 
 import { type Beat } from "./_types";
-import { OuterIntro } from "@/components/scenes/g9/OuterIntro";
+import { OuterIntro } from "@/components/scenes/r11/OuterIntro";
 
 const beat: Beat = {
-  title: "A research programme needs its own loop.",
-  source: "Course evidence synthesis §6 (Apr to Oct 2026 sessions) · ScienceDash usage audit, Oct 2026",
+  title: "How do we run a research programme with agents?",
+  source: "Loops: course plan (Oct 2026)",
   Scene: OuterIntro,
 };
 

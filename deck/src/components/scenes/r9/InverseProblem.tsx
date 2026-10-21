@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "motion/react";
 import { Arrow, C, Canvas, MONO, SANS, SERIF, Show } from "./kit";
 
 // p-newuniverse: the concept first. Step 0: from laws to data is routine
@@ -24,9 +25,7 @@ export function InverseProblem({ step }: { step: number }) {
 
       {/* forward */}
       <path id="r9-fwd" d="M 360 85 H 850" stroke={C.accent} strokeWidth={3.5} markerEnd="url(#r9-ip-a)" fill="none" />
-      <circle r={8} fill={C.accent}>
-        <animateMotion dur="3s" repeatCount="indefinite" path="M 360 85 H 840" />
-      </circle>
+      <motion.circle r={8} cy={85} fill={C.accent} initial={{ cx: 360, opacity: 1 }} animate={{ cx: 840, opacity: [1, 1, 0] }} transition={{ duration: 2.2, delay: 0.4, ease: "easeInOut" }} />
       <text x={605} y={62} textAnchor="middle" fontFamily={SANS} fontSize={26} fill={C.ink}>forward: we know how</text>
       <text className="t-label" x={605} y={118} textAnchor="middle" fontFamily={MONO} fontSize={16} fill={C.muted}>event generator, then detector simulation</text>
 

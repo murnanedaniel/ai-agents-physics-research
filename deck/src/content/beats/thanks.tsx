@@ -1,11 +1,11 @@
 "use client";
 
 import type { Beat } from "./_types";
-import { ThanksScene } from "@/components/scenes/g10/Thanks";
+import { ThanksScene } from "@/components/scenes/r12/Thanks";
 
 const beat: Beat = {
   title: "Which question do you want back first?",
-  source: "Slides and course material: github.com/murnanedaniel/ai-agents-physics-research",
+  source: "Questions: the section scenes q1-possible, q2-limits, q3-professional (click to jump back)",
   Scene: ThanksScene,
 };
 

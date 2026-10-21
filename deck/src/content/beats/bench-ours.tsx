@@ -1,11 +1,11 @@
 "use client";
 
 import { type Beat } from "./_types";
-import { BenchOurs } from "@/components/scenes/g9/BenchOurs";
+import { BenchOurs } from "@/components/scenes/r11/BenchOurs";
 
 const beat: Beat = {
-  title: "Test the work with an oracle that can fail.",
-  source: "SWE-P-Bench prototype (Mar to Sep 2026) · qtbench, Sep to Oct 2026; task contents internal, not shown",
+  title: "How would we know agents can do our work?",
+  source: "SwePhys: SWE-P-Bench prototype, 50 issues (Mar to Sep 2026) · Qual-Bench: qtbench prototype (Sep to Oct 2026); task contents internal, not shown",
   Scene: BenchOurs,
 };
 

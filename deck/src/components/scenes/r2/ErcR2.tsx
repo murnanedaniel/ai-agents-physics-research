@@ -7,9 +7,9 @@ import { C, Canvas, Reveal, T, mono, serif } from "../g1/kit";
 // Step 0: the three jobs an agent took part in (write, review, submit).
 // Step 1: how the mock review panel works, and what it got wrong.
 const STAGES = [
-  { head: "Write", body: "Overleaf, with the agent pulling first", note: "122 commits in 8 days" },
+  { head: "Write", body: "Overleaf, with the agent pulling first", note: "it pulls before every write, so edits never collide" },
   { head: "Review", body: "AI judges score each draft", note: "personas: experimentalist, sceptic, hostile referee" },
-  { head: "Submit", body: "The funder's web portal", note: "[Daniel: did Claude in Chrome fill Part A?]" },
+  { head: "Submit", body: "The funder's web portal", note: "Claude in Chrome filled in the Part A forms" },
 ];
 
 function Arrow() {
@@ -69,7 +69,7 @@ export function ErcR2({ step }: { step: number }) {
             >
               <span style={{ fontFamily: serif, fontStyle: "italic", fontSize: T.body }}>{s.head}</span>
               <span style={{ fontSize: T.body, lineHeight: 1.3 }}>{s.body}</span>
-              <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: i === 2 ? C.warmText : C.muted }}>{s.note}</span>
+              <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>{s.note}</span>
             </motion.div>
             {i < STAGES.length - 1 && <Arrow />}
           </div>

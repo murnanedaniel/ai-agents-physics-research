@@ -4,8 +4,8 @@ import { motion } from "motion/react";
 import { C, Canvas, Reveal, T, mono, serif } from "./kit";
 
 // Seven tokenised modalities (hep-any2any README) around one model.
-// A task is a choice of inputs and outputs. Step 0: the idea. Step 1: two tasks with the same
-// weights, how one compares with a dedicated tool, and what the agents did.
+// A task is a choice of inputs and outputs. Step 0: the idea, two tasks with the same weights,
+// and how one compares with a dedicated tool. Step 1: what the agents did.
 const NODES = [
   { key: "track", name: "tracks" },
   { key: "topo", name: "topoclusters" },
@@ -67,7 +67,7 @@ export function Hep4mScene({ step }: { step: number }) {
           );
         })}
         {PROMPTS.map((pr) => (
-          <motion.g key={pr.name} data-reveal={1} aria-hidden={step < 1} initial={false} animate={{ opacity: step >= 1 ? 1 : 0 }} transition={{ duration: 0.6, delay: pr.bend > 0 ? 0.5 : 0 }}>
+          <motion.g key={pr.name} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: pr.bend > 0 ? 1.1 : 0.6 }}>
             {pr.ins.map((k) => { const l = spoke(idx(k), true, pr.bend * 7); return <line key={`i${k}`} {...l} stroke={pr.color} strokeWidth={3} markerEnd={`url(#r1-hep-arrow-${pr.bend})`} />; })}
             {pr.outs.map((k) => { const l = spoke(idx(k), false, pr.bend * 7); return <line key={`o${k}`} {...l} stroke={pr.color} strokeWidth={3} markerEnd={`url(#r1-hep-arrow-${pr.bend})`} />; })}
           </motion.g>
@@ -75,22 +75,25 @@ export function Hep4mScene({ step }: { step: number }) {
       </svg>
       <div style={{ flex: "1 1 38%", display: "flex", flexDirection: "column", gap: "2.6vh", minWidth: 0 }}>
         <div style={{ fontSize: T.body, lineHeight: 1.35 }}>Detector data becomes tokens, like words. A task picks the inputs and the outputs.</div>
-        <Reveal at={1} step={step} style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           {PROMPTS.map((p) => (
-            <span key={p.name} style={{ display: "flex", alignItems: "center", gap: 12, fontSize: T.body }}>
+            <span key={p.name} className="t-label" style={{ display: "flex", alignItems: "center", gap: 12, fontSize: T.body, color: C.ink }}>
               <span style={{ width: 28, height: 4, background: p.color, borderRadius: 2, flex: "none" }} />{p.name}
             </span>
           ))}
-          <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted, marginTop: 4 }}>same weights for both tasks</span>
-        </Reveal>
-        <Reveal at={1} step={step} style={{ display: "grid", gridTemplateColumns: "auto auto auto", gap: "6px 18px", fontFamily: mono, fontSize: T.label, color: C.ink }}>
+          <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted, marginTop: 2 }}>two tasks, same weights</span>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "auto auto auto", gap: "6px 18px", fontFamily: mono, fontSize: T.label, color: C.ink }}>
           <span className="t-label" style={{ color: C.muted }}>particle flow</span><span className="t-label" style={{ color: C.muted }}>jet pT IQR</span><span className="t-label" style={{ color: C.muted }}>classifier AUC</span>
           <span className="t-label">HGPflow</span><span className="t-label">0.0754</span><span className="t-label">0.902</span>
           <span className="t-label">nanoHEP (ours)</span><span className="t-label">0.0733</span><span className="t-label">0.691</span>
           <span className="t-label" style={{ gridColumn: "1 / -1", color: C.muted }}>AUC: can a classifier tell it from truth? 0.5 = not at all</span>
-        </Reveal>
-        <Reveal at={1} step={step} style={{ fontSize: T.body, lineHeight: 1.35, borderLeft: `3px solid ${C.accent}`, paddingLeft: 14 }}>
-          Agents audited every number and caught a bug in one metric.
+        </div>
+        <Reveal at={1} step={step} style={{ display: "flex", flexDirection: "column", gap: 8, borderLeft: `3px solid ${C.accent}`, paddingLeft: 14 }}>
+          <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>what the agents did</span>
+          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>Helped me design that classifier test.</span>
+          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>Audited every number, and caught a bug in the test.</span>
+          <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>training: about 24k GPU-hours on Perlmutter, Jun to Sep 2026</span>
         </Reveal>
       </div>
     </Canvas>

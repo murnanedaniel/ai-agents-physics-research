@@ -1,10 +1,12 @@
 "use client";
 
+import { motion } from "motion/react";
 import { Arrow, C, Canvas, MONO, SANS, Show } from "./kit";
 
 // newuniverse-pipeline: how the hidden universe reaches the lab.
 // Step 0: the sealed side (Lagrangian -> UFO -> MadGraph + MadSpin).
-// Step 1: the fast detector, with an animated event: hits appear layer by layer.
+// Step 1: the fast detector, with an event whose hits appear layer by layer,
+// once per reveal (no looping).
 // Step 2: the oracle, the lab's only door, and its budget.
 const NODES = [
   { name: "Lagrangian", sub: "ours, frozen" },
@@ -44,9 +46,13 @@ export function UniversePipeline({ step }: { step: number }) {
           {i > 0 && (
             <g>
               <path d={`M ${NX(i) - 22} ${NY + NH / 2} H ${NX(i) - 4}`} stroke={C.muted} strokeWidth={2} markerEnd="url(#r9-up)" />
-              <circle r={5} fill={i >= 4 ? C.accent : C.warm}>
-                <animateMotion dur="1.6s" repeatCount="indefinite" begin={`${i * 0.25}s`} path={`M ${NX(i - 1) + NW / 2} ${NY + NH + 10} H ${NX(i) + NW / 2}`} />
-              </circle>
+              {/* one pulse along the edge when this stage appears, then gone */}
+              {step === AT[i] && (
+                <motion.circle key={`pulse-${i}`} r={6} cy={NY + NH + 14} fill={i >= 4 ? C.accent : C.warm}
+                  initial={{ cx: NX(i - 1) + NW / 2, opacity: 0 }}
+                  animate={{ cx: NX(i) + NW / 2, opacity: [0, 1, 1, 0] }}
+                  transition={{ duration: 1.1, delay: 0.3 + (i - (AT[i] === 0 ? 0 : AT[i] === 1 ? 3 : 4)) * 0.6, ease: "easeInOut" }} />
+              )}
             </g>
           )}
         </Show>
@@ -64,9 +70,7 @@ export function UniversePipeline({ step }: { step: number }) {
           LAYERS.map((r, j) => {
             const [x, y] = hit(t.a, t.c, r);
             return (
-              <circle key={`${k}-${j}`} cx={x} cy={y} r={3.6} fill={C.accent} opacity={0}>
-                <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.08;0.85;1" dur="5s" begin={`${0.6 + j * 0.12}s`} repeatCount="indefinite" />
-              </circle>
+              <motion.circle key={`${k}-${j}`} cx={x} cy={y} r={3.6} fill={C.accent} initial={false} animate={{ opacity: step >= 1 ? 1 : 0 }} transition={{ duration: 0.25, delay: step >= 1 ? 0.5 + j * 0.15 : 0 }} />
             );
           }),
         )}
@@ -80,7 +84,7 @@ export function UniversePipeline({ step }: { step: number }) {
       <Show at={2} step={step}>
         <g transform="translate(400 400)">
           <rect x={0} y={0} width={770} height={56} rx={8} fill={C.tint} stroke={C.accent} strokeWidth={1.5} />
-          <text className="t-label" x={20} y={36} fontFamily={MONO} fontSize={19} fill={C.ink}>$ oracle request --beam1 X --beam2 Y --sqrts S --n N</text>
+          <text className="t-label" x={20} y={36} fontFamily={MONO} fontSize={19} fill={C.ink}>{"$ oracle request <beam1> <beam2> <√s> <n events>"}</text>
           <text x={0} y={104} fontFamily={SANS} fontSize={26} fill={C.ink}>Every event costs budget; every request lands in a ledger.</text>
           <text className="t-label" x={0} y={138} fontFamily={MONO} fontSize={16} fill={C.muted}>stable beams only · √s up to 500 GeV · 5 × 10⁶ events in total</text>
         </g>

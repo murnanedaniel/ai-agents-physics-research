@@ -8,7 +8,7 @@ import { C, Canvas, G, MONO, SANS, SERIF, stop } from "./kit";
 // no instructions). Step 1: three other open tests and the trait each shares.
 // Facts checked 2026-10-21: ARC Prize launch post, METR page, arXiv abstracts.
 const OPEN = [
-  { name: "METR time horizon", trait: "long horizon", what: "longest task, in expert time, an agent finishes half the time", val: "16 h+", valNote: "suite runs out of tasks", note: "Top value 'at least 16 h', added May 2026; METR calls values above 16 h unreliable and stopped updating the page in Sep 2026 (metr.org/time-horizons)" },
+  { name: "METR time horizon", trait: "long horizon", what: "longest expert task an agent finishes half the time", val: "16 h+", valNote: "suite runs out of tasks", note: "Top value 'at least 16 h', added May 2026; METR calls values above 16 h unreliable and stopped updating the page in Sep 2026 (metr.org/time-horizons)" },
   { name: "CritPt", trait: "unpublished research", what: "71 research-level physics challenges", val: "33%", valNote: "best, Oct 2026", note: "32.9%, Artificial Analysis, Oct 2026; 5.7% at launch, Sep 2025 (arXiv:2509.26574); under author review" },
   { name: "Vending-Bench", trait: "staying coherent", what: "run a small vending business for many simulated days", val: "derails", valNote: "every model, some runs", note: "Every model has runs that go off track and rarely recover; failures do not track a full context window (arXiv:2502.15840, Feb 2025)" },
 ];
@@ -57,7 +57,7 @@ export function BenchOpen({ step }: { step: number }) {
             const on = hov === i;
             return (
               <g key={o.name} onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(null)} onClick={(e) => { stop(e); setHov(i); }} style={{ cursor: "pointer" }}>
-                <rect x={624} y={y - 34} width={560} height={138} rx="12" fill={on ? "#ffffff" : C.card} stroke={on ? C.accent : C.rule} />
+                <rect x={624} y={y - 34} width={560} height={132} rx="12" fill={on ? "#ffffff" : C.card} stroke={on ? C.accent : C.rule} />
                 <text x={644} y={y} fill={C.ink} fontSize="23" fontFamily={SANS}>{o.name}</text>
                 <text className="t-label" x={644} y={y + 26} fill={C.accent} fontSize="15" fontFamily={MONO}>{o.trait}</text>
                 {wrap(o.what, 28).map((ln, k) => <text key={k} className="t-label" x={644} y={y + 54 + k * 21} fill={C.muted} fontSize="16" fontFamily={MONO}>{ln}</text>)}
@@ -72,7 +72,7 @@ export function BenchOpen({ step }: { step: number }) {
           <text x={20} y={534} fill={C.ink} fontSize="26" fontFamily={SERIF} fontStyle="italic">long horizons, research.</text>
         </G>
 
-        <text className="t-label" x={20} y={590} fill={C.muted} fontSize="15" fontFamily={MONO}>{hov !== null ? OPEN[hov].note : "ARC Prize launch post, 25 Mar 2026: humans solved every game; the frontier model scored 0.51%"}</text>
+        <text className="t-label" x={20} y={590} fill={C.muted} fontSize="15" fontFamily={MONO}>{hov !== null ? OPEN[hov].note : "Hover a card for its source and date"}</text>
       </svg>
     </Canvas>
   );

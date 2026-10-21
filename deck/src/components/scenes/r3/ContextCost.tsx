@@ -90,7 +90,7 @@ export function ContextCost({ step }: { step: number }) {
             <motion.path
               key={r.id + step}
               d={r.cum.map((v, i) => `${i ? "L" : "M"} ${xs(i + 1).toFixed(1)} ${ys(v).toFixed(1)}`).join(" ")}
-              fill="none" stroke={COLORS[r.id]} strokeWidth="3" strokeLinejoin="round"
+              fill="none" stroke={COLORS[r.id]} strokeWidth="3" strokeLinejoin="round" strokeDasharray={r.id === "sub" ? "9 6" : undefined}
               initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.9 }}
             />
           ))}

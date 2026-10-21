@@ -1,52 +1,48 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { asset } from "@/lib/asset";
-import { C, Canvas, T, mono, stop } from "../g1/kit";
+import { C, Canvas, Reveal, T, mono, stop } from "../g1/kit";
 
 // Screenshots of ScienceDash, 21 Oct 2026 (sidebar cropped off).
-// Step 0 opens on Today, step 1 on a project's check-in deck; the tabs are clickable.
-const TABS = [
-  { id: "today", img: "sd-today.jpg", name: "Today", says: "What needs you this morning: blockers, stalled projects, recent runs." },
-  { id: "project", img: "sd-project.jpg", name: "Project", says: "Each project holds its status, hypothesis and figures of merit; every change is logged." },
-  { id: "checkin", img: "sd-checkin.jpg", name: "Check-in", says: "An agent reports progress as a slide deck attached to the project." },
-  { id: "poster", img: "sd-poster.jpg", name: "Reading", says: "A paper on the reading list, with an agent-written explorable summary." },
+// Step 0: the course programme and an agent's check-in deck.
+// Step 1: a paper as a super-poster and the conversation search.
+// Click a tile to enlarge it; click again to close.
+const TILES = [
+  { img: "sd-programme.jpg", says: "today's projects, as one programme", at: 0 },
+  { img: "sd-checkin.jpg", says: "an agent's check-in, as slides", at: 0 },
+  { img: "sd-poster.jpg", says: "a paper, as an explorable poster", at: 1 },
+  { img: "sd-search.jpg", says: "search every past agent conversation", at: 1 },
 ];
-const DEFAULT = [0, 2];
 
 export function ScienceDashTourR2({ step }: { step: number }) {
-  const [sel, setSel] = useState<number | null>(null);
-  useEffect(() => setSel(null), [step]);
-  const i = sel ?? DEFAULT[Math.min(step, DEFAULT.length - 1)];
-  const tab = TABS[i];
+  const [open, setOpen] = useState<number | null>(null);
   return (
-    <Canvas style={{ gap: "2vh" }}>
-      <div style={{ display: "flex", gap: 8 }} role="tablist">
-        {TABS.map((t, k) => (
-          <button key={t.id} role="tab" aria-selected={k === i} onClick={(e) => { stop(e); setSel(k); }} onKeyDown={stop}
-            className="t-label" style={{ padding: "8px 16px", borderRadius: 18, cursor: "pointer", fontSize: "clamp(15px, 1.2vw, 22px)", fontFamily: mono,
-              border: `1.5px solid ${k === i ? C.accent : C.rule}`, background: k === i ? C.accentSoft : C.card, color: k === i ? C.accent : C.ink }}>
-            {t.name}
-          </button>
+    <Canvas style={{ justifyContent: "center" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr 1fr", gap: "2.4vh 2.4vw", flex: 1, minHeight: 0 }}>
+        {TILES.map((t, k) => (
+          <Reveal key={t.img} at={t.at} step={step} style={{ display: "flex", flexDirection: "column", gap: 8, minHeight: 0 }}>
+            <button onClick={(e) => { stop(e); setOpen(k); }} onKeyDown={stop} aria-label={`Enlarge: ${t.says}`}
+              style={{ flex: 1, minHeight: 0, padding: 0, border: `1px solid ${C.rule}`, borderRadius: 8, background: "#fafafc", cursor: "zoom-in", overflow: "hidden", boxShadow: "0 10px 24px -14px rgba(20,20,20,0.3)" }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={asset(`/r2/${t.img}`)} alt={`ScienceDash: ${t.says}`} style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "top center", display: "block" }} />
+            </button>
+            <span style={{ fontSize: T.body, lineHeight: 1.2 }}>{t.says}</span>
+          </Reveal>
         ))}
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "2.1fr 1fr", gap: "3vw", flex: 1, minHeight: 0, alignItems: "start" }}>
-        <div style={{ position: "relative", height: "100%", minHeight: 0 }}>
-          <AnimatePresence mode="wait">
+      <AnimatePresence>
+        {open !== null && (
+          <motion.div key="zoom" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}
+            onClick={(e) => { stop(e); setOpen(null); }}
+            style={{ position: "absolute", inset: "12vh 4vw 6vh", background: "rgba(244,240,232,0.97)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "zoom-out", zIndex: 5 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <motion.img key={tab.id} src={asset(`/r2/${tab.img}`)} alt={`ScienceDash ${tab.name} page`}
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}
-              style={{ display: "block", maxWidth: "100%", maxHeight: "100%", width: "auto", height: "auto", border: `1px solid ${C.rule}`, borderRadius: 8, background: "#fff", boxShadow: "0 12px 30px -14px rgba(20,20,20,0.3)" }} />
-          </AnimatePresence>
-        </div>
-        <AnimatePresence mode="wait">
-          <motion.div key={tab.id} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}
-            style={{ borderLeft: `3px solid ${C.accent}`, paddingLeft: 14, fontSize: T.body, lineHeight: 1.35 }}>
-            {tab.says}
+            <img src={asset(`/r2/${TILES[open].img}`)} alt={`ScienceDash: ${TILES[open].says}`} style={{ maxWidth: "100%", maxHeight: "100%", border: `1px solid ${C.rule}`, borderRadius: 8, background: "#fff" }} />
+            <span className="t-label" style={{ position: "absolute", right: 8, bottom: 4, fontFamily: mono, fontSize: T.label, color: C.muted }}>click to close</span>
           </motion.div>
-        </AnimatePresence>
-      </div>
+        )}
+      </AnimatePresence>
     </Canvas>
   );
 }

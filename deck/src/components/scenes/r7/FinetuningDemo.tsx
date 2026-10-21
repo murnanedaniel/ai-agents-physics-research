@@ -1,6 +1,6 @@
 "use client";
 
-import { Ask, C, Canvas, T, mono, serif } from "./kit";
+import { C, Canvas, T, mono, serif } from "./kit";
 
 // Demo holding scene: three inputs flow into one new Claude Science project,
 // which is asked the project's question.
@@ -27,8 +27,8 @@ export function FinetuningDemo() {
       </svg>
       <div className="rounded-2xl border-2 px-6 py-5 w-[30vw]" style={{ borderColor: C.accent, background: C.accentSoft }}>
         <div className="t-label" style={{ ...mono, fontSize: T.label, color: C.accent }}>new Claude Science project</div>
-        <div className="mt-2" style={{ ...serif, fontSize: T.big, lineHeight: 1.15 }}>Can one measure cover all orders?</div>
-        <div className="mt-3"><Ask>first prompt and success test still open</Ask></div>
+        <div className="mt-2" style={{ ...serif, fontSize: T.big, lineHeight: 1.15 }}>How fine-tuned is a composite Higgs?</div>
+        <div className="mt-3 t-label" style={{ ...mono, fontSize: T.label, color: C.muted }}>first prompt and success test: to be decided live</div>
       </div>
     </Canvas>
   );

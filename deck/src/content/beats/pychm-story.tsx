@@ -1,6 +1,6 @@
 "use client";
 
-import { Pychm } from "@/components/scenes/g5/Pychm";
+import { Pychm } from "@/components/scenes/r7/Pychm";
 import type { Beat } from "./_types";
 
 const beat: Beat = {

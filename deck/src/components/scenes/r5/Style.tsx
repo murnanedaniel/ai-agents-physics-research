@@ -52,7 +52,7 @@ export function Style({ step }: { step: number }) {
         <text x={910} y={284} fontSize={20} fontFamily={SANS} fill={C.ink}>of 2024 abstracts were</text>
         <text x={910} y={312} fontSize={20} fontFamily={SANS} fill={C.ink}>processed with an LLM</text>
         <text className="t-label" x={910} y={346} fontSize={13} fontFamily={MONO} fill={C.muted}><tspan x={910}>a lower bound;</tspan><tspan x={910} dy={18}>over 40% in some subgroups</tspan></text>
-        <text x={910} y={420} fontSize={19} fontFamily={SANS} fill={C.ink}>Tells this regular can be checked.</text>
+        <text x={910} y={420} fontSize={19} fontFamily={SANS} fill={C.ink}><tspan x={910}>A tell this regular</tspan><tspan x={910} dy={26}>can be checked for.</tspan></text>
       </Step>
     </Canvas>
   );

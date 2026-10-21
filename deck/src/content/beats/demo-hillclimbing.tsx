@@ -5,7 +5,7 @@ import type { Beat } from "./_types";
 
 const beat: Beat = {
   title: "What will each project climb today?",
-  source: "RANGE: project plan, force MAE at matched parameter count and inference time · galactic: FoF benchmark spec · fine-tuning: open",
+  source: "RANGE: project plan, force MAE at matched parameter count and inference time · galactic: faster with no halo-accuracy loss (Daniel, 21 Oct)",
   Scene: HillclimbPlan,
 };
 

@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { motion } from "motion/react";
-import { C, Canvas, Reveal, T, mono, stop } from "./kit";
+import { C, Canvas, Reveal, T, mono, serif, stop } from "./kit";
 import { STEPS, type Status, type Step } from "./pandoraSteps";
 
 // Each change the agent tried, in order, with the event time after it; click a row for the code.
+// The outcome sits on top (5.66x, identical output); particle flow was explained on the scene before.
 // Step 0: the changes that were kept or discarded, opening on the biggest single win.
 // Step 1: the rejected tuning branch and the agent's own honesty note.
 
@@ -76,6 +77,10 @@ export function PandoraStepsScene({ step }: { step: number }) {
       </div>
 
       <div style={{ flex: "1 1 auto", minWidth: 0, display: "flex", flexDirection: "column", justifyContent: "center", gap: "2.4vh" }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 14, borderBottom: `1px solid ${C.rule}`, paddingBottom: "1.4vh" }}>
+          <span style={{ fontFamily: serif, fontStyle: "italic", fontSize: T.big, color: C.accent, lineHeight: 1 }}>5.66×</span>
+          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>faster: 60.2 to 10.6 min, identical output.</span>
+        </div>
         <Panel s={current} />
         <Reveal at={1} step={step} style={{ borderLeft: `3px solid ${C.warm}`, paddingLeft: 14, display: "flex", flexDirection: "column", gap: 4 }}>
           <span style={{ fontSize: T.body, lineHeight: 1.3 }}>The agent's log: &ldquo;I twice reported conclusions before runs completed. Both were wrong.&rdquo;</span>

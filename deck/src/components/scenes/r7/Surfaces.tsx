@@ -1,6 +1,5 @@
 "use client";
 
-import { asset } from "@/lib/asset";
 import { C, Canvas, Reveal, RevealG, T, mono, serif, stop } from "./kit";
 import { useState } from "react";
 
@@ -59,14 +58,8 @@ export function Surfaces({ step }: { step: number }) {
         {NODES.map((n) => (
           <g key={n.id} {...stop} onMouseEnter={() => setHover(n.id)} onMouseLeave={() => setHover(null)} style={{ cursor: "default" }}>
             <rect x={n.x - BW / 2} y={n.y - BH / 2} width={BW} height={BH} rx={14} fill={hover === n.id ? C.accentSoft : C.card} stroke={n.id === "cluster" ? C.accent : C.rule} strokeWidth={n.id === "cluster" ? 2.5 : 1.5} />
-            {n.id === "dash" && (
-              <>
-                <clipPath id="r7-sf-clip"><rect x={n.x + BW / 2 - 96} y={n.y - BH / 2 + 10} width={84} height={84} rx={6} /></clipPath>
-                <image href={asset("/r7/frnn-project.png")} x={n.x + BW / 2 - 96} y={n.y - BH / 2 + 10} width={150} height={102} preserveAspectRatio="xMinYMin slice" clipPath="url(#r7-sf-clip)" />
-              </>
-            )}
             <text x={n.x - BW / 2 + 20} y={n.y - 8} fontSize={26} fill={C.ink} fontWeight={600}>{n.name}</text>
-            <foreignObject x={n.x - BW / 2 + 20} y={n.y + 4} width={n.id === "dash" ? BW - 130 : BW - 36} height={48}>
+            <foreignObject x={n.x - BW / 2 + 20} y={n.y + 4} width={BW - 36} height={48}>
               <div className="t-label" style={{ ...mono, fontSize: 15, lineHeight: 1.3, color: C.muted }}>{n.role}</div>
             </foreignObject>
           </g>

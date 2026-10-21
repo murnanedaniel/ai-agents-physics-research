@@ -91,6 +91,8 @@ nav:
 - Hands-on:
   - Research memory kit: kit/research-memory.md
   - Interview your research setup: exercises/setup-interview.md
+  - Review a draft, then audit its claims: exercises/review-a-draft.md
+  - Turn a rule into a check: exercises/gates-and-checks.md
 - Landscape: landscape.md
 - Methodology: methodology.md
 - Cheatsheet: cheatsheet.md

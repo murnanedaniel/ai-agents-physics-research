@@ -1,11 +1,12 @@
 "use client";
 
-import { Ask, C, Canvas, Reveal, RevealG, T, mono, serif } from "./kit";
+import { C, Canvas, Reveal, RevealG, T, mono, serif, stop } from "./kit";
 
 // Step 0: where the idea came from (a talk at HAMLET 2026) and the hunch.
 // Step 1: the two axes we compete on, as a schematic (no numbers: the
 // published values are on the next scene). Step 2: why it suits an agent.
 const FIT = ["Clear metrics", "An ML training job", "Public data: MD22", "Baselines with code"];
+const TALK = "https://indico.nbi.ku.dk/event/2253/contributions/17127/";
 
 function Axes({ step }: { step: number }) {
   return (
@@ -34,15 +35,17 @@ export function RangeWhy({ step }: { step: number }) {
     <Canvas className="flex items-center gap-[4vw]">
       <div className="flex-1 min-w-0 flex flex-col justify-center gap-[4vh]">
         <Reveal at={0} step={step}>
-          <div className="t-label" style={{ ...mono, fontSize: T.label, color: C.muted }}>HAMLET 2026 · Cecilia Clementi on RANGE</div>
+          <a href={TALK} target="_blank" rel="noreferrer" {...stop} className="t-label underline decoration-dotted underline-offset-4" style={{ ...mono, fontSize: T.label, color: C.accent }}>
+            HAMLET 2026 keynote · Cecilia Clementi · protein dynamics with ML ↗
+          </a>
           <div className="mt-2" style={{ ...serif, fontSize: T.big, lineHeight: 1.12 }}>My hunch: a transformer could do as well.</div>
-          <div className="mt-2"><Ask>link to the HAMLET talk</Ask></div>
         </Reveal>
         <Reveal at={1} step={step}>
-          <div style={{ fontSize: T.body, lineHeight: 1.3 }}>Compete on both: the physics and the timing.</div>
+          <div style={{ fontSize: T.body, lineHeight: 1.3 }}>Beat it on accuracy and on speed.</div>
+          <div className="mt-1 t-label" style={{ ...mono, fontSize: T.label, color: C.muted }}>RANGE is a machine-learned force field: atom positions in, near-quantum forces out, far cheaper</div>
         </Reveal>
         <Reveal at={2} step={step}>
-          <div className="t-label mb-2" style={{ ...mono, fontSize: T.label, color: C.muted }}>why it suits an agent</div>
+          <div className="t-label mb-2" style={{ ...mono, fontSize: T.label, color: C.muted }}>why it suits an agent · MD22: public benchmark of simulated molecules</div>
           <div className="grid grid-cols-2 gap-x-6 gap-y-2">
             {FIT.map((f) => (
               <div key={f} className="flex items-start gap-2" style={{ fontSize: T.body, lineHeight: 1.3 }}>

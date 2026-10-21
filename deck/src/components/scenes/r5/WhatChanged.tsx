@@ -29,7 +29,7 @@ function Dumbbell({ r, yy, hot, onHover }: { r: Row; yy: number; hot?: boolean; 
       <text x={X0 - 24} y={yy + 7} textAnchor="end" fontSize={20} fontFamily={SANS} fill={C.ink}>{r.label}</text>
       <line x1={x(r.early)} x2={x(r.late)} y1={yy} y2={yy} stroke={col} strokeWidth={3} />
       <circle cx={x(r.early)} cy={yy} r={7} fill="#f6f1e7" stroke={C.muted} strokeWidth={2.5} />
-      <circle cx={x(r.late)} cy={yy} r={7} fill={col} />
+      <circle cx={x(r.late)} cy={yy} r={7} fill={C.accent} />
       <text className="t-label" x={x(r.early) + (up ? -14 : 14)} y={yy + 5} textAnchor={up ? "end" : "start"} fontSize={15} fontFamily={MONO} fill={C.muted}>{Math.round(r.early)}%</text>
       <text className="t-label" x={x(r.late) + (up ? 14 : -14)} y={yy + 5} textAnchor={up ? "start" : "end"} fontSize={15} fontFamily={MONO} fill={C.ink}>{Math.round(r.late)}%</text>
     </g>

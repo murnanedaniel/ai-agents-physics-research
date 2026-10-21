@@ -77,7 +77,8 @@ export function PandoraPflowScene({ step }: { step: number }) {
           transition={{ duration: 0.9, delay: on ? 1.8 : 0 }}
           fill="rgba(87,83,78,0.22)" stroke={C.muted} strokeWidth={1.4} />
         <motion.g initial={false} animate={{ opacity: on ? 1 : 0 }} transition={{ duration: 0.5, delay: on ? 1.8 : 0 }}>
-          <text className="t-label" x={FRAG.from.x + 16} y={FRAG.from.y + 6} fontFamily={mono} fontSize="14" fill={C.ink}>fragment merged</text>
+          <line x1={FRAG.from.x + 12} y1={FRAG.from.y + 2} x2={FRAG.to.x + 22} y2={FRAG.to.y + 6} stroke={C.ink} strokeWidth={1.2} />
+          <text className="t-label" x={FRAG.from.x + 14} y={FRAG.from.y + 6} fontFamily={mono} fontSize="14" fill={C.ink}>fragment merged</text>
         </motion.g>
       </svg>
 

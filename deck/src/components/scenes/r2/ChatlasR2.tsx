@@ -5,11 +5,10 @@ import { asset } from "@/lib/asset";
 import { C, Canvas, Reveal, T, mono, serif } from "../g1/kit";
 
 // Step 0: the problem. How much ATLAS documentation there is, by source
-// (LIPS DESY talk, Feb 2024), and the 2025 survey line.
+// (LIPS DESY talk, Feb 2024; three of 10+ sources), and the 2025 survey line.
 // Step 1: the answer, the chATLAS search and assistant (screenshot, Jun 2025).
 const SOURCES = [
   { name: "Indico meeting events", n: 440440, txt: "440,440" },
-  { name: "CDS records", n: 66465, txt: "66,465" },
   { name: "e-group topics", n: 8900, txt: "about 8,900" },
   { name: "TWiki topics", n: 2000, txt: "2,000+" },
 ];
@@ -33,7 +32,7 @@ export function ChatlasR2({ step }: { step: number }) {
               </div>
             </div>
           ))}
-          <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>log scale · ATLAS sources scraped by Feb 2024</span>
+          <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>three of 10+ sources, by Feb 2024 · log scale</span>
           <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginTop: "1vh" }}>
             <span style={{ fontFamily: serif, fontSize: T.big, lineHeight: 1.1 }}>85%</span>
             <span style={{ fontSize: T.body, lineHeight: 1.3 }}>of surveyed members find it overwhelming.</span>
@@ -43,7 +42,7 @@ export function ChatlasR2({ step }: { step: number }) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={asset("/r2/chatlas-ui.jpg")} alt="The chATLAS interface: one message box, with filters for TWiki, GitLab docs, CDS, Indico and the ATLAS forum"
             style={{ width: "100%", maxHeight: "50vh", objectFit: "cover", objectPosition: "top", border: `1px solid ${C.rule}`, borderRadius: 6, boxShadow: "0 12px 30px -14px rgba(20,20,20,0.3)", background: "#fff" }} />
-          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>chATLAS: ask in plain words, get an answer that cites its sources.</span>
+          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>chATLAS: ask in plain words, get a cited answer. In use since April 2024.</span>
         </Reveal>
       </div>
     </Canvas>

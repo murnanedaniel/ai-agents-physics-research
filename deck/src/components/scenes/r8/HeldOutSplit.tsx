@@ -22,7 +22,7 @@ export function HeldOutSplit({ step }: { step: number }) {
     <Stage label="44 support tickets split into 30 the climber sees and 14 held out; keep a change only if both improve. Then accuracy: 74.4 to 98.9 percent on the 30 seen, 78.6 to 90.5 percent on the 14 held out">
       <svg viewBox="0 0 1200 470" width="100%" style={{ width: "100%", height: "100%" }} onClick={stop}>
         {/* the split */}
-        <text className="t-label" x={0} y={22} fontFamily={MONO} fontSize={16} fill={C.muted}>44 support tickets, each with a known right answer</text>
+        <text className="t-label" x={0} y={22} fontFamily={MONO} fontSize={16} fill={C.muted}>Anthropic’s example, not physics: tuning a customer-support agent on 44 graded tickets</text>
         {Array.from({ length: 44 }, (_, i) => {
           const held = i >= 30;
           const col = held ? i - 30 : i;
@@ -35,9 +35,9 @@ export function HeldOutSplit({ step }: { step: number }) {
         <line x1={310} x2={310} y1={36} y2={168} stroke={C.rule} strokeWidth={2} />
 
         {/* the rule */}
-        <text x={620} y={64} fontFamily={SANS} fontSize={24} fill={C.ink}>One change per round.</text>
-        <text x={620} y={100} fontFamily={SANS} fontSize={24} fill={C.ink}><tspan fontWeight={700} fill={C.accent}>Keep</tspan> it if both sets improve.</text>
-        <text x={620} y={136} fontFamily={SANS} fontSize={24} fill={C.ink}>Only the seen one? <tspan fontWeight={700} fill={C.warm}>Undo</tspan>.</text>
+        <text x={640} y={72} fontFamily={SANS} fontSize={24} fill={C.ink}><tspan fontWeight={700} fill={C.accent}>Keep</tspan> a change only if</text>
+        <text x={640} y={106} fontFamily={SANS} fontSize={24} fill={C.ink}>both sets improve.</text>
+        <text className="t-label" x={640} y={136} fontFamily={MONO} fontSize={15} fill={C.muted}>seen up, held-out flat: overfit, revert</text>
 
         {/* step 1: what happened */}
         <Show at={1} step={step}>
@@ -65,7 +65,9 @@ export function HeldOutSplit({ step }: { step: number }) {
           })}
           <line x1={x(98.9)} x2={x(98.9)} y1={272} y2={360} stroke={C.warm} strokeDasharray="4 5" strokeWidth={2} />
           <path d={`M ${x(90.5)} 360 H ${x(98.9)}`} stroke={C.warm} strokeWidth={2} />
-          <text x={x(94.7)} y={396} textAnchor="middle" fontFamily={SANS} fontSize={20} fill={C.warm}>seen set overstates by 8.4 points</text>
+          <text className="t-label" x={x(94.7)} y={396} textAnchor="middle" fontFamily={MONO} fontSize={17} fill={C.warm}>seen set overstates by 8.4 points</text>
+          <text x={640} y={172} fontFamily={SANS} fontSize={21} fill={C.warm}>Caveat: the held-out set now steers choices.</text>
+          <text x={640} y={200} fontFamily={SANS} fontSize={21} fill={C.warm}>Keep a final test set nobody touches.</text>
         </Show>
       </svg>
     </Stage>

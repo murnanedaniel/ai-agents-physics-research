@@ -1,20 +1,18 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Arrow, C, Canvas, SERIF, T } from "./kit";
+import { Arrow, C, Canvas, SERIF, Show, T, TINT } from "./kit";
 
 const X0 = 200, N = 6, BW = 140, GAP = 12;
 const bx = (k: number) => X0 + k * (BW + GAP);
-const YOU = 95, ROW0 = 215, ROWH = 50, PROJECTS = 5;
+const YOU = 60, ROW0 = 175, ROWH = 42, PROJECTS = 5;
 
-const captions = [
-  "Today: one project, every step by hand.",
-  "Be ambitious and do more: many projects, you at the checkpoints.",
-  "Automate the routine; keep the loops and the judgement.",
-];
+// The three questions the lesson raises; each gets the next scene.
+const costs = ["the cost to your attention", "the elephant in the room", "what we become"];
 
 // The same work, first done by hand, then delegated across many projects
 // with the researcher at the checkpoints, then closed into feedback loops.
+// The lesson stays on screen from step 2; step 3 names what it costs.
 export function OneLessonR6({ step }: { step: number }) {
   const many = step >= 1;
   return (
@@ -41,21 +39,33 @@ export function OneLessonR6({ step }: { step: number }) {
         )),
       )}
 
-      {/* Feedback loops: agents report up to your check, which steers the next step */}
-      {Array.from({ length: N - 1 }, (_, k) => {
-        const cx = bx(k) + BW - 11;
-        const from = bx(k) + (BW - 30) / 2, to = bx(k + 1) + (BW - 30) / 2;
+      {/* Feedback loops: each step's agents report up to your checkpoint,
+          which steers the next step. The last checkpoint only receives. */}
+      {Array.from({ length: N }, (_, k) => {
+        const cx = bx(k) + BW - 11, top = YOU + 24;
+        const col = (j: number) => bx(j) + (BW - 30) / 2;
         return (
-          <motion.path key={`fb-${k}`} d={`M ${from} ${ROW0 - 6} Q ${from} ${YOU + 40}, ${cx} ${YOU + 26} Q ${to} ${YOU + 40}, ${to} ${ROW0 - 8}`}
-            fill="none" stroke={C.warm} strokeWidth={1.6} markerEnd="url(#ol-a)"
-            initial={false} animate={{ opacity: step >= 2 ? 1 : 0 }} transition={{ duration: 0.6, delay: 0.08 * k }} />
+          <motion.g key={`fb-${k}`} initial={false} animate={{ opacity: step >= 2 ? 1 : 0 }} transition={{ duration: 0.6, delay: 0.08 * k }}>
+            <path d={`M ${col(k)} ${ROW0 - 6} Q ${col(k)} ${top + 30}, ${cx - 6} ${top + 4}`} fill="none" stroke={C.warm} strokeWidth={1.6} markerEnd="url(#ol-a)" />
+            {k < N - 1 && <path d={`M ${cx + 6} ${top + 4} Q ${col(k + 1)} ${top + 30}, ${col(k + 1)} ${ROW0 - 8}`} fill="none" stroke={C.warm} strokeWidth={1.6} markerEnd="url(#ol-a)" />}
+          </motion.g>
         );
       })}
 
-      {captions.map((c, i) => (
-        <motion.text key={c} x={X0} y={520} fontSize={T.lead} fill={C.ink} initial={false}
-          animate={{ opacity: step === i ? 1 : 0 }} transition={{ duration: 0.5 }} aria-hidden={step !== i}>{c}</motion.text>
-      ))}
+      <motion.text x={X0} y={440} fontSize={T.lead} fill={C.ink} initial={false}
+        animate={{ opacity: step === 0 ? 1 : 0 }} transition={{ duration: 0.5 }} aria-hidden={step !== 0}>Today: one project, every step by hand.</motion.text>
+      <Show when={step >= 1}>
+        <text x={X0} y={448} fontFamily={SERIF} fontStyle="italic" fontSize={T.big + 4} fill={C.warmText}>Be ambitious. Do more.</text>
+      </Show>
+      <Show when={step >= 2}>
+        <text x={X0} y={510} fontSize={T.body} fill={C.ink}>It has costs:</text>
+        {costs.map((c, i) => (
+          <g key={c}>
+            <rect x={X0 + 140 + i * 265} y={482} width={250} height={42} rx={21} fill={TINT.paper} stroke={C.warm} strokeWidth={1.3} />
+            <text x={X0 + 140 + i * 265 + 125} y={509} textAnchor="middle" fontSize={T.small} fill={C.ink}>{c}</text>
+          </g>
+        ))}
+      </Show>
     </Canvas>
   );
 }

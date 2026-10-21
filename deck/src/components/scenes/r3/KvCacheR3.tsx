@@ -20,7 +20,7 @@ const WEIGHTS_GB = 8.03 * 2;
 const MAX_GB = 40;
 
 const CAPTIONS = [
-  "Each layer keeps a key and a value for every token so far.",
+  "The KV cache: every layer stores a key and a value for each past token.",
   "Prefill writes the prompt at once. Decode adds one token at a time.",
   "Memory grows with context. At 128k tokens the cache outweighs the model.",
 ];
@@ -80,6 +80,7 @@ export function KvCacheR3({ step }: { step: number }) {
               <path key={i} d={`M ${COL(q)} ${ROW(0)} Q ${(COL(q) + COL(i)) / 2} ${ROW(0) - 34 - 4 * (q - i)} ${COL(i) - 16} ${ROW(0)}`} fill="none" stroke={C.ink} strokeOpacity="0.5" strokeWidth="1.5" />
             ))}
             {step === 0 && <text className="t-label" x={COL(q) + 44} y={ROW(0) + 20} fill={C.ink} fontSize="16" fontFamily={MONO}>new query · every key</text>}
+            {step === 0 && <text x="600" y={ROW(2) + 160} textAnchor="middle" fill={C.ink} fontSize="23" fontFamily={SANS}>Stored, not recomputed: the next token is fast, but memory grows with context.</text>}
           </G>
 
           {/* prefill / decode braces */}

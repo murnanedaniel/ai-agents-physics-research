@@ -74,8 +74,8 @@ export function ScalingR3({ step }: { step: number }) {
             </g>
           ))}
           <motion.path d={kPath} fill="none" stroke={C.s1} strokeWidth="4" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.2 }} />
-          <text className="t-label" x={PW * 0.55} y={k.y(kaplan(10 ** -3)) - 40} textAnchor="start" fill={C.ink} fontSize="15" fontFamily={MONO}>fit over 7 decades</text>
-          <text className="t-label" x={PW * 0.55} y={k.y(kaplan(10 ** -3)) - 22} textAnchor="start" fill={C.muted} fontSize="14" fontFamily={MONO}>Kaplan 2020</text>
+          <text className="t-label" x={PW - 6} y={k.y(kaplan(10 ** -3)) - 40} textAnchor="end" fill={C.ink} fontSize="15" fontFamily={MONO}>fit over 7 decades</text>
+          <text className="t-label" x={PW - 6} y={k.y(kaplan(10 ** -3)) - 22} textAnchor="end" fill={C.muted} fontSize="14" fontFamily={MONO}>Kaplan 2020</text>
         </Panel>
 
         {/* 2. Chinchilla */}

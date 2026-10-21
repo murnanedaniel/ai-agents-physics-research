@@ -7,9 +7,9 @@ import { Arrow, C, Canvas, MONO, Show, T, TINT, stop } from "./kit";
 // four agent messages, three short files (or one paste-in block).
 const msgs = [
   { n: 1, text: "three questions" },
-  { n: 2, text: "one follow-up, if needed" },
-  { n: 3, text: "drafts, shown once" },
-  { n: 4, text: "writes on your OK" },
+  { n: 2, text: "one follow-up, if any" },
+  { n: 3, text: "drafts" },
+  { n: 4, text: "you approve" },
 ];
 const files = [
   { name: "CLAUDE.md", note: "your rules, under 40 lines" },
@@ -47,13 +47,15 @@ export function HandsOnSetup({ step }: { step: number }) {
             </g>
           );
         })}
-        <text x={fx} y={390} fontSize={T.small + 1} fill={C.ink}>Chat only: a paste-in block.</text>
+        <text x={fx} y={390} fontSize={T.small + 1} fill={C.ink}>No terminal? A block to paste</text>
+        <text x={fx} y={414} fontSize={T.small + 1} fill={C.ink}>into chat settings.</text>
       </Show>
 
       <Show when={step >= 1}>
         <circle cx={66} cy={455} r={44} fill="none" stroke={C.warm} strokeWidth={3} />
         <text x={66} y={464} textAnchor="middle" fontSize={T.lead} fill={C.ink}>5–10</text>
         <text x={126} y={448} fontSize={T.body} fill={C.ink}>minutes</text>
+        <text x={126} y={510} fontSize={T.label} fill={C.muted} className="t-label">two test personas took 7.2 and 7.3 min</text>
         <text x={126} y={480} fontFamily={MONO} fontSize={T.body} fill={C.ink}>“interview me about my setup”</text>
         <a href={docs(CARD)} target="_blank" rel="noopener noreferrer" onClick={(e) => { stop(e); e.preventDefault(); openExternal(docs(CARD)); }} style={{ cursor: "pointer" }}>
           <text x={fx} y={530} fontSize={T.small} fill={C.accent} className="t-label" textDecoration="underline">→ card: exercises/setup-interview</text>

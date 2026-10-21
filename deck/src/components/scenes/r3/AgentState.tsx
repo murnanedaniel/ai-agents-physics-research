@@ -75,14 +75,14 @@ export function AgentState({ step }: { step: number }) {
         {/* harness organelles */}
         <G on={step >= 1}>
           <g {...hover("tools")}>
-            <ellipse cx={CX - 215} cy={CY - 40} rx="92" ry="40" fill={C.card} stroke={hl("tools") ? C.warm : C.faint} strokeWidth={hl("tools") ? 3 : 1.5} />
-            <text x={CX - 215} y={CY - 44} textAnchor="middle" fill={C.ink} fontSize="23" fontFamily={SANS}>tools</text>
-            <text className="t-label" x={CX - 215} y={CY - 18} textAnchor="middle" fill={C.muted} fontSize="15" fontFamily={MONO}>read · edit · run</text>
+            <ellipse cx={CX - 205} cy={CY - 40} rx="92" ry="40" fill={C.card} stroke={hl("tools") ? C.warm : C.faint} strokeWidth={hl("tools") ? 3 : 1.5} />
+            <text x={CX - 205} y={CY - 44} textAnchor="middle" fill={C.ink} fontSize="23" fontFamily={SANS}>tools</text>
+            <text className="t-label" x={CX - 205} y={CY - 18} textAnchor="middle" fill={C.muted} fontSize="15" fontFamily={MONO}>read · edit · run</text>
           </g>
           <g {...hover("memory")}>
-            <ellipse cx={CX + 215} cy={CY - 40} rx="92" ry="40" fill={C.card} stroke={hl("memory") ? C.warm : C.faint} strokeWidth={hl("memory") ? 3 : 1.5} />
-            <text x={CX + 215} y={CY - 44} textAnchor="middle" fill={C.ink} fontSize="23" fontFamily={SANS}>memory files</text>
-            <text className="t-label" x={CX + 215} y={CY - 18} textAnchor="middle" fill={C.muted} fontSize="15" fontFamily={MONO}>CLAUDE.md · skills</text>
+            <ellipse cx={CX + 205} cy={CY - 40} rx="92" ry="40" fill={C.card} stroke={hl("memory") ? C.warm : C.faint} strokeWidth={hl("memory") ? 3 : 1.5} />
+            <text x={CX + 205} y={CY - 44} textAnchor="middle" fill={C.ink} fontSize="23" fontFamily={SANS}>memory files</text>
+            <text className="t-label" x={CX + 205} y={CY - 18} textAnchor="middle" fill={C.muted} fontSize="15" fontFamily={MONO}>CLAUDE.md · skills</text>
           </g>
         </G>
 

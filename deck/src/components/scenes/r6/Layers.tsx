@@ -61,7 +61,7 @@ export function LayerModels({ step }: { step: number }) {
       </Show>
       <Show when={step >= 1}>
         <Takeaway y={370}>Choose by task, data rules and cost.</Takeaway>
-        <text x={CX} y={416} fontSize={T.body} fill={C.ink}>Today: Claude does most work; GPT, via Codex, reviews.</text>
+        <text x={CX} y={416} fontSize={T.body} fill={C.ink}>Today: Claude builds; GPT, in Codex, reviews.</text>
       </Show>
     </Frame>
   );

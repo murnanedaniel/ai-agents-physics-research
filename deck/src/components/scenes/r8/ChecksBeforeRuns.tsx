@@ -10,8 +10,8 @@ import { Arrow, C, MONO, SANS, SERIF, Show, Stage } from "./kit";
 // first and the baseline gate. Step 2: the happy path, a tiny slice end to
 // end. Baseline: Caruso et al., Nat. Commun. 17 (2026), Table 1 (PaiNN, DHA).
 const CATCHES = [
-  { where: "Beam-spot paper", big: "0.0159 vs 0.0147 mm", text: ["always predicting zero nearly", "matched the transformer"] },
-  { where: "Pandora speed-up", big: "twice", text: ["the agent reported results", "before the runs had finished"] },
+  { where: "Beam-spot paper", big: "0.0159 vs 0.0147 mm", text: ["predicting zero nearly", "matched the model"] },
+  { where: "Pandora speed-up", big: "twice", text: ["results reported before", "the runs had finished"] },
 ];
 const CHECKS = ["error falls on a tiny slice", "baseline reproduces 0.199", "variant beats seed spread"];
 
@@ -37,7 +37,7 @@ export function ChecksBeforeRuns({ step }: { step: number }) {
             );
           })}
           <text x={600} y={334} textAnchor="middle" fontFamily={SERIF} fontStyle="italic" fontSize={32} fill={C.ink}>An agent wants to report success.</text>
-          <text x={600} y={384} textAnchor="middle" fontFamily={SANS} fontSize={23} fill={C.muted}>A check written before the run cannot bend to fit it.</text>
+          <text x={600} y={384} textAnchor="middle" fontFamily={SANS} fontSize={23} fill={C.muted}>A check written first cannot bend to fit.</text>
         </motion.g>
 
         {/* steps 1 and 2: the checks, the gate, the happy path */}

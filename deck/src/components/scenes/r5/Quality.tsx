@@ -14,10 +14,10 @@ const MONTHS = [
   { m: "Oct", n: 322, push: 29.2, lo: 24.5, hi: 34.4, corr: 13.7, chal: 15.5 },
 ];
 const CORR = "rgba(180,83,9,0.18)", CHAL = "rgba(3,105,161,0.16)";
-const P = { l: 410, r: 930, t: 40, b: 420 };
+const P = { l: 470, r: 930, t: 40, b: 420 };
 const x = (i: number) => P.l + (i / (MONTHS.length - 1)) * (P.r - P.l);
 const y = (v: number) => P.b - (v / 60) * (P.b - P.t);
-const line = (k: "push" | "corr") => MONTHS.map((d, i) => `${i ? "L" : "M"}${x(i)},${y(d[k])}`).join("");
+const line = (k: "push" | "corr" | "hi" | "lo") => MONTHS.map((d, i) => `${i ? "L" : "M"}${x(i)},${y(d[k])}`).join("");
 
 export function Quality({ step }: { step: number }) {
   const [hover, setHover] = useState<number | null>(null);
@@ -48,10 +48,15 @@ export function Quality({ step }: { step: number }) {
       {MONTHS.map((d, i) => (
         <text key={d.m} className="t-label" x={x(i)} y={P.b + 26} textAnchor="middle" fontSize={15} fill={C.muted} fontFamily={MONO}>{d.m}</text>
       ))}
-      <text className="t-label" x={P.l} y={P.b + 52} fontSize={13} fill={C.muted} fontFamily={MONO}>share of my messages each month, 2026 · band = 95% interval · hover a month</text>
+      <text className="t-label" x={P.l} y={P.b + 52} fontSize={13} fill={C.muted} fontFamily={MONO}>% of my messages, 2026 · band or dashes = 95% interval · hover</text>
 
       {/* step 0: all pushback, with its interval */}
       <motion.path d={band} fill={C.band} initial={false} animate={{ opacity: split ? 0 : 1 }} transition={{ duration: 0.5 }} />
+      {/* once the areas are drawn, the same interval as dashed bounds */}
+      <Step at={1} step={step}>
+        <path d={line("hi")} fill="none" stroke={C.accent} strokeWidth={1.3} strokeDasharray="4 5" />
+        <path d={line("lo")} fill="none" stroke={C.accent} strokeWidth={1.3} strokeDasharray="4 5" />
+      </Step>
       <Step at={1} step={step}>
         <path d={corrArea} fill={CORR} />
         <path d={chalArea} fill={CHAL} />
@@ -59,13 +64,13 @@ export function Quality({ step }: { step: number }) {
       </Step>
       <motion.path d={line("push")} fill="none" stroke={C.accent} strokeWidth={3} initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.9 }} />
       {MONTHS.map((d, i) => <circle key={d.m} cx={x(i)} cy={y(d.push)} r={5} fill={C.accent} />)}
-      <text x={x(0) - 8} y={y(46.2) - 20} fontSize={28} fontFamily={SERIF} fontStyle="italic" fill={C.ink}>46%</text>
+      <text x={x(0) - 14} y={y(46.2) + 10} textAnchor="end" fontSize={28} fontFamily={SERIF} fontStyle="italic" fill={C.ink}>46%</text>
       <text x={x(last) + 16} y={y(29.2) + 2} fontSize={28} fontFamily={SERIF} fontStyle="italic" fill={C.ink}>29%</text>
       <text x={x(last) + 16} y={y(29.2) + 26} fontSize={18} fontFamily={SANS} fill={C.ink}>all pushback</text>
 
       {/* step 1: the fall is challenges; corrections stay flat */}
       <Step at={1} step={step}>
-        <text x={x(last) + 16} y={y(22) + 6} fontSize={18} fontFamily={SANS} fill={C.ink}>challenges fell</text>
+        <text x={(x(2) + x(3)) / 2} y={y(24) + 6} textAnchor="middle" fontSize={18} fontFamily={SANS} fill={C.ink}>challenges fell</text>
         <text x={x(last) + 16} y={y(7) + 6} fontSize={18} fontFamily={SANS} fill={C.ink}>corrections</text>
         <text className="t-label" x={x(last) + 16} y={y(7) + 28} fontSize={15} fontFamily={MONO} fill={C.ink}>flat, about 15%</text>
       </Step>
