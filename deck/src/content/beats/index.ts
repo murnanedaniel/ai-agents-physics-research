@@ -97,6 +97,7 @@ export { default as "p-tracking" } from "./p-tracking";
 export { default as "demo-tracking-review" } from "./demo-tracking-review";
 export { default as "sec-automate" } from "./sec-automate";
 export { default as "browser-automate" } from "./browser-automate";
+export { default as "browser-options" } from "./browser-options";
 export { default as "demo-eurohpc" } from "./demo-eurohpc";
 export { default as "judges" } from "./judges";
 export { default as "demo-arxiv" } from "./demo-arxiv";
