@@ -44,7 +44,7 @@ export function TitleScene() {
           style={{ display: "flex", alignItems: "center", gap: "1.6vw", marginTop: "2vh" }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={asset("/qr-deck.svg")} alt="QR code: the slides at danielmurnane.com/ai-agents-physics-research" style={{ width: "19vh", height: "19vh", background: "#fff", padding: "0.6vh", borderRadius: 8 }} />
+          <img src={asset("/qr-deck.svg")} alt="QR code: the slides at danielmurnane.com/ai-agents-physics-research" style={{ width: "27vh", height: "27vh", background: "#fff", padding: "0.6vh", borderRadius: 8 }} />
           <div style={{ display: "flex", flexDirection: "column", gap: "1vh", fontSize: T.label, fontFamily: mono }}>
             <span style={{ color: C.ink }}>Slides, docs and exercises:</span>
             <a href={SITE} onClick={stop} target="_blank" rel="noopener noreferrer" style={{ color: C.accent, textDecoration: "none", fontSize: T.body }}>danielmurnane.com/ai-agents-physics-research</a>
