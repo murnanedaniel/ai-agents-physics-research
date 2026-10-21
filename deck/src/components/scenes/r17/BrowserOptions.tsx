@@ -96,7 +96,7 @@ function ScriptIcon() {
   return (
     <Frame label="a script that runs again and again">
       <rect x={2} y={4} width={116} height={64} rx={8} fill={C.ink} />
-      <text x={12} y={26} fontSize={12} fill="#fff" fontFamily="monospace">$ run</text>
+      <text x={12} y={26} fontSize={16} fill="#fff" fontFamily="monospace">$ run</text>
       {[0, 1, 2, 3].map((i) => <circle key={i} cx={20 + i * 16} cy={50} r={5} fill={i < 3 ? C.accent : "#5b9ec9"} />)}
       <path d="M92 50 a10 10 0 1 1 -3 -7" stroke="#fff" strokeWidth={2} fill="none" />
       <path d="M86 38 l4 6 l5 -5" stroke="#fff" strokeWidth={2} fill="none" />
@@ -153,7 +153,7 @@ export function BrowserOptions({ step }: { step: number }) {
           </Show>
         ))}
       </div>
-      <Show when={step >= 2}>
+      <Show when={step >= 2} style={{ position: "absolute", top: "-9.5vh", right: 0 }}>
         <a href={card} target="_blank" rel="noopener noreferrer" onPointerDown={block}
           onClick={(e) => { stop(e); e.preventDefault(); openExternal(card); }}
           className="t-label"
