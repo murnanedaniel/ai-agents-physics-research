@@ -76,6 +76,20 @@ Light theme only.
 
 Use warm off-white paper, dark ink, the existing accent blue and a subtle grid. Keep the type scale and italic serif headlines.
 
+## 11. Narrative: signpost, introduce, then go deep
+
+These pairs come from a review of the first full draft of the course deck (21 October 2026). Each scene passed the layout checks; the review still failed it.
+
+**Don't.** An example section ends, and the next scene is titled "An agent acts, observes and tries again." Nobody asked how an agent works yet, so the claim has nothing to attach to. **Do.** A section scene, "How does an agent work?", then the state of a harness (model, context, tools, memory, permissions), then the loop that acts on that state.
+
+**Don't.** "Building was fast; engagement was harder." under a project name the audience has never seen, with a usage curve. It answers a question nobody asked and tells the wrong story. **Do.** One scene introducing the system and what it is for, then screenshots of what it can do, then (if relevant) how quickly it was built.
+
+**Don't.** A plot of scores from a study with no setup on the scene: is it your data or published, what was measured, what question does it answer? **Do.** A short setup line on the scene ("my own agent threads, May to October, each response scored by …"), the question as the title, the answer as the next title.
+
+**Don't.** A project that runs live later in the day introduced with last week's speed-up numbers. **Do.** The physics task, why it matters, the state of the art, and the plan for today; results come when they exist.
+
+**Don't.** A slide on a tool that assumes the audience knows what a skill, a KV cache or hill-climbing is. **Do.** The first mention defines it in one plain sentence and shows one concrete example (for a skill: the folder, the SKILL.md, what triggers it).
+
 ## Scene kinds in the template
 
 | kind | file | when |

@@ -2,6 +2,17 @@
 
 Run `npm run build:export && npm run shoot` first. Items marked **[auto]** are measured by `scripts/shoot.mjs` and appear in `shots/report.md`; the rest need a person (or an agent) looking at the screenshots. Screenshot creation alone is not inspection: open the images.
 
+## Narrative (check first: most review failures are here)
+
+- [ ] Scenes are grouped into sections, and each section opens with a section scene whose title is the section's question.
+- [ ] Each title is a question, or the answer to the question just asked (by the section scene or the previous scene). Read the titles in order: no answer arrives before its question, and no topic change goes unannounced.
+- [ ] Every concept is introduced in plain words the first time it appears (skill, harness, KV cache, hill-climbing...), before any scene goes deeper.
+- [ ] Each topic is motivated before the method: why it matters, what the problem is, what exists already.
+- [ ] Every plot or number states its provenance (own data or published), the setup, and the question it answers.
+- [ ] Systems and projects are shown doing things (screenshots, animated mechanisms). No adoption statistics as the story.
+- [ ] Work that hasn't run yet is presented as a plan, with no results.
+- [ ] For every scene you can say which question it answers. If not, it is cut or the speaker is asked.
+
 ## Storyboard
 
 - [ ] Every scene in `src/lib/timeline.ts` has a `line`: one sentence the speaker says. Read in order, the lines make the talk.
@@ -15,7 +26,7 @@ Run `npm run build:export && npm run shoot` first. Items marked **[auto]** are m
 - [ ] **[auto]** At most 40 words on screen on the final step of each scene (warning above 30). Sources and axis labels are not counted; numbers are not words.
 - [ ] **[auto]** No text under 12px at 1280x720, including SVG text after scaling. Anything that is not a label or source is at least 18px (warning).
 - [ ] At most one big number per scene, with its comparator. At most three items in any list or row of cards.
-- [ ] Title is one italic serif line in sentence case, phrased as a thought or claim, in `.t-headline` (or `.t-title` on the opening scene). No topic labels ("Results", "Serving", "What is it?").
+- [ ] Title is one italic serif line in sentence case, phrased as a question or the answer to the question just asked, in `.t-headline` (or `.t-title` on the opening scene). No topic labels ("Results", "Serving", "What is it?").
 - [ ] No sentence on screen repeats the headline or another element of the same scene.
 - [ ] Sizes only from the scale in `globals.css` (`.t-display`, `.t-title`, `.t-headline`, `.t-body`, `.t-label`, `.t-source`); no one-off pixel sizes in scenes.
 

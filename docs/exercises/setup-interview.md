@@ -30,4 +30,4 @@ Stretch goals:
 - Add a second skill, or a hook that enforces your most important rule.
 - Turn one recurring failure into an automated check, such as comparing a reproduced baseline against an agreed tolerance.
 
-[Back to the deck ↩](../../?scene=outer-intro)
+[Back to the deck ↩](../../../?scene=hands-on-1)

@@ -7,7 +7,7 @@ description: Interview researchers to set up their agent for their research, onb
 
 For the one-day course **AI Agents in Practice for Physics Research**, supporting PhD students and postdocs in particle and astroparticle physics, theory, experiment and instrumentation.
 
-**Time box: 5-10 minutes, four messages from you.** (1) Opening questions. (2) At most one follow-up. (3) Summary and drafts together, shown once. (4) Write and close. Never add rounds beyond these. Unknowns get conservative defaults, not more questions.
+**Time box: 5-10 minutes, four messages from you, plus one if the participant asks for changes.** (1) Opening questions. (2) At most one follow-up. (3) Summary and drafts together, shown once. (4) Write and close. Allow only that one extra change round. Unknowns get conservative defaults, not more questions.
 
 ## Guardrails
 
@@ -21,7 +21,7 @@ For the one-day course **AI Agents in Practice for Physics Research**, supportin
 
 Before asking, silently check the project directory for an existing `CLAUDE.md`, `AGENTS.md` or skills folder and any obvious tools (languages, job scripts, notebooks). Do not ask what you can see.
 
-Send exactly this, adjusted only to skip what you already know:
+Send this, skipping what you already know. If they already have a rules file or ask for hooks/MCP, offer to extend their setup instead of promising a short rules file and one starter skill:
 
 > I'll ask three quick questions, then draft a short rules file and one starter skill for you to approve. Short answers are fine; say "go" at any point.
 > 1. What do you work on, and what does a typical result look like (a fit, a derivation, a simulation, a detector measurement, a trained model)?
@@ -47,7 +47,7 @@ Defaults when not stated:
 Then send one message containing, in order:
 
 1. **What I heard**: exactly three bullets (work and result; where and with what; limits and the one failure or never). One line saying what was defaulted.
-2. **Rules file**: fill [templates/CLAUDE.md.template](templates/CLAUDE.md.template). Remove comments. Keep only approval gates that apply: no "pushing to shared branches" for someone without git, no job gate without a scheduler. Turn their failure into a rule.
+2. **Rules file**: fill [templates/CLAUDE.md.template](templates/CLAUDE.md.template). Remove comments. Require asking before deleting data or sending anything only when the agent has tools that can act. Keep only approval gates that apply: no "pushing to shared branches" for someone without git, no job gate without a scheduler. Turn their failure into a rule.
 3. **One starter skill**, picked by you with a one-line reason, using [templates/skill.template.md](templates/skill.template.md). Name the alternatives in one line so they can swap:
    - **run-experiment**: hypothesis, reproduce the baseline, change one thing, compare, log the evidence.
    - **submit-job**: scheduler template, resource and quota check, approval above the threshold, inspect real output.
@@ -58,17 +58,19 @@ Then send one message containing, in order:
 4. **`DECISIONS.md`**: one entry, `Date: <today>`, `Decision: set up agent rules`, `Reason: <their words>`.
 5. The proposed paths and one line: "Reply OK to write these, or tell me what to change."
 
-If a rules file already exists, do not redraft it: show only the lines you would add (at most ten) and flag any conflict.
+If a rules file already exists, do not redraft it: show only the lines you would add (at most ten non-blank added lines, excluding headings) and flag any conflict.
 
 **Experienced users** who already have rules and ask for hooks, subagents or MCP: the starter can be one hook instead of a skill, turning their failure into an automated check (a short script plus its entry in the project's `.claude/settings.json`). Keep it to one item, drafted in the same message. MCP servers and home-directory settings are out of scope for the time box; name them as a next step.
 
-**Chat-only users** (browser chat, phone, no terminal agent): give a single block of at most 20 lines to paste into their chat tool's custom or project instructions, plus the starter skill as a reusable prompt. Skip `DECISIONS.md` and file paths.
+**Chat-only users** (browser chat, phone, no terminal agent): give a single block of at most 20 lines plus the starter skill as a reusable prompt. Include: never paste unpublished or personal data without checking your institution's rules. Skip `DECISIONS.md`, the date and file paths.
+
+Paste location: ChatGPT: Customize ChatGPT > What traits should ChatGPT have, or a Project's instructions; claude.ai: a Project's instructions or Settings > Profile preferences.
 
 ## Message 4: write and close
 
-Any clear yes ("ok", "looks good", "go") is approval for the drafts as shown. If they ask for changes, show only the changed lines, then write on their OK. Do not reprint unchanged drafts.
+Any clear yes ("ok", "looks good", "go") is approval for the drafts as shown. If they ask for changes, terminal agents show only changed lines; chat-only users get each changed block in full. Then write on their OK, or close for chat-only users. Do not reprint unchanged blocks. If writing a hook, dry-run it on sample input before writing it.
 
-After writing, check line limits and that no secrets or placeholders remain. Close in three lines: files written; one small task to try tomorrow with the skill; "When the agent gets something wrong, add a rule or, better, an automated check."
+After writing, check line limits and that no secrets or unfilled setup placeholders remain; command syntax such as `<jobid>` in examples is allowed. Close in three lines: files written; one small task to try tomorrow with the skill; "When the agent gets something wrong, add a rule or, better, an automated check."
 
 ## Stretch, only if asked or if time remains
 

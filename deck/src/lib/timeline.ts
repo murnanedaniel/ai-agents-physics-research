@@ -37,7 +37,7 @@ export const SCENES = [
   {"id": "llm-scaling", "part": "setup", "theme": "light", "steps": 3, "startSec": 1941, "endSec": 2019, "label": "Where did better models come from?"},
   {"id": "llm-jagged", "part": "setup", "theme": "light", "steps": 2, "startSec": 2019, "endSec": 2096, "label": "Is a frontier model better than us at everything?"},
   {"id": "llm-star", "part": "setup", "theme": "light", "steps": 3, "startSec": 2096, "endSec": 2174, "label": "So how much of what we do can agents cover?"},
-  {"id": "llm-training", "part": "setup", "theme": "light", "steps": 4, "startSec": 2174, "endSec": 2252, "label": "How is a model trained to be useful?"},
+  {"id": "llm-training", "part": "setup", "theme": "light", "steps": 5, "startSec": 2174, "endSec": 2252, "label": "How is a model trained to be useful?"},
   {"id": "sec-bench", "part": "setup", "theme": "light", "steps": 1, "startSec": 2252, "endSec": 2329, "label": "How good are agents now?"},
   {"id": "bench-timetravel", "part": "setup", "theme": "light", "steps": 3, "startSec": 2329, "endSec": 2407, "label": "Which tests filled up, and how fast?"},
   {"id": "bench-unsolved", "part": "setup", "theme": "light", "steps": 2, "startSec": 2407, "endSec": 2485, "label": "Which tests are still open, and why?"},

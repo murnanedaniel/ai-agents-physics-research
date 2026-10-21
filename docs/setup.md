@@ -39,4 +39,4 @@ Begin with one real task and a way to check its output. Coding experience is not
 - [TODO: select a compact worked example and its verification artifact.]
 - [TODO: rehearse the live walkthrough and prepare a fallback.]
 
-[Back to the deck ↩](../../?scene=outer-volunteer)
+[Back to the deck ↩](../../?scene=hands-on-1)
