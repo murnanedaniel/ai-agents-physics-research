@@ -51,7 +51,7 @@ jobs:
           SKIP_NPM_CI: "true"
           SKIP_BUILD_TYPECHECK: "true"
         run: |
-          (cd deck && npx tsc --noEmit -p .) & TSC=$!
+          (cd deck && npx tsc --noEmit -p . --incremental --tsBuildInfoFile .next/cache/tsc.tsbuildinfo) & TSC=$!
           ./build.sh
           wait $TSC
       - uses: actions/upload-pages-artifact@v3
