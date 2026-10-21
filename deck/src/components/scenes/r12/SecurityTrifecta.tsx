@@ -35,7 +35,7 @@ export function SecurityTrifectaScene({ step }: { step: number }) {
                 strokeDasharray={off[i] ? "8 8" : undefined} />
               <g opacity={off[i] ? 0.35 : 1} data-dim={off[i] || undefined}>
                 <text x={l.lx} y={l.ly} textAnchor={l.anchor} fontSize="30" fill={C.ink}>{l.name}</text>
-                <text x={l.lx} y={l.ly + 34} textAnchor={l.anchor} fontSize="20" fill={C.muted} className="t-label" style={mono}>{l.eg}</text>
+                <text x={l.lx} y={l.ly + 34} textAnchor={l.anchor} fontSize="24" fill={C.muted} className="t-label" style={mono}>{l.eg}</text>
               </g>
             </g>
           ))}

@@ -14,7 +14,7 @@ const SW = 300;
 const LOG_Y = 196;
 
 const TOOLS = [
-  { name: "Weights & Biases", what: ["hosted dashboard:", "metrics per step, run state"], write: "wandb.log(...)", read: "API, or an MCP server (a plug-in that gives the agent tools)", detail: "the run states show crashes" },
+  { name: "Weights & Biases", what: ["hosted dashboard:", "metrics per step, run state"], write: "wandb.log(...)", read: "API or MCP server", detail: "the run states show crashes" },
   { name: "Repo files", what: ["results table,", "run folders, in git"], write: "append a line", read: "cat, grep, git log", detail: "plain text, versioned by git" },
   { name: "ScienceDash", what: ["my dashboard:", "hypotheses, runs, check-ins"], write: "its tool API", read: "search old sessions", detail: "indexes session transcripts" },
 ];
@@ -85,7 +85,7 @@ export function WhyLogs({ step }: { step: number }) {
       <div className="beat-source t-source" data-region="source" style={{ position: "fixed" }}>
         {step === 0
           ? "Daniel's W&B: six projects with run counts since April 2026, read-only API query 20 Oct 2026"
-          : "W&B Python API and MCP server · ScienceDash: tool API and transcript search (system audit)"}
+          : "W&B Python API and MCP server (MCP: a plug-in that gives an agent tools) · ScienceDash: tool API and transcript search (system audit)"}
       </div>
     </Stage>
   );

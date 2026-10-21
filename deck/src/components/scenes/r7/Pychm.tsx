@@ -39,7 +39,7 @@ export function Pychm({ step }: { step: number }) {
         <Repo year="2026 · public · numpy and scipy" name="pyCHM" blurb="A clean rewrite from my thesis, mostly built by a cloud Claude Code session in two days." accent={C.accent} rows={["Higgs potential, vacuum, spectrum, four tuning measures", "182 tests pass"]} />
       </div>
       <Reveal at={1} step={step} className="mx-auto w-[min(62vw,860px)]">
-        <div className="mb-1" style={{ fontSize: T.body, lineHeight: 1.25 }}>The check: its tuning Δ<sub className="t-label">BG</sub> at one benchmark point per model, against an independent engine that shares no code.</div>
+        <div className="mb-1" style={{ fontSize: T.body, lineHeight: 1.25 }}>The check: its tuning Δ<sub>BG</sub> at one benchmark point per model, against an independent engine that shares no code.</div>
         <svg viewBox="0 0 600 190" className="w-full h-auto max-h-[27vh]" role="img" aria-label="Relative difference in Barbieri-Giudice tuning for three models, all below 0.2 percent">
           {[0.01, 0.1, 1].map((t) => (
             <g key={t}>
