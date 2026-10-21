@@ -74,12 +74,12 @@ export function BitterAgents({ step }: { step: number }) {
             <rect x={lx(PRE) - 5} y={ry(2894) - 5} width="10" height="10" fill={C.warm} transform={`rotate(45 ${lx(PRE)} ${ry(2894)})`} />
             <text x={lx(PRE) - 14} y={ry(2894) - 4} textAnchor="end" fill={C.warm} fontSize="20" fontFamily={SANS}>+ symmetry</text>
             <text className="t-label" x={lx(PRE) - 14} y={ry(2894) + 16} textAnchor="end" fill={C.warm} fontSize="15" fontFamily={MONO}>L-GATr 2894</text>
-            <text x={lx(PRE) - 14} y={ry(2766) + 22} textAnchor="end" fill={C.accent} fontSize="20" fontFamily={SANS}>transformer, 100M jets</text>
-            <text className="t-label" x={lx(PRE) - 14} y={ry(2766) + 42} textAnchor="end" fill={C.accent} fontSize="15" fontFamily={MONO}>ParT 2766</text>
+            <text x={lx(PRE) - 14} y={ry(2766) + 30} textAnchor="end" fill={C.accent} fontSize="20" fontFamily={SANS}>transformer, 100M jets</text>
+            <text className="t-label" x={lx(PRE) - 14} y={ry(2766) + 48} textAnchor="end" fill={C.accent} fontSize="15" fontFamily={MONO}>ParT 2766</text>
           </motion.g>
         </svg>
         <div style={{ ...T.body, color: C.ink, marginTop: "1vh" }}>
-          Symmetry’s lead shrinks with data; a transformer pretrained on 100M jets passes it. Symmetry inside the transformer still adds a little.
+          Symmetry’s lead shrinks with data; a transformer pretrained on 100M jets passes it. Symmetry inside it still adds a little.
         </div>
         <div className="t-label" style={{ ...T.label, ...T.mono, color: C.muted, marginTop: 6 }}>
           LorentzNet over ParticleNet: 2.8× at 6k jets, 1.4× at 1.2M. JetClass, 100M jets: a plain transformer made Lorentz-equivariant goes 0.855 → 0.864, at 2× the training time.
@@ -110,7 +110,7 @@ export function BitterAgents({ step }: { step: number }) {
               <line x1={ax(BUILT)} y1={agentY + 0.5} x2={ax(BUILT + GAIN) - 4} y2={agentY + 0.5} stroke={C.ink} strokeWidth="1.2" strokeDasharray="2 3" />
               <rect x={ax(BUILT) - 7} y={agentY - 7} width="14" height="14" fill={C.warm} transform={`rotate(45 ${ax(BUILT)} ${agentY})`} />
               <text x={ax(BUILT) + 8} y={agentY - 14} fill={C.ink} fontSize="20" fontFamily={SANS}>≈ 2 months</text>
-              <text className="t-label" x={ax(7) + 12} y={ay(cap(7)) + 20} fill={C.ink} fontSize="15" fontFamily={MONO}>next release passes it</text>
+              <text className="t-label" x={ax(7) + 12} y={ay(cap(7)) + 20} fill={C.ink} fontSize="15" fontFamily={MONO}>overtaken</text>
               <text className="t-label" x={AX0 + 8} y={AY0 - 10} fill={C.faint} fontSize="15" fontFamily={MONO}>schematic, not data</text>
             </motion.g>
           </svg>
@@ -125,7 +125,7 @@ export function BitterAgents({ step }: { step: number }) {
           </div>
           <div className="t-label" style={{ ...T.label, ...T.mono, color: C.muted, marginTop: "1.5vh" }}>closest real case (a model, not an agent; 2023):</div>
           <div style={{ ...T.body, color: C.muted }}>
-            GPT-4 with general prompting passed the medically tuned Med-PaLM 2 on MedQA, 90.2% to 86.5%.
+            GPT-4 with general prompting beat the medically tuned Med-PaLM 2 on MedQA: 90.2% to 86.5%.
           </div>
         </Show>
       </div>

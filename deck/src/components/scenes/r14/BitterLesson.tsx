@@ -21,9 +21,9 @@ const path = (f: (t: number) => number) =>
 const CROSS = 0.745;
 
 const CASES = [
-  { d: "Chess", built: "chess knowledge", won: "deep search, 1997" },
-  { d: "Go", built: "Go knowledge", won: "search and self-play" },
-  { d: "Speech", built: "phonemes, vocal tract", won: "statistics, then deep nets" },
+  { d: "Chess", built: "chess knowledge", won: "search, 1997" },
+  { d: "Go", built: "Go knowledge", won: "search, self-play" },
+  { d: "Speech", built: "phonemes, vocal tract", won: "statistics, deep nets" },
   { d: "Vision", built: "edges, SIFT features", won: "convolutional networks" },
 ];
 
