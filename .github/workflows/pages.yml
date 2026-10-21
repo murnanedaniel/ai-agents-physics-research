@@ -11,33 +11,51 @@ concurrency:
   group: pages
   cancel-in-progress: true
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: deck/package-lock.json
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - run: pip install "mkdocs-material" "mkdocs<2"
-      - name: Build deck + docs
-        env:
-          NEXT_BASE_PATH: /${{ github.event.repository.name }}
-          MKDOCS: mkdocs
-        run: ./build.sh
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: out
+  # One job (build + deploy) to skip a second runner start-up.
   deploy:
-    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # node_modules restored whole, so npm ci only runs when the lockfile changes
+      - id: nm
+        uses: actions/cache@v4
+        with:
+          path: deck/node_modules
+          key: nm-${{ runner.os }}-node22-${{ hashFiles('deck/package-lock.json') }}
+      - if: steps.nm.outputs.cache-hit != 'true'
+        run: npm ci
+        working-directory: deck
+      # mkdocs in a cached venv (system python 3.12 on ubuntu-latest)
+      - id: venv
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-mkdocs-material-mkdocs1-v1
+      - if: steps.venv.outputs.cache-hit != 'true'
+        run: python3 -m venv .venv && .venv/bin/pip install -q "mkdocs-material" "mkdocs<2"
+      - uses: actions/cache@v4
+        with:
+          path: deck/.next/cache
+          key: next-${{ runner.os }}-${{ github.sha }}
+          restore-keys: next-${{ runner.os }}-
+      - name: Build deck + docs (type-check in parallel)
+        env:
+          NEXT_BASE_PATH: /${{ github.event.repository.name }}
+          MKDOCS: .venv/bin/mkdocs
+          SKIP_NPM_CI: "true"
+          SKIP_BUILD_TYPECHECK: "true"
+        run: |
+          (cd deck && npx tsc --noEmit -p .) & TSC=$!
+          ./build.sh
+          wait $TSC
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
       - id: deployment
         uses: actions/deploy-pages@v4

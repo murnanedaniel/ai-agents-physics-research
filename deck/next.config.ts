@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   ...(isExport ? { output: "export" } : {}),
   basePath,
   images: { unoptimized: true },
+  // CI runs tsc in parallel with the build (see .github/workflows/pages.yml)
+  typescript: { ignoreBuildErrors: process.env.SKIP_BUILD_TYPECHECK === "true" },
   trailingSlash: true,
   env: {
     NEXT_PUBLIC_BASE_PATH: basePath,
