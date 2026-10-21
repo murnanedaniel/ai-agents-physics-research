@@ -215,7 +215,7 @@ export function ShowWall({ n }: { n: number }) {
       ) : (
         <div style={{ flex: 1, minHeight: 0, overflowY: "auto", display: "flex", flexDirection: "column", gap: "2vh", paddingRight: 4 }}>
           {spotlit.length > 0 && (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(clamp(280px, 27vw, 640px), 1fr))", gap: "1.4vw", alignContent: "start" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(clamp(280px, 27vw, 640px), 1fr))", gap: "1.4vw", alignContent: "start" }}>
               {spotlit.map((p) => <SpotCard key={p.id} p={p} spot={spots.get(p.id)} open={open} />)}
             </div>
           )}
@@ -268,7 +268,7 @@ function SpotCard({ p, spot, open }: { p: Entry; spot: Spot | undefined; open: (
       {image && (
         // eslint-disable-next-line @next/next/no-img-element
         <img src={image} alt="" loading="lazy" referrerPolicy="no-referrer"
-          style={{ width: "100%", aspectRatio: "16 / 9", objectFit: "contain", display: "block", background: C.paper, borderBottom: `1px solid ${C.rule}` }} />
+          style={{ width: "100%", height: "24vh", objectFit: "contain", display: "block", background: C.paper, borderBottom: `1px solid ${C.rule}` }} />
       )}
       <div style={{ padding: "1.6vh 1.2vw", display: "flex", flexDirection: "column", gap: "1vh" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.8vw" }}>
