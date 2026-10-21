@@ -59,7 +59,7 @@ function VerifyPic() {
           <L x={186} y={y + 5} anchor="start" fill={refuted[i] ? BAD : C.accent} size={17}>{refuted[i] ? "✗" : "✓"}</L>
         </g>
       ))}
-      <L x={45} y={120} fill={BAD}>killed, 2 of 3</L>
+      <L x={58} y={120} fill={BAD}>killed: 2/3</L>
     </svg>
   );
 }
