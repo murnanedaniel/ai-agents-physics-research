@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Area, D, Label, MONO, SERIF, Show, T, fitCanvas } from "./kit";
 
 // eth-rate: ported from the ETH deck's RateRamp (three.js, 6 steps) to a 2D
-// canvas with 3 steps.
+// canvas, keeping ETH's 6 clicked steps (restored in round 3 after a 3-step trim).
 //   step 0: two protons meet, one burst of tracks (one crossing, every 25 ns)
-//   step 1: the rate ramps by itself: 2, 5, 10, 1,000 per second
-//   step 2: the grid fills (40 million per second) and the trigger chain appears
+//   steps 1-4: 2, 5, 10, 1,000 per second, one click each
+//   step 5: the grid fills; the counter shows what this screen draws, against
+//           the LHC's 40 million per second, and the trigger chain appears
 // Numbers: FACTS.md in the ETH repo (CERN-2020-010; ATLAS-TDR-029).
 
 type Phase = { count: string; label: string; hz: number | null };
@@ -17,7 +18,7 @@ const RAMP: Phase[] = [
   { count: "10", label: "per second: losing it", hz: 10 },
   { count: "1,000", label: "per second: just a blur", hz: 1000 },
 ];
-const RAMP_MS = 1900; // time on each ramp phase before the next
+const LAST = RAMP.length + 1; // grid step
 
 const VIEW_H = 18; // world units across the canvas height (as in ETH)
 const FOCAL_SCALE = 4.8;
@@ -47,7 +48,6 @@ function makeBurst(now: number, life: number): Burst {
 export function RateRamp({ step }: { step: number }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const stepRef = useRef(step);
-  const [phase, setPhase] = useState(0);
   const measuredRef = useRef<HTMLSpanElement | null>(null);
 
   useEffect(() => {
@@ -68,7 +68,6 @@ export function RateRamp({ step }: { step: number }) {
     let prevStep = -1;
     let stepStart = t0;
     let lastBurst = t0;
-    let lastPhase = -1;
     let bursts: Burst[] = [];
     let protonsDone = false;
     // grid state
@@ -78,7 +77,7 @@ export function RateRamp({ step }: { step: number }) {
 
     const loop = () => {
       const now = performance.now();
-      const s = Math.min(2, Math.max(0, stepRef.current));
+      const s = Math.min(LAST, Math.max(0, stepRef.current));
       const { w, h, dpr } = size;
       const k = (h / VIEW_H) * dpr; // world unit -> device px
       const cx = (w / 2) * dpr, cy = (h / 2) * dpr;
@@ -89,7 +88,7 @@ export function RateRamp({ step }: { step: number }) {
         lastBurst = now;
         bursts = [];
         if (s === 0) protonsDone = false;
-        if (s === 2) {
+        if (s === LAST) {
           const aspect = w / h;
           rows = Math.round(Math.sqrt(TARGET_CELLS / aspect));
           cols = Math.round(aspect * rows);
@@ -107,7 +106,7 @@ export function RateRamp({ step }: { step: number }) {
       ctx.globalCompositeOperation = "lighter";
 
       // beam line, fading as the rate climbs
-      const beamAlpha = s === 0 ? 0.55 : s === 1 ? 0.25 : 0;
+      const beamAlpha = s === 0 ? 0.55 : s < 3 ? 0.4 : s < LAST ? 0.12 : 0;
       if (beamAlpha > 0) {
         ctx.globalAlpha = beamAlpha;
         ctx.strokeStyle = D.accent;
@@ -138,13 +137,8 @@ export function RateRamp({ step }: { step: number }) {
         }
       }
 
-      if (s === 1) {
-        const p = Math.min(RAMP.length - 1, Math.floor((now - stepStart) / RAMP_MS));
-        if (p !== lastPhase) {
-          lastPhase = p;
-          setPhase(p);
-        }
-        const hz = RAMP[p].hz ?? 1;
+      if (s >= 1 && s < LAST) {
+        const hz = RAMP[s - 1].hz ?? 1;
         const interval = 1000 / hz;
         let spawns = 0;
         if (now - lastBurst > 1000) lastBurst = now - interval; // after a pause, do not flood
@@ -153,8 +147,6 @@ export function RateRamp({ step }: { step: number }) {
           bursts.push(makeBurst(now, Math.max(133, 800 / hz)));
           spawns++;
         }
-      } else if (lastPhase !== -1) {
-        lastPhase = -1;
       }
 
       // draw and cull bursts
@@ -176,7 +168,7 @@ export function RateRamp({ step }: { step: number }) {
       }
       bursts = keep;
 
-      if (s === 2) {
+      if (s === LAST) {
         if (active < total) active = Math.min(total, active + Math.max(64, Math.ceil(total / 90)));
         const cw = (w / cols) * dpr, ch = (h / rows) * dpr;
         const paths = [new Path2D(), new Path2D(), new Path2D(), new Path2D()];
@@ -218,9 +210,9 @@ export function RateRamp({ step }: { step: number }) {
     };
   }, []);
 
-  const count = step <= 0 ? "1" : step === 1 ? RAMP[phase].count : "40,000,000";
+  const last = step >= LAST;
   const label =
-    step <= 0 ? "bunch crossing, every 25 nanoseconds" : step === 1 ? RAMP[phase].label : "bunch crossings per second";
+    step <= 0 ? "bunch crossing, every 25 nanoseconds" : last ? "events per second (measured)" : RAMP[step - 1].label;
 
   return (
     <Area style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", columnGap: "3vw" }}>
@@ -229,14 +221,16 @@ export function RateRamp({ step }: { step: number }) {
       </div>
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", minHeight: 0 }}>
         <div style={{ textAlign: "right" }}>
-          <div style={{ ...T.huge, fontFamily: SERIF, fontStyle: "italic", color: D.ink, fontVariantNumeric: "tabular-nums" }}>{count}</div>
+          <div style={{ ...T.huge, fontFamily: SERIF, fontStyle: "italic", color: D.ink, fontVariantNumeric: "tabular-nums" }}>
+            {last ? <span ref={measuredRef}>…</span> : step <= 0 ? "1" : RAMP[step - 1].count}
+          </div>
           <div style={{ ...T.body, fontFamily: MONO, color: D.muted, marginTop: "1vh" }}>{label}</div>
-          <Show when={step >= 2} style={{ marginTop: "0.6vh" }}>
-            <Label>this screen draws about <span ref={measuredRef}>…</span> per second</Label>
+          <Show when={last} style={{ marginTop: "0.6vh" }}>
+            <Label>what this screen can draw; the LHC does 40 million every second</Label>
           </Show>
         </div>
 
-        <Show when={step >= 2} delay={0.5} style={{ marginTop: "4vh", display: "flex", flexDirection: "column", gap: "1.8vh" }}>
+        <Show when={last} delay={0.5} style={{ marginTop: "4vh", display: "flex", flexDirection: "column", gap: "1.8vh" }}>
           {[
             ["40 MHz", "HL-LHC: about 200 collisions in each crossing"],
             ["1 MHz", "kept by the first-level trigger"],
@@ -250,6 +244,9 @@ export function RateRamp({ step }: { step: number }) {
           <div style={{ ...T.body, ...T.serif, color: D.ink, marginTop: "1.5vh" }}>
             Everything else is gone for good. We decide in real time, and the decision needs tracks.
           </div>
+        </Show>
+        <Show when={!last} style={{ marginTop: "auto", ...T.body, ...T.serif, color: D.soft }}>
+          Every 25 nanoseconds, the beams cross.
         </Show>
       </div>
     </Area>

@@ -1,9 +1,12 @@
-// Agentic-AI papers across physics-adjacent fields, Jan 2024 to Jun 2026.
+// Agentic-AI papers across physics-adjacent fields, Jan 2024 to Oct 2026.
 // Copied from the ETH deck (src/components/scenes/StatsFeint.tsx). Curated by
 // Daniel: particle physics from his own reading list; other fields from
 // agent-run literature searches with each arXiv ID checked. Incomplete,
 // especially for the last two months of the non-particle fields.
-// month 0 = Jan 2024, 29 = Jun 2026. One duplicate (2406.13163, listed under
+// month 0 = Jan 2024, 33 = Oct 2026. The search ran to Jun 2026; the only later
+// entry is chATLAS (particle, Oct 2026, arXiv id not yet assigned), so Jul to Oct
+// 2026 is nearly empty because it was not searched, not because nothing appeared.
+// Totals: 103 papers, 22 in particle physics. One duplicate (2406.13163, listed under
 // both materials and chemistry in ETH) is kept once, under materials.
 
 export type Field = "particle" | "theory" | "astro" | "climate" | "materials" | "chemistry" | "biology";
@@ -38,6 +41,7 @@ export const PAPERS: Paper[] = [
   { field: "particle",  month: 28, id: "2605.17318", title: "RooAgent · LLM agent for ROOT-based HEP analysis" },
   { field: "particle",  month: 29, id: "2606.10381", title: "Agentic Hybrid RAG · evidence-grounded muon-collider analysis" },
   { field: "particle",  month: 29, id: "2606.13535", title: "AgentRivet · Rivet routines from publications" },
+  { field: "particle",  month: 33, id: "",           title: "chATLAS (arXiv, Oct 2026)" },
 
   // ── Theoretical physics ────────────────────────────────────────────
   { field: "theory",    month: 2,  id: "2403.03154", title: "Quantum Many-Body with LLMs" },
@@ -144,4 +148,4 @@ export const FIELD_LABEL: Record<Field, string> = {
   biology:   "biology",
 };
 
-export const MONTHS = 30;
+export const MONTHS = 34;

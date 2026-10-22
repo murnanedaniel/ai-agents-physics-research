@@ -10,11 +10,11 @@ export type Scene = { id: SceneId; label: string; part: Part; theme: Theme; step
 // S4: 50 min outer loop, 20 min outro, 10 min reminders. Buffer/hands-on: 16:10–17:00.
 export const SCENES = [
   {"id": "title", "part": "setup", "theme": "light", "steps": 1, "startSec": 0, "endSec": 66, "label": "How are AI agents changing the way we do physics?"},
-  {"id": "eth-rate", "part": "setup", "theme": "dark", "steps": 3, "startSec": 66, "endSec": 133, "label": "Why do we need to be fast?"},
+  {"id": "eth-rate", "part": "setup", "theme": "dark", "steps": 6, "startSec": 66, "endSec": 133, "label": "Why do we need to be fast?"},
   {"id": "eth-gnn", "part": "setup", "theme": "dark", "steps": 3, "startSec": 133, "endSec": 199, "label": "How do we find tracks?"},
   {"id": "eth-speed", "part": "setup", "theme": "dark", "steps": 4, "startSec": 199, "endSec": 265, "label": "How fast did we get?"},
   {"id": "eth-history", "part": "setup", "theme": "dark", "steps": 2, "startSec": 265, "endSec": 331, "label": "How long has ML been in tracking?"},
-  {"id": "ml-vs-agentic", "part": "setup", "theme": "dark", "steps": 3, "startSec": 331, "endSec": 397, "label": "Is all of this agentic AI?"},
+  {"id": "ml-vs-agentic", "part": "setup", "theme": "dark", "steps": 3, "startSec": 331, "endSec": 397, "label": "When did agents arrive in physics?"},
   {"id": "agenda", "part": "setup", "theme": "light", "steps": 1, "startSec": 397, "endSec": 462, "label": "How will the day run?"},
   {"id": "q1-possible", "part": "setup", "theme": "light", "steps": 4, "startSec": 462, "endSec": 529, "label": "What can agentic science look like today?"},
   {"id": "ex-trackfit", "part": "setup", "theme": "light", "steps": 2, "startSec": 529, "endSec": 595, "label": "Why does ML seem to fit tracks twice as well?"},

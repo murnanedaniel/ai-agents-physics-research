@@ -5,7 +5,7 @@ import { GnnSolution } from "@/components/scenes/r20/GnnSolution";
 
 const beat: Beat = {
   title: "How do we find tracks?",
-  source: "Event: ColliderML Release 1 (open, CC BY 4.0), huggingface.co/datasets/CERN/ColliderML-Release-1, ttbar_pu200_tracker_hits, shard 0, event 0: Open Data Detector, tt̄ + 200 pile-up, Geant4 · barrel hits, |z| < 1 m · candidate edges from a neighbouring-layer rule; kept edges from simulation truth (scripts/r20/make_odd_event.py) · method: Ju et al. 2021, arXiv:2103.06995",
+  source: "Event: simulated ATLAS ITk event, as shown in the ETH talk (ETH deck public/data/tracking_event.bin, scripts/prep_tracking_event.py) · 350,000 hits and the ~99% / < 0.01% requirement as stated in the ETH deck · shown: barrel hits, |z| < 1 m, 144,595 hits, 501,093 candidate edges, 1,122 primary particles above 1 GeV (read from the file header) · kept edges from simulation truth · method: Ju et al. 2021, arXiv:2103.06995",
   Scene: GnnSolution,
 };
 

@@ -7,10 +7,10 @@ import { Area, D, G, MONO, SANS, SERIF, Show, T } from "./kit";
 
 // ml-vs-agentic: ported from the ETH deck's StatsFeint (4 steps) and cut to 3.
 //   step 0: agentic-AI papers in particle physics, with titles (ETH step 0).
-//           Counter: N_PARTICLE = 21 papers.
+//           Counter: N_PARTICLE = 22 papers (21 to Jun 2026, plus chATLAS, Oct 2026).
 //   step 1: the same timeline across seven fields (ETH step 2; the chips and
 //           the Schwartz feature, ETH steps 1 and 3, are dropped).
-//           Counter: PAPERS.length = 102 papers (the 21 above plus 81 in six
+//           Counter: PAPERS.length = 103 papers (the 22 above plus 81 in six
 //           other fields), matching the source line.
 //   step 2: new bridge: machine learning (a model inside the pipeline) against
 //           agentic AI (a model in charge of the loop around it). Leads into
@@ -45,7 +45,7 @@ function Counter({ total }: { total: number }) {
   return (
     <div style={{ textAlign: "right", fontFamily: MONO, fontVariantNumeric: "tabular-nums" }}>
       <div style={{ ...T.big, color: D.ink, lineHeight: 1.25, marginBottom: "0.6vh" }}>{n}</div>
-      <div className="t-label" style={{ ...T.label, color: D.muted, letterSpacing: "0.2em", textTransform: "uppercase" }}>papers · 30 months</div>
+      <div className="t-label" style={{ ...T.label, color: D.muted, letterSpacing: "0.2em", textTransform: "uppercase" }}>papers · 34 months</div>
     </div>
   );
 }
@@ -68,7 +68,7 @@ function ParticleOnly() {
           <text className="t-label" x={x0(t.m)} y={H - PAD0.bottom + 42} textAnchor="middle" fontSize={24} fontFamily={MONO} fill={D.muted} letterSpacing="0.18em">{t.label}</text>
         </g>
       ))}
-      <text className="t-label" x={x0(MONTHS - 1)} y={H - PAD0.bottom + 42} textAnchor="end" fontSize={24} fontFamily={MONO} fill={D.warm}>Jun 2026</text>
+      <text className="t-label" x={x0(MONTHS - 1)} y={H - PAD0.bottom + 42} textAnchor="end" fontSize={24} fontFamily={MONO} fill={D.warm}>Oct 2026</text>
       {dots.map((d) => (
         <motion.g key={d.p.id} initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.45, delay: (d.p.month / MONTHS) * 1.8 + d.k * 0.05 }}>
           <circle cx={d.cx} cy={d.cy} r={7} fill={D.accent} stroke="#bae6fd" strokeWidth={0.8} />
@@ -116,7 +116,7 @@ function AllFields() {
           <text className="t-label" x={x1(t.m)} y={H - PAD.bottom + 38} textAnchor="middle" fontSize={24} fontFamily={MONO} fill={D.muted} letterSpacing="0.18em">{t.label}</text>
         </g>
       ))}
-      <text className="t-label" x={x1(MONTHS - 1)} y={H - PAD.bottom + 38} textAnchor="end" fontSize={24} fontFamily={MONO} fill={D.warm}>Jun 2026</text>
+      <text className="t-label" x={x1(MONTHS - 1)} y={H - PAD.bottom + 38} textAnchor="end" fontSize={24} fontFamily={MONO} fill={D.warm}>Oct 2026</text>
       {dots}
     </svg>
   );

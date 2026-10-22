@@ -5,21 +5,18 @@ import { asset } from "@/lib/asset";
 import { Area, D, Label, Show, T, fitCanvas } from "./kit";
 
 // eth-gnn: ported from the ETH deck's GnnSolution (three.js, 4 steps) to a 2D
-// canvas with 3 steps. The ETH version drew an internal detector event; this
-// one draws an OPEN event instead:
-//   ColliderML Release 1 (CC BY 4.0), huggingface.co/datasets/CERN/ColliderML-Release-1,
-//   ttbar_pu200_tracker_hits, shard train-00000-of-01000, event_id 0 (Open Data Detector,
-//   ttbar + 200 pile-up, Geant4). Built by scripts/r20/make_odd_event.py into
-//   public/r20/odd_event.bin: barrel hits with |z| < 1 m in x-y, geometric candidate edges
-//   between neighbouring layers, truth flags from particle_id.
+// canvas with 3 steps, drawing the same simulated ATLAS ITk event as ETH:
+//   public/r30/tracking_event.bin (copied from the ETH deck's public/data/tracking_event.bin,
+//   built there by scripts/prep_tracking_event.py): barrel slice |z| < 1 m in x-y,
+//   144,595 hits, 501,093 candidate edges with truth labels, and 1,122 "focus" particles
+//   (primary, pT > 1 GeV) with their truth edges.
 //   step 0: the hits
 //   step 1: every nearby pair joined (candidate edges, random order)
 //   step 2: ten message-passing "beats"; false edges fade, true ones take their particle's colour
 // The final picture uses simulation truth: it shows what a good edge classifier
 // would keep, not the output of a trained network.
 
-const MAGIC = 0x46415247; // "GRAF"
-const EXTENT_MM = 1060; // half-width of the square view
+const MAGIC = 0x54524147; // "GART" little-endian, ETH format
 const APPEAR_MS = 2200;
 const CONVERGE_MS = 5000;
 const ITERATIONS = 10;
@@ -27,32 +24,40 @@ const ITERATIONS = 10;
 type EventData = {
   nHits: number;
   nEdges: number;
-  nFocus: number;
+  nFocusEdges: number;
+  extentMm: number;
   hits: Float32Array; // mm, x y interleaved
-  trackId: Int16Array;
+  trackId: Int32Array; // dense focus-particle id per hit, -1 = none
   edges: Uint32Array;
-  flag: Uint8Array;
+  edgeY: Uint8Array; // 1 = true edge
+  focusEdges: Uint32Array;
+  focusEdgePid: Int32Array;
 };
 
+// Binary layout as in the ETH deck's parseBuffer (scripts/prep_tracking_event.py).
 function parse(buf: ArrayBuffer): EventData {
   const dv = new DataView(buf);
-  if (dv.getUint32(0, true) !== MAGIC) throw new Error("odd_event.bin: bad magic");
+  if (dv.getUint32(0, true) !== MAGIC) throw new Error("tracking_event.bin: bad magic");
   const nHits = dv.getUint32(4, true);
   const nEdges = dv.getUint32(8, true);
-  const nFocus = dv.getUint32(12, true);
-  const scale = dv.getFloat32(16, true);
+  const nFocusEdges = dv.getUint32(16, true);
+  const scaleMm = dv.getFloat32(20, true);
   let off = 24;
-  const raw = new Int16Array(buf, off, nHits * 2);
-  off += nHits * 4;
-  const trackId = new Int16Array(buf, off, nHits);
-  off += nHits * 2;
-  off = (off + 3) & ~3;
+  const norm = new Float32Array(buf, off, nHits * 2);
+  off += nHits * 8;
   const edges = new Uint32Array(buf, off, nEdges * 2);
   off += nEdges * 8;
-  const flag = new Uint8Array(buf, off, nEdges);
+  const edgeY = new Uint8Array(buf, off, nEdges);
+  off += nEdges;
+  off = (off + 3) & ~3;
+  const trackId = new Int32Array(buf, off, nHits);
+  off += nHits * 4;
+  const focusEdges = new Uint32Array(buf, off, nFocusEdges * 2);
+  off += nFocusEdges * 8;
+  const focusEdgePid = new Int32Array(buf, off, nFocusEdges);
   const hits = new Float32Array(nHits * 2);
-  for (let i = 0; i < nHits * 2; i++) hits[i] = raw[i] / scale;
-  return { nHits, nEdges, nFocus, hits, trackId, edges, flag };
+  for (let i = 0; i < nHits * 2; i++) hits[i] = norm[i] * scaleMm;
+  return { nHits, nEdges, nFocusEdges, extentMm: scaleMm * 1.05, hits, trackId, edges, edgeY, focusEdges, focusEdgePid };
 }
 
 // Golden-angle hues so neighbouring particles get distinct colours (as in ETH).
@@ -85,11 +90,11 @@ export function GnnSolution({ step }: { step: number }) {
     let onResize: (() => void) | null = null;
 
     (async () => {
-      const res = await fetch(asset("/r20/odd_event.bin"));
+      const res = await fetch(asset("/r30/tracking_event.bin"));
       if (!res.ok || disposed) return;
       const data = parse(await res.arrayBuffer());
       if (disposed) return;
-      const { nHits, nEdges, hits, trackId, edges, flag } = data;
+      const { nHits, nEdges, nFocusEdges, extentMm, hits, trackId, edges, edgeY, focusEdges, focusEdgePid } = data;
 
       let W = 1, H = 1, px = 1, ox = 0, oy = 0, dpr = 1;
       let hitsBase = makeLayer(1, 1), hitsTrack = makeLayer(1, 1), chaos = makeLayer(1, 1), truth = makeLayer(1, 1);
@@ -117,7 +122,7 @@ export function GnnSolution({ step }: { step: number }) {
         dpr = size.dpr;
         W = canvas.width; H = canvas.height;
         const side = Math.min(W, H);
-        px = side / (2 * EXTENT_MM);
+        px = side / (2 * extentMm);
         ox = W / 2; oy = H / 2;
         hitsBase = makeLayer(W, H); hitsTrack = makeLayer(W, H); chaos = makeLayer(W, H); truth = makeLayer(W, H);
         const r = Math.max(1, 1.1 * dpr);
@@ -139,16 +144,24 @@ export function GnnSolution({ step }: { step: number }) {
           ht.fillRect(X(i) - r, Y(i) - r, 2 * r, 2 * r);
         }
 
-        // truth: true edges faint, edges of particles above 1 GeV bright in their colour
+        // truth: true edges faint grey, edges of focus particles (primary, above 1 GeV) bright in their colour
         const tc = truth.getContext("2d")!;
+        tc.globalAlpha = 0.3;
+        tc.lineWidth = 0.8 * dpr;
+        tc.strokeStyle = "rgb(115,120,133)";
+        const faint = new Path2D();
         for (let e = 0; e < nEdges; e++) {
-          if (flag[e] === 0) continue;
+          if (edgeY[e] === 0) continue;
           const a = edges[e * 2], b = edges[e * 2 + 1];
-          const focus = flag[e] === 2;
-          const id = trackId[a] >= 0 ? trackId[a] : trackId[b];
-          tc.globalAlpha = focus ? 0.95 : 0.3;
-          tc.lineWidth = (focus ? 1.6 : 0.8) * dpr;
-          tc.strokeStyle = id >= 0 ? focusColor(id) : "rgb(115,120,133)";
+          faint.moveTo(X(a), Y(a));
+          faint.lineTo(X(b), Y(b));
+        }
+        tc.stroke(faint);
+        tc.globalAlpha = 0.95;
+        tc.lineWidth = 1.6 * dpr;
+        for (let e = 0; e < nFocusEdges; e++) {
+          const a = focusEdges[e * 2], b = focusEdges[e * 2 + 1];
+          tc.strokeStyle = focusColor(focusEdgePid[e]);
           tc.beginPath();
           tc.moveTo(X(a), Y(a));
           tc.lineTo(X(b), Y(b));
@@ -233,22 +246,23 @@ export function GnnSolution({ step }: { step: number }) {
   return (
     <Area style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.25fr) minmax(0, 1fr)", columnGap: "3vw" }}>
       <div style={{ position: "relative", minHeight: 0, minWidth: 0 }}>
-        <canvas ref={canvasRef} role="img" aria-label="Hits from one simulated collision seen end-on; candidate edges join neighbouring hits, then the false edges fade and the tracks remain in colour" style={{ position: "absolute", inset: 0 }} />
+        <canvas ref={canvasRef} role="img" aria-label="Hits from one simulated ATLAS ITk collision seen end-on; candidate edges join neighbouring hits, then the false edges fade and the tracks remain in colour" style={{ position: "absolute", inset: 0 }} />
       </div>
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: "3vh", minHeight: 0 }}>
         <div style={{ ...T.big, ...T.serif, color: D.ink }}>Treat the hits as a graph.</div>
         <Show when={step >= 0}>
-          <div style={{ ...T.body, color: D.soft }}>One simulated collision with 200 pile-up: 214,203 hits.</div>
-          <Label>shown: the barrel, |z| &lt; 1 m, 102,748 hits, end-on</Label>
+          <div style={{ ...T.body, color: D.soft }}>One simulated collision in the ATLAS ITk: 350,000 hits.</div>
+          <div style={{ ...T.body, color: D.warm }}>Required: ~99% efficiency, &lt; 0.01% fake rate.</div>
+          <Label>shown: the barrel, |z| &lt; 1 m, 144,595 hits, end-on</Label>
         </Show>
         <Show when={step >= 1}>
-          <div style={{ ...T.body, color: D.soft }}>Connect every nearby pair: 615,870 candidate edges. Each one is a hypothesis.</div>
+          <div style={{ ...T.body, color: D.soft }}>Connect every nearby pair: half a million candidate edges. Every one is a hypothesis.</div>
         </Show>
         <Show when={step >= 2}>
           <div style={{ ...T.body, color: D.soft }}>
-            A graph neural network passes messages along the edges, ten rounds, and scores each one. We keep the high scores, and the tracks are what&rsquo;s left.
+            A graph neural network passes messages across every edge, ten iterations, and works out which hypotheses agree. We keep those, and the tracks are what&rsquo;s left.
           </div>
-          <Label style={{ display: "block", marginTop: "1vh" }}>illustration: edges kept from simulation truth; in colour, the 194 particles above 1 GeV</Label>
+          <Label style={{ display: "block", marginTop: "1vh" }}>illustration: edges kept from simulation truth; in colour, the 1,122 primary particles above 1 GeV</Label>
         </Show>
       </div>
     </Area>
