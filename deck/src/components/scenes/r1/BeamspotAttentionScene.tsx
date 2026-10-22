@@ -3,10 +3,12 @@
 import { motion } from "motion/react";
 import { asset } from "@/lib/asset";
 import { C, Canvas, Reveal, T, mono, serif, stop } from "./kit";
+import { PaperFan } from "../r31/PaperFan";
 
 // Cross-track attention: let the tracks of one event talk, so the model can find the vertex itself.
 // Top: the architecture (paper section 3.2). Bottom left: d0 on the randomised beam-spot set (Table 5).
 // Step 0: architecture and the gain. Step 1: the matched control Daniel asked for, the probe, the paper.
+// Step 2: the paper fans out into its 16 pages (the effect from the ETH talk).
 
 const TRACKS = [0, 1, 2, 3];
 const TY = (i: number) => 34 + i * 44;
@@ -99,6 +101,7 @@ export function BeamspotAttentionScene({ step }: { step: number }) {
           </a>
         </Reveal>
       </div>
+      <PaperFan open={step >= 2} caption="the agent's 16-page draft, 7 Apr 2026" />
     </Canvas>
   );
 }

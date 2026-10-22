@@ -11,18 +11,20 @@ import { C, Canvas, Reveal, T, mono } from "./kit";
 
 const R_TRK = 118, R_EC0 = 132, R_EC1 = 172, R_HC0 = 180, R_HC1 = 238;
 const polar = (r: number, deg: number) => ({ x: r * Math.cos((deg * Math.PI) / 180), y: r * Math.sin((deg * Math.PI) / 180) });
-// Track as a gentle arc from the origin to the tracker edge; bend sets curvature (charge sign).
-function arc(deg: number, bend: number) {
+// Track in the transverse plane: a circle arc from the beam line (origin) to the tracker edge.
+// rho is the bending radius (proportional to pT; cartoon units), q the charge (sets which way it bends).
+// The arc ends at angle deg, so it starts at deg - q * alpha / 2, where alpha = 2 asin(R / 2 rho) is the turning angle.
+function arc(deg: number, q: number, rho: number) {
   const e = polar(R_TRK, deg);
-  const m = polar(R_TRK / 2, deg + bend);
-  return `M0,0 Q${m.x.toFixed(1)},${m.y.toFixed(1)} ${e.x.toFixed(1)},${e.y.toFixed(1)}`;
+  // sweep flag 1 = increasing SVG angle; a positive charge turns that way in this cartoon
+  return `M0,0 A${rho},${rho} 0 0 ${q > 0 ? 1 : 0} ${e.x.toFixed(1)},${e.y.toFixed(1)}`;
 }
 
-type P = { key: string; kind: "charged" | "photon" | "neutral"; deg: number; bend?: number; r: number; size: number; label: string };
+type P = { key: string; kind: "charged" | "photon" | "neutral"; deg: number; q?: number; rho?: number; r: number; size: number; label: string };
 const PARTS: P[] = [
-  { key: "pi", kind: "charged", deg: -60, bend: 14, r: 206, size: 22, label: "charged hadron" },
-  { key: "e", kind: "charged", deg: 20, bend: -12, r: 150, size: 13, label: "electron" },
-  { key: "pi2", kind: "charged", deg: 150, bend: 10, r: 210, size: 19, label: "charged hadron" },
+  { key: "pi", kind: "charged", deg: -60, q: 1, rho: 95, r: 206, size: 22, label: "charged hadron" },
+  { key: "e", kind: "charged", deg: 20, q: -1, rho: 70, r: 150, size: 13, label: "electron" },
+  { key: "pi2", kind: "charged", deg: 150, q: 1, rho: 260, r: 210, size: 19, label: "charged hadron" },
   { key: "g", kind: "photon", deg: -150, r: 152, size: 14, label: "photon" },
   { key: "n", kind: "neutral", deg: 90, r: 212, size: 21, label: "neutral hadron" },
 ];
@@ -51,7 +53,7 @@ export function PandoraPflowScene({ step }: { step: number }) {
             <g key={p.key}>
               {p.kind === "charged" && (
                 <>
-                  <motion.path d={arc(p.deg, p.bend!)} fill="none" stroke={C.accent} strokeWidth={2.4}
+                  <motion.path d={arc(p.deg, p.q!, p.rho!)} fill="none" stroke={C.accent} strokeWidth={2.4}
                     initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.8, delay: 0.2 + i * 0.15 }} />
                   {/* step 1: the link from the track end to its cluster */}
                   <motion.line x1={end.x} y1={end.y} x2={c.x} y2={c.y} stroke={C.accent} strokeWidth={2.4} strokeDasharray="4 3"
@@ -85,7 +87,7 @@ export function PandoraPflowScene({ step }: { step: number }) {
       <div style={{ flex: "1 1 44%", display: "flex", flexDirection: "column", gap: "2.6vh", minWidth: 0 }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "1.2vh" }}>
           <span style={{ display: "flex", alignItems: "center", gap: 12, fontSize: T.body }}>
-            <span style={{ width: 30, height: 3, background: C.accent, flex: "none" }} />Tracks: charge and momentum.
+            <span style={{ width: 30, height: 3, background: C.accent, flex: "none" }} />Tracks: they curl in the magnetic field. Charge sets which way, momentum sets how tightly.
           </span>
           <span style={{ display: "flex", alignItems: "center", gap: 12, fontSize: T.body }}>
             <span style={{ width: 16, height: 16, borderRadius: 8, background: "rgba(87,83,78,0.22)", border: `1.4px solid ${C.muted}`, flex: "none", marginLeft: 7, marginRight: 7 }} />Clusters: energy.

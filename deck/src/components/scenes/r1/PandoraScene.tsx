@@ -9,12 +9,12 @@ import { C, Canvas, Reveal, T, mono } from "./kit";
 // Minutes of single-thread wall time per mu=200 ttbar event (notes/w19/pandora_speedup.csv).
 const MAXMIN = 130;
 const ROWS = [
-  { key: "first", name: "first attempt", min: 100, label: "killed after 1 h 40 min", color: C.faint, open: true },
-  { key: "stock", name: "stock Pandora", min: 3614 / 60, label: "60.2 min", color: C.muted, open: false },
+  { key: "first", name: "my first run", sub: "key4hep interface had an N×M loop", min: 100, label: "killed after 1 h 40 min", color: C.faint, open: true },
+  { key: "stock", name: "stock Pandora", sub: "loop fixed, algorithms unchanged", min: 3614 / 60, label: "60.2 min", color: C.muted, open: false },
 ];
 const GOAL = 10;
 const pct = (m: number) => `${(m / MAXMIN) * 100}%`;
-const AXIS = "(100% - 11em - 18px)";
+const AXIS = "(100% - 13em - 18px)";
 
 export function PandoraScene({ step }: { step: number }) {
   const on = step >= 1;
@@ -33,10 +33,13 @@ export function PandoraScene({ step }: { step: number }) {
 
       <Reveal at={1} step={step} style={{ display: "flex", flexDirection: "column", gap: "3vh" }}>
         <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>minutes per event, one thread, 200 pile-up collisions</span>
-        <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 11em) 1fr", rowGap: "2.6vh", columnGap: 18, alignItems: "center", position: "relative", marginTop: "3vh" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 13em) 1fr", rowGap: "2.6vh", columnGap: 18, alignItems: "center", position: "relative", marginTop: "3vh" }}>
           {ROWS.map((r, i) => (
             <div key={r.key} style={{ display: "contents" }}>
-              <span className="t-label" style={{ fontSize: T.body, color: C.ink, textAlign: "right" }}>{r.name}</span>
+              <span style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", textAlign: "right", gap: 2 }}>
+                <span className="t-label" style={{ fontSize: T.body, color: C.ink }}>{r.name}</span>
+                <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted, lineHeight: 1.2 }}>{r.sub}</span>
+              </span>
               <div style={{ height: 34, display: "flex", alignItems: "center", gap: 12 }}>
                 <motion.div
                   initial={false}
@@ -53,8 +56,8 @@ export function PandoraScene({ step }: { step: number }) {
             </div>
           ))}
           {/* goal line across the bars */}
-          <div aria-hidden style={{ position: "absolute", top: -12, bottom: -12, left: `calc(11em + 18px + ${AXIS} * ${GOAL / MAXMIN})`, borderLeft: `2px dashed ${C.warm}` }} />
-          <span className="t-label" style={{ position: "absolute", top: -36, left: `calc(11em + 18px + ${AXIS} * ${GOAL / MAXMIN} + 8px)`, fontFamily: mono, fontSize: T.label, color: C.warmText, whiteSpace: "nowrap" }}>goal: 10 min</span>
+          <div aria-hidden style={{ position: "absolute", top: -12, bottom: -12, left: `calc(13em + 18px + ${AXIS} * ${GOAL / MAXMIN})`, borderLeft: `2px dashed ${C.warm}` }} />
+          <span className="t-label" style={{ position: "absolute", top: -36, left: `calc(13em + 18px + ${AXIS} * ${GOAL / MAXMIN} + 8px)`, fontFamily: mono, fontSize: T.label, color: C.warmText, whiteSpace: "nowrap" }}>goal: 10 min</span>
         </div>
         <span style={{ fontSize: T.body, lineHeight: 1.35, borderLeft: `3px solid ${C.warm}`, paddingLeft: 14 }}>
           My brief to the agent: under ten minutes per event, with the physics within 3%.

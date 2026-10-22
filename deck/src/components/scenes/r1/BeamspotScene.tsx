@@ -1,13 +1,15 @@
 "use client";
 
 import { Fragment } from "react";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { BeamspotRunView } from "../r31/BeamspotRunView";
 import { C, Canvas, Reveal, T, mono, serif } from "./kit";
 
 // The study the agent ran: train on one beam spot, test on another.
 // Left: the plan Daniel dictated on a run and what the agent then used (Slurm totals).
 // Right: the paper's cross-evaluation (Tables 3 and 4), d0 IQR/1.349 in um.
-// Step 0: the plan and the four beam-spot settings. Step 1: the matrix fills in.
+// Round 3: step 0 is the ETH view (the run map, and Claude remote control on Perlmutter).
+// Step 1: the plan and the four beam-spot settings. Step 2: the matrix fills in.
 
 const PLAN = ["Move the beam line", "Compare baselines", "Test generalisation", "Try a global fit"];
 
@@ -50,6 +52,16 @@ function SpotGlyph({ dx, dy, r, spread }: { dx: number; dy: number; r: number; s
 }
 
 export function BeamspotScene({ step }: { step: number }) {
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div key={step === 0 ? "run" : "matrix"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.35 }} style={{ position: "absolute", inset: 0 }}>
+        {step === 0 ? <BeamspotRunView /> : <BeamspotMatrix step={step - 1} />}
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+function BeamspotMatrix({ step }: { step: number }) {
   const full = step >= 1;
   return (
     <Canvas style={{ flexDirection: "row", gap: "3vw", alignItems: "center" }}>
