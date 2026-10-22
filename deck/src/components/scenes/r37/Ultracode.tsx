@@ -75,10 +75,11 @@ export function Ultracode({ step }: { step: number }) {
         </G>
         {/* right column: what changes */}
         <G when={step >= 1}>
-          <text x={840} y={90} fontSize="26" fill={C.ink}>It changes how many agents work,</text>
-          <text x={840} y={126} fontSize="26" fill={C.ink}>not how hard each one thinks.</text>
-          <Lbl x={840} y={164} anchor="start">it sits in the /effort menu,</Lbl>
-          <Lbl x={840} y={186} anchor="start">but it is not an effort level</Lbl>
+          <text x={850} y={80} fontSize="26" fill={C.ink}>It changes how many</text>
+          <text x={850} y={114} fontSize="26" fill={C.ink}>agents work, not how</text>
+          <text x={850} y={148} fontSize="26" fill={C.ink}>hard each one thinks.</text>
+          <Lbl x={850} y={186} anchor="start">it sits in the /effort menu,</Lbl>
+          <Lbl x={850} y={208} anchor="start">but it is not an effort level</Lbl>
         </G>
       </svg>
       <div className="relative" style={{ minHeight: "4.2em" }}>

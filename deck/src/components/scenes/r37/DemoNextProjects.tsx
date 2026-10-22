@@ -10,10 +10,10 @@ import { Area, C, G, Show, T } from "../r11/kit";
 // 22 Oct 2026. Full prompt: notes/round3/demo-next-projects-prompt.md (private).
 const MONO = "var(--font-geist-mono), monospace";
 const SOURCES = [
-  { h: "41 projects", t: "hypothesis, next steps, blockers" },
+  { h: "41 projects", t: "hypotheses, next steps" },
   { h: "7 programmes", t: "one thesis each" },
-  { h: "my threads", t: "what I actually worked on" },
-  { h: "grant work", t: "themes I have committed to" },
+  { h: "my threads", t: "what I worked on" },
+  { h: "grant work", t: "themes I committed to" },
 ];
 
 export function DemoNextProjects({ step }: { step: number }) {
@@ -30,7 +30,7 @@ export function DemoNextProjects({ step }: { step: number }) {
         {SOURCES.map((s, i) => (
           <g key={s.h}>
             <text x={30} y={96 + i * 54} fontSize="26" fill={C.ink}>{s.h}</text>
-            <text className="t-label" x={220} y={96 + i * 54} fontSize="17" fill={C.muted} fontFamily={MONO}>{s.t}</text>
+            <text className="t-label" x={210} y={96 + i * 54} fontSize="16" fill={C.muted} fontFamily={MONO}>{s.t}</text>
           </g>
         ))}
         <line x1={445} y1={150} x2={585} y2={150} stroke={C.muted} strokeWidth="2" markerEnd="url(#r37-np-arrow)" />

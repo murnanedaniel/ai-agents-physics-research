@@ -44,7 +44,7 @@ function Meter({ fill, warm }: { fill: number; warm: boolean }) {
       <rect x={60} y={230} width={120} height={150} rx="6" fill="#fff" stroke={C.rule} strokeWidth="1.5" />
       <motion.rect x={60} width={120} rx="6" fill={warm ? C.warm : C.accent} opacity={0.75} initial={false}
         animate={{ y: 380 - 150 * fill, height: 150 * fill }} transition={{ duration: 1.6, ease: "easeInOut" }} />
-      <Lbl x={120} y={400}>Claude&apos;s context</Lbl>
+      <Lbl x={120} y={218}>Claude&apos;s context</Lbl>
     </g>
   );
 }
