@@ -63,7 +63,7 @@ export function LayerHarness34({ step }: { step: number }) {
   const cols = [
     { title: "Chat apps", lines: ["claude.ai", "ChatGPT", "Gemini"], sub: "you copy results across", color: C.faint, fill: TINT.paper },
     { title: "Coding agents", lines: ["Claude Code", "Codex", "Cursor"], sub: "edits files, runs commands", color: C.accent, fill: TINT.accent },
-    { title: "Always on", lines: ["Dots", "Grok bot", "Claude Duet (new)"], sub: "keeps running", color: C.accent, fill: TINT.accent },
+    { title: "Always on", lines: ["Dots", "Grok bot", "Claude Duet"], sub: "keeps running", color: C.accent, fill: TINT.accent },
     { title: "Workbenches", lines: ["Claude Science", "Co-scientist (Google)", "Kosmos (Edison)", "AI Scientist (Sakana)"], sub: "scientific agent systems", color: C.violet, fill: TINT.violet },
   ];
   return (

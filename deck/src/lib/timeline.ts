@@ -59,7 +59,7 @@ export const SCENES = [
   {"id": "q2-limits", "part": "setup", "theme": "light", "steps": 4, "startSec": 3185, "endSec": 3252, "label": "Where do agents fail?"},
   {"id": "limits-patterns", "part": "setup", "theme": "light", "steps": 2, "startSec": 3252, "endSec": 3318, "label": "Studies name four failure patterns, and I've hit all four."},
   {"id": "limits-style", "part": "setup", "theme": "light", "steps": 2, "startSec": 3318, "endSec": 3384, "label": "Does generated prose leave a trace?"},
-  {"id": "limits-architecture", "part": "setup", "theme": "light", "steps": 2, "startSec": 3384, "endSec": 3450, "label": "Does the agent learn from working with me?"},
+  {"id": "limits-architecture", "part": "setup", "theme": "light", "steps": 3, "startSec": 3384, "endSec": 3450, "label": "Does the agent learn from working with me?"},
   {"id": "q3-professional", "part": "setup", "theme": "light", "steps": 3, "startSec": 3450, "endSec": 3516, "label": "What makes agentic science professional?"},
   {"id": "two-axes", "part": "setup", "theme": "light", "steps": 2, "startSec": 3516, "endSec": 3583, "label": "Where do today’s ways of working sit?"},
   {"id": "stack-layers", "part": "setup", "theme": "light", "steps": 3, "startSec": 3583, "endSec": 3649, "label": "What sits between you and the model?"},
