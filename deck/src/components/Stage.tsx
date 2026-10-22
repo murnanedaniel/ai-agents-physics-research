@@ -6,6 +6,7 @@ import { SCENES } from "@/lib/timeline";
 import { useKeyboard } from "@/lib/useKeyboard";
 import { useElapsed } from "@/lib/useElapsed";
 import { PresenterClock } from "./PresenterClock";
+import { SectionFooter } from "./SectionFooter";
 import { SCENE_COMPONENTS } from "@/lib/sceneRegistry";
 
 export function Stage() {
@@ -16,6 +17,7 @@ export function Stage() {
   const [fallback, setFallback] = useState(false);
   const [running, setRunning] = useState(false);
   const [keyDebug, setKeyDebug] = useState(false);
+  const [sourcesVisible, setSourcesVisible] = useState(false);
   const [lastKey, setLastKey] = useState<string>("");
 
   const { elapsed, reset } = useElapsed(running);
@@ -83,6 +85,7 @@ export function Stage() {
     const onKey = (e: KeyboardEvent) => {
       setLastKey(e.key);
       if (e.key === "k" || e.key === "K") setKeyDebug((v) => !v);
+      if (e.key === "s" || e.key === "S") setSourcesVisible((v) => !v);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -95,7 +98,7 @@ export function Stage() {
 
   return (
     <motion.div
-      className={`relative w-screen h-screen overflow-hidden cursor-pointer select-none ${theme === "light" ? "theme-light" : "theme-dark"}`}
+      className={`relative w-screen h-screen overflow-hidden cursor-pointer select-none ${theme === "light" ? "theme-light" : "theme-dark"}${sourcesVisible ? " show-sources" : ""}`}
       onClick={advance}
       role="button"
       data-scene={scene.id}
@@ -105,6 +108,8 @@ export function Stage() {
       transition={{ duration: 1.2, ease: [0.65, 0, 0.3, 1] }}
     >
       <AnimatePresence mode="wait">{rendered}</AnimatePresence>
+
+      <SectionFooter sceneIdx={sceneIdx} stepIdx={stepIdx} />
 
 
 

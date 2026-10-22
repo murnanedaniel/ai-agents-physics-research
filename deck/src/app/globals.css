@@ -162,6 +162,16 @@ body {
 .beat-source { position: absolute; right: 5vw; bottom: 2.5vh; max-width: 90vw; text-align: right; font: 12px/1.4 var(--font-geist-mono), monospace; color: #625d54; z-index: 2; }
 /* On the dark (#050607) scenes the paper-theme citation colour is only ~3:1; use the ETH faint zinc. */
 .theme-dark .beat-source { color: #a1a1aa; }
+/* Sources are hidden from the audience by default; S toggles them (presenter checks, Q&A). */
+.beat-source { display: none; }
+.show-sources .beat-source { display: block; }
+.section-footer { position: absolute; left: 5vw; bottom: 2.5vh; display: flex; align-items: center; gap: 14px; z-index: 2; font: 13px/1 var(--font-geist-mono), monospace; letter-spacing: 0.04em; color: #5b564d; pointer-events: none; }
+.section-footer-bar { display: block; width: 14vw; height: 3px; border-radius: 2px; background: rgba(91, 86, 77, 0.18); overflow: hidden; }
+.section-footer-bar > span { display: block; height: 100%; background: #2f6f9f; transition: width 0.6s ease; }
+.theme-dark .section-footer { color: #a1a1aa; }
+.theme-dark .section-footer-bar { background: rgba(255, 255, 255, 0.12); }
+.theme-dark .section-footer-bar > span { background: #7dd3fc; }
+.show-sources .section-footer { display: none; }
 .day-grid { display: flex; width: 100%; gap: 3px; align-items: stretch; min-height: 36vh; }
 .day-block { display: flex; flex-direction: column; justify-content: space-between; gap: 16px; padding: 16px 10px; background: #dce6e7; min-width: 0; }
 .day-block strong { font-size: 20px; font-weight: 400; }

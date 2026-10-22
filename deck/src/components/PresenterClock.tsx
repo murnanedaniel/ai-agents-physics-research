@@ -56,7 +56,7 @@ export function PresenterClock({ elapsed, sceneIdx, stepIdx, fallback, running }
         </span>
       </div>
       <div className="mt-1 text-[10px] text-zinc-600">
-        space/→/↓/PgDn step · ←/↑/PgUp back · P clock · F fallback{fallback ? " ON" : ""} · R restart · K key-debug
+        space/→/↓/PgDn step · ←/↑/PgUp back · P clock · F fallback{fallback ? " ON" : ""} · R restart · S sources · K key-debug
       </div>
     </div>
   );
