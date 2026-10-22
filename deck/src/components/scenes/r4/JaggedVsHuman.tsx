@@ -12,8 +12,8 @@ type Row = { name: string; what: string; ai: number; hu: number; aiNote: string;
 const ROWS: Row[] = [
   { name: "GPQA Diamond", what: "graduate science quiz", ai: 97, hu: 65, soft: true, aiNote: "AI 97%: GPT-5.4, Mar 2026 (capitalandcompute.net, secondary)", huNote: "Humans 65%: PhD experts in the field, full 448-question set (Rein et al. 2023, arXiv:2311.12022)" },
   { name: "PHYBench", what: "500 physics problems", ai: 77.4, hu: 61.9, soft: true, aiNote: "AI 77.4%: top of llm-stats, Sep 2026 (unconfirmed). At launch, Apr 2025: 36.9%", huNote: "Humans 61.9%: physics experts (Qiu et al. 2025, arXiv:2504.16074)" },
-  { name: "ARC-AGI-2", what: "abstract grid puzzles", ai: 85, hu: 60, soft: true, aiNote: "AI about 85 to 92%: aggregator mirrors, Jun to Sep 2026 (unconfirmed). At launch, Mar 2025: about 4%", huNote: "Humans 60%: average of 400+ test-takers (ARC Prize, 24 Mar 2025)" },
-  { name: "ARC-AGI-3", what: "games learned while playing", ai: 0.51, hu: 100, aiNote: "AI 0.51%: best frontier model at launch (ARC Prize, 25 Mar 2026)", huNote: "Humans 100%: every game solved by human testers (ARC Prize, 25 Mar 2026)" },
+  { name: "ARC-AGI-2", what: "abstract grid puzzles", ai: 92.5, hu: 60, aiNote: "AI 92.5%: GPT-5.6 Sol (Max), ARC Prize leaderboard, Oct 2026. At launch, Mar 2025: about 4%", huNote: "Humans 60%: average of 400+ test-takers (ARC Prize, 24 Mar 2025)" },
+  { name: "ARC-AGI-3", what: "games learned while playing", ai: 30.2, hu: 100, aiNote: "AI 30.2%: Claude Opus 5 (High), ARC Prize leaderboard, Oct 2026. At launch, 25 Mar 2026: 0.51%", huNote: "Humans 100%: every game solved by human testers (ARC Prize, 25 Mar 2026)" },
 ];
 
 // Step 1 panel: ARC Prize leaderboard data (arcprize.org/media/data/evaluations.json, read 2026-10-22),
@@ -31,7 +31,7 @@ export function JaggedVsHuman({ step }: { step: number }) {
   const note = hov ? (() => { const [i, k] = hov.split("-"); const r = ROWS[+i]; return k === "ai" ? r.aiNote : r.huNote; })() : "Best reported frontier score against the published human baseline on the same test";
   return (
     <Canvas>
-      <svg viewBox="0 0 1200 600" className="h-full w-full" role="img" aria-label="Frontier AI against humans: ahead on GPQA Diamond, PHYBench and ARC-AGI-2; 0.5% against 100% on ARC-AGI-3">
+      <svg viewBox="0 0 1200 600" className="h-full w-full" role="img" aria-label="Frontier AI against humans: ahead on GPQA Diamond, PHYBench and ARC-AGI-2; 30% against 100% on ARC-AGI-3">
         {/* legend */}
         <circle cx={X0} cy={22} r="8" fill={C.s1} />
         <text className="t-label" x={X0 + 16} y={28} fill={C.ink} fontSize="17" fontFamily={MONO}>best frontier AI</text>
