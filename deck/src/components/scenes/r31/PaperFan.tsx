@@ -24,7 +24,7 @@ export function PaperFan({ open, caption }: { open: boolean; caption: string }) 
       initial={false}
       animate={{ opacity: open ? 1 : 0 }}
       transition={{ duration: 0.4 }}
-      style={{ position: "absolute", top: "13vh", left: 0, right: 0, bottom: 0, zIndex: 20, pointerEvents: open ? "auto" : "none", background: "rgba(250,248,243,0.94)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "2vh" }}
+      style={{ position: "absolute", top: "13vh", left: 0, right: 0, bottom: 0, zIndex: 20, pointerEvents: open ? "auto" : "none", background: "rgba(250,248,243,0.99)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "2vh" }}
     >
       <div style={{ position: "relative", width: "100%", height: "78%" }}>
         {FAN.map((f, i) => (

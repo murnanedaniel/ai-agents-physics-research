@@ -26,7 +26,7 @@ function Plot({ upto }: { upto: number }) {
   const kept = [{ x: px(0), y: py(YMAX) }, ...pts.filter((p) => p.s.status === "kept").map((p) => ({ x: p.x, y: py(p.s.min!) }))];
   return (
     <svg viewBox={`0 0 ${PW} ${PH}`} style={{ width: "100%", height: "21vh", flex: "none" }} role="img" aria-label="Minutes per event after each optimisation step">
-      <g className="t-label" fontFamily={mono} fontSize="13" fill={C.muted}>
+      <g className="t-label" fontFamily={mono} fontSize="16" fill={C.muted}>
         {[0, 20, 40, 60].map((m) => (
           <g key={m}>
             <line x1={PL} x2={PW - 8} y1={py(m)} y2={py(m)} stroke={C.rule} strokeWidth={m === 0 ? 1.2 : 0.6} />

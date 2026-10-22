@@ -71,7 +71,7 @@ export function BeamspotRunView() {
               const l = LINES[k % LINES.length];
               const newest = i === shown.length - 1;
               return (
-                <motion.div key={k} layout initial={{ opacity: 0, y: 10 }} animate={{ opacity: newest ? 1 : 0.4 + (0.5 * i) / SHOW, y: 0 }} transition={{ duration: 0.3 }}
+                <motion.div key={k} initial={{ opacity: 0 }} animate={{ opacity: newest ? 1 : 0.55 + (0.45 * i) / SHOW }} transition={{ duration: 0.3 }}
                   className="t-label"
                   style={{ display: "flex", gap: 8, fontFamily: mono, fontSize: "clamp(12px, 0.95vw, 18px)", lineHeight: 1.3, color: l.t.startsWith("$") ? C.warmText : C.accent, background: newest ? C.accentSoft : "transparent", borderRadius: 4, padding: "2px 6px", whiteSpace: "nowrap", overflow: "hidden" }}>
                   <span style={{ color: C.muted, flex: "none" }}>{l.day}</span>

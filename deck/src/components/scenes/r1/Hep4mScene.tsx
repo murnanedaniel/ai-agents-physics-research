@@ -88,7 +88,7 @@ export function Hep4mScene({ step }: { step: number }) {
         </AnimatePresence>
       </svg>
       <div style={{ flex: "1 1 42%", display: "flex", flexDirection: "column", gap: "1.8vh", minWidth: 0 }}>
-        <div style={{ fontSize: T.body, lineHeight: 1.35 }}>Seven kinds of detector and truth data become tokens, like words, and one model learns them all. A task is a choice of inputs and outputs.</div>
+        <div style={{ fontSize: T.body, lineHeight: 1.35 }}>Seven kinds of detector and truth data become tokens, and one model learns them all. A task picks inputs and outputs.</div>
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: "6px 16px", minHeight: "2.6em" }}>
           <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>task</span>
           <AnimatePresence mode="wait">
@@ -109,9 +109,9 @@ export function Hep4mScene({ step }: { step: number }) {
         <span style={{ fontSize: T.body, lineHeight: 1.3 }}>On particle flow it matches HGPflow and is harder to tell from truth.</span>
         <Reveal at={1} step={step} style={{ display: "flex", flexDirection: "column", gap: 8, borderLeft: `3px solid ${C.accent}`, paddingLeft: 14 }}>
           <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>what the agents did</span>
-          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>Ran over 20,000 GPU-hours of training and tests on Perlmutter.</span>
-          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>Managed the paper writing: little of Claude&apos;s own text made it in, but it ran the comments, the changes and the Overleaf collaboration.</span>
-          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>Audited every number, and found an event-alignment bug in the classifier test.</span>
+          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>Ran over 20,000 GPU-hours of experiments.</span>
+          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>Managed the paper writing: little of its own text made it in, but it ran the comments, changes and Overleaf collaboration.</span>
+          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>Audited every number; found an event-alignment bug.</span>
         </Reveal>
       </div>
     </Canvas>
