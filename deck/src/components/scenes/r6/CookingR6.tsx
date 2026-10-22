@@ -61,8 +61,6 @@ export function CookingR6({ step }: { step: number }) {
               </>
             ) : (
               <>
-                <rect x={PRE0} y={y - 14} width={X0 - PRE0} height={28} rx={4} fill="none" stroke={C.faint} strokeWidth={1} strokeDasharray="4 4" />
-                <text x={PRE0 + (X0 - PRE0) / 2} y={y + 6} textAnchor="middle" fontSize={T.label} fill={C.muted} className="t-label">tested</text>
                 <motion.rect x={tx(p.start)} y={y - 14} height={28} rx={4} fill={C.warm} opacity={0.85}
                   initial={false} animate={{ width: tx(SERVE) - tx(p.start) }} transition={{ duration: 0.9, delay: 0.1 * i }} />
                 {p.start > 13 && <text x={tx(p.start)} y={y - 22} fontSize={T.label} fill={C.muted} className="t-label">after lunch</text>}
@@ -73,7 +71,7 @@ export function CookingR6({ step }: { step: number }) {
       })}
 
       <Show when={step >= 0}>
-        <text x={34} y={yEnd + 82} fontSize={T.body} fill={C.ink}>Four start from scratch today. We tested each one once beforehand.</text>
+        <text x={34} y={yEnd + 82} fontSize={T.body} fill={C.ink}>Four start from scratch today; tracking was cooked beforehand.</text>
       </Show>
       <Show when={step >= 1}>
         {[{ h: LUNCH_CHECK, label: "check" }, { h: SERVE, label: "serve" }].map(({ h, label }) => (
