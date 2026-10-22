@@ -53,7 +53,7 @@ export function FineTuningIntro({ step }: { step: number }) {
       <div className="h-full flex-[0.75] min-w-0 flex items-center justify-center"><Bars /></div>
       <div className="flex-1 min-w-0 flex flex-col justify-center gap-[4vh]">
         <Reveal at={0} step={step}>
-          <div style={{ fontSize: T.body, lineHeight: 1.3 }}>A model is fine-tuned when large inputs cancel to leave a small observable. The finer the cancellation, the more tuned the model.</div>
+          <div style={{ fontSize: T.body, lineHeight: 1.3 }}>Fine-tuning: large inputs cancel to leave a small observable.</div>
           <div className="mt-3" style={{ fontSize: "clamp(22px, 1.9vw, 36px)", lineHeight: 1.4 }}>Δ<sub>BG</sub> = max<sub>i</sub> |∂ log <i>O</i> / ∂ log <i>x<sub>i</sub></i>|</div>
           <Label>Barbieri and Giudice: the largest log-sensitivity, one input at a time</Label>
         </Reveal>
@@ -79,7 +79,7 @@ export function FineTuningClaim({ step }: { step: number }) {
   return (
     <Canvas className="flex flex-col justify-center gap-[4vh]">
       <div className="text-center">
-        <div style={{ ...serif, fontSize: "clamp(40px, 4.4vw, 84px)", lineHeight: 1.15 }}>
+        <div style={{ ...serif, fontSize: "clamp(40px, 4.4vw, 84px)", lineHeight: 1.15, marginBottom: "2.2vh" }}>
           ½ log det(1 + <i>F</i>) = ½ Σ<sub>i</sub> log(1 + λ<sub>i</sub>)
         </div>
         <Label>F = JᵀJ · J = ∂ log O / ∂ log x · λᵢ: the eigenvalues of F</Label>
