@@ -89,7 +89,7 @@ export function Galactic({ step }: { step: number }) {
           <div style={{ ...serif, fontSize: T.big, lineHeight: 1.1 }}>A simulated universe, one snapshot.</div>
           <div className="mt-3" style={{ fontSize: T.body, lineHeight: 1.3 }}>Each dot is a tracer for a huge lump of dark matter.</div>
           <div className="mt-2 t-label" style={{ ...mono, fontSize: T.label, color: C.muted }}>Quijote: 512³ tracers in a box 1 Gpc/h wide, about 6.6 × 10¹¹ M☉/h each</div>
-          <div className="mt-3" style={{ fontSize: T.body, lineHeight: 1.3 }}>Gravity pulls the mass into dense, bound clumps called halos, joined by filaments.</div>
+          <div className="mt-3" style={{ fontSize: T.body, lineHeight: 1.3 }}>Gravity pulls it into bound clumps: halos.</div>
         </Reveal>
         <Reveal at={1} step={step}>
           <div style={{ fontSize: T.body, lineHeight: 1.3 }}>Link every pair closer than <i>b</i>. Each linked group with enough members is a <span style={{ color: C.accent }}>halo</span>.</div>

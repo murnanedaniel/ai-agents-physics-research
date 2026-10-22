@@ -15,7 +15,7 @@ import { C, Canvas, MONO, SANS, Show } from "../r9/kit";
 const ROWS = [
   ["events", "single muons", "tt̄, drifting beam spot, no pile-up"],
   ["hits", "truth, perfect matching", "truth first, then CKF-found tracks"],
-  ["training", "381 M tracks", "1.67 M tracks in the pre-cook"],
+  ["training", "381 M tracks", "1.67 M tracks"],
 ];
 const PT = [1.41, 2.45, 3.87, 7.07, 14.1, 31.6, 74.2]; // geometric bin centres, edges 1-2-3-5-10-20-50-110 GeV
 const SERIES = [
@@ -67,8 +67,8 @@ export function TrackPlan({ step }: { step: number }) {
             <text className="t-label" x={sx(PT[6]) + 12} y={sy(s.v[6]) + 5 + (s.k === "z0" ? -6 : s.k === "θ" ? 8 : 0)} fontFamily={MONO} fontSize={16} fill={s.c === C.faint ? C.muted : s.c}>{s.k}</text>
           </g>
         ))}
-        <text x={X0} y={Y0 + 88} fontFamily={SANS} fontSize={21} fill={C.ink}>Our short pre-cook run is 8 to 35% behind the</text>
-        <text x={X0} y={Y0 + 116} fontFamily={SANS} fontSize={21} fill={C.ink}>filter at low pT, and far behind on q/p.</text>
+        <text x={X0} y={Y0 + 88} fontFamily={SANS} fontSize={21} fill={C.ink}>Our short pre-cook: 8 to 35% behind at</text>
+        <text x={X0} y={Y0 + 116} fontFamily={SANS} fontSize={21} fill={C.ink}>low pT, far behind on q/p.</text>
         <text className="t-label" x={X0} y={Y0 + 140} fontFamily={MONO} fontSize={14} fill={C.muted}>expected from a short run on little data; it says little about the models yet</text>
         <text className="t-label" x={X0} y={Y0 + 160} fontFamily={MONO} fontSize={14} fill={C.muted}>one minGRU run: 8 epochs, one seed, 87,287 test tracks, few above 50 GeV</text>
       </Show>
@@ -77,8 +77,7 @@ export function TrackPlan({ step }: { step: number }) {
         <g transform="translate(0 420)">
           <rect x={-6} y={-10} width={490} height={130} rx={10} fill={C.warmTint} stroke={C.warm} strokeWidth={1.5} />
           <text x={14} y={22} fontFamily={SANS} fontSize={21} fill={C.ink}>Today: all four models, longer runs,</text>
-          <text x={14} y={50} fontFamily={SANS} fontSize={21} fill={C.ink}>then CKF-found tracks. The results go</text>
-          <text x={14} y={78} fontFamily={SANS} fontSize={21} fill={C.ink}>into the draft we review next.</text>
+          <text x={14} y={50} fontFamily={SANS} fontSize={21} fill={C.ink}>then CKF-found tracks, into the draft.</text>
           <text className="t-label" x={14} y={104} fontFamily={MONO} fontSize={14} fill={C.muted}>one A100 each, 5 to 15 min per run</text>
         </g>
       </Show>

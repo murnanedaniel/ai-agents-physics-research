@@ -49,13 +49,13 @@ function Loop({ step }: { step: number }) {
       <Lbl x={442} y={188}>checks the condition</Lbl>
       {/* not yet met: go round */}
       <path d="M 380 212 C 380 290, 140 290, 120 216" fill="none" stroke={C.accent} strokeWidth="2.5" markerEnd="url(#r37-goal-arrow)" />
-      <Lbl x={200} y={300} fill={C.accent}>not yet met: another turn, with the reason</Lbl>
+      <Lbl x={24} y={300} anchor="start" fill={C.accent}>not yet met: another turn, with the reason</Lbl>
       {/* met / impossible */}
       <line x1={540} y1={212} x2={540} y2={262} stroke={C.muted} strokeWidth="1.5" markerEnd="url(#r37-goal-arrow)" />
-      <Lbl x={540} y={284} fill={C.ink}>met: stop</Lbl>
-      <Lbl x={540} y={306} fill={C.ink}>impossible: stop</Lbl>
+      <Lbl x={612} y={284} anchor="end" fill={C.ink}>met: stop</Lbl>
+      <Lbl x={612} y={306} anchor="end" fill={C.ink}>impossible: stop</Lbl>
       <G when={step >= 1}>
-        <Lbl x={442} y={240} fill={C.warm} size={15}>reads, never runs</Lbl>
+        <Lbl x={442} y={108} fill={C.warm} size={15}>reads, never runs</Lbl>
       </G>
     </svg>
   );

@@ -96,14 +96,14 @@ export function HandsOn0R3({ step }: { step: number }) {
       phrase="interview me about my research setup" skill="research-setup"
       asks={[
         <>What do you work on, and what is a typical result?</>,
-        <>Where does the work run, and with which tools?</>,
-        <>What did an AI get wrong, or what must it never touch?</>,
+        <>Where does it run, with which tools?</>,
+        <>What did an AI get wrong, or must never touch?</>,
       ]}
       draftsLabel="then three drafts, written on your OK"
       drafts={[
         { file: "CLAUDE.md", what: <>your rules, short</> },
         { file: "a starter skill", what: <>for one task you repeat</> },
-        { file: "DECISIONS.md", what: <>why it is set up this way</> },
+        { file: "DECISIONS.md", what: <>the reasons</> },
       ]}
     />
   );
