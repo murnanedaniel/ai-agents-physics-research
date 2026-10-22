@@ -92,7 +92,6 @@ export function ErcR32({ step }: { step: number }) {
             style={{ display: "grid", gridTemplateColumns: "1.25fr 1fr", gap: "3vw", alignItems: "center", width: "100%" }}>
             <Panel />
             <div style={{ display: "flex", flexDirection: "column", gap: "1.6vh", fontSize: T.body, lineHeight: 1.3 }}>
-              <span>Three AI judges read three past proposals with known outcomes, then scored 11 others blind.</span>
               <span>One of the 11 was my own 2025 proposal. The judges put it at 76, and the real panel&apos;s scores ran from 78 to 87.</span>
               <span style={{ borderLeft: `3px solid ${C.warm}`, paddingLeft: 14 }}>The judges rewarded density, so drafts got denser.</span>
             </div>

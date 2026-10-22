@@ -57,7 +57,7 @@ export function HamletPanelR32({ step }: { step: number }) {
   const go = (d: number) => (e: React.MouseEvent) => { stop(e); setPaused(true); setI((i + d + CARDS.length) % CARDS.length); };
   return (
     <Canvas style={{ justifyContent: "center", gap: "2.4vh" }}>
-      <span style={{ fontSize: T.body, lineHeight: 1.3 }}>In the closing panel, Claude listened to the room and put cards on the projector behind the panellists.</span>
+      <span style={{ fontSize: T.body, lineHeight: 1.3 }}>In the closing panel, Claude listened and put cards on the projector.</span>
       <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: "1.5vw" }}>
         <button onClick={go(-1)} onKeyDown={stop} aria-label="previous card" style={btn}>‹</button>
         <div style={{ position: "relative", paddingBottom: "8vh" }}>

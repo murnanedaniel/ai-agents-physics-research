@@ -24,7 +24,7 @@ export function HamletBrainR32({ step }: { step: number }) {
           </marker>
         </defs>
         <text x={20} y={22} fontSize="20" fill={C.ink}>HAMLET = How to Apply Machine Learning in Experiment and Theory</text>
-        <text className="t-label" x={20} y={46} fontFamily={mono} fontSize="16" fill={C.muted}>HAMLET-PHYSICS 2026, NBI Copenhagen · 139 attendees, 3 days, one phone app</text>
+        <text className="t-label" x={20} y={46} fontFamily={mono} fontSize="16" fill={C.muted}>HAMLET-PHYSICS 2026 · 139 attendees, 3 days</text>
         {INS.map((t, i) => (
           <motion.g key={t} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 + i * 0.12, duration: 0.5 }}>
             <rect x={20} y={inY(i) - 26} width={196} height={50} rx={25} fill="#fffdf8" stroke={C.faint} strokeWidth={1.5} />

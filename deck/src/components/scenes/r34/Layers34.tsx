@@ -110,10 +110,10 @@ export function LayerEnvironment34({ step }: { step: number }) {
         <rect x={hubX - 150} y={hubY - 24} width={300} height={52} rx={26} fill={TINT.paper} stroke={C.ink} strokeWidth={1.5} />
         <text x={hubX} y={hubY + 9} textAnchor="middle" fontSize={T.body} fill={C.ink}>steered from one chat</text>
         <Takeaway y={385}>Put the agent next to the data.</Takeaway>
-        <text x={CX} y={426} fontSize={T.body} fill={C.ink}>Remote Control: you drive a Claude Code session on your own machine</text>
-        <text x={CX} y={456} fontSize={T.body} fill={C.ink}>or cluster from the Claude app on your phone, or the web.</text>
+        <text x={CX} y={426} fontSize={T.body} fill={C.ink}>Remote Control: drive a Claude Code session on your machine</text>
+        <text x={CX} y={456} fontSize={T.body} fill={C.ink}>or cluster from your phone or the web.</text>
         <text x={CX} y={486} fontSize={T.body} fill={C.ink}>The session and the code stay on that machine.</text>
-        <text x={CX} y={516} fontSize={T.body} fill={C.ink}>I use it for sessions on Perlmutter and on my home server.</text>
+        <text x={CX} y={516} fontSize={T.body} fill={C.ink}>I use it on Perlmutter and my home server.</text>
       </Show>
     </Frame>
   );

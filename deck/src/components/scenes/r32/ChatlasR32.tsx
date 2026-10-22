@@ -38,7 +38,7 @@ export function ChatlasR32({ step }: { step: number }) {
           ))}
           <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>indexed in chATLAS, 2026 · five of 10+ sources · log scale</span>
           <span style={{ fontSize: T.body, lineHeight: 1.3 }}>About 31,000 documents, split into 1.2M chunks.</span>
-          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>Indico alone now holds about 500,000 slide decks: several million slides of images, text and diagrams.</span>
+          <span style={{ fontSize: T.body, lineHeight: 1.3 }}>Indico alone holds about 500,000 slide decks, several million slides.</span>
           <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginTop: "0.6vh" }}>
             <span style={{ fontFamily: serif, fontSize: T.big, lineHeight: 1.1 }}>85%</span>
             <span style={{ fontSize: T.body, lineHeight: 1.3 }}>of members surveyed in 2025 find it overwhelming.</span>
