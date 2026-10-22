@@ -7,8 +7,8 @@ import { C, Canvas, SERIF, T, stop } from "./kit";
 const CX = 290, CY = 280;
 const loops = [
   { r: 80, period: 3, color: C.accent, name: "An experiment", verbs: "hypothesis, run, evaluate, iterate", eg: "e.g. the Pandora speed-up, one A/B test at a time", when: "Session 2, this morning", ly: 105 },
-  { r: 165, period: 10, color: C.warm, text: C.warmText, name: "A project and a paper", verbs: "experiments, argument, review, revision", eg: "e.g. the paper review loop", when: "Session 3, after lunch", ly: 270 },
-  { r: 250, period: 30, color: C.violet, name: "A programme", verbs: "briefs, decision logs, sign-off points", eg: "e.g. ScienceDash, the ERC submission", when: "Session 4, this afternoon", ly: 435 },
+  { r: 165, period: 10, color: C.warm, text: C.warmText, name: "A project and a paper", verbs: "experiments, argument, review, revision", eg: "e.g. the HEP4M paper, the ERC proposal", when: "Session 3, after lunch", ly: 270 },
+  { r: 250, period: 30, color: C.violet, name: "A programme", verbs: "briefs, decision logs, sign-off points", eg: "e.g. ScienceDash, chATLAS", when: "Session 4, this afternoon", ly: 435 },
 ];
 const LX = 660;
 

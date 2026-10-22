@@ -38,6 +38,7 @@ export function Quality({ step }: { step: number }) {
       <text x={24} y={189} fontSize={21} fontFamily={SANS} fill={C.ink}>challenge</text>
       <text x={24} y={218} fontSize={19} fontFamily={SANS} fill={C.muted}>“Are you sure?”</text>
       <text className="t-label" x={0} y={252} fontSize={13} fontFamily={MONO} fill={C.muted}>examples paraphrased, not quoted</text>
+      <text className="t-label" x={0} y={270} fontSize={13} fontFamily={MONO} fill={C.muted}>labels by Haiku · Sonnet agrees on 89% of 150</text>
 
       <text className="t-label" x={P.l} y={16} fontSize={14} fontFamily={MONO} fill={C.muted}>each month: share of my messages to the agent that push back</text>
       {[0, 20, 40, 60].map((t) => (
