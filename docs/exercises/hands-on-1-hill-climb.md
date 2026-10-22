@@ -18,9 +18,18 @@ Physics example: tuning a track-reconstruction algorithm by hand, one idea a day
 
 ## Steps
 
-1. Start with this opener:
+1. **Ask your agent: "help me pick what to hill-climb in my research".** With the course skills installed (hands-on 0, step 4), this starts the `hill-climb-plan` skill. It reads your `CLAUDE.md` if you have one, then asks three questions:
+    1. Which single number would tell you this week's version is better than last week's?
+    2. What is that number today, and could you reproduce it from scratch?
+    3. Where could that number go up while the physics gets worse?
 
-    > I'm a physicist. I want to find one part of my research an agent could improve by trying many variants against a metric. Ask me about my project one question at a time, then help me write a one-page HYPOTHESIS.md. Keep it to three short rounds.
+    Then it drafts a one-page `HYPOTHESIS.md` (question, metric, baseline, held-out check, overnight loop) and writes it only when you say OK. About 5 to 10 minutes. It runs nothing, and never touches a shared cluster without asking.
+
+    Web chat, or no skills installed? Paste this opener instead:
+
+    > I'm a physicist. I want to find one part of my research an agent could improve by trying many variants against a metric. Ask me three questions: which number would tell me this week's version beats last week's, what its baseline is today, and where it could go up while the physics gets worse. Then help me write a one-page HYPOTHESIS.md.
+
+    The prompts in steps 2 to 4 are for digging further, with or without the skill.
 
 2. **Which metric could you hill-climb?** Prompts to try:
     - "Here's what I do day to day: ... Which of these steps produces a number?"
@@ -78,7 +87,7 @@ Stretch goals:
 
 ## Show and tell
 
-With the skill: in Claude Code say "share my hands-on 1 to the course". The share-to-course skill asks three short questions, writes `showcase/<your-handle>/hands-on-1/README.md` (a summary of your hypothesis and metric, not your data), shows you the diff and opens the PR once you say OK.
+With the skill: in Claude Code say "share my hands-on 1 to the course" (the hill-climb skill offers this when it closes). The share-to-course skill asks three short questions, writes `showcase/<your-handle>/hands-on-1/README.md` (a summary of your hypothesis and metric, not your data), shows you the diff and opens the PR once you say OK.
 
 By hand: follow the [show-and-tell guide](show-and-tell.md). Title the PR `[show-and-tell 1] <short title>`. Leave out unpublished numbers and anything collaboration-internal; the metric's name and the idea are enough.
 

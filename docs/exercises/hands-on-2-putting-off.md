@@ -30,9 +30,16 @@ If you are a student: this is a chance to aim higher. Apply for the travel grant
 
 ## Steps
 
-1. Start with this interview prompt:
+1. **Ask your agent: "help me with a task I've been putting off".** With the course skills installed (hands-on 0, step 4), this starts the `put-off-task` skill. It asks three questions:
+    1. What is it, and where does it live (a call page, a form, an email thread)?
+    2. What is blocking you?
+    3. What does a good result look like, and when is it due?
 
-    > Interview me about one task I have been putting off. Ask me, one question at a time: what it is, what is blocking me, what a good result looks like, and the deadline. Then make a plan in three steps, find the form or page, and fill in a draft. Stop before anything is sent or submitted.
+    Then it proposes a three-step plan, and on your OK it finds the page and fills in a draft. It stops at every login and before anything is sent or submitted. The interview and plan take about 5 to 10 minutes.
+
+    Web chat, or no skills installed? Paste this prompt instead:
+
+    > Interview me about one task I have been putting off. Ask me three questions: what it is and where it lives, what is blocking me, and what a good result looks like and when it is due. Then make a plan in three steps, find the form or page, and fill in a draft. Stop before anything is sent or submitted.
 
 2. Watch it work. Correct it early when it drifts.
 3. Read every field it filled in. Rewrite anything that does not sound like you or that you cannot stand behind.
@@ -57,7 +64,7 @@ Stretch goals:
 
 ## Show and tell
 
-With the skill: in Claude Code say "share my hands-on 2 to the course". The share-to-course skill asks three short questions, writes `showcase/<your-handle>/hands-on-2/README.md`, shows you the diff and opens the PR once you say OK.
+With the skill: in Claude Code say "share my hands-on 2 to the course" (the put-off-task skill offers this when it closes). The share-to-course skill asks three short questions, writes `showcase/<your-handle>/hands-on-2/README.md`, shows you the diff and opens the PR once you say OK.
 
 By hand: follow the [show-and-tell guide](show-and-tell.md). Title the PR `[show-and-tell 2] <short title>`. Share what the task was and how it went, not the application itself. Blur names, email addresses and reference numbers in your screenshot.
 

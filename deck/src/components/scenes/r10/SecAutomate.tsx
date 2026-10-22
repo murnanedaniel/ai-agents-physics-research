@@ -7,14 +7,14 @@ import { C, Canvas, Loops, MONO, SANS } from "./kit";
 // agents, each tied to the demo that follows. One line in warm sets the rule
 // that holds for all of them.
 const LINES = [
-  { head: "Forms and submissions", tail: ["EuroHPC for the Basic Model,", "arXiv for tracking, AI-for-Science credits"] },
+  { head: "Forms and submissions", tail: ["EuroHPC for the Basic Model,", "arXiv for the tracking paper"] },
   { head: "First reviews", tail: ["model judges for the grant,", "a held-out reviewer for the paper"] },
   { head: "Slides and teaching", tail: ["the skill behind this deck,", "teaching when students have agents"] },
 ];
 
 export function SecAutomate() {
   return (
-    <Canvas label="The three loops with the paper loop highlighted; beside it, the admin this section automates, much of it in a browser: forms and submissions (EuroHPC, arXiv, credits), first reviews (model judges, a held-out reviewer), slides and teaching; the last click stays with me">
+    <Canvas label="The three loops with the paper loop highlighted; beside it, the admin this section automates, much of it in a browser: forms and submissions (EuroHPC, arXiv), first reviews (model judges, a held-out reviewer), slides and teaching; the last click stays with me">
       <Loops cx={240} cy={300} />
       <text x={540} y={44} fontFamily={SANS} fontSize={24} fill={C.ink}>Mostly admin, and much of it in a browser.</text>
       {LINES.map((ln, i) => (

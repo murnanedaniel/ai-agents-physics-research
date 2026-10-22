@@ -1,10 +1,10 @@
 import type { Beat } from "./_types";
-import { ReverseLecture } from "@/components/scenes/r10/ReverseLecture";
+import { TeachingReversed } from "@/components/scenes/r36/TeachingR3";
 
 const beat: Beat = {
   title: "How does teaching change when students have agents?",
-  source: "Reversed lecture, tutor dialogue and the PhD question: D. Murnane, Agentic AI for Collider Physics, ETH Zurich, June 2026 · G. Kestin et al., AI tutoring outperforms in-class active learning, Sci. Rep. 15 (2025)",
-  Scene: ReverseLecture,
+  source: "Ported from D. Murnane, Agentic AI for Collider Physics, ETH Zurich, June 2026 (scene faculty2031Teaching: tutor dialogue, during-class cards)",
+  Scene: TeachingReversed,
 };
 
 export default beat;

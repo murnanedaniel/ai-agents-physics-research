@@ -10,9 +10,19 @@ Choose a tier:
 2. **Terminal agent:** route A or B below.
 3. **Own project:** point the dashboard at your real runs, papers or `HYPOTHESIS.md` from hands-on 1.
 
-## First, the interview (5 minutes)
+## First, the interview (5 to 10 minutes)
 
-> Interview me about what a research dashboard should show me. Ask one question at a time: what I work on, what I check every morning, what I keep losing track of (runs, papers, deadlines, ideas, compute), and what would make me open it every day. Then propose three panels and the data each one needs.
+**Ask your agent: "build me a dashboard for my research".** With the course skills installed (hands-on 0, step 4), this starts the `research-dashboard` skill. It reads your `HYPOTHESIS.md` from hands-on 1 if it finds one, then asks three questions:
+
+1. What do you check every morning?
+2. What do you keep losing track of (runs, papers, deadlines, ideas, compute)?
+3. What would make you open it every day?
+
+Then it proposes three panels and the data each one needs, and builds only on your OK: one local page, sample data first, on a new git branch. At the end it drafts the 30-minute task below for you. Default is route B; say "set up ScienceDash" for route A.
+
+Web chat, or no skills installed? Paste this prompt instead:
+
+> Interview me about what a research dashboard should show me. Ask three questions: what I check every morning, what I keep losing track of (runs, papers, deadlines, ideas, compute), and what would make me open it every day. Then propose three panels and the data each one needs.
 
 ## Route A: install ScienceDash
 
@@ -68,7 +78,7 @@ Stretch goals:
 
 ## Show and tell
 
-With the skill: in Claude Code say "share my hands-on 3 to the course". The share-to-course skill asks three short questions, writes `showcase/<your-handle>/hands-on-3/README.md`, adds one screenshot of your dashboard (shrunk if over 1 MB), shows you the diff and opens the PR once you say OK.
+With the skill: in Claude Code say "share my hands-on 3 to the course" (the dashboard skill offers this when it closes). The share-to-course skill asks three short questions, writes `showcase/<your-handle>/hands-on-3/README.md`, adds one screenshot of your dashboard (shrunk if over 1 MB), shows you the diff and opens the PR once you say OK.
 
 By hand: follow the [show-and-tell guide](show-and-tell.md). Title the PR `[show-and-tell 3] <short title>`. Use sample data in the screenshot if your real data is unpublished.
 
