@@ -1,12 +1,15 @@
 // Agentic-AI papers across physics-adjacent fields, Jan 2024 to Oct 2026.
 // Copied from the ETH deck (src/components/scenes/StatsFeint.tsx). Curated by
 // Daniel: particle physics from his own reading list; other fields from
-// agent-run literature searches with each arXiv ID checked. Incomplete,
-// especially for the last two months of the non-particle fields.
-// month 0 = Jan 2024, 33 = Oct 2026. The search ran to Jun 2026; the only later
-// entry is chATLAS (particle, Oct 2026, arXiv id not yet assigned), so Jul to Oct
-// 2026 is nearly empty because it was not searched, not because nothing appeared.
-// Totals: 103 papers, 22 in particle physics. One duplicate (2406.13163, listed under
+// agent-run literature searches with each arXiv ID checked.
+// month 0 = Jan 2024, 33 = Oct 2026. The first search ran to Jun 2026. On
+// 2026-10-22 an arXiv API search (agent/agentic + LLM, by category) added 15
+// particle-physics papers (any date) and a Jul to Oct 2026 sample for the six
+// other fields, each id, title and date checked against arXiv. Particle physics
+// is close to complete; the other fields are a sample (materials, chemistry and
+// biology have several times more agentic papers per month on arXiv).
+// "Agentic" here = an LLM agent that acts (runs code, tools or experiments).
+// Totals: 153 papers, 37 in particle physics. One duplicate (2406.13163, listed under
 // both materials and chemistry in ETH) is kept once, under materials.
 
 export type Field = "particle" | "theory" | "astro" | "climate" | "materials" | "chemistry" | "biology";
@@ -41,6 +44,21 @@ export const PAPERS: Paper[] = [
   { field: "particle",  month: 28, id: "2605.17318", title: "RooAgent · LLM agent for ROOT-based HEP analysis" },
   { field: "particle",  month: 29, id: "2606.10381", title: "Agentic Hybrid RAG · evidence-grounded muon-collider analysis" },
   { field: "particle",  month: 29, id: "2606.13535", title: "AgentRivet · Rivet routines from publications" },
+  { field: "particle",  month: 9,  id: "2410.15222", title: "AutoFLUKA · LLM-run FLUKA Monte Carlo" },
+  { field: "particle",  month: 20, id: "2509.08535", title: "Agents of Discovery" },
+  { field: "particle",  month: 24, id: "2601.21015", title: "MadAgents" },
+  { field: "particle",  month: 27, id: "2604.22541", title: "Dr.Sai · agentic physics analysis at BESIII" },
+  { field: "particle",  month: 29, id: "2606.31214", title: "EasyScan_HEP 2 · agent parameter scans" },
+  { field: "particle",  month: 29, id: "2606.18294", title: "Vision AI agent · LEGEND-1000 material monitoring" },
+  { field: "particle",  month: 30, id: "2607.22331", title: "SMEFT-Pheno-Agent" },
+  { field: "particle",  month: 30, id: "2607.22813", title: "Agentic re-casting with agentic re-simulations" },
+  { field: "particle",  month: 31, id: "2608.07138", title: "Autonomous discovery of accelerator commissioning" },
+  { field: "particle",  month: 31, id: "2608.28244", title: "HEPLocalAgent · collider simulations from plain language" },
+  { field: "particle",  month: 31, id: "2609.00107", title: "Reining in an agentic harness for HEP" },
+  { field: "particle",  month: 33, id: "2610.12862", title: "HepUKE · knowledge evolution for HEP analysis agents" },
+  { field: "particle",  month: 33, id: "2610.15615", title: "Brilliance · autonomous accelerator physics research" },
+  { field: "particle",  month: 33, id: "2610.16607", title: "CorsikaAgent · cosmic-ray air-shower simulation" },
+  { field: "particle",  month: 33, id: "2610.18454", title: "HEPTABench · agentic evaluations in HEP" },
   { field: "particle",  month: 33, id: "",           title: "chATLAS (arXiv, Oct 2026)" },
 
   // ── Theoretical physics ────────────────────────────────────────────
@@ -58,6 +76,13 @@ export const PAPERS: Paper[] = [
   { field: "theory",    month: 29, id: "2606.18648", title: "Deep Research in Physical Sciences · multi-agent benchmark" },
   { field: "theory",    month: 29, id: "2606.13380", title: "Autonomous Variational Quantum Circuit Design" },
   { field: "theory",    month: 29, id: "2606.19425", title: "LeWRON · agentic analysis of electroweak phase transitions" },
+  { field: "theory",    month: 30, id: "2607.13930", title: "NNStar · agent for neutron-star physics" },
+  { field: "theory",    month: 30, id: "2607.15001", title: "LQCDMaster · agentic lattice QCD computing" },
+  { field: "theory",    month: 30, id: "2607.27822", title: "CLVisc Agent · heavy-ion hydrodynamics" },
+  { field: "theory",    month: 32, id: "2609.32225", title: "LaMET-Agent · large-momentum EFT analysis" },
+  { field: "theory",    month: 32, id: "2610.00435", title: "How AI agents discover scientific equations" },
+  { field: "theory",    month: 33, id: "2610.21118", title: "PTagent · phase-transition model construction" },
+  { field: "theory",    month: 33, id: "2610.21942", title: "Jianmu-Q · QFT to quantum simulation with agents" },
 
   // ── Astrophysics ───────────────────────────────────────────────────
   { field: "astro",     month: 8,  id: "2409.14807", title: "mephisto v1 · multi-band galaxy LLM" },
@@ -74,6 +99,10 @@ export const PAPERS: Paper[] = [
   { field: "astro",     month: 27, id: "2604.09621", title: "Competing with AI Scientists · Astrophysics" },
   { field: "astro",     month: 28, id: "2605.14791", title: "Beyond AI as Assistants · autonomous discovery in cosmology" },
   { field: "astro",     month: 29, id: "2606.11157", title: "DarkAgents · multi-agent theoretical astroparticle physics" },
+  { field: "astro",     month: 30, id: "2607.13549", title: "JW-ASTClaw · LLM-driven solar telescope control" },
+  { field: "astro",     month: 32, id: "2609.35900", title: "Agents reproducing astronomy papers end to end" },
+  { field: "astro",     month: 33, id: "2610.14185", title: "AI agents for IXPE X-ray polarimetry analysis" },
+  { field: "astro",     month: 33, id: "2610.16536", title: "CosmoAgent · theoretical cosmology" },
 
   // ── Climate / earth science ───────────────────────────────────────
   { field: "climate",   month: 0,  id: "2401.09646", title: "ClimateGPT · interdisciplinary synthesis" },
@@ -91,6 +120,9 @@ export const PAPERS: Paper[] = [
   { field: "climate",   month: 26, id: "2603.22148", title: "OpenEarth-Agent · tool calling → tool creation" },
   { field: "climate",   month: 27, id: "2604.01647", title: "Multi-Agent Environmental Data Workflows" },
   { field: "climate",   month: 27, id: "2604.16922", title: "ClimAgent · open-ended climate science" },
+  { field: "climate",   month: 30, id: "2607.23983", title: "HydroAgent · skill-orchestrated flood forecasting" },
+  { field: "climate",   month: 31, id: "2608.18272", title: "SeisEvo · agents evolve seismic reconstruction" },
+  { field: "climate",   month: 32, id: "2610.03780", title: "OceanMind · multi-agent ocean diagnosis" },
 
   // ── Condensed matter / materials ──────────────────────────────────
   { field: "materials", month: 5,  id: "2406.13163", title: "LLMatDesign · autonomous materials discovery" },
@@ -105,6 +137,12 @@ export const PAPERS: Paper[] = [
   { field: "materials", month: 27, id: "2604.11957", title: "A-Lab GPSS · self-driving lithium halide lab" },
   { field: "materials", month: 27, id: "2604.19789", title: "From Data to Theory · autonomous materials" },
   { field: "materials", month: 27, id: "2604.23758", title: "ElementsClaw · agentic atomic+language fusion" },
+  { field: "materials", month: 31, id: "2608.20434", title: "LLM agent for end-to-end materials discovery" },
+  { field: "materials", month: 31, id: "2609.00070", title: "AutoXRD · agents for powder diffraction" },
+  { field: "materials", month: 32, id: "2609.27302", title: "Agentic scanning tunnelling microscopy" },
+  { field: "materials", month: 33, id: "2610.20779", title: "LLM agents for many-body perturbation theory" },
+  { field: "materials", month: 33, id: "2610.25619", title: "LLM agent for adaptive spectral analysis" },
+  { field: "materials", month: 33, id: "2610.28629", title: "GBClaw · agentic grain-boundary research" },
 
   // ── Chemistry ──────────────────────────────────────────────────────
   { field: "chemistry", month: 6,  id: "2407.01603", title: "Review · LLMs + autonomous agents in chemistry" },
@@ -119,6 +157,13 @@ export const PAPERS: Paper[] = [
   { field: "chemistry", month: 24, id: "2601.17687", title: "ChemCRAFT · agentic RL chemical models" },
   { field: "chemistry", month: 26, id: "2603.01311", title: "Catalyst-Agent · autonomous catalyst screening" },
   { field: "chemistry", month: 26, id: "2603.03655", title: "Mozi · governed autonomy for drug discovery" },
+  { field: "chemistry", month: 30, id: "2607.14512", title: "RetroAgent · agentic retrosynthesis planning" },
+  { field: "chemistry", month: 30, id: "2607.19406", title: "NMR elucidation as agentic search" },
+  { field: "chemistry", month: 32, id: "2609.13357", title: "Agents running multireference quantum chemistry" },
+  { field: "chemistry", month: 32, id: "2609.14840", title: "El Agente Potente · high-throughput atomistic simulations" },
+  { field: "chemistry", month: 32, id: "2609.19419", title: "Agentic density-functional development" },
+  { field: "chemistry", month: 32, id: "2609.39302", title: "SQD-Agent · quantum chemistry workflows" },
+  { field: "chemistry", month: 33, id: "2610.27230", title: "Magnolia · persistent-memory computational chemistry agent" },
 
   // ── Biology / drug discovery ──────────────────────────────────────
   { field: "biology",   month: 3,  id: "2404.18021", title: "CRISPR-GPT · LLM agent for gene editing" },
@@ -135,6 +180,14 @@ export const PAPERS: Paper[] = [
   { field: "biology",   month: 21, id: "2510.27130", title: "AI Agents in Drug Discovery" },
   { field: "biology",   month: 25, id: "2602.10163", title: "Beyond SMILES · agentic drug discovery eval" },
   { field: "biology",   month: 26, id: "doi:10.1038/s41551-026-01634-6", title: "BioMedAgent · multi-agent biomed analysis" },
+  { field: "biology",   month: 30, id: "2607.25045", title: "CogEEGAgent · autonomous EEG analysis" },
+  { field: "biology",   month: 30, id: "2607.29007", title: "EasyBCI Agent · neural data preprocessing" },
+  { field: "biology",   month: 31, id: "2608.16951", title: "The Little Scientist · agent-driven discovery" },
+  { field: "biology",   month: 31, id: "2608.25286", title: "BixBench3 · agents on study-scale computational biology" },
+  { field: "biology",   month: 31, id: "2608.28990", title: "Agentic AI finds cross-tissue protein co-abundance" },
+  { field: "biology",   month: 32, id: "2609.28557", title: "BaseCamp · agentic DNA sequencing pipelines" },
+  { field: "biology",   month: 33, id: "2610.22617", title: "Agentic optical pooled screen analysis" },
+  { field: "biology",   month: 33, id: "2610.24806", title: "Aptamers · lab-in-the-loop agentic discovery" },
 ];
 
 export const FIELD_ORDER: Field[] = ["particle", "theory", "astro", "climate", "materials", "chemistry", "biology"];

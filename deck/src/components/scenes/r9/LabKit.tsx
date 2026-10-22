@@ -17,8 +17,8 @@ const ROLES = [
 const FILES = [["NOTEBOOK.md", "dated: question, run, result"], ["THEORY.md", "claims with confidence"], ["PARTICLES.md", "the current table"], ["ledger.csv", "every request, its cost"]];
 const PLAN = [
   ["Wednesday", "a pre-cook lab tests the set-up", ""],
-  ["today, running since the morning", "a fresh lab, same universe,", "no pre-cook notes; we watch live"],
-  ["end of day", "both labs predict 8 held-out", "experiments, then the reveal"],
+  ["today, both passes live", "an agent builds a new universe in a", "sealed session; a fresh lab works back"],
+  ["end of day", "the lab predicts held-out", "experiments, then the reveal"],
 ];
 
 export function LabKit() {

@@ -7,10 +7,10 @@ import { Area, D, G, MONO, SANS, SERIF, Show, T } from "./kit";
 
 // ml-vs-agentic: ported from the ETH deck's StatsFeint (4 steps) and cut to 3.
 //   step 0: agentic-AI papers in particle physics, with titles (ETH step 0).
-//           Counter: N_PARTICLE = 22 papers (21 to Jun 2026, plus chATLAS, Oct 2026).
+//           Counter: N_PARTICLE = 37 papers (Jan 2024 to Oct 2026, incl. chATLAS).
 //   step 1: the same timeline across seven fields (ETH step 2; the chips and
 //           the Schwartz feature, ETH steps 1 and 3, are dropped).
-//           Counter: PAPERS.length = 103 papers (the 22 above plus 81 in six
+//           Counter: PAPERS.length = 153 papers (the 37 above plus 116 in six
 //           other fields), matching the source line.
 //   step 2: new bridge: machine learning (a model inside the pipeline) against
 //           agentic AI (a model in charge of the loop around it). Leads into
@@ -52,15 +52,20 @@ function Counter({ total }: { total: number }) {
 
 // One row per paper, oldest at the bottom, so the dots climb as a staircase and
 // no two labels can share a line. Labels sit LEFT of their dot (the papers bunch
-// up at the right edge); the lone 2024 paper is labelled to the right. Title and
-// arXiv id share one line. Font sizes are viewBox units; the chart renders at
-// about 0.56-0.65 px per unit at 1280x720, so 23/22 units stay above 12px.
+// up at the right edge); the two 2024 papers are labelled to the right. Title and
+// arXiv id share one line. Font sizes are viewBox units (shrunk to the row pitch below); the chart renders at
+// about 0.56-0.65 px per unit at 1280x720, so 23/22 units stay above 12px; at 37 rows they drop to ~20, about 11-13px.
 function ParticleOnly() {
   const list = PAPERS.filter((p) => p.field === "particle").sort((a, b) => a.month - b.month || a.id.localeCompare(b.id));
   const rowH = BODY_H0 / list.length;
+  // With ~37 rows the row pitch is ~18 units, so the label shrinks to fit the row
+  // (about 11-12 px on screen) instead of overlapping its neighbours.
+  const titleSize = Math.min(23, Math.round(rowH * 1.1));
+  const idSize = Math.min(22, Math.round(rowH * 1.05));
+  const nudge = Math.round(titleSize * 0.3);
   const dots = list.map((p, k) => ({ p, k, cx: x0(p.month), cy: PAD0.top + BODY_H0 - (k + 0.5) * rowH, right: p.month < 12 }));
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", height: "100%" }} preserveAspectRatio="xMidYMid meet" role="img" aria-label="Timeline of agentic-AI papers in particle physics: one in 2024, then a steady rise through 2025 and 2026">
+    <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", height: "100%" }} preserveAspectRatio="xMidYMid meet" role="img" aria-label="Timeline of agentic-AI papers in particle physics: two in 2024, then a steady rise through 2025 and 2026">
       <line x1={PAD0.left} x2={PAD0.left + BODY_W0} y1={H - PAD0.bottom + 4} y2={H - PAD0.bottom + 4} stroke={D.rule} />
       {YEAR_TICKS.map((t) => (
         <g key={t.m}>
@@ -72,9 +77,9 @@ function ParticleOnly() {
       {dots.map((d) => (
         <motion.g key={d.p.id} initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.45, delay: (d.p.month / MONTHS) * 1.8 + d.k * 0.05 }}>
           <circle cx={d.cx} cy={d.cy} r={7} fill={D.accent} stroke="#bae6fd" strokeWidth={0.8} />
-          <text className="t-label" x={d.right ? d.cx + 16 : d.cx - 16} y={d.cy + 7} textAnchor={d.right ? "start" : "end"}>
-            <tspan fontSize={23} fontFamily={SERIF} fill={D.soft}>{d.p.title}</tspan>
-            <tspan fontSize={22} fontFamily={MONO} fill={D.muted} dx={14}>{d.p.id}</tspan>
+          <text className="t-label" x={d.right ? d.cx + 16 : d.cx - 16} y={d.cy + nudge} textAnchor={d.right ? "start" : "end"}>
+            <tspan fontSize={titleSize} fontFamily={SERIF} fill={D.soft}>{d.p.title}</tspan>
+            <tspan fontSize={idSize} fontFamily={MONO} fill={D.muted} dx={14}>{d.p.id}</tspan>
           </text>
         </motion.g>
       ))}
@@ -109,10 +114,6 @@ function AllFields() {
           </motion.g>
         );
       })}
-      {/* Jul to Oct 2026 was searched for particle physics only: say so, so the gap doesn't read as a slowdown */}
-      <rect x={x1(29.5)} y={PAD.top + ROW_H + 2} width={x1(MONTHS - 1) + 12 - x1(29.5)} height={ROW_H * (FIELD_ORDER.length - 1) - 4} fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.18)" strokeDasharray="4 5" />
-      <text className="t-label" x={(x1(29.5) + x1(MONTHS - 1) + 12) / 2} y={PAD.top + ROW_H + 30} textAnchor="middle" fontSize={18} fontFamily={MONO} fill={D.muted}>not yet</text>
-      <text className="t-label" x={(x1(29.5) + x1(MONTHS - 1) + 12) / 2} y={PAD.top + ROW_H + 52} textAnchor="middle" fontSize={18} fontFamily={MONO} fill={D.muted}>searched</text>
       <line x1={PAD.left} x2={PAD.left + BODY_W} y1={H - PAD.bottom + 2} y2={H - PAD.bottom + 2} stroke={D.rule} />
       {YEAR_TICKS.map((t) => (
         <g key={t.m}>

@@ -52,7 +52,7 @@ export function AutoVsManualGeneral({ step }: { step: number }) {
           <div style={{ ...card, borderColor: C.accent }}>
             <div className="t-label" style={{ ...T.label, fontFamily: MONO, color: C.muted }}>downstream</div>
             <div style={{ ...T.big, ...T.serif, color: C.ink }}>Harness</div>
-            <div style={{ ...T.body, color: C.ink, marginTop: "1vh" }}>In Claude Code's auto mode, a classifier checks each action before it runs.</div>
+            <div style={{ ...T.body, color: C.ink, marginTop: "1vh" }}>In Claude Code's auto mode, a classifier checks risky actions before they run.</div>
             <div style={{ display: "flex", alignItems: "center", gap: "0.7vw", flexWrap: "wrap", marginTop: "1.4vh" }}>
               <Chip>tool call</Chip><Arrow /><Chip tone={C.accent}>classifier</Chip><Arrow /><Chip>runs</Chip>
               <span className="t-label" style={{ ...T.label, color: C.faint }}>or</span><Chip tone={C.warm}>blocked</Chip>
