@@ -21,7 +21,7 @@ const COLS = [
   {
     harm: "Financial",
     stake: "cards, API bills, compute",
-    control: "Single-use cards, API keys with a spend cap, a compute budget in the project",
+    control: "API keys with a spend cap, a compute budget in the project, and a human click before any payment",
     example: "My runs: a budget file capped one agent at 100 GPU-hours.",
   },
 ];

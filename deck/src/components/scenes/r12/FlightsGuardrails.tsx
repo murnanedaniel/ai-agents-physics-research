@@ -6,7 +6,9 @@ import { C, Canvas, Reveal, T, mono } from "./ui";
 
 // flights-guardrails. Step 0: a booking as five stages, and the risk (prompt injection,
 // with the setup of Anthropic's 1% test). Step 1: the boundary. The agent does
-// the first three stages; a person pays and confirms, with two more limits around it.
+// the first three stages; a person pays and confirms. Round 3: no separate login
+// or single-use card (Daniel uses neither); the honest boundary is the stop
+// before payment plus reading the details.
 const STAGES = ["Search", "Compare", "Fill in details", "Pay", "Confirm"];
 const W = 1200, BOX = 190, GAP = (W - 40 - STAGES.length * BOX) / (STAGES.length - 1);
 const x = (i: number) => 20 + i * (BOX + GAP);
@@ -53,8 +55,8 @@ export function FlightsGuardrailsScene({ step }: { step: number }) {
           <Guard tone={C.red} text={<>Anthropic tested Claude Opus 4.5 in a browser against its own adaptive attacker: about <b>1%</b> of attacks still got through.</>} />
         </motion.div>
         <Reveal at={1} step={step} style={{ position: "absolute", inset: 0, display: "flex", gap: "3vw", justifyContent: "center", alignItems: "flex-start" }}>
-          <Guard tone={C.warm} text="A separate browser profile with no email or bank logins, so a tricked agent can't reach my inbox or bank." />
-          <Guard tone={C.warm} text="A single-use card with a low limit, so the most I can lose is that limit." />
+          <Guard tone={C.warm} text="I tell the agent to stop at the payment page and hand back to me. The final click is mine." />
+          <Guard tone={C.warm} text="An injected page could still change what it fills in, so I read every detail before I pay." />
         </Reveal>
       </div>
     </Canvas>

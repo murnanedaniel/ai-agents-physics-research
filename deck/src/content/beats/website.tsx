@@ -4,8 +4,8 @@ import { type Beat } from "./_types";
 import { Website } from "@/components/scenes/r11/Website";
 
 const beat: Beat = {
-  title: "How do I set up a research website?",
-  source: "GitHub Docs: Pages limits (accessed 20 Oct 2026) · templates: quarto.org, academicpages on GitHub, hugoblox.com, docs.astro.build · agent steps: my own suggestion · custom domain: as in the add-a-slide demo",
+  title: "How would other people's agents find you?",
+  source: "GitHub Docs: Pages limits (accessed 20 Oct 2026) · the NBI graph on the previous slides was built from public arXiv papers · agents reading pages to find collaborators: my argument, not a measured effect · Vite: my preference · custom domain: as in the add-a-slide demo",
   Scene: Website,
 };
 
