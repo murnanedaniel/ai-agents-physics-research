@@ -14,9 +14,9 @@ import { C, Canvas, MONO, SANS, SERIF } from "../r5/common";
 // - Zweiger et al. (MIT), "Self-Adapting Language Models" (SEAL), arXiv:2506.10943: model generates its own finetuning
 //   data and directives, trained with RL; shown on knowledge incorporation and few-shot generalization.
 const CARDS = [
-  { t: "Memory that keeps training", who: "Titans, Hope · Google, 2025", body: ["A memory module updates as text", "streams in. Better long-context", "recall than Transformers, in", "lab-scale tests."] },
-  { t: "Update only a few slots", who: "Sparse memory finetuning · Meta, 2025", body: ["New facts go into a few memory", "slots. Old-fact scores dropped", "about 11%, against 89% with", "full finetuning."] },
-  { t: "The model writes its own lessons", who: "SEAL · MIT, 2025", body: ["It writes its own training data,", "then updates on it. Tested on", "small knowledge and few-shot", "tasks."] },
+  { t: "Memory that keeps training", who: "Titans, Hope · Google, 2025", body: ["A memory module keeps", "training as text streams in."] },
+  { t: "Update only a few slots", who: "Sparse memory finetuning · Meta, 2025", body: ["New facts go into a few slots:", "old facts drop 11%, not 89%."] },
+  { t: "It writes its own lessons", who: "SEAL · MIT, 2025", body: ["Writes its own training data,", "then updates on it."] },
 ];
 const W = 360, G = 36;
 
@@ -24,7 +24,7 @@ function Cards() {
   return (
     <Canvas label="Three research directions in continual learning: Titans and Hope from Google, a memory module that keeps training on the text it reads; sparse memory finetuning from Meta, updating only a few memory slots so old facts are mostly kept; SEAL from MIT, a model writing its own training data. None is in products; today's agents still remember through files and context, not weights.">
       <text x={0} y={40} fontSize={23} fontFamily={SANS} fill={C.ink}>
-        Is anyone close? <tspan fontFamily={SERIF} fontStyle="italic" fontSize={25}>Promising research, none of it in products yet.</tspan>
+        Is anyone close? <tspan fontFamily={SERIF} fontStyle="italic" fontSize={25}>Promising research, not in products yet.</tspan>
       </text>
       {CARDS.map((c, i) => (
         <motion.g key={c.t} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15 * i }}>
