@@ -95,10 +95,7 @@ export function ModelChoice({ step }: { step: number }) {
         bars: output price per token, relative to Opus · /effort: low, medium (default), high, xhigh, max · /fast: Opus up to 2.5× faster at 2× the price · Haiku is 1/8× above 100k-token prompts
       </div>
 
-      <Show when={step >= 2} style={{ display: "grid", gridTemplateColumns: "1fr 1.4fr", gap: "2.5vw", alignItems: "start" }}>
-        <div style={{ ...T.body, color: C.muted }}>
-          I name the newest models in full; “sonnet” once gave me Sonnet 5.
-        </div>
+      <Show when={step >= 2} style={{ maxWidth: "62%" }}>
         <div style={{ borderLeft: `4px solid ${C.warm}`, paddingLeft: 16, ...T.body, ...T.serif, color: C.ink }}>
           Wrong answers cost more than saved tokens. Use the strongest model for anything you trust. Downshift only for bulk work you can check.
         </div>

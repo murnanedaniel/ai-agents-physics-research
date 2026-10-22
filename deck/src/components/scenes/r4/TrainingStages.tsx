@@ -10,7 +10,7 @@ import { Arrowheads, C, Canvas, MONO, SANS, SERIF, stop } from "./kit";
 // to jump back or ahead.
 const STAGES = [
   { tab: "Pretraining", verb: "Predict", what: "the next token", signal: "raw text, which is its own label", ref: "GPT-3: Brown et al. 2020, arXiv:2005.14165" },
-  { tab: "SFT", verb: "Imitate", what: "an ideal answer", signal: "answers written by people", ref: "InstructGPT: Ouyang et al. 2022, arXiv:2203.02155" },
+  { tab: "SFT", verb: "Imitate", what: "an ideal answer", signal: "answers written by people", ref: "InstructGPT: Ouyang et al. 2022, arXiv:2203.02155", agent: "A large enough model can write its own training answers (Self-Instruct, 2022). AI 2027 imagines this feeding a self-improvement loop." },
   { tab: "RLHF", verb: "Prefer", what: "the better-liked answer", signal: "people ranking pairs of answers", ref: "Christiano et al. 2017, arXiv:1706.03741 · InstructGPT 2022" },
   { tab: "RLVR", verb: "Verify", what: "a checkable answer", signal: "a program that checks", ref: "Tülu 3, arXiv:2411.15124 · DeepSeek-R1, arXiv:2501.12948", agent: "Agents are trained the same way on whole multi-step tasks, e.g. code that has to pass its tests." },
   { tab: "Test-time compute", verb: "Think", what: "longer, at answer time", signal: "nothing: the weights are frozen", ref: "Snell et al. 2024, arXiv:2408.03314" },

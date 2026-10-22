@@ -20,7 +20,7 @@ const TIPS: { r: [number, number, number]; label?: string; note?: string }[] = [
   { r: [0.4, 1.0, 1.35], label: "textbook physics", note: "PHYBench: 36.9% (Apr 2025) against experts' 61.9%; 77.4% reported Sep 2026, unconfirmed" },
   { r: [0.5, 0.85, 1.1] },
   { r: [0.25, 0.55, 0.9], label: "long projects", note: "METR: tasks an agent finishes half the time grew from about 50 min (Mar 2025) to 16 h or more (May 2026)" },
-  { r: [0.35, 0.55, 0.7], label: "know when it is wrong", note: "See the next section: confident errors and sycophancy" },
+  { r: [0.35, 0.55, 0.7], label: "know when\nit is wrong", note: "See the next section: confident errors and sycophancy" },
   { r: [0.6, 1.0, 1.25] },
 ];
 const VALLEY = [0.25, 0.42, 0.56];
@@ -66,7 +66,11 @@ export function HumanStar({ step }: { step: number }) {
           const on = hov === k;
           return (
             <g key={k} onMouseEnter={() => setHov(k)} onMouseLeave={() => setHov(null)} onClick={(e) => { stop(e); setHov(k); }} style={{ cursor: "pointer" }}>
-              <text className="t-label" x={lx} y={ly + 6} textAnchor={anchor} fill={on ? C.accent : C.ink} fontSize="18" fontFamily={MONO} textDecoration={on ? "underline" : undefined}>{t.label}</text>
+              <text className="t-label" x={lx} y={ly + 6} textAnchor={anchor} fill={on ? C.accent : C.ink} fontSize="18" fontFamily={MONO} textDecoration={on ? "underline" : undefined}>
+                {t.label.split("\n").map((line, i, all) => (
+                  <tspan key={i} x={lx} dy={i === 0 ? -((all.length - 1) * 11) : 22}>{line}</tspan>
+                ))}
+              </text>
             </g>
           );
         })}

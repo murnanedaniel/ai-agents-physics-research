@@ -7,6 +7,10 @@ import { C, Canvas, G, MONO, SANS, stop } from "../g2/kit";
 // llm-inference (round 2): what the KV cache is.
 // Step 0: every layer stores a key and a value for every past token; the new
 //         token's query is compared with all stored keys.
+// Step 1 (round 3): the maths. attention = softmax(QK^T/sqrt(d)) V; a new token adds
+//         one row to K and V, old rows never change, so only the new query's dot
+//         products are computed. Same diagram as step 0. Vaswani et al. 2017.
+// Steps 2-3 are the old steps 1-2 (s = step - 1 below).
 // Step 1: prefill (the prompt, all at once) vs decode (one token at a time).
 // Step 2: memory grows linearly with context. Llama 3.1 8B in bf16:
 //         2 (K, V) x 32 layers x 8 KV heads x 128 dims x 2 bytes = 131,072 B/token.
@@ -35,27 +39,34 @@ const COL = (i: number) => 190 + i * 92;
 const ROW = (j: number) => 110 + j * 70;
 
 export function KvCacheR3({ step }: { step: number }) {
+  // m: the maths step (1). s: the round-2 step index the rest of the scene uses.
+  const m = step === 1;
+  const s = step <= 1 ? 0 : step - 1;
   const [tokens, setTokens] = useState(128000);
-  useEffect(() => { if (step < 2) setTokens(128000); }, [step]);
+  useEffect(() => { if (s < 2) setTokens(128000); }, [s]);
   const kv = tokens * KV_GB_PER_TOKEN;
   const L = 190, R = 1100;
   const x = (gb: number) => L + (Math.min(gb, MAX_GB) / MAX_GB) * (R - L);
   // which columns are filled at this step: step 0 shows the prompt plus the new token
-  const shown = (i: number) => (step === 0 ? i <= PROMPT.length : true);
-  const delay = (i: number) => (step === 1 ? (i < PROMPT.length ? 0.2 : 1.0 + 0.7 * (i - PROMPT.length)) : 0);
-  const q = step === 0 ? PROMPT.length : ALL.length - 1; // the token whose query we draw
+  const shown = (i: number) => (s === 0 ? i <= PROMPT.length : true);
+  const delay = (i: number) => (s === 1 ? (i < PROMPT.length ? 0.2 : 1.0 + 0.7 * (i - PROMPT.length)) : 0);
+  const q = s === 0 ? PROMPT.length : ALL.length - 1; // the token whose query we draw
 
   return (
     <Canvas>
       <div className="flex h-full w-full flex-col">
         <svg viewBox="0 0 1200 560" className="min-h-0 w-full flex-1" role="img" aria-label="The KV cache: a key and a value per token per layer, written all at once for the prompt and one column at a time while generating; its size grows linearly with context">
           {CAPTIONS.map((c, i) => (
-            <G key={c} on={step === i}>
+            <G key={c} on={s === i && !m}>
               <text x="20" y="30" fill={C.ink} fontSize="25" fontFamily={SANS}>{c}</text>
             </G>
           ))}
 
-          <G on={step === 2}>
+          <G on={m}>
+            <text x="20" y="30" fill={C.ink} fontSize="25" fontFamily={SANS}>Why can it be stored? Look at what attention computes.</text>
+          </G>
+
+          <G on={s === 2}>
             {ECON.map((e, i) => (
               <text key={e} x="20" y={66 + i * 28} fill={C.ink} fontSize="21" fontFamily={SANS}>{e}</text>
             ))}
@@ -71,7 +82,7 @@ export function KvCacheR3({ step }: { step: number }) {
           {ALL.map((t, i) => {
             const isNew = i === q;
             return (
-              <G key={`${step}-${i}`} on={shown(i)} delay={delay(i)}>
+              <G key={`${s}-${i}`} on={shown(i)} delay={delay(i)}>
                 {LAYERS.map((l, j) => (
                   <g key={l}>
                     <rect x={COL(i) - 30} y={ROW(j)} width="28" height="30" rx="4" fill={C.s1} fillOpacity={isNew ? 1 : 0.55} />
@@ -87,16 +98,26 @@ export function KvCacheR3({ step }: { step: number }) {
           <text className="t-label" x="120" y={ROW(2) + 88} textAnchor="end" fill={C.warmText} fontSize="16" fontFamily={MONO}>■ value</text>
 
           {/* the new token's query against every stored key, in the top layer */}
-          <G key={`q${step}`} on={step <= 1} delay={step === 1 ? 2.6 : 0.6}>
+          <G key={`q${s}`} on={s <= 1} delay={s === 1 ? 2.6 : 0.6}>
             {ALL.slice(0, q).map((_, i) => (
               <path key={i} d={`M ${COL(q)} ${ROW(0)} Q ${(COL(q) + COL(i)) / 2} ${ROW(0) - 34 - 4 * (q - i)} ${COL(i) - 16} ${ROW(0)}`} fill="none" stroke={C.ink} strokeOpacity="0.5" strokeWidth="1.5" />
             ))}
-            {step === 0 && <text className="t-label" x={COL(q) + 44} y={ROW(0) + 20} fill={C.ink} fontSize="16" fontFamily={MONO}>new query · every key</text>}
-            {step === 0 && <text x="600" y={ROW(2) + 160} textAnchor="middle" fill={C.ink} fontSize="23" fontFamily={SANS}>They're stored, not recomputed. The next token is fast, but memory grows with context.</text>}
+            {s === 0 && <text className="t-label" x={COL(q) + 44} y={ROW(0) + 20} fill={C.ink} fontSize="16" fontFamily={MONO}>new query · every key</text>}
+            {s === 0 && !m && <text x="600" y={ROW(2) + 160} textAnchor="middle" fill={C.ink} fontSize="23" fontFamily={SANS}>They're stored, not recomputed. The next token is fast, but memory grows with context.</text>}
+          </G>
+
+          {/* the maths: one new row of K and V, one new row of dot products */}
+          <G on={m}>
+            <text x="600" y={ROW(2) + 150} textAnchor="middle" fill={C.ink} fontSize="32" fontFamily={SANS}>
+              attention = softmax(Q K<tspan dy="-13" fontSize="20">T</tspan><tspan dy="13"> / √d) V</tspan>
+            </text>
+            <text x="600" y={ROW(2) + 195} textAnchor="middle" fill={C.ink} fontSize="22" fontFamily={SANS}>A new token adds one row to K and one to V. The old rows don't change,</text>
+            <text x="600" y={ROW(2) + 225} textAnchor="middle" fill={C.ink} fontSize="22" fontFamily={SANS}>so they're kept, and only the new query's dot products are computed.</text>
+            <text className="t-label" x="600" y={ROW(2) + 256} textAnchor="middle" fill={C.muted} fontSize="16" fontFamily={MONO}>Q, K, V: queries, keys, values, one row per token · d: key size</text>
           </G>
 
           {/* prefill / decode braces */}
-          <G on={step >= 1}>
+          <G on={s >= 1}>
             <path d={`M ${COL(0) - 40} ${ROW(2) + 104} L ${COL(PROMPT.length - 1) + 40} ${ROW(2) + 104}`} stroke={C.accent} strokeWidth="3" />
             <text className="t-label" x={(COL(0) + COL(PROMPT.length - 1)) / 2} y={ROW(2) + 130} textAnchor="middle" fill={C.accent} fontSize="17" fontFamily={MONO}>prefill: all at once, limited by compute</text>
             <path d={`M ${COL(PROMPT.length) - 40} ${ROW(2) + 104} L ${COL(ALL.length - 1) + 40} ${ROW(2) + 104}`} stroke={C.warm} strokeWidth="3" />
@@ -104,7 +125,7 @@ export function KvCacheR3({ step }: { step: number }) {
           </G>
 
           {/* memory bar */}
-          <G on={step >= 2}>
+          <G on={s >= 2}>
             <text className="t-label" x={L} y="452" fill={C.ink} fontSize="17" fontFamily={MONO}>GPU memory, Llama 3.1 8B</text>
             <rect x={x(0)} y="464" height="44" width={x(WEIGHTS_GB) - x(0) - 1} rx="4" fill={C.s1} fillOpacity="0.35" stroke={C.s1} />
             <text x={x(0) + 12} y="493" fill={C.ink} fontSize="19" fontFamily={SANS}>weights 16 GB</text>
@@ -115,7 +136,7 @@ export function KvCacheR3({ step }: { step: number }) {
             ))}
           </G>
         </svg>
-        <div className="flex shrink-0 items-center justify-center gap-4 pb-1 font-mono text-[14px] [&_input]:accent-[#eb6834]" style={{ color: C.muted, visibility: step >= 2 ? "visible" : "hidden" }} onClick={stop} onKeyDown={stop} onPointerDown={stop}>
+        <div className="flex shrink-0 items-center justify-center gap-4 pb-1 font-mono text-[14px] [&_input]:accent-[#eb6834]" style={{ color: C.muted, visibility: s >= 2 ? "visible" : "hidden" }} onClick={stop} onKeyDown={stop} onPointerDown={stop}>
           <label className="t-label flex items-center gap-3">context
             <input type="range" min={0} max={128000} step={1000} value={tokens} onChange={(e) => setTokens(+e.target.value)} aria-label="Tokens of context" />
             <span className="w-36 whitespace-nowrap text-right" style={{ color: C.ink }}>{tokens.toLocaleString("en-GB")} tokens</span>

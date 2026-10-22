@@ -40,7 +40,7 @@ export const SCENES = [
   {"id": "topology-teaser", "part": "setup", "theme": "light", "steps": 2, "startSec": 1931, "endSec": 1996, "label": "One agent, or many?"},
   {"id": "sec-model", "part": "setup", "theme": "light", "steps": 1, "startSec": 1996, "endSec": 2062, "label": "What is inside the model?"},
   {"id": "llm-transformer", "part": "setup", "theme": "light", "steps": 2, "startSec": 2062, "endSec": 2129, "label": "What does a language model compute?"},
-  {"id": "llm-inference", "part": "setup", "theme": "light", "steps": 3, "startSec": 2129, "endSec": 2195, "label": "What does the model keep in memory as it writes?"},
+  {"id": "llm-inference", "part": "setup", "theme": "light", "steps": 4, "startSec": 2129, "endSec": 2195, "label": "What does the model keep in memory as it writes?"},
   {"id": "llm-context-cost", "part": "setup", "theme": "light", "steps": 3, "startSec": 2195, "endSec": 2261, "label": "How much does a working style cost in tokens?"},
   {"id": "model-choice", "part": "setup", "theme": "light", "steps": 3, "startSec": 2261, "endSec": 2327, "label": "Which model should do which job?"},
   {"id": "effort-levels", "part": "setup", "theme": "light", "steps": 3, "startSec": 2327, "endSec": 2393, "label": "How hard should the model think?"},

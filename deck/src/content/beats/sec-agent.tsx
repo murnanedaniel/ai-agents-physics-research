@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Arrowheads, C, MONO } from "@/components/scenes/g2/kit";
+import { C, MONO } from "@/components/scenes/g2/kit";
 import { Section } from "@/components/scenes/r3/Section";
 import type { Beat } from "./_types";
 
@@ -16,7 +16,6 @@ function SecAgentScene() {
       ]}
     >
       <svg viewBox="0 0 460 360" className="h-full max-h-[52vh] w-full" aria-hidden>
-        <Arrowheads id="r3-sa" color={C.accent} />
         {/* the parts */}
         <ellipse cx="140" cy="180" rx="118" ry="96" fill="#eef3f6" stroke={C.accent} strokeWidth="2.5" strokeDasharray="30 10" />
         <circle cx="140" cy="180" r="36" fill="#dbe8f3" stroke={C.accent} strokeWidth="2" />
@@ -25,7 +24,9 @@ function SecAgentScene() {
         ))}
         <text className="t-label" x="140" y="318" textAnchor="middle" fill={C.muted} fontSize="20" fontFamily={MONO}>parts</text>
         {/* the motion */}
-        <motion.path d="M 370 118 A 62 62 0 1 1 308 180" fill="none" stroke={C.accent} strokeWidth="2.5" markerEnd="url(#r3-sa)" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.4, delay: 0.4 }} />
+        <motion.path d="M 370 118 A 62 62 0 1 1 308 180" fill="none" stroke={C.accent} strokeWidth="2.5" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.4, delay: 0.4 }} />
+        {/* arrowhead drawn separately: a marker on a pathLength-animated path does not render reliably */}
+        <motion.path d="M 308 168 L 299 186 L 317 186 Z" fill={C.accent} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25, delay: 1.75 }} />
         <text className="t-label" x="370" y="318" textAnchor="middle" fill={C.muted} fontSize="20" fontFamily={MONO}>loop</text>
       </svg>
     </Section>

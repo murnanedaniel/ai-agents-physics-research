@@ -85,7 +85,7 @@ export function EffortLevels({ step }: { step: number }) {
       </svg>
 
       <div style={{ ...T.body, color: C.ink }}>
-        On each step the model decides whether to think, and how much. Effort sets how readily it does.
+        Thinking is chain-of-thought: tokens the model writes before its answer, a behaviour trained with reinforcement learning. Effort sets how many it spends on each step.
         <div className="t-label" style={{ ...T.label, ...T.mono, color: C.muted, marginTop: 4 }}>
           it also sets how many files it reads and tools it calls · next: why thinking longer helps
         </div>

@@ -32,7 +32,7 @@ const MECH = [
 
 const CAPTIONS = [
   "Text is cut into tokens. The last token looks back at all the others: attention.",
-  "Out comes a probability for every possible next token. Pick one, append it, repeat.",
+  "Out comes a probability for every next token. One is sampled: “electron” could win.",
 ];
 
 export function Transformer({ step }: { step: number }) {
@@ -80,11 +80,15 @@ export function Transformer({ step }: { step: number }) {
           {NEXT.map(([w, p], i) => (
             <g key={w}>
               <text x={bx - 12} y={by + i * (bh + 8) + 28} textAnchor="end" fill={C.ink} fontSize="21" fontFamily={SANS} fontWeight={i === 0 ? 600 : 400}>{w}</text>
-              <motion.rect x={bx} y={by + i * (bh + 8) + 6} height={bh - 12} rx="3" fill={w === "elephant" ? C.s2 : C.s1} initial={{ width: 0 }} animate={{ width: step >= 1 ? px(p) : 0 }} transition={{ duration: 0.7, delay: 0.3 + 0.08 * i }} />
+              <motion.rect x={bx} y={by + i * (bh + 8) + 6} height={bh - 12} rx="3" fill={C.s1} initial={{ width: 0 }} animate={{ width: step >= 1 ? px(p) : 0 }} transition={{ duration: 0.7, delay: 0.3 + 0.08 * i }} />
               <text className="t-label" x={bx + px(p) + 10} y={by + i * (bh + 8) + 28} fill={C.ink} fontSize="18" fontFamily={MONO}>{(p * 100).toFixed(1)}%</text>
             </g>
           ))}
           <text className="t-label" x={bx} y={by + 6 * (bh + 8) + 26} fill={C.muted} fontSize="17" fontFamily={MONO}>50,251 other tokens: {Math.round(REST * 100)}%</text>
+          <text className="t-label" x={bx - 100} y={by + 6 * (bh + 8) + 60} fill={C.muted} fontSize="17" fontFamily={MONO}>
+            <tspan x={bx - 100}>sampled, usually at temperature 1,</tspan>
+            <tspan x={bx - 100} dy="22">often with a top-k or top-p cut</tspan>
+          </text>
         </G>
 
         {/* pick, append: the chosen token joins the row */}
