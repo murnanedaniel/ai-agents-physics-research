@@ -36,7 +36,7 @@ export const SCENES = [
   {"id": "no-code", "part": "setup", "theme": "light", "steps": 3, "startSec": 1666, "endSec": 1732, "label": "Who wrote the code for all of this?"},
   {"id": "sec-agent", "part": "setup", "theme": "light", "steps": 1, "startSec": 1732, "endSec": 1798, "label": "How does an agent work?"},
   {"id": "agent-cell", "part": "setup", "theme": "light", "steps": 2, "startSec": 1798, "endSec": 1864, "label": "What is an agent made of?"},
-  {"id": "q2-machinery", "part": "setup", "theme": "light", "steps": 3, "startSec": 1864, "endSec": 1931, "label": "What happens when an agent runs?"},
+  {"id": "q2-machinery", "part": "setup", "theme": "light", "steps": 4, "startSec": 1864, "endSec": 1931, "label": "What happens when an agent runs?"},
   {"id": "topology-teaser", "part": "setup", "theme": "light", "steps": 2, "startSec": 1931, "endSec": 1996, "label": "One agent, or many?"},
   {"id": "sec-model", "part": "setup", "theme": "light", "steps": 1, "startSec": 1996, "endSec": 2062, "label": "What is inside the model?"},
   {"id": "llm-transformer", "part": "setup", "theme": "light", "steps": 2, "startSec": 2062, "endSec": 2129, "label": "What does a language model compute?"},

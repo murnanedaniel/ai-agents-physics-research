@@ -6,7 +6,9 @@ import { C, Canvas, G, MONO, SANS, stop } from "../g2/kit";
 
 // agent-cell (round 2): the STATE of an agentic harness, drawn as a cell.
 // Step 0: the model and the only thing it can see, its context window.
-// Step 1: the harness: tools, memory files, and permissions as gates in the membrane.
+// Step 1: the harness as a porous membrane: tools, memory files, and permissions as gates.
+// Checked against Claude Code docs (how-claude-code-works), Codex docs (agent approvals
+// and security: sandbox + approval policy) and pi-mono's agent loop (beforeToolCall hook).
 const CX = 600, CY = 290, RX = 340, RY = 225;
 
 type Part = { id: string; label: string; info: string };
@@ -14,9 +16,9 @@ type Part = { id: string; label: string; info: string };
 const INFO: Record<string, string> = {
   model: "The model: an LLM. It reads the context and writes text or a tool call.",
   context: "Context window: everything the model can see right now. Up to 1M tokens.",
-  tools: "Tools: actions the harness runs on the model's behalf. Read, edit, search, run.",
+  tools: "Tools: the model only names a tool and its arguments. The harness runs it.",
   memory: "CLAUDE.md is loaded at every start. A skill is loaded when its task comes up.",
-  perms: "Permissions: some actions go ahead, others wait for you to approve them.",
+  perms: "Permissions: the harness checks each tool call against your rules. It goes ahead, asks you, or is blocked.",
 };
 
 // The outside world, each reached through a gate in the membrane.
@@ -40,7 +42,7 @@ export function AgentState({ step }: { step: number }) {
     ? INFO[sel] ?? OUT.find((o) => o.id === sel)?.info
     : step === 0
       ? "Beyond its training, the model knows only what's in its context window."
-      : "The harness (e.g. Claude Code) wraps the model: tools, memory files, permissions.";
+      : "Like a cell: the harness is a porous membrane, and permissions decide what passes.";
   const hover = (id: string) => ({
     onMouseEnter: () => setSel(id),
     onMouseLeave: () => setSel(null),
@@ -109,7 +111,7 @@ export function AgentState({ step }: { step: number }) {
           );
         })}
         <G on={step >= 1} delay={0.7}>
-          <text className="t-label" x={CX} y={CY + RY + 32} textAnchor="middle" fill={C.muted} fontSize="17" fontFamily={MONO}>membrane = permissions (example rules) · hover any part</text>
+          <text className="t-label" x={CX} y={CY + RY + 32} textAnchor="middle" fill={C.muted} fontSize="17" fontFamily={MONO}>membrane = harness · gates = permissions (example rules)</text>
         </G>
 
         <motion.text key={caption} x="600" y="628" textAnchor="middle" fill={C.ink} fontSize="25" fontFamily={SANS} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.35 }}>{caption}</motion.text>

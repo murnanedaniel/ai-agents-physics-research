@@ -7,6 +7,7 @@ import { C, Canvas, G, MONO, SANS, SERIF, stop } from "./kit";
 // llm-jagged: on each test that publishes a human baseline, where does the best
 // frontier model sit relative to people? Ahead on three, far behind on one.
 // Facts checked 2026-10-21 (arXiv abstracts, ARC Prize posts); hollow = secondary.
+// Step 1 (round 3): METR time horizons by domain replace the 2023 GPT-4 consultant study.
 type Row = { name: string; what: string; ai: number; hu: number; aiNote: string; huNote: string; soft?: boolean };
 const ROWS: Row[] = [
   { name: "GPQA Diamond", what: "graduate science quiz", ai: 97, hu: 65, soft: true, aiNote: "AI 97%: GPT-5.4, Mar 2026 (capitalandcompute.net, secondary)", huNote: "Humans 65%: PhD experts in the field, full 448-question set (Rein et al. 2023, arXiv:2311.12022)" },
@@ -62,18 +63,18 @@ export function JaggedVsHuman({ step }: { step: number }) {
 
         <G on={step >= 1}>
           <line x1={790} x2={790} y1={60} y2={440} stroke={C.rule} />
-          <text x={815} y={98} fill={C.ink} fontSize="30" fontFamily={SERIF} fontStyle="italic">What happens at the edge?</text>
-          <text className="t-label" x={815} y={128} fill={C.muted} fontSize="16" fontFamily={MONO}>randomised trial: 758 BCG consultants</text>
-          <text className="t-label" x={815} y={150} fill={C.muted} fontSize="16" fontFamily={MONO}>realistic tasks, with or without GPT-4</text>
-          <text x={815} y={188} fill={C.ink} fontSize="21" fontFamily={SANS}>18 tasks inside the frontier</text>
-          <rect x={815} y={202} width={0.4 * 380} height="26" rx="4" fill={C.s1} />
-          <text x={815 + 0.4 * 380 + 10} y={222} fill={C.ink} fontSize="21" fontFamily={MONO}>+40% quality</text>
-          <text x={815} y={290} fill={C.ink} fontSize="21" fontFamily={SANS}>1 task just outside it</text>
-          <text className="t-label" x={815} y={352} fill={C.muted} fontSize="15" fontFamily={MONO}>less often correct</text>
-          <rect x={815} y={304} width={0.19 * 380} height="26" rx="4" fill={C.warm} />
-          <text x={815 + 0.19 * 380 + 10} y={324} fill={C.ink} fontSize="21" fontFamily={MONO}>−19 points</text>
-          <text className="t-label" x={815} y={402} fill={C.muted} fontSize="15" fontFamily={MONO}>Dell&apos;Acqua et al. 2023,</text>
-          <text className="t-label" x={815} y={422} fill={C.muted} fontSize="15" fontFamily={MONO}>HBS working paper 24-013</text>
+          <text x={815} y={98} fill={C.ink} fontSize="30" fontFamily={SERIF} fontStyle="italic">How long a task can it do?</text>
+          <text className="t-label" x={815} y={128} fill={C.muted} fontSize="16" fontFamily={MONO}>METR: task length (in human time) that</text>
+          <text className="t-label" x={815} y={150} fill={C.muted} fontSize="16" fontFamily={MONO}>models finish half the time, by domain</text>
+          <text x={815} y={188} fill={C.ink} fontSize="21" fontFamily={SANS}>software, maths, science</text>
+          <rect x={815} y={202} width={250} height="26" rx="4" fill={C.s1} />
+          <text x={815 + 250 + 10} y={222} fill={C.ink} fontSize="21" fontFamily={MONO}>~100 min</text>
+          <text x={815} y={290} fill={C.ink} fontSize="21" fontFamily={SANS}>clicking around a computer</text>
+          <rect x={815} y={304} width={5} height="26" rx="2" fill={C.warm} />
+          <text x={815 + 5 + 10} y={324} fill={C.ink} fontSize="21" fontFamily={MONO}>40 to 100× shorter</text>
+          <text className="t-label" x={815} y={352} fill={C.muted} fontSize="15" fontFamily={MONO}>same frontier models (OSWorld, WebArena)</text>
+          <text className="t-label" x={815} y={402} fill={C.muted} fontSize="15" fontFamily={MONO}>METR, &quot;How does time horizon vary</text>
+          <text className="t-label" x={815} y={422} fill={C.muted} fontSize="15" fontFamily={MONO}>across domains?&quot;, 14 Jul 2025</text>
         </G>
 
         <G on={step >= 1}>

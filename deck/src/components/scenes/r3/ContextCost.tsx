@@ -78,6 +78,7 @@ export function ContextCost({ step }: { step: number }) {
         <svg viewBox={`0 0 ${W} ${H}`} className="min-h-0 w-full flex-1" role="img" aria-label={`Cumulative cost after ${n} agent steps: ${runs.map((r) => `${r.label} $${r.cum[n - 1].toFixed(2)}`).join(", ")}`}>
           <G on={step < 2}>
             <text x="20" y="30" fill={C.ink} fontSize="25" fontFamily={SANS}>{step === 0 ? "Every step re-sends the whole context, so cost per step keeps rising." : "Shorter contexts cost less for the same work."}</text>
+            {step === 1 && <text x="20" y="56" fill={C.ink} fontSize="20" fontFamily={SANS}>Subagents only help a bit more: every step still pays for its new output and tool result.</text>}
           </G>
 
           {/* axes and grid */}
