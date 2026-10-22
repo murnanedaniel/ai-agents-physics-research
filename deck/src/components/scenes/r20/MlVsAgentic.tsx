@@ -109,6 +109,10 @@ function AllFields() {
           </motion.g>
         );
       })}
+      {/* Jul to Oct 2026 was searched for particle physics only: say so, so the gap doesn't read as a slowdown */}
+      <rect x={x1(29.5)} y={PAD.top + ROW_H + 2} width={x1(MONTHS - 1) + 12 - x1(29.5)} height={ROW_H * (FIELD_ORDER.length - 1) - 4} fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.18)" strokeDasharray="4 5" />
+      <text className="t-label" x={(x1(29.5) + x1(MONTHS - 1) + 12) / 2} y={PAD.top + ROW_H + 30} textAnchor="middle" fontSize={18} fontFamily={MONO} fill={D.muted}>not yet</text>
+      <text className="t-label" x={(x1(29.5) + x1(MONTHS - 1) + 12) / 2} y={PAD.top + ROW_H + 52} textAnchor="middle" fontSize={18} fontFamily={MONO} fill={D.muted}>searched</text>
       <line x1={PAD.left} x2={PAD.left + BODY_W} y1={H - PAD.bottom + 2} y2={H - PAD.bottom + 2} stroke={D.rule} />
       {YEAR_TICKS.map((t) => (
         <g key={t.m}>
