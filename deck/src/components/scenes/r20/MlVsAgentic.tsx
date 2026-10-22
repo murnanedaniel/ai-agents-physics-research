@@ -60,8 +60,10 @@ function ParticleOnly() {
   const rowH = BODY_H0 / list.length;
   // With ~37 rows the row pitch is ~18 units, so the label shrinks to fit the row
   // (about 11-12 px on screen) instead of overlapping its neighbours.
-  const titleSize = Math.min(23, Math.round(rowH * 1.1));
-  const idSize = Math.min(22, Math.round(rowH * 1.05));
+  // Too many rows for a label each: label every other paper (always the newest), at a readable size.
+  const every = list.length > 24 ? 2 : 1;
+  const titleSize = Math.min(23, Math.round(rowH * every * 0.95));
+  const idSize = Math.min(22, Math.round(rowH * every * 0.9));
   const nudge = Math.round(titleSize * 0.3);
   const dots = list.map((p, k) => ({ p, k, cx: x0(p.month), cy: PAD0.top + BODY_H0 - (k + 0.5) * rowH, right: p.month < 12 }));
   return (
@@ -77,10 +79,10 @@ function ParticleOnly() {
       {dots.map((d) => (
         <motion.g key={d.p.id} initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.45, delay: (d.p.month / MONTHS) * 1.8 + d.k * 0.05 }}>
           <circle cx={d.cx} cy={d.cy} r={7} fill={D.accent} stroke="#bae6fd" strokeWidth={0.8} />
-          <text className="t-label" x={d.right ? d.cx + 16 : d.cx - 16} y={d.cy + nudge} textAnchor={d.right ? "start" : "end"}>
+          {(list.length - 1 - d.k) % every === 0 && <text className="t-label" x={d.right ? d.cx + 16 : d.cx - 16} y={d.cy + nudge} textAnchor={d.right ? "start" : "end"}>
             <tspan fontSize={titleSize} fontFamily={SERIF} fill={D.soft}>{d.p.title}</tspan>
             <tspan fontSize={idSize} fontFamily={MONO} fill={D.muted} dx={14}>{d.p.id}</tspan>
-          </text>
+          </text>}
         </motion.g>
       ))}
     </svg>

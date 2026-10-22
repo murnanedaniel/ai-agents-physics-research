@@ -7,9 +7,9 @@ import { C, Canvas, G, MONO, SANS, stop } from "../g2/kit";
 // llm-inference (round 2): what the KV cache is.
 // Step 0: every layer stores a key and a value for every past token; the new
 //         token's query is compared with all stored keys.
-// Step 1 (round 3): the maths. attention = softmax(QK^T/sqrt(d)) V; a new token adds
-//         one row to K and V, old rows never change, so only the new query's dot
-//         products are computed. Same diagram as step 0. Vaswani et al. 2017.
+// Step 1 (round 3): the maths as block matrices. q_new times K^T gives one 1x(n+1)
+//         strip of scores; softmax of it times V gives the new output. Old K and V
+//         rows never change (causal mask), so they are kept. Vaswani et al. 2017.
 // Steps 2-3 are the old steps 1-2 (s = step - 1 below).
 // Step 1: prefill (the prompt, all at once) vs decode (one token at a time).
 // Step 2: memory grows linearly with context. Llama 3.1 8B in bf16:
@@ -35,6 +35,17 @@ const ECON = [
   "A prefix the provider has already processed is billed at a lower rate: prompt caching.",
 ];
 
+// maths step geometry: K and V as stacks of rows, the score strip between them
+const ROWS = ["₁", "₂", "₃", "ₙ", "_new"];
+const RH = 34; // row height
+const MW = 170; // row width (d)
+const MX = { k: 80, v: 820 };
+const MY = (i: number) => 172 + i * 40;
+const CW = 76; // score cell width
+const SX = 312; // score strip x
+const SY = MY(2); // score strip y
+const OX = 1040; // output row x
+
 const COL = (i: number) => 190 + i * 92;
 const ROW = (j: number) => 110 + j * 70;
 
@@ -56,6 +67,11 @@ export function KvCacheR3({ step }: { step: number }) {
     <Canvas>
       <div className="flex h-full w-full flex-col">
         <svg viewBox="0 0 1200 560" className="min-h-0 w-full flex-1" role="img" aria-label="The KV cache: a key and a value per token per layer, written all at once for the prompt and one column at a time while generating; its size grows linearly with context">
+          <defs>
+            <marker id="kv-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill={C.ink} />
+            </marker>
+          </defs>
           {CAPTIONS.map((c, i) => (
             <G key={c} on={s === i && !m}>
               <text x="20" y="30" fill={C.ink} fontSize="25" fontFamily={SANS}>{c}</text>
@@ -72,6 +88,7 @@ export function KvCacheR3({ step }: { step: number }) {
             ))}
           </G>
 
+          <G on={!m}>
           {/* layer labels */}
           {LAYERS.map((l, j) => (
             <text key={l} className="t-label" x="120" y={ROW(j) + 22} textAnchor="end" fill={C.muted} fontSize="16" fontFamily={MONO}>{l}</text>
@@ -106,14 +123,53 @@ export function KvCacheR3({ step }: { step: number }) {
             {s === 0 && !m && <text x="600" y={ROW(2) + 160} textAnchor="middle" fill={C.ink} fontSize="23" fontFamily={SANS}>They're stored, not recomputed. The next token is fast, but memory grows with context.</text>}
           </G>
 
-          {/* the maths: one new row of K and V, one new row of dot products */}
+          </G>
+
+          {/* the maths as block matrices: q_new x K^T gives one new row of scores; softmax of it x V gives the new output */}
           <G on={m}>
-            <text x="600" y={ROW(2) + 150} textAnchor="middle" fill={C.ink} fontSize="32" fontFamily={SANS}>
-              attention = softmax(Q K<tspan dy="-13" fontSize="20">T</tspan><tspan dy="13"> / √d) V</tspan>
+            <text x="600" y="72" textAnchor="middle" fill={C.ink} fontSize="22" fontFamily={SANS}>
+              attention = softmax(Q K<tspan dy="-9" fontSize="14">T</tspan><tspan dy="9"> / √d) V</tspan>
             </text>
-            <text x="600" y={ROW(2) + 195} textAnchor="middle" fill={C.ink} fontSize="22" fontFamily={SANS}>A new token adds one row to K and one to V. The old rows don't change,</text>
-            <text x="600" y={ROW(2) + 225} textAnchor="middle" fill={C.ink} fontSize="22" fontFamily={SANS}>so they're kept, and only the new query's dot products are computed.</text>
-            <text className="t-label" x="600" y={ROW(2) + 256} textAnchor="middle" fill={C.muted} fontSize="16" fontFamily={MONO}>Q, K, V: queries, keys, values, one row per token · d: key size</text>
+            {/* q_new: one row */}
+            <rect x={MX.k} y="112" width={MW} height={RH} rx="4" fill={C.s3} stroke={C.ink} strokeWidth="2.5" />
+            <text x={MX.k + MW / 2} y="135" textAnchor="middle" fill="#fff" fontSize="17" fontFamily={MONO}>q_new</text>
+            {/* K and V: n cached rows plus the new one */}
+            {(["k", "v"] as const).map((mat) => (
+              <g key={mat}>
+                {ROWS.map((r, i) => {
+                  const isNew = i === ROWS.length - 1;
+                  return (
+                    <g key={r}>
+                      <rect x={MX[mat]} y={MY(i)} width={MW} height={RH} rx="4" fill={mat === "k" ? C.s1 : C.s2} fillOpacity={isNew ? 1 : 0.22} stroke={isNew ? C.ink : "none"} strokeWidth="2.5" />
+                      <text x={MX[mat] + 12} y={MY(i) + 23} fill={isNew ? "#fff" : C.ink} fontSize="17" fontFamily={MONO}>{mat}{r}</text>
+                      <text className="t-label" x={MX[mat] + MW - 10} y={MY(i) + 22} textAnchor="end" fill={isNew ? "#fff" : C.muted} fontSize="13" fontFamily={MONO}>{isNew ? "new" : "reused"}</text>
+                    </g>
+                  );
+                })}
+                <text className="t-label" x={MX[mat] + MW / 2} y={MY(ROWS.length) + 18} textAnchor="middle" fill={C.muted} fontSize="15" fontFamily={MONO}>{mat === "k" ? "K" : "V"}: n+1 rows × d</text>
+              </g>
+            ))}
+            {/* q_new K^T: a 1 x (n+1) strip of dot products, all new */}
+            <path d={`M ${MX.k + MW + 8} ${SY + RH / 2} L ${SX - 10} ${SY + RH / 2}`} stroke={C.ink} strokeWidth="2" markerEnd="url(#kv-arrow)" />
+            <text className="t-label" x={SX + (ROWS.length * CW) / 2} y={SY - 14} textAnchor="middle" fill={C.ink} fontSize="15" fontFamily={MONO}>q_new Kᵀ: 1 × (n+1) scores</text>
+            {ROWS.map((r, i) => (
+              <g key={r}>
+                <rect x={SX + i * CW} y={SY} width={CW - 4} height={RH} rx="4" fill={C.s4} fillOpacity="0.85" stroke={C.ink} strokeWidth="2.5" />
+                <text x={SX + i * CW + (CW - 4) / 2} y={SY + 23} textAnchor="middle" fill={C.ink} fontSize="14" fontFamily={MONO}>q·k{r}</text>
+              </g>
+            ))}
+            {/* softmax, then times V */}
+            <path d={`M ${SX + ROWS.length * CW + 4} ${SY + RH / 2} L ${MX.v - 10} ${SY + RH / 2}`} stroke={C.ink} strokeWidth="2" markerEnd="url(#kv-arrow)" />
+            <text className="t-label" x={(SX + ROWS.length * CW + MX.v) / 2} y={SY + RH + 24} textAnchor="middle" fill={C.ink} fontSize="15" fontFamily={MONO}>softmax, × V</text>
+            <path d={`M ${MX.v + MW + 8} ${SY + RH / 2} L ${OX - 10} ${SY + RH / 2}`} stroke={C.ink} strokeWidth="2" markerEnd="url(#kv-arrow)" />
+            <rect x={OX} y={SY} width="120" height={RH} rx="4" fill={C.s3} stroke={C.ink} strokeWidth="2.5" />
+            <text x={OX + 60} y={SY + 23} textAnchor="middle" fill="#fff" fontSize="17" fontFamily={MONO}>out_new</text>
+            {/* legend */}
+            <rect x="250" y="412" width="26" height="20" rx="3" fill={C.s1} fillOpacity="0.22" />
+            <text className="t-label" x="284" y="428" fill={C.ink} fontSize="15" fontFamily={MONO}>cached: computed once, never recomputed</text>
+            <rect x="680" y="412" width="26" height="20" rx="3" fill={C.s1} stroke={C.ink} strokeWidth="2.5" />
+            <text className="t-label" x="714" y="428" fill={C.ink} fontSize="15" fontFamily={MONO}>new: one row of K, V and scores</text>
+            <text x="600" y="490" textAnchor="middle" fill={C.ink} fontSize="22" fontFamily={SANS}>Only the new row is computed. The old blocks never change, so we keep them: that is the KV cache.</text>
           </G>
 
           {/* prefill / decode braces */}

@@ -7,13 +7,20 @@ import { C, Canvas, G, MONO, SANS, SERIF, stop } from "./kit";
 // llm-jagged: on each test that publishes a human baseline, where does the best
 // frontier model sit relative to people? Ahead on three, far behind on one.
 // Facts checked 2026-10-21 (arXiv abstracts, ARC Prize posts); hollow = secondary.
-// Step 1 (round 3): METR time horizons by domain replace the 2023 GPT-4 consultant study.
+// Step 1 (round 3): same-model ARC-AGI-2 vs ARC-AGI-3 (2026) replaces METR's Jul 2025 domain study.
 type Row = { name: string; what: string; ai: number; hu: number; aiNote: string; huNote: string; soft?: boolean };
 const ROWS: Row[] = [
   { name: "GPQA Diamond", what: "graduate science quiz", ai: 97, hu: 65, soft: true, aiNote: "AI 97%: GPT-5.4, Mar 2026 (capitalandcompute.net, secondary)", huNote: "Humans 65%: PhD experts in the field, full 448-question set (Rein et al. 2023, arXiv:2311.12022)" },
   { name: "PHYBench", what: "500 physics problems", ai: 77.4, hu: 61.9, soft: true, aiNote: "AI 77.4%: top of llm-stats, Sep 2026 (unconfirmed). At launch, Apr 2025: 36.9%", huNote: "Humans 61.9%: physics experts (Qiu et al. 2025, arXiv:2504.16074)" },
   { name: "ARC-AGI-2", what: "abstract grid puzzles", ai: 85, hu: 60, soft: true, aiNote: "AI about 85 to 92%: aggregator mirrors, Jun to Sep 2026 (unconfirmed). At launch, Mar 2025: about 4%", huNote: "Humans 60%: average of 400+ test-takers (ARC Prize, 24 Mar 2025)" },
   { name: "ARC-AGI-3", what: "games learned while playing", ai: 0.51, hu: 100, aiNote: "AI 0.51%: best frontier model at launch (ARC Prize, 25 Mar 2026)", huNote: "Humans 100%: every game solved by human testers (ARC Prize, 25 Mar 2026)" },
+];
+
+// Step 1 panel: ARC Prize leaderboard data (arcprize.org/media/data/evaluations.json, read 2026-10-22),
+// semi-private sets. GPT-5.6 Sol (Max, released 9 Jul 2026): v2 92.5%, v3 7.78%. Claude Opus 5 (High, 24 Jul 2026): v2 88.3%, v3 30.2%.
+const BARS = [
+  { name: "GPT-5.6 Sol", grid: 93, game: 8 },
+  { name: "Claude Opus 5", grid: 88, game: 30 },
 ];
 
 const X0 = 300, XW = 360, Y0 = 92, DY = 108;
@@ -63,18 +70,22 @@ export function JaggedVsHuman({ step }: { step: number }) {
 
         <G on={step >= 1}>
           <line x1={790} x2={790} y1={60} y2={440} stroke={C.rule} />
-          <text x={815} y={98} fill={C.ink} fontSize="30" fontFamily={SERIF} fontStyle="italic">How long a task can it do?</text>
-          <text className="t-label" x={815} y={128} fill={C.muted} fontSize="16" fontFamily={MONO}>METR: task length (in human time) that</text>
-          <text className="t-label" x={815} y={150} fill={C.muted} fontSize="16" fontFamily={MONO}>models finish half the time, by domain</text>
-          <text x={815} y={188} fill={C.ink} fontSize="21" fontFamily={SANS}>software, maths, science</text>
-          <rect x={815} y={202} width={250} height="26" rx="4" fill={C.s1} />
-          <text x={815 + 250 + 10} y={222} fill={C.ink} fontSize="21" fontFamily={MONO}>~100 min</text>
-          <text x={815} y={290} fill={C.ink} fontSize="21" fontFamily={SANS}>clicking around a computer</text>
-          <rect x={815} y={304} width={5} height="26" rx="2" fill={C.warm} />
-          <text x={815 + 5 + 10} y={324} fill={C.ink} fontSize="21" fontFamily={MONO}>40 to 100× shorter</text>
-          <text className="t-label" x={815} y={352} fill={C.muted} fontSize="15" fontFamily={MONO}>same frontier models (OSWorld, WebArena)</text>
-          <text className="t-label" x={815} y={402} fill={C.muted} fontSize="15" fontFamily={MONO}>METR, &quot;How does time horizon vary</text>
-          <text className="t-label" x={815} y={422} fill={C.muted} fontSize="15" fontFamily={MONO}>across domains?&quot;, 14 Jul 2025</text>
+          <text x={815} y={98} fill={C.ink} fontSize="30" fontFamily={SERIF} fontStyle="italic">Same model, two puzzle tests</text>
+          <text className="t-label" x={815} y={128} fill={C.muted} fontSize="16" fontFamily={MONO}>ARC Prize leaderboard, Oct 2026:</text>
+          <text className="t-label" x={815} y={150} fill={C.muted} fontSize="16" fontFamily={MONO}>grids (ARC-AGI-2) vs games (ARC-AGI-3)</text>
+          {BARS.map((m, i) => {
+            const y = 190 + i * 112;
+            return (
+              <g key={m.name}>
+                <text x={815} y={y} fill={C.ink} fontSize="21" fontFamily={SANS}>{m.name}</text>
+                <rect x={815} y={y + 12} width={2.5 * m.grid} height="22" rx="4" fill={C.s1} />
+                <text x={815 + 2.5 * m.grid + 10} y={y + 30} fill={C.ink} fontSize="19" fontFamily={MONO}>{m.grid}% grids</text>
+                <rect x={815} y={y + 44} width={Math.max(4, 2.5 * m.game)} height="22" rx="4" fill={C.warm} />
+                <text x={815 + Math.max(4, 2.5 * m.game) + 10} y={y + 62} fill={C.ink} fontSize="19" fontFamily={MONO}>{m.game}% games</text>
+              </g>
+            );
+          })}
+          <text className="t-label" x={815} y={422} fill={C.muted} fontSize="15" fontFamily={MONO}>people solved every task in both sets</text>
         </G>
 
         <G on={step >= 1}>
