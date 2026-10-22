@@ -137,6 +137,7 @@ export { default as "bench-ours" } from "./bench-ours";
 export { default as "collider2031" } from "./collider2031";
 export { default as "serving" } from "./serving";
 export { default as "sec-reminders" } from "./sec-reminders";
+export { default as "sec-misc" } from "./sec-misc";
 export { default as "flights-guardrails" } from "./flights-guardrails";
 export { default as "demo-flights" } from "./demo-flights";
 export { default as "security-trifecta" } from "./security-trifecta";
