@@ -1,12 +1,12 @@
 "use client";
 
-import { FinetuningDemo } from "@/components/scenes/r7/FinetuningDemo";
+import { FineTuningDemo } from "@/components/scenes/r41/FineTuning";
 import type { Beat } from "./_types";
 
 const beat: Beat = {
-  title: "Demo: give the workbench the literature and both codes.",
-  source: "Live demo on the day · inputs: Fine-Tuning (my 2019 PhD code, private), github.com/murnanedaniel/pyCHM",
-  Scene: FinetuningDemo,
+  title: "Demo: where does the Gaussian answer break?",
+  source: "Live on the day · toys: O = a xⁿ − C (thesis eq. 365) and the double-tuning potential (thesis §14.2), arXiv:2606.18364 · checks and tiers fixed before the run",
+  Scene: FineTuningDemo,
 };
 
 export default beat;
