@@ -113,10 +113,10 @@ export function CheckLadder({ step }: { step: number }) {
             ))}
             {e.checks.map(([h, d], i) => {
               const kill = h === "kill if";
-              const top = y(5) + 50 + i * (e.checks.length > 4 ? 72 : 80);
+              const top = y(5) + 50 + i * (e.checks.length > 4 ? 76 : 80);
               return (
                 <g key={h} transform={`translate(0 ${top})`}>
-                  <rect x={0} y={-22} width={420} height={e.checks.length > 4 ? 66 : 70} rx={8} fill={kill ? C.warmTint : "#fffdf8"} stroke={kill ? C.warm : C.rule} strokeWidth={1.2} />
+                  <rect x={0} y={-22} width={420} height={72} rx={8} fill={kill ? C.warmTint : "#fffdf8"} stroke={kill ? C.warm : C.rule} strokeWidth={1.2} />
                   <text className="t-label" x={14} y={-2} fontFamily={MONO} fontSize={14} fill={kill ? C.warm : C.accent}>{h}</text>
                   <Wrap x={14} y={20} text={d} />
                 </g>
@@ -131,7 +131,7 @@ export function CheckLadder({ step }: { step: number }) {
 
 // Two-line wrap for the check text (SVG has no wrapping).
 function Wrap({ x, y, text }: { x: number; y: number; text: string }) {
-  const max = 40;
+  const max = 47;
   const words = text.split(" ");
   const lines: string[] = [""];
   words.forEach((w) => {
@@ -142,7 +142,7 @@ function Wrap({ x, y, text }: { x: number; y: number; text: string }) {
   return (
     <>
       {lines.map((l, i) => (
-        <text key={i} x={x} y={y + i * 22} fontFamily={SANS} fontSize={18} fill={C.ink}>{l}</text>
+        <text key={i} x={x} y={y + i * 21} fontFamily={SANS} fontSize={17} fill={C.ink}>{l}</text>
       ))}
     </>
   );
