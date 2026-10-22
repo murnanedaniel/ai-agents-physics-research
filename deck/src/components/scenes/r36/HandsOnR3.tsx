@@ -53,7 +53,7 @@ function HandsOnSkill({ step, n, first, phrase, skill, asks, draftsLabel, drafts
           <div style={{ ...card, borderLeft: `4px solid ${C.accent}` }}>
             <div className="t-label" style={lbl}>ask your agent</div>
             <div style={{ ...T.big, ...T.serif, color: C.ink, marginTop: 6 }}>“{phrase}”</div>
-            <div className="t-label" style={{ ...T.label, ...T.mono, color: C.faint, marginTop: 8 }}>starts the {skill} skill</div>
+            <div className="t-label" style={{ ...T.label, ...T.mono, color: C.muted, marginTop: 8 }}>starts the {skill} skill</div>
           </div>
           <div className="t-label" style={lbl}>it asks three questions</div>
           <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "1.6vh" }}>
@@ -92,18 +92,18 @@ function HandsOnSkill({ step, n, first, phrase, skill, asks, draftsLabel, drafts
 export function HandsOn0R3({ step }: { step: number }) {
   return (
     <HandsOnSkill step={step} n={0} card="exercises/hands-on-0-setup/" minutes="15 minutes · the interview takes 5 to 10"
-      first={<>a GitHub account, Claude Code, and the course skills copied in.</>}
+      first={<>GitHub account, Claude Code, course skills installed.</>}
       phrase="interview me about my research setup" skill="research-setup"
       asks={[
-        <>What do you work on, and what does a result look like?</>,
+        <>What do you work on, and what is a typical result?</>,
         <>Where does the work run, and with which tools?</>,
         <>What did an AI get wrong, or what must it never touch?</>,
       ]}
       draftsLabel="then three drafts, written on your OK"
       drafts={[
-        { file: "CLAUDE.md", what: <>your rules, under 40 lines</> },
-        { file: "a starter skill", what: <>for a task you do, such as checking a calculation</> },
-        { file: "DECISIONS.md", what: <>why you set it up this way</> },
+        { file: "CLAUDE.md", what: <>your rules, short</> },
+        { file: "a starter skill", what: <>for one task you repeat</> },
+        { file: "DECISIONS.md", what: <>why it is set up this way</> },
       ]}
     />
   );
@@ -123,7 +123,7 @@ export function HandsOn1R3({ step }: { step: number }) {
       drafts={[
         { file: "HYPOTHESIS.md", what: <>one page: question, metric, baseline, held-out check, overnight loop</> },
       ]}
-      after={<div style={{ ...T.body, color: C.muted }}>Nothing runs yet. Next: a scoring script that gets your baseline back.</div>}
+      after={<div style={{ ...T.body, color: C.muted }}>Nothing runs yet.</div>}
     />
   );
 }

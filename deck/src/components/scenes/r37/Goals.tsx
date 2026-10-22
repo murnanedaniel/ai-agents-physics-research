@@ -27,14 +27,14 @@ const Lbl = ({ x, y, children, fill = C.muted, anchor = "middle", size = 17 }: {
 
 function Loop({ step }: { step: number }) {
   return (
-    <svg viewBox="0 0 560 330" style={{ width: "100%", height: "auto", display: "block" }} role="img" aria-label="The goal loop: Claude works a turn, a small model checks the condition against the conversation; not yet met sends Claude back for another turn; met or impossible ends the loop">
+    <svg viewBox="0 0 620 330" style={{ width: "100%", height: "auto", display: "block" }} role="img" aria-label="The goal loop: Claude works a turn, a small model checks the condition against the conversation; not yet met sends Claude back for another turn; met or impossible ends the loop">
       <defs>
         <marker id="r37-goal-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
           <path d="M 0 0 L 10 5 L 0 10 z" fill={C.muted} />
         </marker>
       </defs>
       {/* the condition */}
-      <rect x={10} y={10} width={540} height={46} rx="8" fill="#fff" stroke={C.accent} strokeWidth="2" />
+      <rect x={10} y={10} width={600} height={46} rx="8" fill="#fff" stroke={C.accent} strokeWidth="2" />
       <Lbl x={26} y={40} anchor="start" fill={C.accent} size={18}>/goal &lt;a condition you can check&gt;</Lbl>
       {/* turn */}
       <rect x={30} y={120} width={170} height={90} rx="12" fill={C.card} stroke={C.ink} strokeWidth="2" />
@@ -44,18 +44,18 @@ function Loop({ step }: { step: number }) {
       {/* evaluator */}
       <line x1={202} y1={165} x2={318} y2={165} stroke={C.muted} strokeWidth="1.5" markerEnd="url(#r37-goal-arrow)" />
       <Lbl x={260} y={155}>transcript</Lbl>
-      <rect x={322} y={120} width={200} height={90} rx="12" fill="#fff" stroke={C.warm} strokeWidth="2" />
-      <text x={422} y={160} textAnchor="middle" fontSize="22" fill={C.warm}>a small model</text>
-      <Lbl x={422} y={188}>checks the condition</Lbl>
+      <rect x={322} y={120} width={240} height={90} rx="12" fill="#fff" stroke={C.warm} strokeWidth="2" />
+      <text x={442} y={160} textAnchor="middle" fontSize="22" fill={C.warm}>a small model</text>
+      <Lbl x={442} y={188}>checks the condition</Lbl>
       {/* not yet met: go round */}
       <path d="M 380 212 C 380 290, 140 290, 120 216" fill="none" stroke={C.accent} strokeWidth="2.5" markerEnd="url(#r37-goal-arrow)" />
-      <Lbl x={250} y={300} fill={C.accent}>not yet met: another turn, with the reason</Lbl>
+      <Lbl x={200} y={300} fill={C.accent}>not yet met: another turn, with the reason</Lbl>
       {/* met / impossible */}
-      <line x1={500} y1={212} x2={500} y2={262} stroke={C.muted} strokeWidth="1.5" markerEnd="url(#r37-goal-arrow)" />
-      <Lbl x={500} y={284} fill={C.ink}>met: stop</Lbl>
-      <Lbl x={500} y={306} fill={C.ink}>impossible: stop</Lbl>
+      <line x1={540} y1={212} x2={540} y2={262} stroke={C.muted} strokeWidth="1.5" markerEnd="url(#r37-goal-arrow)" />
+      <Lbl x={540} y={284} fill={C.ink}>met: stop</Lbl>
+      <Lbl x={540} y={306} fill={C.ink}>impossible: stop</Lbl>
       <G when={step >= 1}>
-        <Lbl x={422} y={240} fill={C.warm} size={15}>reads, never runs</Lbl>
+        <Lbl x={442} y={240} fill={C.warm} size={15}>reads, never runs</Lbl>
       </G>
     </svg>
   );
