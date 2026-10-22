@@ -23,7 +23,7 @@ export const SCENES = [
   {"id": "ex-pandora", "part": "setup", "theme": "light", "steps": 2, "startSec": 727, "endSec": 793, "label": "What is Pandora, and why was it too slow?"},
   {"id": "ex-pandora-pflow", "part": "setup", "theme": "light", "steps": 2, "startSec": 793, "endSec": 859, "label": "What is particle flow?"},
   {"id": "ex-pandora-steps", "part": "setup", "theme": "light", "steps": 2, "startSec": 859, "endSec": 925, "label": "Which changes made it faster?"},
-  {"id": "ex-erc", "part": "setup", "theme": "light", "steps": 2, "startSec": 925, "endSec": 991, "label": "Can an agent help write a grant proposal?"},
+  {"id": "ex-erc", "part": "setup", "theme": "light", "steps": 4, "startSec": 925, "endSec": 991, "label": "Can an agent help write a grant proposal?"},
   {"id": "ex-hep4m", "part": "setup", "theme": "light", "steps": 2, "startSec": 991, "endSec": 1058, "label": "Can one model do many reconstruction tasks?"},
   {"id": "ex-chatlas", "part": "setup", "theme": "light", "steps": 2, "startSec": 1058, "endSec": 1123, "label": "How do 6,000 physicists find their own documentation?"},
   {"id": "ex-chatlas-detail", "part": "setup", "theme": "light", "steps": 2, "startSec": 1123, "endSec": 1189, "label": "How does chATLAS find an answer?"},
