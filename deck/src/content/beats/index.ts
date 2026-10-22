@@ -101,6 +101,7 @@ export { default as "basic-model-paper" } from "./basic-model-paper";
 export { default as "sec-tracking" } from "./sec-tracking";
 export { default as "p-tracking" } from "./p-tracking";
 export { default as "demo-tracking-review" } from "./demo-tracking-review";
+export { default as "demo-voice-skill" } from "./demo-voice-skill";
 export { default as "sec-automate" } from "./sec-automate";
 export { default as "browser-automate" } from "./browser-automate";
 export { default as "browser-options" } from "./browser-options";

@@ -1,0 +1,83 @@
+"use client";
+
+import { motion } from "motion/react";
+import { C, Canvas, T, mono, serif, stop } from "../r1/kit";
+
+// q1-possible (round 3): seven things agents did in Daniel's work in 2026, sorted by loop.
+// The loops are defined here in one plain line, because the three-loops scene comes much later.
+// HEP4M moved to the middle loop (Daniel, round 3): the Prompting Particle Physics paper
+// (arXiv:2609.31862) was run with Claude managing the edits and comments.
+// Step 0 names the three loops; steps 1 to 3 light one loop each, in the order the examples follow.
+// Each card deep-links to its first example scene.
+const COLUMNS = [
+  { head: "Inner loop", sub: "one experiment", items: [
+    { id: "ex-trackfit", name: "Track fitting", when: "Apr 2026", what: "a beam-spot study, dictated on a run" },
+    { id: "ex-pandora", name: "Pandora speed-up", when: "May 2026", what: "particle flow, profiled and sped up" },
+  ] },
+  { head: "Middle loop", sub: "a paper", items: [
+    { id: "ex-hep4m", name: "HEP4M paper", when: "Aug to Sep 2026", what: "Prompting Particle Physics, edits and comments run by Claude" },
+    { id: "ex-erc", name: "ERC proposal", when: "Oct 2026", what: "writing, budget and the portal" },
+  ] },
+  { head: "Outer loop", sub: "a research programme", items: [
+    { id: "ex-chatlas", name: "chATLAS", when: "2024 to 2026", what: "search over ATLAS documentation" },
+    { id: "ex-hamlet", name: "HAMLET app", when: "Aug 2026", what: "a conference app and live panel" },
+    { id: "ex-sciencedash", name: "ScienceDash", when: "Apr to Oct 2026", what: "the dashboard I run my research from" },
+  ] },
+];
+
+export function Possible({ step }: { step: number }) {
+  return (
+    <Canvas style={{ justifyContent: "center", gap: "4vh" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "1.2vh" }}>
+        <p style={{ fontSize: T.body, lineHeight: 1.35, color: C.ink, maxWidth: "52em", margin: 0 }}>
+          Seven things agents did in my own work this year, sorted by the size of the loop they sit in.
+        </p>
+        <p style={{ fontSize: T.body, lineHeight: 1.35, color: C.muted, maxWidth: "52em", margin: 0 }}>
+          Inner loop: one experiment. Middle loop: a paper. Outer loop: a research programme.
+        </p>
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "2.4vw", alignItems: "start" }}>
+        {COLUMNS.map((col, ci) => {
+          const lit = step >= ci + 1;
+          return (
+            <div key={col.head} style={{ display: "flex", flexDirection: "column", gap: "1.6vh" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, borderBottom: `2px solid ${C.accent}`, paddingBottom: 10 }}>
+                <svg width="40" height="40" viewBox="-20 -20 40 40" aria-hidden style={{ flex: "none" }}>
+                  {[7, 12.5, 18].map((r, i) => (
+                    <circle key={r} r={r} fill="none" stroke={C.accent} strokeWidth={i === ci ? 2.6 : 1} opacity={i === ci ? 1 : 0.25} />
+                  ))}
+                </svg>
+                <span style={{ display: "flex", flexDirection: "column" }}>
+                  <span style={{ fontSize: T.body, fontStyle: "italic", fontFamily: serif }}>{col.head}</span>
+                  <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>{col.sub}</span>
+                </span>
+              </div>
+              {col.items.map((it, ii) => (
+                <motion.a
+                  key={it.id}
+                  href={`?scene=${it.id}`}
+                  onClick={stop}
+                  onKeyDown={stop}
+                  data-reveal={ci + 1}
+                  {...(!lit ? { "data-dim": "" } : {})}
+                  aria-hidden={!lit}
+                  tabIndex={lit ? 0 : -1}
+                  initial={false}
+                  animate={{ opacity: lit ? 1 : 0.05, y: lit ? 0 : 6 }}
+                  transition={{ duration: 0.55, delay: lit ? ii * 0.12 : 0 }}
+                  style={{
+                    display: "flex", flexDirection: "column", gap: 4, padding: "12px 16px", borderRadius: 10,
+                    background: C.card, border: `1px solid ${C.rule}`, color: C.ink, textDecoration: "none", cursor: "pointer",
+                  }}
+                >
+                  <span style={{ fontSize: T.body, lineHeight: 1.2 }}>{it.name}</span>
+                  <span className="t-label" style={{ fontFamily: mono, fontSize: T.label, color: C.muted }}>{it.when} · {it.what}</span>
+                </motion.a>
+              ))}
+            </div>
+          );
+        })}
+      </div>
+    </Canvas>
+  );
+}
