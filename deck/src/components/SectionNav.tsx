@@ -31,11 +31,9 @@ export function SectionNav({ sceneIdx, open, onToggle, onJump }: Props) {
     <nav
       className={`snav-root${open ? " snav-open" : ""}`}
       aria-label="Slide sections"
-      onClick={(e) => {
-        e.stopPropagation();
-        // Hand focus back to the deck so arrow keys keep stepping slides.
-        if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
-      }}
+      onClick={(e) => e.stopPropagation()}
+      // Clicking must not leave focus on a nav button, or the arrow keys stop stepping slides.
+      onMouseDown={(e) => e.preventDefault()}
       onPointerDown={(e) => e.stopPropagation()}
       onPointerUp={(e) => e.stopPropagation()}
     >

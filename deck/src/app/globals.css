@@ -187,7 +187,11 @@ body {
 .snav-root button { cursor: pointer; font-family: inherit; }
 .snav-root button:focus-visible { outline: 2px solid #1f6fa8; outline-offset: 2px; }
 .snav-rail { flex: 0 0 44px; height: 100%; overflow-y: auto; display: flex; align-items: center; flex-direction: column; padding: 12px 0; background: rgba(251,248,241,.92); border-right: 1px solid #ddd5c6; }
-.theme-dark .snav-rail { background: rgba(251,248,241,.85); }
+.theme-dark .snav-rail { background: rgba(255,255,255,.04); border-right-color: rgba(255,255,255,.08); }
+.theme-dark .snav-root:not(.snav-open) .snav-toggle { background: transparent; border-color: rgba(255,255,255,.18); color: #a1a1aa; }
+.theme-dark .snav-root:not(.snav-open) .snav-dot { background: rgba(255,255,255,.18); }
+.theme-dark .snav-root:not(.snav-open) .snav-dot-current { background: #7dd3fc; }
+.theme-dark .snav-open .snav-rail { background: rgba(251,248,241,.97); border-right-color: #ddd5c6; }
 .snav-toggle { flex-shrink: 0; width: 30px; height: 30px; border: 1px solid #ddd5c6; border-radius: 8px; background: #fbf8f1; line-height: 1; }
 .snav-dots { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 18px; }
 .snav-dot { width: 8px; height: 8px; flex-shrink: 0; border-radius: 50%; background: #ddd5c6; }
