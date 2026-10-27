@@ -91,4 +91,8 @@ With the skill: in Claude Code say "share my hands-on 1 to the course" (the hill
 
 By hand: follow the [show-and-tell guide](show-and-tell.md). Title the PR `[show-and-tell 1] <short title>`. Leave out unpublished numbers and anything collaboration-internal; the metric's name and the idea are enough.
 
+## Using the KIT KI Toolbox instead
+
+No Claude subscription? You can run OpenCode against KIT's KI Toolbox with your KIT account. The [KIT OpenCode setup](kit-opencode.md) takes about 5 minutes.
+
 [Back to the deck ↩](../../../?scene=hands-on-1)

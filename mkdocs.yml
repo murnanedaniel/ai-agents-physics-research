@@ -92,6 +92,7 @@ nav:
   - All hands-on exercises: exercises/index.md
   - 'Hands-on 0: get set up': exercises/hands-on-0-setup.md
   - 'Hands-on 1: what could your project hill-climb?': exercises/hands-on-1-hill-climb.md
+  - 'Use OpenCode with the KIT KI Toolbox': exercises/kit-opencode.md
   - 'Hands-on 2: what have you been putting off?': exercises/hands-on-2-putting-off.md
   - 'Hands-on 3: what dashboard would fit your research?': exercises/hands-on-3-dashboard.md
   - Show and tell: exercises/show-and-tell.md
