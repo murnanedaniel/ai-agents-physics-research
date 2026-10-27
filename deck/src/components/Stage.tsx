@@ -7,9 +7,12 @@ import { useKeyboard } from "@/lib/useKeyboard";
 import { useElapsed } from "@/lib/useElapsed";
 import { PresenterClock } from "./PresenterClock";
 import { SectionFooter } from "./SectionFooter";
+import { SectionNav } from "./SectionNav";
 import { SCENE_COMPONENTS } from "@/lib/sceneRegistry";
 
 export function Stage() {
+  const [navOpen, setNavOpen] = useState(false);
+  const [viewportWidth, setViewportWidth] = useState<number | null>(null);
   const [sceneIdx, setSceneIdx] = useState(0);
   const [stepIdx, setStepIdx] = useState(0);
   // Presenter clock + reset button hidden by default (press P to reveal).
@@ -21,6 +24,15 @@ export function Stage() {
   const [lastKey, setLastKey] = useState<string>("");
 
   const { elapsed, reset } = useElapsed(running);
+
+  useEffect(() => {
+    const onResize = () => setViewportWidth(window.innerWidth);
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  const navScale = viewportWidth === null ? 0.56 : (viewportWidth - 564) / viewportWidth;
 
   // Deep-link: ?scene=<id> or ?s=<index> jumps straight to a scene on load
   // (handy for rehearsing a single beat). Silently ignored if not found.
@@ -83,7 +95,10 @@ export function Stage() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (e.target instanceof Element && e.target.closest("input, textarea, select")) return;
       setLastKey(e.key);
+      if (e.key === "m" || e.key === "M") setNavOpen((v) => !v);
+      if (e.key === "Escape") setNavOpen(false);
       if (e.key === "k" || e.key === "K") setKeyDebug((v) => !v);
       if (e.key === "s" || e.key === "S") setSourcesVisible((v) => !v);
     };
@@ -107,12 +122,23 @@ export function Stage() {
       animate={{ backgroundColor: theme === "light" ? "#f6f1e7" : "#050607" }}
       transition={{ duration: 1.2, ease: [0.65, 0, 0.3, 1] }}
     >
-      <AnimatePresence mode="wait">{rendered}</AnimatePresence>
-
-      <SectionFooter sceneIdx={sceneIdx} stepIdx={stepIdx} />
-
-
-
+      <div
+        className="stage-canvas"
+        style={{ transform: navOpen ? `scale(${navScale})` : undefined }}
+      >
+        <AnimatePresence mode="wait">{rendered}</AnimatePresence>
+        <SectionFooter sceneIdx={sceneIdx} stepIdx={stepIdx} />
+      </div>
+      <SectionNav
+        sceneIdx={sceneIdx}
+        open={navOpen}
+        onToggle={() => setNavOpen((v) => !v)}
+        onJump={(i) => {
+          setSceneIdx(i);
+          setStepIdx(0);
+          setRunning(true);
+        }}
+      />
 
       {clockVisible && (
         <button
