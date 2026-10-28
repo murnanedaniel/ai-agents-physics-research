@@ -5,6 +5,8 @@ import { AnimatePresence, motion } from "motion/react";
 import { SCENES } from "@/lib/timeline";
 import { useKeyboard } from "@/lib/useKeyboard";
 import { useElapsed } from "@/lib/useElapsed";
+import { useRecorder } from "@/lib/useRecorder";
+import { RecorderOverlay } from "./RecorderOverlay";
 import { PresenterClock } from "./PresenterClock";
 import { SectionFooter } from "./SectionFooter";
 import { SectionNav } from "./SectionNav";
@@ -52,6 +54,7 @@ export function Stage() {
 
   const scene = SCENES[sceneIdx];
   const theme = scene.theme;
+  const recorder = useRecorder({ sceneIdx, sceneId: scene.id, stepIdx, navOpen });
 
   const advance = useCallback(() => {
     setRunning(true);
@@ -139,6 +142,7 @@ export function Stage() {
           setRunning(true);
         }}
       />
+      <RecorderOverlay recorder={recorder} />
 
       {clockVisible && (
         <button
