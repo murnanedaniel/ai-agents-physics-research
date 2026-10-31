@@ -98,6 +98,7 @@ export { default as "newuniverse-pipeline" } from "./newuniverse-pipeline";
 export { default as "demo-newuniverse" } from "./demo-newuniverse";
 export { default as "basic-model-ladder" } from "./basic-model-ladder";
 export { default as "basic-model-paper" } from "./basic-model-paper";
+export { default as "basic-model-result" } from "./basic-model-result";
 export { default as "sec-tracking" } from "./sec-tracking";
 export { default as "p-tracking" } from "./p-tracking";
 export { default as "demo-tracking-review" } from "./demo-tracking-review";
