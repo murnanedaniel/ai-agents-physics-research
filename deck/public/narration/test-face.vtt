@@ -1,0 +1,19 @@
+WEBVTT
+
+00:00.000 --> 00:04.000
+Welcome to the presentation.
+
+00:04.000 --> 00:07.000
+Why do we need to be fast?
+
+00:07.000 --> 00:10.000
+Consider how many events arrive each second.
+
+00:10.000 --> 00:13.000
+Efficient reconstruction helps us keep up.
+
+00:13.000 --> 00:16.000
+Now let's return to finding tracks.
+
+00:16.000 --> 00:20.000
+We can represent the tracking problem as a graph.

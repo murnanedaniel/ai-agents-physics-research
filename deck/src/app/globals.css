@@ -219,3 +219,30 @@ body {
   .snav-root { display: none; }
   .stage-canvas { transform: none !important; }
 }
+
+/* Optional recorded narration. The root leaves slide clicks unobstructed. */
+.narration-root { position: absolute; inset: 0; z-index: 45; pointer-events: none; cursor: default; }
+.narration-root button, .narration-face, .narration-demo, .narration-notes { pointer-events: auto; }
+.narration-root button { cursor: pointer; }
+.narration-root button:focus-visible { outline: 2px solid #1f6fa8; outline-offset: 3px; }
+.narration-play { position: absolute; left: 56px; bottom: 24px; width: 44px; height: 44px; border-radius: 50%; background: #fbf8f1; color: #141414; border: 1px solid #ddd5c6; box-shadow: 0 3px 14px #0003; }
+.narration-face { position: absolute; left: 56px; bottom: 80px; width: 168px; height: 168px; border-radius: 50%; border: 2px solid white; box-shadow: 0 6px 24px #0004; object-fit: cover; background: black; }
+.narration-demo { position: absolute; inset: 6vh 5vw 10vh calc(5vw + 50px); border-radius: 10px; overflow: hidden; background: black; }
+.narration-demo video { width: 100%; height: 100%; object-fit: contain; }
+.narration-demo-label, .narration-skip { position: absolute; top: 12px; padding: 6px 10px; border-radius: 6px; background: #000b; color: white; font-size: 13px; }
+.narration-demo-label { left: 12px; }
+.narration-skip { right: 12px; border: 1px solid #ffffff60; }
+.narration-captions { position: absolute; left: 50%; transform: translateX(-50%); bottom: 14vh; max-width: 60vw; padding: 8px 14px; font-size: 18px; line-height: 1.4; white-space: pre-line; text-align: center; color: white; background: rgba(0,0,0,.72); border-radius: 6px; }
+.narration-notes-toggle { position: absolute; right: 24px; bottom: 24px; border: 1px solid #ddd5c6; border-radius: 8px; padding: 8px 12px; background: #fbf8f1; color: #141414; font-size: 13px; }
+.narration-notes { position: absolute; right: 24px; bottom: 24px; width: min(420px, 40vw); max-height: 40vh; overflow-y: auto; padding: 18px; border: 1px solid #ddd5c6; border-radius: 10px; background: #fbf8f1; color: #141414; box-shadow: 0 6px 24px #0003; font-size: 15px; line-height: 1.5; user-select: text; }
+.narration-notes > button { float: right; margin: -8px -4px 4px 12px; padding: 4px 8px; font-size: 22px; }
+.narration-notes p { white-space: pre-line; }
+.narration-notes p + p { margin-top: 1em; }
+.theme-dark .narration-notes, .theme-dark .narration-notes-toggle { background: #18181b; color: #f4f4f5; border-color: #ffffff2e; }
+.narration-toast { position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%); padding: 8px 14px; border-radius: 6px; background: #18181bee; color: white; font-size: 14px; }
+.narration-root [hidden] { display: none; }
+@media (max-width: 700px) {
+  .narration-face { width: 112px; height: 112px; }
+  .narration-notes { left: 12px; right: 12px; width: auto; }
+}
+@media print { .narration-root { display: none; } }

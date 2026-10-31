@@ -10,6 +10,7 @@ import { RecorderOverlay } from "./RecorderOverlay";
 import { PresenterClock } from "./PresenterClock";
 import { SectionFooter } from "./SectionFooter";
 import { SectionNav } from "./SectionNav";
+import { NarrationPlayer } from "./NarrationPlayer";
 import { SCENE_COMPONENTS } from "@/lib/sceneRegistry";
 
 export function Stage() {
@@ -55,6 +56,12 @@ export function Stage() {
   const scene = SCENES[sceneIdx];
   const theme = scene.theme;
   const recorder = useRecorder({ sceneIdx, sceneId: scene.id, stepIdx, navOpen });
+
+  const goTo = useCallback((sceneIndex: number, stepIndex: number) => {
+    if (!SCENES[sceneIndex]) return;
+    setSceneIdx(sceneIndex);
+    setStepIdx(Math.max(0, Math.min(SCENES[sceneIndex].steps - 1, stepIndex)));
+  }, []);
 
   const advance = useCallback(() => {
     setRunning(true);
@@ -143,6 +150,7 @@ export function Stage() {
         }}
       />
       <RecorderOverlay recorder={recorder} />
+      <NarrationPlayer sceneIdx={sceneIdx} stepIdx={stepIdx} goTo={goTo} />
 
       {clockVisible && (
         <button
