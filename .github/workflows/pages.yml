@@ -37,8 +37,8 @@ jobs:
         with:
           path: .venv
           key: venv-${{ runner.os }}-mkdocs-material-mkdocs1-v1
-      - if: steps.venv.outputs.cache-hit != 'true'
-        run: python3 -m venv .venv && .venv/bin/pip install -q "mkdocs-material" "mkdocs<2"
+      # Rebuild if the cache missed or the runner's python changed under the cached venv
+      - run: .venv/bin/python -c "import mkdocs, material" 2>/dev/null || { rm -rf .venv && python3 -m venv .venv && .venv/bin/pip install -q "mkdocs-material" "mkdocs<2"; }
       - uses: actions/cache@v4
         with:
           path: deck/.next/cache
