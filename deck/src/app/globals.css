@@ -225,8 +225,8 @@ body {
 .narration-root button, .narration-face, .narration-demo, .narration-notes { pointer-events: auto; }
 .narration-root button { cursor: pointer; }
 .narration-root button:focus-visible { outline: 2px solid #1f6fa8; outline-offset: 3px; }
-.narration-play { position: absolute; left: 56px; bottom: 24px; width: 44px; height: 44px; border-radius: 50%; background: #fbf8f1; color: #141414; border: 1px solid #ddd5c6; box-shadow: 0 3px 14px #0003; }
-.narration-face { position: absolute; left: 56px; bottom: 80px; width: 168px; height: 168px; border-radius: 50%; border: 2px solid white; box-shadow: 0 6px 24px #0004; object-fit: cover; background: black; }
+.narration-play { position: absolute; left: 7px; bottom: 14px; width: 30px; height: 30px; font-size: 12px; line-height: 1; border-radius: 50%; background: #fbf8f1; color: #141414; border: 1px solid #ddd5c6; box-shadow: 0 2px 8px #0003; }
+.narration-face { position: absolute; left: 56px; bottom: 44px; width: 168px; height: 168px; border-radius: 50%; border: 2px solid white; box-shadow: 0 6px 24px #0004; object-fit: cover; background: black; }
 .narration-demo { position: absolute; inset: 6vh 5vw 10vh calc(5vw + 50px); border-radius: 10px; overflow: hidden; background: black; }
 .narration-demo video { width: 100%; height: 100%; object-fit: contain; }
 .narration-demo-label, .narration-skip { position: absolute; top: 12px; padding: 6px 10px; border-radius: 6px; background: #000b; color: white; font-size: 13px; }
@@ -242,7 +242,8 @@ body {
 .narration-toast { position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%); padding: 8px 14px; border-radius: 6px; background: #18181bee; color: white; font-size: 14px; }
 .narration-root [hidden] { display: none; }
 @media (max-width: 700px) {
-  .narration-face { width: 112px; height: 112px; }
+  .narration-face { left: 12px; width: 112px; height: 112px; }
+  .narration-play { left: 12px; width: 40px; height: 40px; }
   .narration-notes { left: 12px; right: 12px; width: auto; }
 }
 @media print { .narration-root { display: none; } }

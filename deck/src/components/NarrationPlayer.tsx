@@ -213,7 +213,7 @@ function LoadedPlayer({ manifest, sceneIdx, stepIdx, goTo }: Props & { manifest:
       <div className="narration-demo" hidden={!started || kind !== "demo"}>
         <video ref={demo} playsInline preload="metadata" crossOrigin="anonymous">{track(files.demo)}</video>
         <span className="narration-demo-label">Demo</span>
-        <button type="button" className="narration-skip" onClick={() => actions.current?.skip()}>Skip demo ⏭</button>
+        <button type="button" className="narration-skip" onClick={() => actions.current?.skip()}>Skip demo →</button>
       </div>
       {started && captions && caption && <div className="narration-captions">{caption}</div>}
       {manifest.notes && <button type="button" className="narration-notes-toggle" aria-expanded={notesOpen}
